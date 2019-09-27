@@ -1,1 +1,1 @@
-web: gunicorn pelican --log-file -
+web: gunicorn pelican:app
