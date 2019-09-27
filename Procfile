@@ -1,1 +1,1 @@
-web: pelican --listen 
+web: pelican --listen $PORT 
