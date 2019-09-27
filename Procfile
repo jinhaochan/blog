@@ -1,1 +1,1 @@
-web: python pelican --listen 
+web: pelican --listen 
