@@ -1,1 +1,1 @@
-web: gunicorn pelican:app
+web: python pelican --listen 
