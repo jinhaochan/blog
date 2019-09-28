@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>A Pelican Blog - Software Engineering</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="A Pelican Blog Atom Feed" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">A Pelican Blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/book-review.html">Book Review</a></li>
+                    <li><a href="/category/data-science.html">Data Science</a></li>
+                    <li><a href="/category/misc.html">misc</a></li>
+                    <li><a href="/category/ramblings.html">Ramblings</a></li>
+                    <li><a href="/category/review.html">Review</a></li>
+                    <li><a href="/category/security.html">Security</a></li>
+                    <li class="active"><a href="/category/software-engineering.html">Software Engineering</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/async-and-await-in-c.html">Async and Await in C#</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2018-12-09T22:40:00+00:00">
+                Published: Sun 09 December 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/software-engineering.html">Software Engineering</a>.</p>
+<p>tags: <a href="/tag/async.html">Async</a> <a href="/tag/await.html">Await</a> </p>
+</footer><!-- /.post-info --><h2>Async and Await in C</h2>
+<p><code>async</code> and <code>await</code> are used when we are doing asynchronous programming. Why we would want to do asynchronous programming, is due to performance issues. When we have two unrelated tasks that are in the program, and one task takes a long time to process, it should not be holding up the other task.</p>
+<p>We use Asynchronous programming to hand over program controls to ensure that no one process is holding up the entire program.</p>
+<p><code>async</code> and <code>await</code> are used together to make a program asynchronous.</p>
+<p>Below is a simple example to make a program asynchronous</p>
+<p>[code lang=text]<br>
+static void Main(string[] args)<br>
+{<br>
+DoSomething();<br>
+Console.WriteLine("Control to Main!");<br>
+Console.ReadLine();<br>
+}</p>
+<p>public static async void DoSomething()<br>
+{<br>
+await Delay();<br>
+Console.WriteLine("Control back to Method!");<br>
+}</p>
+<p>async static Task Delay()<br>
+{<br>
+await Task.Delay(5000);<br>
+}<br>
+[/code]</p>
+<p>The output on the console:</p>
+<p>[code lang=text]<br>
+Control to Main!<br>
+&lt;after a 5 second delay&gt;<br>
+Control back to Method!<br>
+[/code]</p>
+<p>You first have to declare the method asynchronous with <code>async</code></p>
+<p><code>async static Task Delay()</code></p>
+<p>Next, we put the keyword <code>await</code> beside the command that will take a long time.</p>
+<p>What <code>await</code> does is this<br>
+- It awaits for the command to be completed<br>
+- While it is awaiting, it passes control back up to the caller<br>
+- After the command is completed, the control is passed back to the callee</p>
+<p>If we look at the code, the program first calls <code>DoSomething()</code>, which calls <code>await Delay()</code>, which then executes <code>await Task.Delay(5000);</code></p>
+<p>When <code>await Task.Delay(5000);</code> is executed, <code>Delay()</code> passes control back up to the caller, which is <code>DoSomething()</code></p>
+<p>Because <code>DoSomething()</code> is awaiting <code>Delay()</code>, it passes control back up again to <code>Main()</code>, which then executes <code>Console.WriteLine("Control to Main!");</code></p>
+<p>After <code>await Task.Delay(5000);</code> is completed, it returns to <code>DoSomething()</code>, which executes <code>Console.WriteLine("Control back to Method!");</code>, and finally returns to <code>Main()</code></p>
+<p>Another example is given below</p>
+<p>[code lang=text]<br>
+async Task&lt;int&gt; AccessTheWebAsync()<br>
+{<br>
+HttpClient client = new HttpClient();</p>
+<p>Task&lt;string&gt; getStringTask = client.GetStringAsync("http://msdn.microsoft.com");</p>
+<p>// You can do work here that doesn't rely on the string from GetStringAsync.<br>
+DoIndependentWork();</p>
+<p>string urlContents = await getStringTask;<br>
+//The thing is that this returns an int to a method that has a return type of Task&lt;int&gt;<br>
+return urlContents.Length;<br>
+}<br>
+[/code]</p>
+<p>Here, <code>Task getStringTask = client.GetStringAsync("http://msdn.microsoft.com");</code> is called, followed by <code>DoIndependentWork();</code>.</p>
+<p>We next call <code>string urlContents = await getStringTask;</code>, which awaits on <code>getStringTask</code>. There are two possible scenerios here</p>
+<ol>
+<li>After <code>DoIndependentWork()</code> is completed, <code>Task getStringTask = client.GetStringAsync("http://msdn.microsoft.com");</code> is completed as well, and <code>getStringTask</code> is fully initialized. In this case, there is no control being passed back to the caller of <code>AccessTheWebAsync()</code>, and the program just runs through.</li>
+<li>After <code>DoIndependentWork()</code> is completed, <code>Task getStringTask = client.GetStringAsync("http://msdn.microsoft.com");</code> NOT completed, and <code>getStringTask</code> is NOT initialized. In this case, there control is passed back to the caller of <code>AccessTheWebAsync()</code> for execution. Only after <code>getStringTask</code> has been initialized, will the program pass back control to <code>AccessTheWebAsync()</code></li>
+</ol>
+<p>And for obvious reasons, <code>async</code> cannot be a modifier on the <code>Main</code> method, because it is the root caller.</p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/c-pass-by-value.html" rel="bookmark"
+                           title="Permalink to C# Pass By Value">C# Pass By Value</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-11-25T22:37:00+00:00">
+                Published: Sun 25 November 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/software-engineering.html">Software Engineering</a>.</p>
+
+</footer><!-- /.post-info -->                <h2>Pass by Value vs Reference</h2>
+<h3>Pass by value</h3>
+<hr>
+<p>When we pass call a function, we sometimes pass in some values for the function to use. Typically, it would look like this</p>
+<p><code>(parameters)</code></p>
+<p>or</p>
+<p><code>void swapValues(int x, int y)</code></p>
+<p>When we pass a value to the function <code>swapValue()</code>, we are …</p>
+                <a class="readmore" href="/c-pass-by-value.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/python-tips-and-tricks.html" rel="bookmark"
+                           title="Permalink to Python Tips and Tricks">Python Tips and Tricks</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-11-04T22:32:00+00:00">
+                Published: Sun 04 November 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/software-engineering.html">Software Engineering</a>.</p>
+
+</footer><!-- /.post-info -->                <h2>Summary of Python tips, tricks, and to-dos</h2>
+<p>These pointers are what I picked up from the book <code>Python Tricks: The Book</code></p>
+<p>The book itself is a summary, and here i'll be doing a summary of a summary.</p>
+<p>Python is great because of its flexibility, but that itself could potentially be …</p>
+                <a class="readmore" href="/python-tips-and-tricks.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/how-netflix-thinks-of-devops.html" rel="bookmark"
+                           title="Permalink to How Netflix Thinks of DevOps">How Netflix Thinks of DevOps</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-07-13T07:02:00+00:00">
+                Published: Fri 13 July 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/software-engineering.html">Software Engineering</a>.</p>
+
+</footer><!-- /.post-info -->                <p><a href="https://www.youtube.com/watch?v=UTKIT6STSVM">Link to the video of how Netflix thinks about DevOps(Hint: They don't)</a></p>
+<p><a href="https://netflix.github.io/">Netflix Github Page</a></p>
+<p>Instead, what they do focus on is a lot about culture, which is really be what every company should be focusing on. In this era, for better or for worse, we as humans have …</p>
+                <a class="readmore" href="/how-netflix-thinks-of-devops.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/core-design-principles.html" rel="bookmark"
+                           title="Permalink to Core Design Principles">Core Design Principles</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-07-12T09:08:00+00:00">
+                Published: Thu 12 July 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/software-engineering.html">Software Engineering</a>.</p>
+
+</footer><!-- /.post-info -->                <p><a href="https://www.youtube.com/watch?v=llGgO74uXMI">Core Design Principles for Software Developers by Venkat Subramaniam</a></p>
+<p>Devoxx is a conference directed towards the Java, Android and HTML5 community.</p>
+<p>Some points that are language agnostic, and can be applied universally are summarized below:</p>
+<ol>
+<li><strong>Good code can be changed without much hassle.</strong></li>
+<li>It is always impossible to get it …</li></ol>
+                <a class="readmore" href="/core-design-principles.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/the-journey-begins.html" rel="bookmark"
+                           title="Permalink to Printing Subsets in a List">Printing Subsets in a List</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-07-10T09:52:00+00:00">
+                Published: Tue 10 July 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/software-engineering.html">Software Engineering</a>.</p>
+<p>tags: <a href="/tag/codexercise.html">codexercise</a> </p>
+</footer><!-- /.post-info -->                <p><strong><u> Problem Statement </u></strong></p>
+<p>Given a list of distinct items (or a set), print out all of its subset lists.</p>
+<p>Input:</p>
+<p><code>[1, 2, 3, 4]</code></p>
+<p>Output:</p>
+<p><code>:empty set: 1 1,2 1,3 1,4 1,2,3 1,2,4 1,3,4 1,2,3,4 2 2,3 2 …</code></p>
+                <a class="readmore" href="/the-journey-begins.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

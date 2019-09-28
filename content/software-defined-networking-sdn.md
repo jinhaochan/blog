@@ -20,7 +20,7 @@ Components and Architecture of a SDN
 
 ------------------------------------------------------------------------
 
-![Untitled Diagram (1)](https://chanjinhao.files.wordpress.com/2018/11/untitled-diagram-1.png){.alignnone .size-full .wp-image-105 width="686" height="406"}
+![Untitled Diagram (1)]({attach}media/2018/11/untitled-diagram-1.png){.alignnone .size-full .wp-image-105 width="686" height="406"}
 
 It'll make more sense when the flow is explained bottom up, from the infrastructure layer.
 

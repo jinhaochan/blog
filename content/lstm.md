@@ -40,7 +40,7 @@ Lets visually inspect the difference between a normal RNN cell and an LSTM cell.
 <!-- wp:image {"id":362} -->
 
 <figure class="wp-block-image">
-![](https://chanjinhao.files.wordpress.com/2019/03/lstm3-simplernn.png){.wp-image-362}  
+![]({attach}media/2019/03/lstm3-simplernn.png){.wp-image-362}  
 
 <figcaption>
 An unrolled RNN cell
@@ -52,7 +52,7 @@ An unrolled RNN cell
 <!-- wp:image {"id":356} -->
 
 <figure class="wp-block-image">
-![](https://chanjinhao.files.wordpress.com/2019/03/lstm3-chain.png){.wp-image-356}  
+![]({attach}media/2019/03/lstm3-chain.png){.wp-image-356}  
 
 <figcaption>
 An unrolled LSTM cell
@@ -97,7 +97,7 @@ The top line of an LSTM cell represents the cell state
 <div class="wp-block-image">
 
 <figure class="aligncenter">
-![](https://chanjinhao.files.wordpress.com/2019/03/lstm3-c-line.png){.wp-image-357}
+![]({attach}media/2019/03/lstm3-c-line.png){.wp-image-357}
 </figure>
 
 </div>
@@ -166,7 +166,7 @@ In all the 3 gates, there exists the common Sigmoid layer. This layer outputs a 
 <div class="wp-block-image">
 
 <figure class="aligncenter is-resized">
-![](https://chanjinhao.files.wordpress.com/2019/03/lstm3-gate.png){.wp-image-365 width="87" height="106"}  
+![]({attach}media/2019/03/lstm3-gate.png){.wp-image-365 width="87" height="106"}  
 <figcaption>
 The common Sigmoid layer in all 3 gates
 </figcaption>
@@ -221,7 +221,7 @@ This gate has the Sigmoid activation function. It takes in the previous time ste
 <!-- wp:image {"id":359} -->
 
 <figure class="wp-block-image">
-![](https://chanjinhao.files.wordpress.com/2019/03/lstm3-focus-f.png){.wp-image-359}
+![]({attach}media/2019/03/lstm3-focus-f.png){.wp-image-359}
 
 </figure>
 <!-- /wp:image -->
@@ -253,7 +253,7 @@ The next gate is the input gate, which is a combination of both the Sigmoid and 
 <!-- wp:image {"id":360} -->
 
 <figure class="wp-block-image">
-![](https://chanjinhao.files.wordpress.com/2019/03/lstm3-focus-i.png){.wp-image-360}
+![]({attach}media/2019/03/lstm3-focus-i.png){.wp-image-360}
 
 </figure>
 <!-- /wp:image -->
@@ -297,7 +297,7 @@ The last gate, output gate, decides what value the cell would output. The output
 <!-- wp:image {"id":361} -->
 
 <figure class="wp-block-image">
-![](https://chanjinhao.files.wordpress.com/2019/03/lstm3-focus-o.png){.wp-image-361}
+![]({attach}media/2019/03/lstm3-focus-o.png){.wp-image-361}
 
 </figure>
 <!-- /wp:image -->
@@ -336,7 +336,7 @@ The cell states in each LSTM cell are modified either by the forget gate, or the
 <!-- wp:image {"id":364} -->
 
 <figure class="wp-block-image">
-![](https://chanjinhao.files.wordpress.com/2019/03/lstm3-focus-c-2.png){.wp-image-364}
+![]({attach}media/2019/03/lstm3-focus-c-2.png){.wp-image-364}
 
 </figure>
 <!-- /wp:image -->
@@ -444,7 +444,7 @@ The key to LSTM preventing the vanexplgrad (I just made that up) is cell state u
 <div class="wp-block-image">
 
 <figure class="aligncenter">
-![](https://chanjinhao.files.wordpress.com/2019/03/untitled-1.png){.wp-image-369}  
+![]({attach}media/2019/03/untitled-1.png){.wp-image-369}  
 <figcaption>
 Calculating the current cell state using values from the previous cell state
 </figcaption>
@@ -473,7 +473,7 @@ When performing backpropagation, we find the derivative w.r.t the error. This gi
 <div class="wp-block-image">
 
 <figure class="aligncenter">
-![](https://chanjinhao.files.wordpress.com/2019/03/2.png){.wp-image-368}  
+![]({attach}media/2019/03/2.png){.wp-image-368}  
 <figcaption>
 Derivative of w.r.t the error
 </figcaption>

@@ -47,7 +47,7 @@ I'll like to highlight the 2 important lessons I took away from this book
 <!-- wp:image {"id":439} -->
 
 <figure class="wp-block-image">
-![](https://chanjinhao.files.wordpress.com/2019/05/picture1.png){.wp-image-439}
+![]({attach}media/2019/05/picture1.png){.wp-image-439}
 
 </figure>
 <!-- /wp:image -->

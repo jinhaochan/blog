@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Python Tips and Tricks</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="A Pelican Blog Atom Feed" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">A Pelican Blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/book-review.html">Book Review</a></li>
+                    <li><a href="/category/data-science.html">Data Science</a></li>
+                    <li><a href="/category/misc.html">misc</a></li>
+                    <li><a href="/category/ramblings.html">Ramblings</a></li>
+                    <li><a href="/category/review.html">Review</a></li>
+                    <li><a href="/category/security.html">Security</a></li>
+                    <li class="active"><a href="/category/software-engineering.html">Software Engineering</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/python-tips-and-tricks.html" rel="bookmark"
+           title="Permalink to Python Tips and Tricks">Python Tips and Tricks</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-11-04T22:32:00+00:00">
+                Published: Sun 04 November 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/software-engineering.html">Software Engineering</a>.</p>
+
+</footer><!-- /.post-info -->      <h2>Summary of Python tips, tricks, and to-dos</h2>
+<p>These pointers are what I picked up from the book <code>Python Tricks: The Book</code></p>
+<p>The book itself is a summary, and here i'll be doing a summary of a summary.</p>
+<p>Python is great because of its flexibility, but that itself could potentially be a double edged sword. It can be so easy to abuse and write really messy code, yet the program still runs fine.</p>
+<p>Lets talk about the points made in the book. I only picked out points that I feel that are useful and that I have very little exposure to. Don't get me wrong, all the points in the book are great, just some greater than others.</p>
+<h2>Assertions</h2>
+<p>If the asserted condition returns true, nothing happens.<br>
+If the asserted condition returns false, <code>AssertionError</code> exception is raised.</p>
+<p>[code lang=text]<br>
+def price_after_discount(0ld_price, discount):<br>
+new_price = 0ld_price * discount<br>
+assert 0 &lt;= new_price &lt;= old_price<br>
+[/code]</p>
+<p>This block of code applies a discount the an item. We assert that the new price is greater than zero, and not more than the old price.</p>
+<p>Assert is different from a regular exception in that it's meant for unrecoverable errors. Recoverable errors are things like <code>File not found</code>, where you can fix it (by putting the file where it should be) and try to run the program again. Asserts are meant for internal sanity checking.</p>
+<p>Don't use Assert for data validation, because it can be optimized away.</p>
+<p>[code lang=text]<br>
+def delete_product(prod_id, user):<br>
+assert user.is_admin()<br>
+assert store.has_product(prod_id) 'Unknown product'<br>
+store.get_product(prod_id).delete()<br>
+[/code]</p>
+<p>When you optimize away asserts, we remove checking if the user is admin, or if the store has the product.</p>
+<h2>Context Managers</h2>
+<p>When you do OO in python and you create classes to use, you can set context managers that dictate what happens when you enter and exit the code.</p>
+<p>This is done by defining <code>__enter__</code> and <code>__exit__</code> functions</p>
+<p>[code lang=text]<br>
+class ManagedFile:<br>
+def __init__(self, name):<br>
+self.name = name</p>
+<p>def __enter__(self):<br>
+self.file = open(self.name, 'w')<br>
+return self.file</p>
+<p>def __exit__(self, exc_type, exc_val, exc_tb):<br>
+if self.file:<br>
+self.file.close()</p>
+<p>[/code]</p>
+<p><code>__enter__</code> is called when the execution enters the context of the statement, and <code>__exit__</code> is called when it leaves the context.</p>
+<h2>Underscores and Dunders</h2>
+<p>On naming the variables in python, each name has a different meaning:</p>
+<ol>
+<li>
+<p>SingleLeadingUnderscore: <code>_var</code></p>
+<p>Purely conventional, this tells the reader that the variable is only meant for use internal to the function.</p>
+</li>
+<li>
+<p>SingleTrailingUnderscore: <code>var_</code></p>
+<p>Purely conventional, putting an underscore at the back prevents naming conflicts with Python's keywords</p>
+</li>
+<li>
+<p>DoubleLeadingUnderscore: <code>__var</code></p>
+<p>When double underscores are infront, Python name-mangles the variable, and puts the class name in front of it.</p>
+<p>[code lang=text]<br>
+   class Test: def __init__(self):<br>
+   self.foo = 11<br>
+   self._bar = 23<br>
+   self.__baz = 42<br>
+   [/code]</p>
+<p>When you look at the attributes of object <code>Test</code>, we see that <code>__baz</code> has become <code>_Test__baz</code></p>
+<p>[code lang=text]<br>
+   &gt;&gt;&gt; t = Test()<br>
+   &gt;&gt;&gt; dir(t)<br>
+   ['_Test__baz', '__class__', '__delattr__' ... ]<br>
+   [/code]</p>
+<p>This is done to protect the variable from being overridden in subclasses that extends from the parent class</p>
+</li>
+<li>
+<p>DoubleLeadingandTrailingUnderscore: <code>__var__</code></p>
+<p>Leading and trailing underscores are left untouched by Python. They are reserved for special usage in Python, such as <code>__init__</code> and <code>__call__</code></p>
+</li>
+<li>
+<p>SingleUnderscore: <code>_</code></p>
+<p>Meant to represent a variable that is temporary and insignificant</p>
+<p>[code lang=text]<br>
+   for _ in range(5):<br>
+   print("Hello World)<br>
+   [/code]</p>
+<p><code>_</code> also represents the last value of the Python interpreter session</p>
+</li>
+</ol>
+<h2>String Formatting</h2>
+<p>Old method: <code>"Hello, %s" % name</code></p>
+<p>New method: <code>"Hello, {}".format(name)</code></p>
+<p>The new method is more powerful, because the order in <code>format</code> doesn't matter</p>
+<p><code>'Hey {name}, there is a 0x{errno:x} error!'.format(errno=errno, name=name)</code></p>
+<h2>Python Functions</h2>
+<p>Python's functions are first class objects.</p>
+<p>What this means is that they can be assigned to variables, stored in data structures, and passed as arguements</p>
+<p>[code lang=text]<br>
+&gt;&gt;&gt; funcs = [bark, str.lower, str.capitalize]<br>
+&gt;&gt;&gt; funcs<br>
+[&lt;function yell at 0x10ff96510&gt;, &lt;method 'lower' of 'str' objects&gt;, &lt;method 'capitalize' of 'str' objects&gt;]<br>
+[/code]</p>
+<h2>Lambdas</h2>
+<p>Lambdas declare small anonymous functions. It's a declarative way of programming</p>
+<p>[code lang=text]<br>
+&gt;&gt;&gt; add = lambda x, y: x + y<br>
+&gt;&gt;&gt; add(5, 3)<br>
+8<br>
+[/code]</p>
+<p>The syntax: <code>lambda x, y</code> are the inputs. <code>x + y</code> is the action to carry out and return.</p>
+<p>A more complete example:</p>
+<p>[code lang=text]<br>
+&gt;&gt;&gt; tuples = [(1, 'd'), (2, 'b'), (4, 'a'), (3, 'c')]<br>
+&gt;&gt;&gt; sorted(tuples, key=lambda x: x[1])<br>
+[(4, 'a'), (2, 'b'), (3, 'c'), (1, 'd')]<br>
+[/code]</p>
+<p>The tuple is passed into the lambda function, and it returns the second element, which is assigned to key. The output is then sorted according to the second value.</p>
+<h2>Decorators</h2>
+<p>Decorators let you modify the behavior of the callee, without modifying the callee's code itself.</p>
+<p>Some common use case for decorators are:</p>
+<ol>
+<li>Logging</li>
+<li>User authentication</li>
+</ol>
+<p>[code lang=text]<br>
+def uppercase(func):<br>
+def wrapper():<br>
+original_result = func()<br>
+modified_result = original_result.upper()<br>
+return modified_result<br>
+return wrapper</p>
+<p>@uppercase<br>
+def greet():<br>
+return 'Hello!'</p>
+<p>&gt;&gt;&gt; greet()<br>
+'HELLO!'<br>
+[/code]</p>
+<p>When we put the decorator on <code>greet()</code>, we are passing the function to our decorator function.</p>
+<p>The output is then gotten from the decorator</p>
+<p>Decorators are done bottom to top</p>
+<p>[code lang=text]<br>
+@strong<br>
+@emphasis<br>
+def greet():<br>
+return 'Hello!<br>
+[/code]</p>
+<p><code>emphasis</code> is executed first, before <code>strong</code></p>
+<p>Decorators can also accept arguments by using <code>args</code> and <code>kwargs</code>. The arguments are gotten from the original function, and passed to the decorators.</p>
+<p>[code lang=text]<br>
+def proxy(func):<br>
+def wrapper(*args, **kwargs):<br>
+return func(*args, **kwargs)<br>
+return wrapper<br>
+[/code]</p>
+<h2>*args and **kwargs</h2>
+<p><code>*args</code> and <code>**kwargs</code> are optional arguments to a function.</p>
+<p>[code lang=text]<br>
+def foo(required, *args, **kwargs):<br>
+print(required)<br>
+if args:<br>
+print(args)<br>
+if kwargs:<br>
+print(kwargs)</p>
+<p>&gt;&gt;&gt; foo() TypeError:<br>
+"foo() missing 1 required positional arg: 'required'"</p>
+<p>&gt;&gt;&gt; foo('hello')<br>
+hello</p>
+<p>&gt;&gt;&gt; foo('hello', 1, 2, 3)<br>
+hello (1, 2, 3)</p>
+<p>&gt;&gt;&gt; foo('hello', 1, 2, 3, key1='value', key2=999)<br>
+hello (1, 2, 3) {'key1': 'value', 'key2': 999}<br>
+[/code]</p>
+<p><code>*args</code> collects extra positional arguments<br>
+<code>**kwargs</code> collects extra keywords as a dictionary</p>
+<h2>Writing your own exception class</h2>
+<p>[code lang=text]<br>
+class NameTooShortError(ValueError):<br>
+pass</p>
+<p>def validate(name):<br>
+if len(name) &lt; 10::<br>
+raise NameTooShortError(name)<br>
+[/code]</p>
+<h2>References, Shallow Copying and Deep Copying</h2>
+<h4>References</h4>
+<p>[code lang=text]<br>
+new_list = original_list<br>
+new_dict = original_dict<br>
+new_set = original_set<br>
+[/code]</p>
+<p>This just creates references, and any modifications done to <code>original_</code> will also modify <code>new_</code></p>
+<p>[code lang=text]<br>
+&gt;&gt;&gt; xs<br>
+[[1, 2, 3], [4, 5, 6], [7, 8, 9]]<br>
+&gt;&gt;&gt; ys<br>
+[[1, 2, 3], [4, 5, 6], [7, 8, 9]]</p>
+<p>&gt;&gt;&gt; xs.append("Hello")</p>
+<p>&gt;&gt;&gt; xs<br>
+[[1, 2, 3], [4, 5, 6], [7, 8, 9], "Hello"]<br>
+&gt;&gt;&gt; ys<br>
+[[1, 2, 3], [4, 5, 6], [7, 8, 9], "Hello"]<br>
+[/code]</p>
+<h4>Shallow Copying</h4>
+<p>[code lang=text]<br>
+new_list = list(original_list)<br>
+new_dict = dict(original_dict)<br>
+new_set = set(original_set)<br>
+[/code]</p>
+<p>This makes a new list, but the children objects in the list are not copied.</p>
+<p>[code lang=text]<br>
+&gt;&gt;&gt; xs<br>
+[[1, 2, 3], [4, 5, 6], [7, 8, 9]]<br>
+&gt;&gt;&gt; ys<br>
+[[1, 2, 3], [4, 5, 6], [7, 8, 9]]</p>
+<p>&gt;&gt;&gt; xs.append("Hello")</p>
+<p>&gt;&gt;&gt; xs<br>
+[[1, 2, 3], [4, 5, 6], [7, 8, 9], "Hello"]<br>
+&gt;&gt;&gt; ys<br>
+[[1, 2, 3], [4, 5, 6], [7, 8, 9]]</p>
+<p>&gt;&gt;&gt; xs[1][0] = "X"</p>
+<p>&gt;&gt;&gt; xs<br>
+[[1, 2, 3], ['X', 5, 6], [7, 8, 9], "Hello"]<br>
+&gt;&gt;&gt; ys<br>
+[[1, 2, 3], ['X', 5, 6], [7, 8, 9]]</p>
+<p>[/code]</p>
+<h4>Deep Copying</h4>
+<p>[code lang=text]<br>
+new_list = copy.deepcopy(original_list)<br>
+new_dict = copy.deepcopy(original_dict)<br>
+new_set = copy.deepcopy(original_set)<br>
+[/code]</p>
+<p>This creates an entirely new instance, and copies all the children too.</p>
+<p>[code lang=text]<br>
+&gt;&gt;&gt; xs<br>
+[[1, 2, 3], [4, 5, 6], [7, 8, 9]]<br>
+&gt;&gt;&gt; ys<br>
+[[1, 2, 3], [4, 5, 6], [7, 8, 9]]</p>
+<p>&gt;&gt;&gt; xs.append("Hello")</p>
+<p>&gt;&gt;&gt; xs<br>
+[[1, 2, 3], [4, 5, 6], [7, 8, 9], "Hello"]<br>
+&gt;&gt;&gt; ys<br>
+[[1, 2, 3], [4, 5, 6], [7, 8, 9]]</p>
+<p>&gt;&gt;&gt; xs[1][0] = "X"</p>
+<p>&gt;&gt;&gt; xs<br>
+[[1, 2, 3], ['X', 5, 6], [7, 8, 9], "Hello"]<br>
+&gt;&gt;&gt; ys<br>
+[[1, 2, 3], [4, 5, 6], [7, 8, 9]]</p>
+<p>[/code]</p>
+<h2>Generators</h2>
+<p>Generators generate values JIT (Just In Time). This is opposed to making a list, and iterating through it.</p>
+<p>[code lang=text]<br>
+genexpr = ('Hello' for i in range(3))</p>
+<p>&gt;&gt;&gt; next(genexpr)<br>
+'Hello'</p>
+<p>&gt;&gt;&gt; next(genexpr)<br>
+'Hello'</p>
+<p>&gt;&gt;&gt; next(genexpr)<br>
+'Hello'</p>
+<p>&gt;&gt;&gt; next(genexpr)<br>
+StopIteration<br>
+[/code]</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

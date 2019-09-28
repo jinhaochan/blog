@@ -87,7 +87,7 @@ Below shows an image of the packet sizes versus time, and we can see the start d
 <div class="wp-block-image">
 
 <figure class="aligncenter">
-![](https://chanjinhao.files.wordpress.com/2019/05/eta-blake-fig-2.png){.wp-image-435}
+![]({attach}media/2019/05/eta-blake-fig-2.png){.wp-image-435}
 </figure>
 
 </div>

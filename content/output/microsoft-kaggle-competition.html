@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Microsoft Kaggle Competition</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="A Pelican Blog Atom Feed" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">A Pelican Blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/book-review.html">Book Review</a></li>
+                    <li class="active"><a href="/category/data-science.html">Data Science</a></li>
+                    <li><a href="/category/misc.html">misc</a></li>
+                    <li><a href="/category/ramblings.html">Ramblings</a></li>
+                    <li><a href="/category/review.html">Review</a></li>
+                    <li><a href="/category/security.html">Security</a></li>
+                    <li><a href="/category/software-engineering.html">Software Engineering</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/microsoft-kaggle-competition.html" rel="bookmark"
+           title="Permalink to Microsoft Kaggle Competition">Microsoft Kaggle Competition</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-03-31T09:38:00+00:00">
+                Published: Sun 31 March 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/data-science.html">Data Science</a>.</p>
+<p>tags: <a href="/tag/kaggle.html">Kaggle</a> </p>
+</footer><!-- /.post-info -->      <!-- wp:paragraph -->
+
+<p>This is the write up for my solution for the Microsoft Malware Prediction</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p><a href="https://www.kaggle.com/c/microsoft-malware-prediction">https://www.kaggle.com/c/microsoft-malware-prediction</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>I got pretty high up the leader board, but it was nothing that I was proud of, because:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+
+<ol>
+<li>I grossly overfitted my model</li>
+<li>The final result was a blend of another kernel</li>
+<li>All my attempts at feature engineering failed</li>
+</ol>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+
+<p>And I'm now officially ceasing efforts to improve my score, because:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+
+<ol>
+<li>I'm not learning anything new, just mindlessly tweaking hyperparameters and hoping one of them works</li>
+<li>I don't think I've got the basics down yet, and this challenge was way over my head. I feel I should start with something simpler</li>
+<li>And most importantly, I'm no longer having fun</li>
+</ol>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+
+<p>But wait! Doing such a hard competition really taught me many concepts, such as:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+
+<ol>
+<li>Adversarial Cross Validation</li>
+<li>How to properly use LightGBM</li>
+<li>The real problem of overfitting, which LightGBM does really fast</li>
+<li>Blending and Ensembling is a powerful method for getting good results</li>
+</ol>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+
+<p>Below shows one of the code variants I've used. They were all mostly the same, with a few hyperparameters being different, and some failed attempts at feature engineering.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The most important features were Version numbers, and there's probably some way to exploit that.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>My single model (which I believe grossly overfitted, because I set <code>num_leaves=8000</code> got me a score of 0.684. I blended with another blended kernel of 0.688, and my final score was 0.692.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>I think this got me off at the wrong start because I was working and tweaking with those overfitted hyperparameters, when they were wrong in the first place.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Anyway, on to the next competition!  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+
+<div class="highlight"><pre><span></span><span class="c1"># This Python 3 environment comes with many helpful analytics libraries installed</span>
+<span class="c1"># It is defined by the kaggle/python docker image: https://github.com/kaggle/docker-python</span>
+<span class="c1"># For example, here&#39;s several helpful packages to load in </span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">gc</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="kn">as</span> <span class="nn">mpl</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="kn">import</span> <span class="nn">lightgbm</span> <span class="kn">as</span> <span class="nn">lgb</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_auc_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">StratifiedKFold</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">preprocessing</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">preprocessing</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="kn">import</span> <span class="nn">category_encoders</span> <span class="kn">as</span> <span class="nn">ce</span>
+
+<span class="n">le</span> <span class="o">=</span> <span class="n">preprocessing</span><span class="o">.</span><span class="n">LabelEncoder</span><span class="p">()</span>
+
+
+<span class="c1"># Any results you write to the current directory are saved as output.</span>
+
+<span class="n">dtypes</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="c1">#&#39;MachineIdentifier&#39;:                                    &#39;category&#39;,</span>
+        <span class="s1">&#39;ProductName&#39;</span><span class="p">:</span>                                          <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;EngineVersion&#39;</span><span class="p">:</span>                                        <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;AppVersion&#39;</span><span class="p">:</span>                                           <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;AvSigVersion&#39;</span><span class="p">:</span>                                         <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;IsBeta&#39;</span><span class="p">:</span>                                               <span class="s1">&#39;int8&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;RtpStateBitfield&#39;</span><span class="p">:</span>                                     <span class="s1">&#39;float16&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;IsSxsPassiveMode&#39;</span><span class="p">:</span>                                     <span class="s1">&#39;int8&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;DefaultBrowsersIdentifier&#39;</span><span class="p">:</span>                            <span class="s1">&#39;float16&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;AVProductStatesIdentifier&#39;</span><span class="p">:</span>                            <span class="s1">&#39;float32&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;AVProductsInstalled&#39;</span><span class="p">:</span>                                  <span class="s1">&#39;float16&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;AVProductsEnabled&#39;</span><span class="p">:</span>                                    <span class="s1">&#39;float16&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;HasTpm&#39;</span><span class="p">:</span>                                               <span class="s1">&#39;int8&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;CountryIdentifier&#39;</span><span class="p">:</span>                                    <span class="s1">&#39;int32&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;CityIdentifier&#39;</span><span class="p">:</span>                                       <span class="s1">&#39;float32&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;OrganizationIdentifier&#39;</span><span class="p">:</span>                               <span class="s1">&#39;float16&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;GeoNameIdentifier&#39;</span><span class="p">:</span>                                    <span class="s1">&#39;float32&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;LocaleEnglishNameIdentifier&#39;</span><span class="p">:</span>                          <span class="s1">&#39;int32&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Platform&#39;</span><span class="p">:</span>                                             <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Processor&#39;</span><span class="p">:</span>                                            <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;OsVer&#39;</span><span class="p">:</span>                                                <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;OsBuild&#39;</span><span class="p">:</span>                                              <span class="s1">&#39;int16&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;OsSuite&#39;</span><span class="p">:</span>                                              <span class="s1">&#39;int16&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;OsPlatformSubRelease&#39;</span><span class="p">:</span>                                 <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;OsBuildLab&#39;</span><span class="p">:</span>                                           <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;SkuEdition&#39;</span><span class="p">:</span>                                           <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;IsProtected&#39;</span><span class="p">:</span>                                          <span class="s1">&#39;float16&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;AutoSampleOptIn&#39;</span><span class="p">:</span>                                      <span class="s1">&#39;int8&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;PuaMode&#39;</span><span class="p">:</span>                                              <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;SMode&#39;</span><span class="p">:</span>                                                <span class="s1">&#39;float16&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;IeVerIdentifier&#39;</span><span class="p">:</span>                                      <span class="s1">&#39;float32&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;SmartScreen&#39;</span><span class="p">:</span>                                          <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Firewall&#39;</span><span class="p">:</span>                                             <span class="s1">&#39;float16&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;UacLuaenable&#39;</span><span class="p">:</span>                                         <span class="s1">&#39;float64&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_MDC2FormFactor&#39;</span><span class="p">:</span>                                <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_DeviceFamily&#39;</span><span class="p">:</span>                                  <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_OEMNameIdentifier&#39;</span><span class="p">:</span>                             <span class="s1">&#39;float32&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_OEMModelIdentifier&#39;</span><span class="p">:</span>                            <span class="s1">&#39;float32&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_ProcessorCoreCount&#39;</span><span class="p">:</span>                            <span class="s1">&#39;float16&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_ProcessorManufacturerIdentifier&#39;</span><span class="p">:</span>               <span class="s1">&#39;float16&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_ProcessorModelIdentifier&#39;</span><span class="p">:</span>                      <span class="s1">&#39;float32&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_ProcessorClass&#39;</span><span class="p">:</span>                                <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_PrimaryDiskTotalCapacity&#39;</span><span class="p">:</span>                      <span class="s1">&#39;float32&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_PrimaryDiskTypeName&#39;</span><span class="p">:</span>                           <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_SystemVolumeTotalCapacity&#39;</span><span class="p">:</span>                     <span class="s1">&#39;float32&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_HasOpticalDiskDrive&#39;</span><span class="p">:</span>                           <span class="s1">&#39;int8&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_TotalPhysicalRAM&#39;</span><span class="p">:</span>                              <span class="s1">&#39;float32&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_ChassisTypeName&#39;</span><span class="p">:</span>                               <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_InternalPrimaryDiagonalDisplaySizeInInches&#39;</span><span class="p">:</span>    <span class="s1">&#39;float32&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_InternalPrimaryDisplayResolutionHorizontal&#39;</span><span class="p">:</span>    <span class="s1">&#39;float32&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_InternalPrimaryDisplayResolutionVertical&#39;</span><span class="p">:</span>      <span class="s1">&#39;float32&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_PowerPlatformRoleName&#39;</span><span class="p">:</span>                         <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_InternalBatteryType&#39;</span><span class="p">:</span>                           <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_InternalBatteryNumberOfCharges&#39;</span><span class="p">:</span>                <span class="s1">&#39;float32&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_OSVersion&#39;</span><span class="p">:</span>                                     <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_OSArchitecture&#39;</span><span class="p">:</span>                                <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_OSBranch&#39;</span><span class="p">:</span>                                      <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_OSBuildNumber&#39;</span><span class="p">:</span>                                 <span class="s1">&#39;int32&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_OSBuildRevision&#39;</span><span class="p">:</span>                               <span class="s1">&#39;int32&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_OSEdition&#39;</span><span class="p">:</span>                                     <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_OSSkuName&#39;</span><span class="p">:</span>                                     <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_OSInstallTypeName&#39;</span><span class="p">:</span>                             <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_OSInstallLanguageIdentifier&#39;</span><span class="p">:</span>                   <span class="s1">&#39;float16&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_OSUILocaleIdentifier&#39;</span><span class="p">:</span>                          <span class="s1">&#39;int32&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_OSWUAutoUpdateOptionsName&#39;</span><span class="p">:</span>                     <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_IsPortableOperatingSystem&#39;</span><span class="p">:</span>                     <span class="s1">&#39;int8&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_GenuineStateName&#39;</span><span class="p">:</span>                              <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_ActivationChannel&#39;</span><span class="p">:</span>                             <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_IsFlightingInternal&#39;</span><span class="p">:</span>                           <span class="s1">&#39;float16&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_IsFlightsDisabled&#39;</span><span class="p">:</span>                             <span class="s1">&#39;float16&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_FlightRing&#39;</span><span class="p">:</span>                                    <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_ThresholdOptIn&#39;</span><span class="p">:</span>                                <span class="s1">&#39;float16&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_FirmwareManufacturerIdentifier&#39;</span><span class="p">:</span>                <span class="s1">&#39;float32&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_FirmwareVersionIdentifier&#39;</span><span class="p">:</span>                     <span class="s1">&#39;float32&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_IsSecureBootEnabled&#39;</span><span class="p">:</span>                           <span class="s1">&#39;int8&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_IsWIMBootEnabled&#39;</span><span class="p">:</span>                              <span class="s1">&#39;float16&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_IsVirtualDevice&#39;</span><span class="p">:</span>                               <span class="s1">&#39;float16&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_IsTouchEnabled&#39;</span><span class="p">:</span>                                <span class="s1">&#39;int8&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_IsPenCapable&#39;</span><span class="p">:</span>                                  <span class="s1">&#39;int8&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Census_IsAlwaysOnAlwaysConnectedCapable&#39;</span><span class="p">:</span>              <span class="s1">&#39;float16&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Wdft_IsGamer&#39;</span><span class="p">:</span>                                         <span class="s1">&#39;float16&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Wdft_RegionIdentifier&#39;</span><span class="p">:</span>                                <span class="s1">&#39;float32&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;HasDetections&#39;</span><span class="p">:</span>                                        <span class="s1">&#39;int8&#39;</span>
+    <span class="p">}</span>
+
+
+<span class="c1"># read data</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Reading Data&quot;</span><span class="p">)</span>
+<span class="n">df_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;sorted.csv&#39;</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">5000000</span><span class="p">,</span> <span class="kp">dtype</span><span class="o">=</span><span class="n">dtypes</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;MachineIdentifier&#39;</span><span class="p">)</span>
+<span class="n">df_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;test.csv&#39;</span><span class="p">,</span> <span class="kp">dtype</span><span class="o">=</span><span class="n">dtypes</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;MachineIdentifier&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<!-- /wp:code -->
+
+<!-- wp:code -->
+
+<div class="highlight"><pre><span></span><span class="n">Reading</span> <span class="k">Data</span>
+</pre></div>
+
+
+<!-- /wp:code -->
+
+<!-- wp:code -->
+
+<div class="highlight"><pre><span></span><span class="nv">len</span><span class="ss">(</span><span class="nv">df_train</span><span class="ss">)</span>
+
+<span class="nv">features</span> <span class="o">=</span> [<span class="nv">f</span> <span class="k">for</span> <span class="nv">f</span> <span class="nv">in</span> <span class="nv">df_train</span>.<span class="nv">columns</span> <span class="k">if</span> <span class="nv">f</span> <span class="o">!=</span> <span class="s1">&#39;</span><span class="s">HasDetections</span><span class="s1">&#39;</span>]
+
+#<span class="nv">assign</span> <span class="nv">target</span> <span class="nv">variable</span> <span class="nv">to</span> <span class="nv">y_train</span>
+<span class="nv">y</span> <span class="o">=</span> <span class="nv">df_train</span>[<span class="s1">&#39;</span><span class="s">HasDetections</span><span class="s1">&#39;</span>]
+<span class="nv">Train</span> <span class="o">=</span> <span class="nv">df_train</span>[<span class="nv">features</span>]
+<span class="nv">Test</span> <span class="o">=</span> <span class="nv">df_test</span>[<span class="nv">features</span>]
+</pre></div>
+
+
+<!-- /wp:code -->
+
+<!-- wp:heading -->
+
+<h2>Feature Engineering</h2>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:code --></p>
+<div class="highlight"><pre><span></span><span class="nv">def</span> <span class="nv">add_noise</span><span class="ss">(</span><span class="nv">series</span>, <span class="nv">noise_level</span><span class="ss">)</span>:
+    <span class="k">return</span> <span class="nv">series</span> <span class="o">*</span> <span class="ss">(</span><span class="mi">1</span> <span class="o">+</span> <span class="nv">noise_level</span> <span class="o">*</span> <span class="nv">np</span>.<span class="k">random</span>.<span class="nv">randn</span><span class="ss">(</span><span class="nv">len</span><span class="ss">(</span><span class="nv">series</span><span class="ss">)))</span>
+
+<span class="nv">def</span> <span class="nv">target_encode</span><span class="ss">(</span><span class="nv">trn_series</span><span class="o">=</span><span class="nv">None</span>, 
+                  <span class="nv">tst_series</span><span class="o">=</span><span class="nv">None</span>, 
+                  <span class="nv">target</span><span class="o">=</span><span class="nv">None</span>, 
+                  <span class="nv">min_samples_leaf</span><span class="o">=</span><span class="mi">1</span>, 
+                  <span class="nv">smoothing</span><span class="o">=</span><span class="mi">1</span>,
+                  <span class="nv">noise_level</span><span class="o">=</span><span class="mi">0</span><span class="ss">)</span>:
+    <span class="s2">&quot;&quot;&quot;</span>
+    <span class="nv">Smoothing</span> <span class="nv">is</span> <span class="nv">computed</span> <span class="nv">like</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">following</span> <span class="nv">paper</span> <span class="nv">by</span> <span class="nv">Daniele</span> <span class="nv">Micci</span><span class="o">-</span><span class="nv">Barreca</span>
+    <span class="nv">https</span>:<span class="o">//</span><span class="nv">kaggle2</span>.<span class="nv">blob</span>.<span class="nv">core</span>.<span class="nv">windows</span>.<span class="nv">net</span><span class="o">/</span><span class="nv">forum</span><span class="o">-</span><span class="nv">message</span><span class="o">-</span><span class="nv">attachments</span><span class="o">/</span><span class="mi">225952</span><span class="o">/</span><span class="mi">7441</span><span class="o">/</span><span class="nv">high</span><span class="o">%</span><span class="mi">20</span><span class="nv">cardinality</span><span class="o">%</span><span class="mi">20</span><span class="nv">categoricals</span>.<span class="nv">pdf</span>
+    <span class="nv">trn_series</span> : <span class="nv">training</span> <span class="nv">categorical</span> <span class="nv">feature</span> <span class="nv">as</span> <span class="nv">a</span> <span class="nv">pd</span>.<span class="nv">Series</span>
+    <span class="nv">tst_series</span> : <span class="nv">test</span> <span class="nv">categorical</span> <span class="nv">feature</span> <span class="nv">as</span> <span class="nv">a</span> <span class="nv">pd</span>.<span class="nv">Series</span>
+    <span class="nv">target</span> : <span class="nv">target</span> <span class="nv">data</span> <span class="nv">as</span> <span class="nv">a</span> <span class="nv">pd</span>.<span class="nv">Series</span>
+    <span class="nv">min_samples_leaf</span> <span class="ss">(</span><span class="nv">int</span><span class="ss">)</span> : <span class="nv">minimum</span> <span class="nv">samples</span> <span class="nv">to</span> <span class="nv">take</span> <span class="nv">category</span> <span class="nv">average</span> <span class="nv">into</span> <span class="nv">account</span>
+    <span class="nv">smoothing</span> <span class="ss">(</span><span class="nv">int</span><span class="ss">)</span> : <span class="nv">smoothing</span> <span class="nv">effect</span> <span class="nv">to</span> <span class="nv">balance</span> <span class="nv">categorical</span> <span class="nv">average</span> <span class="nv">vs</span> <span class="nv">prior</span>  
+    <span class="s2">&quot;&quot;&quot;</span><span class="s"> </span>
+    <span class="nv">assert</span> <span class="nv">len</span><span class="ss">(</span><span class="nv">trn_series</span><span class="ss">)</span> <span class="o">==</span> <span class="nv">len</span><span class="ss">(</span><span class="nv">target</span><span class="ss">)</span>
+    <span class="nv">assert</span> <span class="nv">trn_series</span>.<span class="nv">name</span> <span class="o">==</span> <span class="nv">tst_series</span>.<span class="nv">name</span>
+    <span class="nv">temp</span> <span class="o">=</span> <span class="nv">pd</span>.<span class="nv">concat</span><span class="ss">(</span>[<span class="nv">trn_series</span>, <span class="nv">target</span>], <span class="nv">axis</span><span class="o">=</span><span class="mi">1</span><span class="ss">)</span>
+    # <span class="nv">Compute</span> <span class="nv">target</span> <span class="nv">mean</span> 
+    <span class="nv">averages</span> <span class="o">=</span> <span class="nv">temp</span>.<span class="nv">groupby</span><span class="ss">(</span><span class="nv">by</span><span class="o">=</span><span class="nv">trn_series</span>.<span class="nv">name</span><span class="ss">)</span>[<span class="nv">target</span>.<span class="nv">name</span>].<span class="nv">agg</span><span class="ss">(</span>[<span class="s2">&quot;</span><span class="s">mean</span><span class="s2">&quot;</span>, <span class="s2">&quot;</span><span class="s">count</span><span class="s2">&quot;</span>]<span class="ss">)</span>
+    # <span class="nv">Compute</span> <span class="nv">smoothing</span>
+    <span class="nv">smoothing</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="ss">(</span><span class="mi">1</span> <span class="o">+</span> <span class="nv">np</span>.<span class="nv">exp</span><span class="ss">(</span><span class="o">-</span><span class="ss">(</span><span class="nv">averages</span>[<span class="s2">&quot;</span><span class="s">count</span><span class="s2">&quot;</span>] <span class="o">-</span> <span class="nv">min_samples_leaf</span><span class="ss">)</span> <span class="o">/</span> <span class="nv">smoothing</span><span class="ss">))</span>
+    # <span class="nv">Apply</span> <span class="nv">average</span> <span class="nv">function</span> <span class="nv">to</span> <span class="nv">all</span> <span class="nv">target</span> <span class="nv">data</span>
+    <span class="nv">prior</span> <span class="o">=</span> <span class="nv">target</span>.<span class="nv">mean</span><span class="ss">()</span>
+    # <span class="nv">The</span> <span class="nv">bigger</span> <span class="nv">the</span> <span class="nv">count</span> <span class="nv">the</span> <span class="nv">less</span> <span class="nv">full_avg</span> <span class="nv">is</span> <span class="nv">taken</span> <span class="nv">into</span> <span class="nv">account</span>
+    <span class="nv">averages</span>[<span class="nv">target</span>.<span class="nv">name</span>] <span class="o">=</span> <span class="nv">prior</span> <span class="o">*</span> <span class="ss">(</span><span class="mi">1</span> <span class="o">-</span> <span class="nv">smoothing</span><span class="ss">)</span> <span class="o">+</span> <span class="nv">averages</span>[<span class="s2">&quot;</span><span class="s">mean</span><span class="s2">&quot;</span>] <span class="o">*</span> <span class="nv">smoothing</span>
+    <span class="nv">averages</span>.<span class="nv">drop</span><span class="ss">(</span>[<span class="s2">&quot;</span><span class="s">mean</span><span class="s2">&quot;</span>, <span class="s2">&quot;</span><span class="s">count</span><span class="s2">&quot;</span>], <span class="nv">axis</span><span class="o">=</span><span class="mi">1</span>, <span class="nv">inplace</span><span class="o">=</span><span class="nv">True</span><span class="ss">)</span>
+    # <span class="nv">Apply</span> <span class="nv">averages</span> <span class="nv">to</span> <span class="nv">trn</span> <span class="nv">and</span> <span class="nv">tst</span> <span class="nv">series</span>
+    <span class="nv">ft_trn_series</span> <span class="o">=</span> <span class="nv">pd</span>.<span class="nv">merge</span><span class="ss">(</span>
+        <span class="nv">trn_series</span>.<span class="nv">to_frame</span><span class="ss">(</span><span class="nv">trn_series</span>.<span class="nv">name</span><span class="ss">)</span>,
+        <span class="nv">averages</span>.<span class="nv">reset_index</span><span class="ss">()</span>.<span class="nv">rename</span><span class="ss">(</span><span class="nv">columns</span><span class="o">=</span>{<span class="s1">&#39;</span><span class="s">index</span><span class="s1">&#39;</span>: <span class="nv">target</span>.<span class="nv">name</span>, <span class="nv">target</span>.<span class="nv">name</span>: <span class="s1">&#39;</span><span class="s">average</span><span class="s1">&#39;</span>}<span class="ss">)</span>,
+        <span class="nv">on</span><span class="o">=</span><span class="nv">trn_series</span>.<span class="nv">name</span>,
+        <span class="nv">how</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">left</span><span class="s1">&#39;</span><span class="ss">)</span>[<span class="s1">&#39;</span><span class="s">average</span><span class="s1">&#39;</span>].<span class="nv">rename</span><span class="ss">(</span><span class="nv">trn_series</span>.<span class="nv">name</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="s">_mean</span><span class="s1">&#39;</span><span class="ss">)</span>.<span class="nv">fillna</span><span class="ss">(</span><span class="nv">prior</span><span class="ss">)</span>
+    # <span class="nv">pd</span>.<span class="nv">merge</span> <span class="nv">does</span> <span class="nv">not</span> <span class="nv">keep</span> <span class="nv">the</span> <span class="nv">index</span> <span class="nv">so</span> <span class="nv">restore</span> <span class="nv">it</span>
+    <span class="nv">ft_trn_series</span>.<span class="nv">index</span> <span class="o">=</span> <span class="nv">trn_series</span>.<span class="nv">index</span> 
+    <span class="nv">ft_tst_series</span> <span class="o">=</span> <span class="nv">pd</span>.<span class="nv">merge</span><span class="ss">(</span>
+        <span class="nv">tst_series</span>.<span class="nv">to_frame</span><span class="ss">(</span><span class="nv">tst_series</span>.<span class="nv">name</span><span class="ss">)</span>,
+        <span class="nv">averages</span>.<span class="nv">reset_index</span><span class="ss">()</span>.<span class="nv">rename</span><span class="ss">(</span><span class="nv">columns</span><span class="o">=</span>{<span class="s1">&#39;</span><span class="s">index</span><span class="s1">&#39;</span>: <span class="nv">target</span>.<span class="nv">name</span>, <span class="nv">target</span>.<span class="nv">name</span>: <span class="s1">&#39;</span><span class="s">average</span><span class="s1">&#39;</span>}<span class="ss">)</span>,
+        <span class="nv">on</span><span class="o">=</span><span class="nv">tst_series</span>.<span class="nv">name</span>,
+        <span class="nv">how</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">left</span><span class="s1">&#39;</span><span class="ss">)</span>[<span class="s1">&#39;</span><span class="s">average</span><span class="s1">&#39;</span>].<span class="nv">rename</span><span class="ss">(</span><span class="nv">trn_series</span>.<span class="nv">name</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="s">_mean</span><span class="s1">&#39;</span><span class="ss">)</span>.<span class="nv">fillna</span><span class="ss">(</span><span class="nv">prior</span><span class="ss">)</span>
+    # <span class="nv">pd</span>.<span class="nv">merge</span> <span class="nv">does</span> <span class="nv">not</span> <span class="nv">keep</span> <span class="nv">the</span> <span class="nv">index</span> <span class="nv">so</span> <span class="nv">restore</span> <span class="nv">it</span>
+    <span class="nv">ft_tst_series</span>.<span class="nv">index</span> <span class="o">=</span> <span class="nv">tst_series</span>.<span class="nv">index</span>
+    <span class="k">return</span> <span class="nv">add_noise</span><span class="ss">(</span><span class="nv">ft_trn_series</span>, <span class="nv">noise_level</span><span class="ss">)</span>, <span class="nv">add_noise</span><span class="ss">(</span><span class="nv">ft_tst_series</span>, <span class="nv">noise_level</span><span class="ss">)</span>
+</pre></div>
+
+
+<!-- /wp:code -->
+
+<!-- wp:code -->
+
+<div class="highlight"><pre><span></span># <span class="nv">combine</span> <span class="nv">dtrain</span> <span class="nv">and</span> <span class="nv">dtest</span> <span class="k">for</span> <span class="nv">preprocessing</span>
+<span class="nv">alldata</span> <span class="o">=</span> <span class="nv">pd</span>.<span class="nv">concat</span><span class="ss">(</span>[<span class="nv">Train</span>,<span class="nv">Test</span>], <span class="nv">axis</span><span class="o">=</span><span class="mi">0</span><span class="ss">)</span>
+
+<span class="nv">trainlen</span> <span class="o">=</span> <span class="nv">len</span><span class="ss">(</span><span class="nv">Train</span><span class="ss">)</span>
+
+# <span class="nv">convert</span> <span class="nv">character</span> <span class="nv">columns</span> <span class="nv">to</span> <span class="nv">integer</span>
+<span class="nv">print</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">Label Encoding</span><span class="s2">&quot;</span><span class="ss">)</span>
+<span class="nv">numeric</span> <span class="o">=</span> <span class="nv">Train</span>.<span class="nv">select_dtypes</span><span class="ss">(</span><span class="k">include</span><span class="o">=</span><span class="nv">np</span>.<span class="nv">number</span><span class="ss">)</span>.<span class="nv">columns</span>.<span class="nv">tolist</span><span class="ss">()</span>
+<span class="nv">categorical</span> <span class="o">=</span> [<span class="nv">f</span> <span class="k">for</span> <span class="nv">f</span> <span class="nv">in</span> <span class="nv">Train</span>.<span class="nv">columns</span>.<span class="nv">tolist</span><span class="ss">()</span> <span class="k">if</span> <span class="nv">f</span> <span class="nv">not</span> <span class="nv">in</span> <span class="nv">numeric</span>]
+<span class="nv">categorical</span>
+<span class="k">for</span> <span class="nv">cat</span> <span class="nv">in</span> <span class="nv">categorical</span>:
+    <span class="nv">alldata</span>[<span class="nv">cat</span>] <span class="o">=</span> <span class="nv">le</span>.<span class="nv">fit_transform</span><span class="ss">(</span><span class="nv">alldata</span>[<span class="nv">cat</span>].<span class="nv">fillna</span><span class="ss">(</span><span class="nv">alldata</span>[<span class="nv">cat</span>].<span class="nv">mode</span><span class="ss">()</span>.<span class="nv">iloc</span>[<span class="mi">0</span>]<span class="ss">))</span>
+
+# <span class="nv">split</span> <span class="nv">back</span> <span class="nv">into</span> <span class="nv">dtrain</span> <span class="nv">and</span> <span class="nv">dtest</span>
+<span class="nv">Train</span> <span class="o">=</span> <span class="nv">alldata</span>[:<span class="nv">trainlen</span>]
+<span class="nv">Test</span> <span class="o">=</span> <span class="nv">alldata</span>[<span class="nv">trainlen</span>:]
+</pre></div>
+
+
+<!-- /wp:code -->
+
+<!-- wp:heading -->
+
+<h2>Training</h2>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:code --></p>
+<div class="highlight"><pre><span></span><span class="nb">params</span> <span class="o">=</span> {
+    <span class="s1">&#39;</span><span class="s">boosting_type</span><span class="s1">&#39;</span> : <span class="s1">&#39;</span><span class="s">gbdt</span><span class="s1">&#39;</span>, 
+    <span class="s1">&#39;</span><span class="s">objective</span><span class="s1">&#39;</span> : <span class="s1">&#39;</span><span class="s">binary</span><span class="s1">&#39;</span>,
+    <span class="s1">&#39;</span><span class="s">metric</span><span class="s1">&#39;</span> : <span class="s1">&#39;</span><span class="s">binary_logloss</span><span class="s1">&#39;</span>, 
+    <span class="s1">&#39;</span><span class="s">nthread</span><span class="s1">&#39;</span> : <span class="mi">16</span>, 
+    <span class="s1">&#39;</span><span class="s">learning_rate</span><span class="s1">&#39;</span> : <span class="mi">0</span>.<span class="mi">02</span>,
+    <span class="s1">&#39;</span><span class="s">max_depth</span><span class="s1">&#39;</span> : <span class="mi">12</span>,
+    <span class="s1">&#39;</span><span class="s">num_leaves</span><span class="s1">&#39;</span> : <span class="mi">100</span>,
+    <span class="s1">&#39;</span><span class="s">sub_feature</span><span class="s1">&#39;</span> : <span class="mi">0</span>.<span class="mi">7</span>, 
+    <span class="s1">&#39;</span><span class="s">sub_row</span><span class="s1">&#39;</span> : <span class="mi">0</span>.<span class="mi">7</span>, 
+    <span class="s1">&#39;</span><span class="s">bagging_freq</span><span class="s1">&#39;</span> : <span class="mi">1</span>,
+    <span class="s1">&#39;</span><span class="s">bagging_fraction</span><span class="s1">&#39;</span> : <span class="mi">0</span>.<span class="mi">8</span>,
+    <span class="s1">&#39;</span><span class="s">lambda_l1</span><span class="s1">&#39;</span>: <span class="mi">0</span>.<span class="mi">1</span>, 
+    <span class="s1">&#39;</span><span class="s">lambda_l2</span><span class="s1">&#39;</span> : <span class="mi">0</span>.<span class="mi">2</span>
+}
+
+<span class="nv">def</span> <span class="nv">modeling_cross_validation</span><span class="ss">(</span><span class="nb">params</span>, <span class="nv">X</span>, <span class="nv">y</span>, <span class="nv">folds</span><span class="ss">)</span>:
+    <span class="nv">clfs</span> <span class="o">=</span> []
+    <span class="nv">allPreds</span> <span class="o">=</span> <span class="nv">np</span>.<span class="nv">zeros</span><span class="ss">(</span><span class="nv">X</span>.<span class="nv">shape</span>[<span class="mi">0</span>]<span class="ss">)</span>
+
+    <span class="nv">evals_result</span> <span class="o">=</span> {}
+
+    <span class="nv">X_len</span> <span class="o">=</span> <span class="nv">int</span><span class="ss">(</span><span class="nv">len</span><span class="ss">(</span><span class="nv">X</span><span class="ss">)</span><span class="o">/</span><span class="mi">3</span><span class="ss">)</span>
+
+    <span class="nv">X_train</span> <span class="o">=</span> <span class="nv">X</span>[<span class="nv">X_len</span>:]
+    <span class="nv">X_valid</span> <span class="o">=</span> <span class="nv">X</span>[:<span class="nv">X_len</span>]
+    <span class="nv">y_train</span> <span class="o">=</span> <span class="nv">y</span>[<span class="nv">X_len</span>:]
+    <span class="nv">y_valid</span> <span class="o">=</span> <span class="nv">y</span>[:<span class="nv">X_len</span>] 
+
+    <span class="nv">lgb_train</span> <span class="o">=</span> <span class="nv">lgb</span>.<span class="nv">Dataset</span><span class="ss">(</span><span class="nv">X_train</span>, <span class="nv">y_train</span><span class="ss">)</span>
+    <span class="nv">lgb_valid</span> <span class="o">=</span> <span class="nv">lgb</span>.<span class="nv">Dataset</span><span class="ss">(</span><span class="nv">X_valid</span>, <span class="nv">y_valid</span>, <span class="nv">reference</span><span class="o">=</span><span class="nv">lgb_train</span><span class="ss">)</span>
+
+    <span class="nv">model</span> <span class="o">=</span> <span class="nv">lgb</span>.<span class="nv">train</span><span class="ss">(</span><span class="nb">params</span>,
+                <span class="nv">lgb_train</span>,
+                <span class="nv">num_boost_round</span><span class="o">=</span><span class="mi">200</span>,
+                <span class="nv">valid_sets</span><span class="o">=</span>[<span class="nv">lgb_train</span>, <span class="nv">lgb_valid</span>],
+                <span class="nv">evals_result</span><span class="o">=</span><span class="nv">evals_result</span>,
+                <span class="nv">verbose_eval</span><span class="o">=</span><span class="mi">100</span>,
+                <span class="nv">early_stopping_rounds</span><span class="o">=</span><span class="mi">50</span><span class="ss">)</span>
+
+    <span class="nv">print</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">Plot metrics during training...</span><span class="s1">&#39;</span><span class="ss">)</span>
+    <span class="nv">ax</span> <span class="o">=</span> <span class="nv">lgb</span>.<span class="nv">plot_metric</span><span class="ss">(</span><span class="nv">evals_result</span>, <span class="nv">metric</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">binary_logloss</span><span class="s1">&#39;</span><span class="ss">)</span>
+    <span class="nv">plt</span>.<span class="k">show</span><span class="ss">()</span>
+
+    <span class="nv">print</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">Plot feature importances...</span><span class="s1">&#39;</span><span class="ss">)</span>
+    <span class="nv">ax</span> <span class="o">=</span> <span class="nv">lgb</span>.<span class="nv">plot_importance</span><span class="ss">(</span><span class="nv">model</span>, <span class="nv">max_num_features</span><span class="o">=</span><span class="mi">10</span><span class="ss">)</span>
+    <span class="nv">plt</span>.<span class="k">show</span><span class="ss">()</span>
+
+    <span class="s1">&#39;&#39;&#39;</span>
+
+    <span class="nv">allPreds</span> <span class="o">=</span> <span class="nv">model</span>.<span class="nv">predict</span><span class="ss">(</span><span class="nv">X_test</span><span class="ss">)</span>
+
+    <span class="nv">score</span> <span class="o">=</span> <span class="nv">roc_auc_score</span><span class="ss">(</span><span class="nv">y_test</span>, <span class="nv">allPreds</span><span class="ss">)</span>
+    <span class="nv">print</span><span class="ss">(</span><span class="nv">score</span><span class="ss">)</span>
+    <span class="s1">&#39;&#39;&#39;</span>
+
+    <span class="nv">clfs</span>.<span class="nv">append</span><span class="ss">(</span><span class="nv">model</span><span class="ss">)</span>
+    <span class="k">return</span> <span class="nv">clfs</span>
+
+
+<span class="nv">def</span> <span class="nv">predict_cross_validation</span><span class="ss">(</span><span class="nv">test</span>, <span class="nv">clfs</span><span class="ss">)</span>:
+
+    <span class="nv">sub_preds</span> <span class="o">=</span> <span class="nv">np</span>.<span class="nv">zeros</span><span class="ss">(</span><span class="nv">test</span>.<span class="nv">shape</span>[<span class="mi">0</span>]<span class="ss">)</span>
+
+    <span class="k">for</span> <span class="nv">i</span>, <span class="nv">model</span> <span class="nv">in</span> <span class="nv">enumerate</span><span class="ss">(</span><span class="nv">clfs</span>, <span class="mi">1</span><span class="ss">)</span>:    
+        <span class="nv">test_preds</span> <span class="o">=</span> <span class="nv">model</span>.<span class="nv">predict_proba</span><span class="ss">(</span><span class="nv">test</span><span class="ss">)</span>
+        <span class="nv">sub_preds</span> <span class="o">+=</span> <span class="nv">test_preds</span>[:,<span class="mi">1</span>]
+
+    # <span class="nv">Averaging</span> <span class="nv">across</span> <span class="nv">all</span> <span class="nv">models</span>
+    <span class="nv">sub_preds</span> <span class="o">=</span> <span class="nv">sub_preds</span> <span class="o">/</span> <span class="nv">len</span><span class="ss">(</span><span class="nv">clfs</span><span class="ss">)</span>
+
+    # <span class="nv">Creating</span> <span class="nv">a</span> <span class="nv">series</span> <span class="nv">from</span> <span class="nv">the</span> <span class="nv">predictions</span>
+    <span class="nv">ret</span> <span class="o">=</span> <span class="nv">pd</span>.<span class="nv">Series</span><span class="ss">(</span><span class="nv">sub_preds</span>, <span class="nv">index</span><span class="o">=</span><span class="nv">test</span>.<span class="nv">index</span><span class="ss">)</span>
+    <span class="nv">ret</span>.<span class="nv">index</span>.<span class="nv">name</span> <span class="o">=</span> <span class="nv">test</span>.<span class="nv">index</span>.<span class="nv">name</span> 
+
+    <span class="k">return</span> <span class="nv">ret</span>
+
+<span class="nv">def</span> <span class="nv">predict_test_chunk</span><span class="ss">(</span><span class="nv">clfs</span>, <span class="nv">Test</span>, <span class="nv">filename</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">tmp.csv</span><span class="s1">&#39;</span>, <span class="nv">chunks</span><span class="o">=</span><span class="mi">100000</span><span class="ss">)</span>:
+
+    <span class="nv">preds_sub</span> <span class="o">=</span> <span class="nv">pd</span>.<span class="nv">DataFrame</span><span class="ss">()</span>
+
+    <span class="nv">num</span> <span class="o">=</span> <span class="nv">int</span><span class="ss">(</span><span class="mi">7853253</span><span class="o">/</span><span class="mi">100000</span><span class="ss">)</span>
+
+    <span class="nv">groups</span> <span class="o">=</span> <span class="nv">Test</span>.<span class="nv">groupby</span><span class="ss">(</span><span class="nv">np</span>.<span class="nv">arange</span><span class="ss">(</span><span class="nv">len</span><span class="ss">(</span><span class="nv">Test</span><span class="ss">))</span><span class="o">//</span><span class="nv">chunks</span><span class="ss">)</span>
+
+    <span class="nv">count</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="nv">idx</span>, <span class="nv">df</span> <span class="nv">in</span> <span class="nv">groups</span>:
+
+        <span class="k">if</span> <span class="nv">count</span> <span class="o">==</span> <span class="mi">10</span>:
+            <span class="nv">print</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">Running on idx {} of {}</span><span class="s2">&quot;</span>.<span class="nv">format</span><span class="ss">(</span><span class="nv">idx</span>, <span class="nv">num</span><span class="ss">))</span>
+            <span class="nv">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="nv">count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="nv">preds_df</span> <span class="o">=</span> <span class="nv">predict_cross_validation</span><span class="ss">(</span><span class="nv">df</span>, <span class="nv">clfs</span><span class="ss">)</span>
+        <span class="nv">preds_df</span> <span class="o">=</span> <span class="nv">preds_df</span>.<span class="nv">to_frame</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">HasDetections</span><span class="s1">&#39;</span><span class="ss">)</span>
+
+        <span class="nv">preds_sub</span> <span class="o">=</span> <span class="nv">pd</span>.<span class="nv">concat</span><span class="ss">(</span>[<span class="nv">preds_sub</span>, <span class="nv">preds_df</span>], <span class="nv">axis</span><span class="o">=</span><span class="mi">0</span><span class="ss">)</span>
+
+        <span class="nv">del</span> <span class="nv">preds_df</span>
+        <span class="nv">gc</span>.<span class="nv">collect</span><span class="ss">()</span>
+
+    <span class="k">return</span> <span class="nv">preds_sub</span>
+</pre></div>
+
+
+<!-- /wp:code -->
+
+<!-- wp:code -->
+
+<div class="highlight"><pre><span></span><span class="n">print</span><span class="p">(</span><span class="ss">&quot;Start Training&quot;</span><span class="p">)</span>
+<span class="n">clfs</span> <span class="o">=</span> <span class="n">modeling_cross_validation</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">Train</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+
+
+<!-- /wp:code -->
+
+<!-- wp:code -->
+
+<div class="highlight"><pre><span></span><span class="nv">Start</span> <span class="nv">Training</span>
+<span class="nv">Training</span> <span class="k">until</span> <span class="nv">validation</span> <span class="nv">scores</span> <span class="nv">don</span><span class="s1">&#39;</span><span class="s">t improve for 50 rounds.</span>
+[<span class="mi">100</span>]    <span class="nv">training</span><span class="s1">&#39;</span><span class="s">s binary_logloss: 0.626603 valid_1</span><span class="s1">&#39;</span><span class="nv">s</span> <span class="nv">binary_logloss</span>: <span class="mi">0</span>.<span class="mi">632894</span>
+[<span class="mi">200</span>]    <span class="nv">training</span><span class="s1">&#39;</span><span class="s">s binary_logloss: 0.614641 valid_1</span><span class="s1">&#39;</span><span class="nv">s</span> <span class="nv">binary_logloss</span>: <span class="mi">0</span>.<span class="mi">624013</span>
+<span class="nv">Did</span> <span class="nv">not</span> <span class="nv">meet</span> <span class="nv">early</span> <span class="nv">stopping</span>. <span class="nv">Best</span> <span class="nv">iteration</span> <span class="nv">is</span>:
+[<span class="mi">200</span>]    <span class="nv">training</span><span class="s1">&#39;</span><span class="s">s binary_logloss: 0.614641 valid_1</span><span class="s1">&#39;</span><span class="nv">s</span> <span class="nv">binary_logloss</span>: <span class="mi">0</span>.<span class="mi">624013</span>
+<span class="nv">Plot</span> <span class="nv">metrics</span> <span class="nv">during</span> <span class="nv">training</span>...
+</pre></div>
+
+
+<!-- /wp:code -->
+
+<!-- wp:code -->
+
+<div class="highlight"><pre><span></span><span class="n">Plot</span> <span class="n">feature</span> <span class="n">importances</span><span class="p">...</span>
+</pre></div>
+
+
+<!-- /wp:code -->
+
+<!-- wp:image {"id":241} -->
+
+<figure class="wp-block-image">
+![]({attach}media/2019/01/output_9_1.png){.wp-image-241}
+
+</figure>
+
+<!-- /wp:image -->
+
+<!-- wp:image {"id":242} -->
+
+<figure class="wp-block-image">
+![]({attach}media/2019/01/output_9_3.png){.wp-image-242}
+
+</figure>
+
+<!-- /wp:image -->
+
+<!-- wp:code -->
+
+<div class="highlight"><pre><span></span><span class="n">print</span><span class="p">(</span><span class="ss">&quot;Start Predicting&quot;</span><span class="p">)</span>
+<span class="n">preds</span> <span class="o">=</span> <span class="n">predict_test_chunk</span><span class="p">(</span><span class="n">clfs</span><span class="p">,</span> <span class="n">Test</span><span class="p">,</span> <span class="n">chunks</span><span class="o">=</span><span class="mi">100000</span><span class="p">)</span>
+
+<span class="n">print</span><span class="p">(</span><span class="ss">&quot;Start Submission&quot;</span><span class="p">)</span>
+<span class="n">df_sub</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;sample_submission.csv&#39;</span><span class="p">)</span>
+<span class="n">df_sub</span><span class="p">[</span><span class="s1">&#39;HasDetections&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">preds</span><span class="p">[</span><span class="s1">&#39;HasDetections&#39;</span><span class="p">].</span><span class="k">values</span>
+<span class="n">df_sub</span><span class="p">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;mySubmission.csv&#39;</span><span class="p">,</span> <span class="k">index</span><span class="o">=</span><span class="k">False</span><span class="p">)</span>
+
+<span class="n">print</span><span class="p">(</span><span class="ss">&quot;Done!&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<!-- /wp:code -->
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

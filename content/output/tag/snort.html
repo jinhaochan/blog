@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>A Pelican Blog - Snort</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="A Pelican Blog Atom Feed" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">A Pelican Blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/book-review.html">Book Review</a></li>
+                    <li><a href="/category/data-science.html">Data Science</a></li>
+                    <li><a href="/category/misc.html">misc</a></li>
+                    <li><a href="/category/ramblings.html">Ramblings</a></li>
+                    <li><a href="/category/review.html">Review</a></li>
+                    <li><a href="/category/security.html">Security</a></li>
+                    <li><a href="/category/software-engineering.html">Software Engineering</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/setting-up-your-own-ids.html">Setting Up Your Own IDS</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2018-12-30T19:49:00+00:00">
+                Published: Sun 30 December 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/security.html">Security</a>.</p>
+<p>tags: <a href="/tag/mininet.html">Mininet</a> <a href="/tag/sdn.html">SDN</a> <a href="/tag/snort.html">Snort</a> </p>
+</footer><!-- /.post-info --><h1>Mininet Floodlight Snort</h1>
+<p>In this post, we're going to be building our own IDS setup to play around with.</p>
+<p>This setup can be used as a POC, or to just see how an IDS works. We're going to be using 3 technologies here.</p>
+<ol>
+<li>Mininet, which is a program to create your own virtual network on your host.</li>
+<li>Snort, which is an IDS program</li>
+<li>Floodlight, which is an SDN controller</li>
+</ol>
+<p>[gallery ids="110,109,108" type="rectangular" link="none"]</p>
+<h2>The Setup</h2>
+<p>We're going to setup an SDN network with 5 hosts, with host 5 sniffing traffic on host 4 using Snort.</p>
+<p>This project will have 3 malicious actors (h1, h2, h3), a victim machine (h4) and an IDS using Snort sniffer (h5)</p>
+<p>We will configure the network such that the 5 hosts are connected to the a switch, and the switch is connected to Floodlight SDN Controller. h1, h2 and h3 will attack h4 with a DoS attack, and h5 will be able to pick it up using Snort rules.</p>
+<h2>Setting up floodlight</h2>
+<p>[code lang=text]<br>
+git://github.com/floodlight/floodlight.git<br>
+\$ cd floodlight<br>
+\$ git submodule init<br>
+\$ git submodule update<br>
+\$ ant</p>
+<p>\$ sudo mkdir /var/lib/floodlight<br>
+\$ sudo chmod 777 /var/lib/floodlight<br>
+[/code]</p>
+<p>After you've configured Floodlight, run it with:<br>
+<code>$ java -jar target/floodlight.jar</code></p>
+<p>Floodlight GUI will be running on http://localhost:8080/ui/pages/index.html</p>
+<h2>Setting up mininet</h2>
+<p>Clone and install:</p>
+<p>[code lang=text]<br>
+\$ git clone git://github.com/mininet/mininet<br>
+\$ cd mininet<br>
+\$ sudo ./util/install.sh -a<br>
+[/code]</p>
+<p>Mininet is now installed.</p>
+<p>Spawn your network with the command:</p>
+<p><code>$ sudo mn --topo single,5 --controller=remote,ip=127.0.0.1,port=6653</code></p>
+<p>Spawns a single layer network, with 5 hosts connected to a switch.</p>
+<p>The switch is connected to a remote controller, which is the floodlight service you setup earlier.</p>
+<p><em>Note: your port specified in this command should be <code>6653</code> and not <code>8080</code>. <code>8080</code> is used for showing the UI, <code>6653</code> is used for communicating with your switch.</em></p>
+<p>If your floodlight service is running on another machine, configure the <code>ip</code> and <code>port</code> accordingly.</p>
+<h2>Setting up Snort (In Ubuntu)</h2>
+<p>Before installing Snort, you have to first install DAQ</p>
+<p>Updating your apt</p>
+<p>[code lang=text]<br>
+\$ apt-get update -y<br>
+\$ apt-get upgrade -y<br>
+[/code]</p>
+<p>Installing dependencies<br>
+<code>$ apt-get install openssh-server ethtool build-essential libpcap-dev libpcre3-dev libdumbnet-dev bison flex zlib1g-dev liblzma-dev openssl libssl-dev</code></p>
+<p>Grabbing DAQ source (Change the value of the version to the lastest one)</p>
+<p>[code lang=text]<br>
+\$ wget https://www.snort.org/downloads/snort/daq-2.0.6.tar.gz<br>
+\$ tar xvf daq-2.0.6.tar.gz<br>
+\$ cd daq-2.0.6<br>
+[/code]</p>
+<p>Configure and install DAQ</p>
+<p>[code lang=text]<br>
+\$ ./configure &amp;&amp; make &amp;&amp; make install<br>
+[/code]</p>
+<p>Now that you've installed DAQ, you can proceed to install Snort</p>
+<p>Grabbing Snort source (Change the value of the version to the lastest one)</p>
+<p>[code lang=text]<br>
+\$ wget https://www.snort.org/downloads/snort/snort-2.9.8.3.tar.gz<br>
+\$ tar vzf snort-2.9.8.3.tar.gz<br>
+\$ cd snort-2.9.8.3<br>
+[/code]</p>
+<p>Configure and install Snort</p>
+<p>[code lang=text]<br>
+\$ ./configure --enable-sourcefire &amp;&amp; make &amp;&amp; make install<br>
+[/code]</p>
+<p>Link the libraries</p>
+<p>[code lang=text]<br>
+\$ ldconfig<br>
+[/code]</p>
+<p>Creating a symbolic link to Snort binary</p>
+<p>[code lang=text]<br>
+\$ ln -s /usr/local/bin/snort /usr/sbin/snort<br>
+[/code]</p>
+<p>Test it out!<br>
+<code>$ snort -V</code></p>
+<p>After Snort is up and running, you will need to create directory structures for it</p>
+<p>[code lang=text]<br>
+\$ mkdir /etc/snort</p>
+<p>\$ mkdir /etc/snort/preproc_rules</p>
+<p>\$ mkdir /etc/snort/rules</p>
+<p>\$ mkdir /var/log/snort</p>
+<p>\$ mkdir /usr/local/lib/snort_dynamicrules</p>
+<p>\$ touch /etc/snort/rules/white_list.rules</p>
+<p>\$ touch /etc/snort/rules/black_list.rules</p>
+<p>\$ touch /etc/snort/rules/local.rules</p>
+<p>\$ chmod -R 5775 /etc/snort/</p>
+<p>\$ chmod -R 5775 /var/log/snort/</p>
+<p>\$ chmod -R 5775 /usr/local/lib/snort</p>
+<p>[/code]</p>
+<h2>Configuring Snort Rules</h2>
+<p>Download Snort rules here https://www.snort.org/downloads</p>
+<p>Edit your <code>snort.conf</code> accordingly to remove any preprocessors you don't have</p>
+<p>If you're having trouble, <code>$ sudo find / -type f -name snort.conf</code></p>
+<p>Adding a rule in <code>snort.conf</code> to catch DoS by ICMP packets</p>
+<p><code>alert icmp any any -&amp;gt; any any (threshold: type both, track by_dst, count 70, seconds 10; msg: "DoS by ICMP detected"; sid:1001;)</code></p>
+<h2>Mirroring port h4 to h5 and sniff using Snort</h2>
+<p>Command to mirror h4 traffic to h5<br>
+<code>mininet$ s1 ovs-vsctl -- set Bridge "s1" mirrors=@m -- --id=@s1-eth4 get Port s1-eth4 -- --id=@s1-eth5 get Port s1-eth5 -- --id=@m create Mirror name=e4toe5 select-dst-port=@s1-eth4 output-port=@s1-eth5</code></p>
+<p>Now all traffic that is flowing into h4 will be mirrored onto h5, where Snort is running.</p>
+<p><code>mininet$ xterm h5</code></p>
+<p>In the new terminal spawned for h5, run:</p>
+<p><code>h5$ ifconfig</code> to get the adapter name</p>
+<p><code>h5$ snort -i &amp;lt;Adapter name&amp;gt; -c &amp;lt;snort.conf location&amp;gt; &amp;amp;</code></p>
+<p>h5 is now sniffing traffic on h4</p>
+<h2>Starting the attack</h2>
+<p><code>mininet$ h1 ping -f h4</code></p>
+<p>This launches a barrage of ICMP packets from h1 to h4, which will subsequently be detected by h5, who is sniffing h4.</p>
+<p>h5 will then write an alert which you should see in <code>/var/log/snort/alert</code> the message <code>"DoS by ICMP detected"</code></p>                </article>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

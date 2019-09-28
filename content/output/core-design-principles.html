@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Core Design Principles</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="A Pelican Blog Atom Feed" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">A Pelican Blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/book-review.html">Book Review</a></li>
+                    <li><a href="/category/data-science.html">Data Science</a></li>
+                    <li><a href="/category/misc.html">misc</a></li>
+                    <li><a href="/category/ramblings.html">Ramblings</a></li>
+                    <li><a href="/category/review.html">Review</a></li>
+                    <li><a href="/category/security.html">Security</a></li>
+                    <li class="active"><a href="/category/software-engineering.html">Software Engineering</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/core-design-principles.html" rel="bookmark"
+           title="Permalink to Core Design Principles">Core Design Principles</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-07-12T09:08:00+00:00">
+                Published: Thu 12 July 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/software-engineering.html">Software Engineering</a>.</p>
+
+</footer><!-- /.post-info -->      <p><a href="https://www.youtube.com/watch?v=llGgO74uXMI">Core Design Principles for Software Developers by Venkat Subramaniam</a></p>
+<p>Devoxx is a conference directed towards the Java, Android and HTML5 community.</p>
+<p>Some points that are language agnostic, and can be applied universally are summarized below:</p>
+<ol>
+<li><strong>Good code can be changed without much hassle.</strong></li>
+<li>It is always impossible to get it right the first time.</li>
+<li>Be unemotional in coding.</li>
+<li>People who are dangerous to work with (So you shouldn't become them): People who can't follow instructions, and people who only follow instructions.</li>
+<li><strong>Take time to review code. (You can learn, and you can improve the design)</strong></li>
+<li>Simplicity is hard. Strive to achieve that.</li>
+<li>Simple keeps you focused (Imperative vs Declarative)</li>
+<li>Write code to solve real problems. (Don't code without knowing what it should do)</li>
+<li>Complexity (Inherent vs Accidental). Inherent Complexity comes from the problem. Accidental Complexity comes from the solution.</li>
+<li>Simple != Familiar (just because you know what it does, doesn't mean its simple)</li>
+<li><strong>Good Design is one that hides Inherent complexity, and eliminates Accidental Complexity</strong></li>
+<li><strong>YAGNIy (You Aren't Going To Need It (yet)) Don't implement things that you don't need yet. Do the important things first.</strong></li>
+<li>Cost of implementing now &gt; Cost of implementing later = Postpone</li>
+<li>Cost of implementing now = Cost of implementing later = Postpone</li>
+<li>Cost of implementing now &lt; Cost of implementing later = Do it now</li>
+<li><strong>Have a Good Automated Testing. This prevents fear of postponing</strong></li>
+<li>Cohesion is a code that does one thing and one thing only. This makes it easier for change.</li>
+<li>Similar code stays together. Dissimilar code stays away</li>
+<li>Coupling is what you depend on. Try to see if you can remove coupling. (You can't remove all dependencies, so make them loose)</li>
+<li>Knock out before you Mock out</li>
+<li><strong>Good Design has High Cohesion and Low Coupling</strong></li>
+<li>DRY (Don't repeat yourself) (Don't duplicate code, and effort)</li>
+<li>Every piece of knowledge in a system should have a single unambiguous authoritative representation</li>
+<li>CPD (Copy Paste Detector to find duplicated code)</li>
+<li>Don't write overly long functions and methods</li>
+<li>How long is a long method? SLAP (Single Level of Abstraction Principle)</li>
+<li><strong>SLAP: What was the level of abstraction of your function</strong></li>
+<li><strong>Don't comment what, comment why</strong></li>
+<li>Open Closed Principle: A software module should be open for extension, but close for modification</li>
+<li>Use DRY and YAGNI often</li>
+</ol>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

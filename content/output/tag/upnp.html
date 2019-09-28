@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>A Pelican Blog - UPnP</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="A Pelican Blog Atom Feed" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">A Pelican Blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/book-review.html">Book Review</a></li>
+                    <li><a href="/category/data-science.html">Data Science</a></li>
+                    <li><a href="/category/misc.html">misc</a></li>
+                    <li><a href="/category/ramblings.html">Ramblings</a></li>
+                    <li><a href="/category/review.html">Review</a></li>
+                    <li><a href="/category/security.html">Security</a></li>
+                    <li><a href="/category/software-engineering.html">Software Engineering</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/what-is-upnp-and-how-it-can-be-malicious.html">What is UPnP? (And how it can be malicious)</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2019-04-29T20:09:00+00:00">
+                Published: Mon 29 April 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/security.html">Security</a>.</p>
+<p>tags: <a href="/tag/upnp.html">UPnP</a> </p>
+</footer><!-- /.post-info --><!-- wp:paragraph -->
+
+<p>UPnP, which stands for Universal Plug n Play, is a set of networking protocols used to facilitate adding of new devices to the network. It comes enabled default on most new routers.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>For example, when you connect a new printer to the network, it automatically becomes discoverable by all other devices without you having to configure the IP address, or opening ports on the firewall. It does so through the concept of zero-configuration networking, which at it's core consists of</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+
+<ol>
+<li>Automatic assignment of network address</li>
+<li>Automatic distribution and resolution of hostnames</li>
+<li>Automatic location of network services such as printers (through Service Discovery Protocol)</li>
+</ol>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+
+<p>Device search and advertising is done over HTTP over UDP on port 1900</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>This means that any UPnP compatible device can join the network and automatically get an IP address, broadcast it's name, advertise it's capabilities /services on request, and learn about capabilities / services on the network.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>UPnP Setup Steps</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:heading {"level":4} --></p>
+<h4>Addressing</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+
+<p>The device implements a DHCP client, and must search for a DHCP server on the network. If no DHCP server exists on the network, it then assigns itself an IP through AutoIP</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":4} -->
+
+<h4>Discovery</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+
+<p>The device then uses Simple Service Discovery Protocol (SSDP) to advertise it's own service to Control Points (CP) on the network by sending SSDP Alive Messages, which provides very basic information about the device</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":4} -->
+
+<h4>Description</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+
+<p>To learn more about the device, the Control Point must retrieve the device description from the URL provided from the SSDP. The Device Description comes in an XML format, and has information such as model number, serial number and manufacturer name.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":4} -->
+
+<h4>Control</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+
+<p>After getting the description, the Control Point can send actions to the device via Simple Object Access Protocol (SOAP)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":4} -->
+
+<h4>Notifications</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+
+<p>The UPnP device can send events or notifications to the Control Points on any changes that happen to it. This uses the General Event Notification Architecture (GENA)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":4} -->
+
+<h4>Presentation</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+
+<p>If the device has any pages for presentation, the Control Point can receive it and load it on the web browser</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>How It Is Abused</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>UPnP does not perform any sort of authentication, and assumes that any devices that is connected is trusted.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Also, UPnP can automatically configure port forwarding on the router without having any user intervention, or authentication.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Flash UPnP attack was one of the attack that abused the UPnP protocol, and how it works was by sending a UPnP request to the router to forward ports, thus exposing it to the internet. The attack could also change your primary DNS server with a UPnP request.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The best defense therefore is to <strong>disable UPnP on your routers</strong></p>
+<!-- /wp:paragraph -->                </article>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

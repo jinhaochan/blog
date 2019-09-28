@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>A Pelican Blog - Review</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="A Pelican Blog Atom Feed" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">A Pelican Blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/book-review.html">Book Review</a></li>
+                    <li><a href="/category/data-science.html">Data Science</a></li>
+                    <li><a href="/category/misc.html">misc</a></li>
+                    <li><a href="/category/ramblings.html">Ramblings</a></li>
+                    <li class="active"><a href="/category/review.html">Review</a></li>
+                    <li><a href="/category/security.html">Security</a></li>
+                    <li><a href="/category/software-engineering.html">Software Engineering</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/branches-of-machine-learning.html">Branches of Machine Learning</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2019-06-02T15:30:00+00:00">
+                Published: Sun 02 June 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/review.html">Review</a>.</p>
+
+</footer><!-- /.post-info --><!-- wp:paragraph -->
+
+<p>Just finished reading the book "The Master Algorithm", where the author tries to find the ultimate Machine Learning algorithm that can solve different varieties of problems (text, image, predictive, time series etc)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>In the book, he goes over the 5 main branches (or tribes) of Machine Learning. They are:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+
+<ol>
+<li>The Evoluntionaries</li>
+<li>The Connectionist</li>
+<li>The Symbolist</li>
+<li>The Bayesians</li>
+<li>The Analogizers</li>
+</ol>
+<!-- /wp:list -->
+
+<!-- wp:image {"id":323,"align":"center"} -->
+
+<div class="wp-block-image">
+
+<figure class="aligncenter">
+![]({attach}media/2019/02/master-algo_thumb.png){.wp-image-323}
+</figure>
+
+</div>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>Lets look at what the 5 tribes have to offer, and their each individual "Master Algorithm"</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>The Evolutionaries</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Master Algorithm: <strong>Genetic Algorithm</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Loss Function: <strong>Fitness Function</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Optimization Function: <strong>Genetic Search</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>This tribe tries to represent learning by mimicking evolution, where the it uses survival-of-the-fittest idea to pick the best model.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Starting with weak and not-fit models, the models go through different biologically inspired evolutionary stages: Mutation, Cross Over and Selection</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Evolutionaries focus on learning the structure of the model, and not so much of the parameters (something which Connectionist with neural networks focus on)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>The Connectionists</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Master Algorithm: <strong>Neural Networks</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Loss Function: <strong>RMSE</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Optimization Function: <strong>Gradient Descent and Back Propagation</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The Connectionist represent learning by modelling it after the brain and the neuron connections inside them. Dendrites, Axons and the Cell made up the Neural Network.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>In Neural Networks, we are trying to learn the weights of the connections between the cells, and not the structure of the neural network itself (Perhaps there could be a combination of GA and NN, where GA finds the structure, and NN finds the weights)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>It follows the notion that a concept can be represented by firing various neurons, and concepts that are similar to each other will cause the same set of neurons firing.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>The Symbolist</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Master Algorithm: <strong>Logic</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Loss Function: <strong>Accuracy</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Optimization Function: <strong>Inverse Deduction</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Symbolist believe that all intelligence can be reduced to symbols, or rules. They build rule base systems, which obviously have huge limitations, because we can't possibly convert all intelligence and edge cases to a hard coded rule. The moment the rule encounters just a slightest bit of noise, it fails to perform.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Also, real life scenarios and concepts are seldom defined in black and white rules, and are usually stochastic and in the grey area.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>In some cases, they can perform quite well. A model that Symbolist use are decision trees, which are huge tree that have if-else rules at each branch.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>The Bayesians</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Master Algorithm: <strong>Graphical Models</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Loss Function: <strong>Posterior Probability</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Optimization Function: <strong>Probabilistic Inference</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>As opposed to frequentist, which gives no value to prior beliefs, Bayesians hold prior beliefs at the center of their model.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The Bayesian works on conditional probability, or Bayes Theorem, that tells the probability of event A happening given that B has occurs <code>P(A|B)</code>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>During the training phase, the model takes the training data to build a list of conditional probabilities. During testing, given certain features, the model will use the conditional probabilities to perform predictions.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>A Naive Bayes algorithm is one that assumes that all probabilities are independent of each other. Although it is not a valid assumption in the real world, it still performs quite well.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>The Analogizers</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Master Algorithm: <strong>Support Vector Machines</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Loss Function: <strong>Margin between Support Vectors</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Optimization Function: <strong>Constrained Optimization</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>This tribe uses similarities among various data points to categorize them to distinct classes. Based on the similarity between data points, we can relate them together.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Models in this tribe are K-Nearest-Neighbor and Support Vector Machines.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Summary</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:image {"id":325,"align":"center","width":487,"height":487} --></p>
+<div class="wp-block-image">
+
+<figure class="aligncenter is-resized">
+![]({attach}media/2019/02/puzzle_thumb.png){.wp-image-325 width="487" height="487"}
+</figure>
+
+</div>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>The book tries to amalgamate ideas together to form the Master Equation.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>We could use posterior probability as the evaluation function, and genetic search coupled with gradient descent as the optimizer</p>
+<!-- /wp:paragraph -->                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/the-power-of-agency.html" rel="bookmark"
+                           title="Permalink to The Power of Agency">The Power of Agency</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-05-14T21:19:00+00:00">
+                Published: Tue 14 May 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/review.html">Review</a>.</p>
+
+</footer><!-- /.post-info -->                <p>Agency is having the feeling that you're in control of the situation at hand, and of yourself.</p>
+<p>This post is a review of the book "The Power of Agency", and they offer 7 steps for you to regain this sense of control</p>
+<ol>
+<li>Keep a clear head and control the amount …</li></ol>
+                <a class="readmore" href="/the-power-of-agency.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/reinventing-capitalism-in-the-age-of-big-data-summary.html" rel="bookmark"
+                           title="Permalink to Reinventing Capitalism in the Age of Big Data: Summary">Reinventing Capitalism in the Age of Big Data: Summary</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-04-21T20:28:00+00:00">
+                Published: Sun 21 April 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/review.html">Review</a>.</p>
+<p>tags: <a href="/tag/big-data.html">Big Data</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>I've finished this book a few months ago, and realized it'll be useful for me to recap the points I've learnt from the book.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>This book talks about how data is the new currency in this era, and how the capitalism landscape will change. The book also proposes some steps …</p>
+                <a class="readmore" href="/reinventing-capitalism-in-the-age-of-big-data-summary.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/the-culture-code.html" rel="bookmark"
+                           title="Permalink to The Culture Code">The Culture Code</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-12-02T22:38:00+00:00">
+                Published: Sun 02 December 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/review.html">Review</a>.</p>
+<p>tags: <a href="/tag/readings.html">Readings</a> <a href="/tag/the-culture-code.html">The Culture Code</a> </p>
+</footer><!-- /.post-info -->                <h2>Culture Code</h2>
+<p>I've just finsihed reading <a href="https://www.amazon.com/Culture-Code-Secrets-Highly-Successful/dp/0525492461">The Culture Code</a>, and it was a really good book. Good books are those that either introduces new ideas, or reintroduces known ideas to be relevant.</p>
+<p>In this book, he explores what are the cultural values that make up successful team. 3 cultural values …</p>
+                <a class="readmore" href="/the-culture-code.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

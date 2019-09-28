@@ -27,7 +27,7 @@ If we just look at the final CV result, we see an astounding `~92%` accuracy. Th
 <!-- wp:image {"id":294} -->
 
 <figure class="wp-block-image">
-![](https://chanjinhao.files.wordpress.com/2019/01/xgb2.png){.wp-image-294}
+![]({attach}media/2019/01/xgb2.png){.wp-image-294}
 
 </figure>
 <!-- /wp:image -->
@@ -60,7 +60,7 @@ Since I've used XGBoost, there are several techniques available to combat overfi
 <!-- wp:image {"id":293} -->
 
 <figure class="wp-block-image">
-![](https://chanjinhao.files.wordpress.com/2019/01/xgb1.png){.wp-image-293}
+![]({attach}media/2019/01/xgb1.png){.wp-image-293}
 
 </figure>
 <!-- /wp:image -->

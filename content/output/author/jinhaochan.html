@@ -1,0 +1,3277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>A Pelican Blog - jinhaochan</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="A Pelican Blog Atom Feed" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">A Pelican Blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/book-review.html">Book Review</a></li>
+                    <li><a href="/category/data-science.html">Data Science</a></li>
+                    <li><a href="/category/misc.html">misc</a></li>
+                    <li><a href="/category/ramblings.html">Ramblings</a></li>
+                    <li><a href="/category/review.html">Review</a></li>
+                    <li><a href="/category/security.html">Security</a></li>
+                    <li><a href="/category/software-engineering.html">Software Engineering</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/dnssec.html">DNSSEC</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2019-09-23T14:16:00+00:00">
+                Published: Mon 23 September 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/security.html">Security</a>.</p>
+<p>tags: <a href="/tag/dnssec.html">DNSSEC</a> </p>
+</footer><!-- /.post-info --><!-- wp:paragraph -->
+
+<p>In the previous post, we talked about some of the attack vectors on the DNS. In this post, we're going to be talking about DNSSEC, which is an attempt to make the DNS more secure.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>A point to note, DNSSEC does not provide Confidentiality, but only Integrity. Integrity in this case is ensuring that the reply that you received from the DNS is truly the reply, and not altered by any MITM means. The lack of Confidentiality is due to the fact that it does not encrypt your DNS traffic data, and all your queries are still exposed in plain text. These are several technologies out there now that are branching out into encryption of DNS data, named DNS over HTTPS (DoH). But for DNSSEC, there is no encryption.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>This post assumes you have knowledge of recursive DNS resolving of hostnames.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>DNSSEC introduces several new resources that are used by the DNSSEC verification process.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+
+<ul>
+<li>RRSIG (Resource Record Signature)</li>
+<li>DNSKEY (Public Key for Verification)</li>
+<li>DS (Delegation Signer)</li>
+<li>NSEC (Proof of Nonexistence - No encryption)</li>
+<li>NSEC3 ( Proof of Nonexistence - Encryption)</li>
+</ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+
+<p>We'll go through each one of them, and explain how they are being used in the verification process.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":4} -->
+
+<h4>RRSIG</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+
+<p>With DNSSEC, every reply comes with at least one RRSIG reply. RRSIG acts like a digital certification, to verify that this reply is indeed authentic.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":4} -->
+
+<h4>DNSKEY</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+
+<p>DNSSEC operates on asymmetric encryption, and DNSKEY is the public key. The RRSIG is encrypted with the private key, and verification of the response is done by decrypting it with DNSKEY.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":4} -->
+
+<h4>DS</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+
+<p>During the recursive DNS resolution process, the parent has to verify the authenticity of the child server. This is done by signing the hash of the child. The parent becomes the Delegation Signing (DS) of the child</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":4} -->
+
+<h4>NSEC/NSEC3</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+
+<p>Without DNSSEC, non-existent domains are return with NXDOMAIN. With DNSSEC, non-existent domains are handled by NSEC and NSEC3 records to prove that they really don't exist. NSEC3 is the encrypted version of NSEC. We'll talk about this in a section later below.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Difference in DNS lookup with DNSSEC</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<p><img alt="DNS resolution with DNSSEC" src="/media/2019/09/untitled-1.png"></p>
+<p>Up front, you can see that there is an additional layer called the Validating Resolver, which handles the DNSSEC process.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The recursive DNS resolution to obtain the IP address of isc.org still remains the same (asking <code>.</code>, <code>.org</code> and <code>isc.org</code>). We start the phase above when we finally get the address of the authoritative server for the address of <code>isc.org</code></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+
+<ol>
+<li>Ask the authoritative server for the IP address of <code>isc.org</code></li>
+<li>Reply the IP address of <code>isc.org</code>. Also, send the encrypted RRSIG</li>
+<li>Ask for the public DNSKEY of <code>isc.org</code> to verify the RRSIG obtained in step 2</li>
+<li>Reply with the DNSKEY to decrypt the RRSIG, and verify the reply from <code>isc.org</code><ul>
+<li><code>.org</code> is the parent of <code>isc.org</code>, and thus is the DS of <code>isc.org</code>. As part of the DNSSEC process, <code>isc.org</code> has to the hash of it's DNSKEY to <code>.org</code></li>
+<li>The hash of the child's DNSKEY is signed by the parent's DNSKEY</li>
+<li>i.e. the hash of <code>isc.org</code> DNSKEY is signed by <code>.org</code> DNSKEY</li>
+</ul>
+</li>
+<li>Ask for the hash of <code>isc.org</code> DNSKEY, and ensure that the DNSKEY obtained in step 4 is correct</li>
+<li>Reply with the hash of <code>isc.org</code> DNSKEY, along with the RRSIG of <code>.org</code></li>
+<li>Ask for the public DNSKEY of <code>.org</code> to verify the RRSIG obtained in step 6</li>
+<li>Reply with the DNSKEY to decrypt the RRSIG, and verify the reply from <code>.org</code></li>
+<li><strong>Ask for the hash of <code>.org</code> DNSKEY, and ensure that the DNSKEY obtained in step 8 is correct</strong></li>
+<li><strong>Reply with the hash of <code>.org</code> DNSKEY, along with the RRSIG of the root server</strong></li>
+<li><strong>Ask for the public DNSKEY of the root server to verify the RRSIG obtained in step 10</strong></li>
+<li><strong>Reply with the DNSKEY to decrypt the RRSIG, and verify the reply from the root server</strong></li>
+</ol>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+
+<p>You can see the pattern of these 4 sets of communication repeating. I've bolded steps 9, 10, 11, 12, as they are the same steps being repeated for each recursive step of DNS resolution.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>These Are Not The Records You're Looking For</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+
+<p>The typical response from a DNS server when a non-existent domain is requested is returning an <code>NXDOMAIN</code> response. However, a simple <code>NXDOMAIN</code> will not suffice, as an attacker can simply spoof this reply to deny services to customers.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>With DNSSEC implemented, instead of using an <code>NXDOMAIN</code> to indicate a non-existent record, we use NSEC as a proof of non-existence. NSEC stands for Next-Secure-Record, and a gist of how it works is by providing information above records before and after the requested domain.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>For NSEC to work, the records need to be sorted alphabetically so that by showing the previous and next record, we can determine if the request domain does not exist.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>An example of this in action: We have 3 employees working at a company: Alice, Edward and Susan (already sorted alphabetically). When some one calls and asks for an employee called Bob (which doesn't exist), NSEC will reply the previous and next records (alphabetically), Alice and Edward.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>We can see an obvious problem over here. Probe for many non-existent domains, and NSEC will return to you all of the records in the DNS, something which we don't want. This act is called zone-walking, or zone enumeration.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The solution to zone walking is simply to encrypt the information being sent over, which is what is implemented in NSEC3. NSEC3 hashes the entries before sending the data over to the requesting machine</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Credits</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+
+<p>This post was a summary of this guide by ISC: <a href="https://downloads.isc.org/isc/dnssec-guide/dnssec-guide.pdf">https://downloads.isc.org/isc/dnssec-guide/dnssec-guide.pdf</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The above documentation is a lot more comprehensive, and this post is meant to highlight content that is important.</p>
+<!-- /wp:paragraph -->                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/dns-attack-vectors.html" rel="bookmark"
+                           title="Permalink to DNS Attack Vectors">DNS Attack Vectors</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-07-07T14:50:00+00:00">
+                Published: Sun 07 July 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/security.html">Security</a>.</p>
+
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>Before looking at DNS Attack Vectors, let's do a quick recap of what a DNS is, and what are it's functions.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>What is a DNS?</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>DNS, or Domain Name System, is a server that provides Name to IP Address resolution. When people visit websites, it's much easier for them to …</p>
+                <a class="readmore" href="/dns-attack-vectors.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/lstm.html" rel="bookmark"
+                           title="Permalink to LSTM">LSTM</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-06-30T15:33:00+00:00">
+                Published: Sun 30 June 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/data-science.html">Data Science</a>.</p>
+<p>tags: <a href="/tag/exploding-gradients.html">Exploding Gradients</a> <a href="/tag/lstm.html">LSTM</a> <a href="/tag/vanishing-gradients.html">Vanishing Gradients</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>In the previous post, we talked about RNN, and how performing Backpropagation through time (BPTT) on an unrolled RNN with many time steps can lead to the problems of vanishing / exploding gradients, and difficulties in learning long term dependencies.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>In this post, we're going to look at a the LSTM …</p>
+                <a class="readmore" href="/lstm.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/rnn-and-vanishing-exploding-gradients.html" rel="bookmark"
+                           title="Permalink to RNN and Vanishing/Exploding Gradients">RNN and Vanishing/Exploding Gradients</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-06-23T16:23:00+00:00">
+                Published: Sun 23 June 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/data-science.html">Data Science</a>.</p>
+<p>tags: <a href="/tag/rnn.html">RNN</a> <a href="/tag/vanishing-gradients.html">Vanishing Gradients</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>In this post, we're going to be looking at:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+
+<ol>
+<li>Recurrent Neural Networks (RNN)</li>
+<li>Weight updates in an RNN</li>
+<li>Unrolling an RNN</li>
+<li>Vanishing/Exploding Gradient Problem</li>
+</ol>
+<!-- /wp:list -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Recurrent Neural Networks</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>A Recurrent Neural Network (RNN) is a variant of neural networks, where in each neuron, the outputs cycle back to themselves, hence …</p>
+                <a class="readmore" href="/rnn-and-vanishing-exploding-gradients.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/what-are-proxies.html" rel="bookmark"
+                           title="Permalink to What are Proxies?">What are Proxies?</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-06-21T09:57:00+00:00">
+                Published: Fri 21 June 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/security.html">Security</a>.</p>
+<p>tags: <a href="/tag/proxy.html">Proxy</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>A Proxy, or a Proxy Server / Web Proxy, is something that sits between the source of the network traffic, and the desired destination of the traffic. What the proxy will do is relay the network traffic across to the other side.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Typically, it would sit between a client and a …</p>
+                <a class="readmore" href="/what-are-proxies.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/k-means-clustering.html" rel="bookmark"
+                           title="Permalink to K-Means Clustering">K-Means Clustering</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-06-16T21:18:00+00:00">
+                Published: Sun 16 June 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/data-science.html">Data Science</a>.</p>
+<p>tags: <a href="/tag/k-means-clustering.html">K means clustering</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>K-Means Clustering is an unsupervised learning algorithm. It works by grouping similar data points together to try to find underlying patterns.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The number of groups are pre-defined by the user as K.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>How the Algorithm works</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Before the iterative update starts, a random selection of centroid locations are picked on …</p>
+                <a class="readmore" href="/k-means-clustering.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/domain-fronting-and-sni.html" rel="bookmark"
+                           title="Permalink to Domain Fronting and SNI">Domain Fronting and SNI</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-06-13T10:54:00+00:00">
+                Published: Thu 13 June 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/security.html">Security</a>.</p>
+<p>tags: <a href="/tag/domain-fronting.html">Domain Fronting</a> <a href="/tag/sni.html">SNI</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>Domain fronting is a malicious act of appearing to request to visit a legitimate site (the front), while in actual fact, the request is going to another website.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Domain fronting relies on the SSL technology to work, where the service provider is unable to see the actual malicious hostname the …</p>
+                <a class="readmore" href="/domain-fronting-and-sni.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/random-forests.html" rel="bookmark"
+                           title="Permalink to Random Forests">Random Forests</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-06-09T20:43:00+00:00">
+                Published: Sun 09 June 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/data-science.html">Data Science</a>.</p>
+<p>tags: <a href="/tag/decision-tree.html">Decision Tree</a> <a href="/tag/random-forest.html">Random Forest</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>A random forest is an ensemble approach of combining multiple decision trees. Ensembling and Decision Trees, we first need to explain what these two things are</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Decision Trees</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Decision Trees try to encode and separate the data into if-else rules. It breaks the data down into smaller and smaller subsets …</p>
+                <a class="readmore" href="/random-forests.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/branches-of-machine-learning.html" rel="bookmark"
+                           title="Permalink to Branches of Machine Learning">Branches of Machine Learning</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-06-02T15:30:00+00:00">
+                Published: Sun 02 June 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/review.html">Review</a>.</p>
+
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>Just finished reading the book "The Master Algorithm", where the author tries to find the ultimate Machine Learning algorithm that can solve different varieties of problems (text, image, predictive, time series etc)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>In the book, he goes over the 5 main branches (or tribes) of Machine Learning. They are:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+
+<ol>
+<li>The …</li></ol>
+                <a class="readmore" href="/branches-of-machine-learning.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/gan.html" rel="bookmark"
+                           title="Permalink to GAN?">GAN?</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-05-26T13:13:00+00:00">
+                Published: Sun 26 May 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/data-science.html">Data Science</a>.</p>
+
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>A Generative Adversarial Network (GAN) is a collection of two neural network models: A Discriminator, and a Generator. The goals of the two models are opposing to each other</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+
+<ol>
+<li>Discriminator: Given a set of features, we try to predict the label</li>
+<li>Generator: Given a label, we try to predict the …</li></ol>
+                <a class="readmore" href="/gan.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/visualizing-neural-networks.html" rel="bookmark"
+                           title="Permalink to Visualizing Neural Networks">Visualizing Neural Networks</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-05-19T09:31:00+00:00">
+                Published: Sun 19 May 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/data-science.html">Data Science</a>.</p>
+
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>Neural Networks have always been sort of a black box when it comes to it's implementation, and how it produces good results. I came across some material that shows visually, how the neural networks morph the problem space so that they are separable.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Simple Data</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Here's a sample graph that …</p>
+                <a class="readmore" href="/visualizing-neural-networks.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/the-power-of-agency.html" rel="bookmark"
+                           title="Permalink to The Power of Agency">The Power of Agency</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-05-14T21:19:00+00:00">
+                Published: Tue 14 May 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/review.html">Review</a>.</p>
+
+</footer><!-- /.post-info -->                <p>Agency is having the feeling that you're in control of the situation at hand, and of yourself.</p>
+<p>This post is a review of the book "The Power of Agency", and they offer 7 steps for you to regain this sense of control</p>
+<ol>
+<li>Keep a clear head and control the amount …</li></ol>
+                <a class="readmore" href="/the-power-of-agency.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/the-cyber-kill-chain.html" rel="bookmark"
+                           title="Permalink to The Cyber Kill Chain">The Cyber Kill Chain</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-05-13T16:52:00+00:00">
+                Published: Mon 13 May 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/security.html">Security</a>.</p>
+<p>tags: <a href="/tag/cyber-kill-chain.html">Cyber kill chain</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>The Cyber Kill Chain (CKC) is a sequential set of steps that takes place when an attack happens. There are many variations of the CKC by different companies such as , but the "trusted" and most convincing variant is by Lockheed Martin.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":447} -->
+
+<figure class="wp-block-image">
+![]({attach}media/2019/05/the-cyber-kill-chain-body.png.pc-adaptive.1920.medium …</figure>
+                <a class="readmore" href="/the-cyber-kill-chain.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/tips-for-kaggling.html" rel="bookmark"
+                           title="Permalink to Tips for Kaggling">Tips for Kaggling</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-05-12T11:31:00+00:00">
+                Published: Sun 12 May 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/data-science.html">Data Science</a>.</p>
+<p>tags: <a href="/tag/kaggle.html">Kaggle</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>I've been doing Kaggle competitions for awhile (although with not much success), and I've learning quite a few things along the way. One of which is how to properly approach the problem, and iterate through it to climb the LB (leader board).</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Setting the baseline</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>The first thing I would …</p>
+                <a class="readmore" href="/tips-for-kaggling.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/side-channel-data-exfiltration.html" rel="bookmark"
+                           title="Permalink to Side Channel Data Exfiltration">Side Channel Data Exfiltration</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-05-10T14:39:00+00:00">
+                Published: Fri 10 May 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/security.html">Security</a>.</p>
+<p>tags: <a href="/tag/data-exfiltration.html">data exfiltration</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>A typical data exfiltration attack can be quite easy to spot. By monitoring the usage of common protocols such as HTTP, HTTPS, FTP or even DNS, we can deduce if a data exfiltration is taking place.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Most modern DLP (Data Leak Prevention) solutions today that incorporate network analysis can perform …</p>
+                <a class="readmore" href="/side-channel-data-exfiltration.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/say-no-to-overfitting.html" rel="bookmark"
+                           title="Permalink to Say NO to Overfitting!">Say NO to Overfitting!</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-05-05T13:58:00+00:00">
+                Published: Sun 05 May 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/data-science.html">Data Science</a>.</p>
+<p>tags: <a href="/tag/overfitting.html">Overfitting</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>Just some experience I've encountered while working on a very small data set of 1703 training samples, and 1705 testing samples.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>One way to combat overfitting is to use cross validation. While doing so, it's important for you not to just look at the final validation score, but also observe …</p>
+                <a class="readmore" href="/say-no-to-overfitting.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/hit-refresh.html" rel="bookmark"
+                           title="Permalink to Hit Refresh">Hit Refresh</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-05-05T12:51:00+00:00">
+                Published: Sun 05 May 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/book-review.html">Book Review</a>.</p>
+
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>A book by Satya Nadella, CEO of Microsoft</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>This book seems to start off as a biography, but it's intent becomes clear by the second chapter, that it's about the changes Satya brings about in Microsoft, and the anticipation of the future innovations such as Mixed Reality, Artificial Intelligence, and …</p>
+                <a class="readmore" href="/hit-refresh.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/looking-out-for-c2-traffic.html" rel="bookmark"
+                           title="Permalink to Looking out for C2 Traffic">Looking out for C2 Traffic</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-05-02T16:14:00+00:00">
+                Published: Thu 02 May 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/security.html">Security</a>.</p>
+<p>tags: <a href="/tag/c2.html">C2</a> <a href="/tag/command-and-control.html">Command and Control</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:heading -->
+
+<h2>Types of C2 Communication</h2>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>When a host gets infected with a malware, sometimes it will attempt to call back to it's Command and Control (C2) to get, or send information. There are 4 types of C2 communication traffic</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+
+<ol>
+<li>Beacon<ul>
+<li>After a host has been compromised, the malware will send a …</li></ul></li></ol>
+                <a class="readmore" href="/looking-out-for-c2-traffic.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/what-is-upnp-and-how-it-can-be-malicious.html" rel="bookmark"
+                           title="Permalink to What is UPnP? (And how it can be malicious)">What is UPnP? (And how it can be malicious)</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-04-29T20:09:00+00:00">
+                Published: Mon 29 April 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/security.html">Security</a>.</p>
+<p>tags: <a href="/tag/upnp.html">UPnP</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>UPnP, which stands for Universal Plug n Play, is a set of networking protocols used to facilitate adding of new devices to the network. It comes enabled default on most new routers.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>For example, when you connect a new printer to the network, it automatically becomes discoverable by all other …</p>
+                <a class="readmore" href="/what-is-upnp-and-how-it-can-be-malicious.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/what-is-maximum-likelihood-estimation.html" rel="bookmark"
+                           title="Permalink to What is Maximum Likelihood Estimation?">What is Maximum Likelihood Estimation?</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-04-28T09:44:00+00:00">
+                Published: Sun 28 April 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/data-science.html">Data Science</a>.</p>
+
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>In machine learning, we often perform what we call <strong>parameter estimation</strong>, which are the weights that are assigned to each feature of the input data.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>For example, in a simple linear model, we use the equation <code>y=mx + c</code> , and <code>m</code> and <code>c</code> are your parameters to be estimated. For …</p>
+                <a class="readmore" href="/what-is-maximum-likelihood-estimation.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/mitre-on-threat-detection.html" rel="bookmark"
+                           title="Permalink to MITRE on Threat Detection">MITRE on Threat Detection</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-04-25T17:37:00+00:00">
+                Published: Thu 25 April 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/security.html">Security</a>.</p>
+<p>tags: <a href="/tag/mitre.html">MITRE</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>I just sat through a webinar by the folks at Red Canary, and they covered some questions regarding threat detection using the MITRE ATT&amp;CK framework.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The webinar sat down with the researchers who created MITRE, and it was quite insightful. Here are some of the notes I took that …</p>
+                <a class="readmore" href="/mitre-on-threat-detection.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/csrf-tokens.html" rel="bookmark"
+                           title="Permalink to CSRF Tokens">CSRF Tokens</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-04-24T16:13:00+00:00">
+                Published: Wed 24 April 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/security.html">Security</a>.</p>
+<p>tags: <a href="/tag/csrf.html">CSRF</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>If we look at source codes of HTML forms, we typically can spot this field being rendered on the webpage</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":420} -->
+
+<figure class="wp-block-image">
+![]({attach}media/2019/04/token.png){.wp-image-420}
+
+<figcaption>
+
+
+</figcaption>
+</figure>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>Sometimes it doesn't have the name called CSRF Token, and it just appears as a random gibberish value being loaded.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>This post breaks …</p>
+                <a class="readmore" href="/csrf-tokens.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/reinventing-capitalism-in-the-age-of-big-data-summary.html" rel="bookmark"
+                           title="Permalink to Reinventing Capitalism in the Age of Big Data: Summary">Reinventing Capitalism in the Age of Big Data: Summary</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-04-21T20:28:00+00:00">
+                Published: Sun 21 April 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/review.html">Review</a>.</p>
+<p>tags: <a href="/tag/big-data.html">Big Data</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>I've finished this book a few months ago, and realized it'll be useful for me to recap the points I've learnt from the book.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>This book talks about how data is the new currency in this era, and how the capitalism landscape will change. The book also proposes some steps …</p>
+                <a class="readmore" href="/reinventing-capitalism-in-the-age-of-big-data-summary.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/os-inference-through-ping-ttl.html" rel="bookmark"
+                           title="Permalink to OS Inference through Ping TTL">OS Inference through Ping TTL</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-04-18T14:00:00+00:00">
+                Published: Thu 18 April 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/security.html">Security</a>.</p>
+
+</footer><!-- /.post-info -->                <!-- wp:heading {"level":3} -->
+
+<h3>Terminologies</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:list --></p>
+<ul>
+<li>Ping: An command to discover the availability of a target machine. It sends an ICMP Echo Request, and waits for an Echo Reply</li>
+<li>TTL: Time-To-Live, which tells the network routers how long the packet should live. For each router that passes the packet on, the TTL reduces by 1 …</li></ul>
+                <a class="readmore" href="/os-inference-through-ping-ttl.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/how-to-harden-a-linux-kernel.html" rel="bookmark"
+                           title="Permalink to How to harden a Linux Kernel">How to harden a Linux Kernel</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-04-17T11:21:00+00:00">
+                Published: Wed 17 April 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/security.html">Security</a>.</p>
+<p>tags: <a href="/tag/aslr.html">ASLR</a> <a href="/tag/smap.html">SMAP</a> <a href="/tag/smep.html">SMEP</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>Hardening means to make the something more secure and resilient to attacks. When people talk about hardening, they usually talk about server hardening, which includes things like</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+
+<ul>
+<li>IP / MAC address white listing</li>
+<li>Closing unused ports</li>
+<li>Uninstalling unused systems</li>
+<li>Disabling <code>root</code> login (no one can login as root, only a normal …</li></ul>
+                <a class="readmore" href="/how-to-harden-a-linux-kernel.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/activation-functions.html" rel="bookmark"
+                           title="Permalink to Activation Functions">Activation Functions</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-04-14T18:07:00+00:00">
+                Published: Sun 14 April 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/data-science.html">Data Science</a>.</p>
+<p>tags: <a href="/tag/activation-functions.html">Activation Functions</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>The structure of a deep learning model consists mainly of nodes, and connections between them. Most of the time, every single node is connected to every other node in the next layer, which we call a Dense layer.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":260,"align":"center"} -->
+
+<div class="wp-block-image">
+
+<figure class="aligncenter">
+![]({attach}media/2019/01/2.png){.wp-image-260}  
+<figcaption>
+Nodes in a fully connected …</figcaption></figure></div>
+                <a class="readmore" href="/activation-functions.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/the-interpretation-of-roc-and-auc.html" rel="bookmark"
+                           title="Permalink to The Interpretation of ROC and AUC">The Interpretation of ROC and AUC</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-04-14T12:52:00+00:00">
+                Published: Sun 14 April 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/data-science.html">Data Science</a>.</p>
+
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>The ROC curve and it's AUC is a common metric for evaluation the performance of a model. In this post, we dig deeper to find out how to interpret the results, and what corrective actions to take to improve it.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>What is it?</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>The ROC curve, or Receiver Operating Characteristic …</p>
+                <a class="readmore" href="/the-interpretation-of-roc-and-auc.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/hosting-your-own-dns-and-how-to-setup-dns-tunneling.html" rel="bookmark"
+                           title="Permalink to Hosting your own DNS (and how to setup DNS tunneling)">Hosting your own DNS (and how to setup DNS tunneling)</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-04-11T11:23:00+00:00">
+                Published: Thu 11 April 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/security.html">Security</a>.</p>
+<p>tags: <a href="/tag/dns.html">DNS</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>Earlier this week, I wrote a post on DNS tunneling, and how to pass information over the web through the DNS protocol by stuffing information in the DNS Name Resolution process.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>In this post, we're going to look at how to setup and host your own DNS server. And because …</p>
+                <a class="readmore" href="/hosting-your-own-dns-and-how-to-setup-dns-tunneling.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/uefi-and-secure-boot.html" rel="bookmark"
+                           title="Permalink to UEFI and Secure Boot">UEFI and Secure Boot</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-04-09T16:12:00+00:00">
+                Published: Tue 09 April 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/security.html">Security</a>.</p>
+<p>tags: <a href="/tag/secure-boot.html">Secure Boot</a> <a href="/tag/uefi.html">UEFI</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>Secure Boot is a verification mechanism to ensure that code launched by the firmware is trusted. It ensures that all system level drivers are signed and trusted.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Before we talk about secure boot and how it works, we need to have some understand of UEFI (Unified Extensible Firmware Interface)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Overview …</h3>
+                <a class="readmore" href="/uefi-and-secure-boot.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/what-is-a-cgi.html" rel="bookmark"
+                           title="Permalink to What is a CGI?">What is a CGI?</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-04-08T17:11:00+00:00">
+                Published: Mon 08 April 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/security.html">Security</a>.</p>
+<p>tags: <a href="/tag/cgi.html">cgi</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>Not Computer Generated Imagery, but <code>cgi</code> pages you see when you visit webpages.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>CGI stands for Common Gateway Interface, and it acts as the Controller in the MVC framework. To give a complete picture, in a web application, the Model is the database, the View is the front-end HTML/CSS …</p>
+                <a class="readmore" href="/what-is-a-cgi.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/domain-generating-algorithm-used-by-c2-communication.html" rel="bookmark"
+                           title="Permalink to Domain Generating Algorithm (Used by C2 Communication)">Domain Generating Algorithm (Used by C2 Communication)</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-04-07T16:46:00+00:00">
+                Published: Sun 07 April 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/security.html">Security</a>.</p>
+<p>tags: <a href="/tag/domain-generation-algorithm.html">Domain Generation Algorithm</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:heading {"level":3} -->
+
+<h3>C2 Communication and Disruption</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>When a machine gets infected by a malware, it can start receiving command from it's C2 server to perform unwanted activities. Examples of this are a machines infected with botnets or ransomware, where the C2 server will send commands down to the victim machine, and the …</p>
+                <a class="readmore" href="/domain-generating-algorithm-used-by-c2-communication.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/regularization.html" rel="bookmark"
+                           title="Permalink to Regularization">Regularization</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-04-07T09:49:00+00:00">
+                Published: Sun 07 April 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/data-science.html">Data Science</a>.</p>
+<p>tags: <a href="/tag/drop-out.html">drop out</a> <a href="/tag/regularization.html">regularization</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>One of the major problems in training a model in machine learning is overfitting. Especially when your model gets more and more complex, it starts to memorize the patterns in the training data. This makes it perform poorly on unseen data, which has new patterns.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Overfitting is the result of …</p>
+                <a class="readmore" href="/regularization.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/process-injection.html" rel="bookmark"
+                           title="Permalink to Process Injection">Process Injection</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-04-05T14:44:00+00:00">
+                Published: Fri 05 April 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/security.html">Security</a>.</p>
+<p>tags: <a href="/tag/process-injection.html">Process Injection</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>I decided to revisit some fundamental security concepts again, and one of which I used in my previous employment was Process Injection.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Process Injection is a technique of running your own code within the address space of another process. The hard part is getting your code in that address space …</p>
+                <a class="readmore" href="/process-injection.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/microsoft-kaggle-competition.html" rel="bookmark"
+                           title="Permalink to Microsoft Kaggle Competition">Microsoft Kaggle Competition</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-03-31T09:38:00+00:00">
+                Published: Sun 31 March 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/data-science.html">Data Science</a>.</p>
+<p>tags: <a href="/tag/kaggle.html">Kaggle</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>This is the write up for my solution for the Microsoft Malware Prediction</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p><a href="https://www.kaggle.com/c/microsoft-malware-prediction">https://www.kaggle.com/c/microsoft-malware-prediction</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>I got pretty high up the leader board, but it was nothing that I was proud of, because:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+
+<ol>
+<li>I grossly overfitted my model</li>
+<li>The final result was a blend of another …</li></ol>
+                <a class="readmore" href="/microsoft-kaggle-competition.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/model-capacity.html" rel="bookmark"
+                           title="Permalink to Model Capacity">Model Capacity</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-03-24T20:19:00+00:00">
+                Published: Sun 24 March 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/data-science.html">Data Science</a>.</p>
+<p>tags: <a href="/tag/capacity.html">Capacity</a> <a href="/tag/vc-dimension.html">VC Dimension</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>While studying the book Deep Learning by Ian Goodfellow, I came across this concept of model capacity, and it was really intuitive in helping me understand the models representation of a given problem.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>This ties to the concept of overfitting and underfitting</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Capacity</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Put simply, the capacity of the model …</p>
+                <a class="readmore" href="/model-capacity.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/counts-based-featurization.html" rel="bookmark"
+                           title="Permalink to Counts Based Featurization">Counts Based Featurization</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-03-24T17:48:00+00:00">
+                Published: Sun 24 March 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/data-science.html">Data Science</a>.</p>
+<p>tags: <a href="/tag/count-feature.html">Count Feature</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>While doing the Microsoft Malware Classification challenge, I encountered a way of Feature representation called Count Based Features (CBF).</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>CBF is good to use with very high cardinality features, and it transforms the high number of categories in the data to the number of it's occurrences. This representation is helpful …</p>
+                <a class="readmore" href="/counts-based-featurization.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/lightgbm.html" rel="bookmark"
+                           title="Permalink to LightGBM">LightGBM</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-03-24T12:33:00+00:00">
+                Published: Sun 24 March 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/data-science.html">Data Science</a>.</p>
+
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>For some time, XGBoost was considered the Kaggle-Killer, being the winning model for most prediction problems. Recently Microsoft released their own gradient boosting framework called LightGBM, and it is way faster than XGB. In this post, I'm going to touch on the interesting portions of LightGBM.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>What is LightGBM?</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Similar …</p>
+                <a class="readmore" href="/lightgbm.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/feature-engineering.html" rel="bookmark"
+                           title="Permalink to Feature Engineering">Feature Engineering</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-03-17T09:41:00+00:00">
+                Published: Sun 17 March 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/data-science.html">Data Science</a>.</p>
+<p>tags: <a href="/tag/feature-engineering.html">Feature Engineering</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>Feature Engineering is one of the neglected portion of machine learning. Most topics revolve around Model Training (parameter tuning, cross validation). While that might be really important, feature engineering is equally important as well, but I can't seem to find good resources that talk about this. I suspect this is …</p>
+                <a class="readmore" href="/feature-engineering.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/microsoft-kaggle-challenge-adversarial-validation.html" rel="bookmark"
+                           title="Permalink to Microsoft Kaggle Challenge: Adversarial Validation">Microsoft Kaggle Challenge: Adversarial Validation</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-03-10T19:45:00+00:00">
+                Published: Sun 10 March 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/data-science.html">Data Science</a>.</p>
+<p>tags: <a href="/tag/adversarial-validation.html">Adversarial Validation</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:heading {"level":3} -->
+
+<h3>Overview</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>This was a concept I came across while doing a Kaggle challenge issued by Microsoft to predict if a computer would get hit by a malware or not.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>This challenge was different from their previous one, where they wanted you to predict if the malware class of a given …</p>
+                <a class="readmore" href="/microsoft-kaggle-challenge-adversarial-validation.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/web-beacon-for-trip-wiring-documents.html" rel="bookmark"
+                           title="Permalink to Web Beacon for Trip wiring documents">Web Beacon for Trip wiring documents</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-03-03T14:25:00+00:00">
+                Published: Sun 03 March 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/security.html">Security</a>.</p>
+<p>tags: <a href="/tag/web-beacons.html">Web Beacons</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>During my course of security research work, I came across this concept of web beacons, which is a clever way of knowing who has opened up a document.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>A Web Beacon is an element inside the document, that is not a saved resource. Rather, the element sends a request out …</p>
+                <a class="readmore" href="/web-beacon-for-trip-wiring-documents.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/convolutional-neural-networks.html" rel="bookmark"
+                           title="Permalink to Convolutional Neural Networks">Convolutional Neural Networks</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-02-17T16:11:00+00:00">
+                Published: Sun 17 February 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/data-science.html">Data Science</a>.</p>
+
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>Convolutional Neural Networks (CNN) are neural networks that are mainly used for image recognition and image classification.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>In this post, we'll break down how a CNN works under the hoods.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Backgroud</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>If we used a traditional neural network without any of the prior convolution steps, the network would not scale …</p>
+                <a class="readmore" href="/convolutional-neural-networks.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/model-optimizers-beyond-gradient-descent-in-deep-learning.html" rel="bookmark"
+                           title="Permalink to Model Optimizers Beyond Gradient Descent in Deep Learning">Model Optimizers Beyond Gradient Descent in Deep Learning</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-02-10T09:52:00+00:00">
+                Published: Sun 10 February 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/data-science.html">Data Science</a>.</p>
+<p>tags: <a href="/tag/optimizers.html">Optimizers</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>In this post, we're going to talk about the draw backs and constrains of a simple Gradient Descent algorithm when applied to Deep Learning models, and also talk about other optimization algorithms that aim to solve those problems.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>These problems mainly arise due to the complex error surface in Deep …</p>
+                <a class="readmore" href="/model-optimizers-beyond-gradient-descent-in-deep-learning.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/gradient-descent.html" rel="bookmark"
+                           title="Permalink to Gradient Descent">Gradient Descent</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-02-03T20:10:00+00:00">
+                Published: Sun 03 February 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/data-science.html">Data Science</a>.</p>
+<p>tags: <a href="/tag/gradient-descent.html">Gradient Descent</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>A machine learning model consists of weights, and those weights, given a set of inputs, are used in the calculation process to produce a prediction. The prediction is then fed into a loss function, to calculate the the total error. Using this error, we feed it into an optimization algorithm …</p>
+                <a class="readmore" href="/gradient-descent.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/learning-in-machine-learning.html" rel="bookmark"
+                           title="Permalink to Learning in Machine Learning">Learning in Machine Learning</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-01-27T17:14:00+00:00">
+                Published: Sun 27 January 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/data-science.html">Data Science</a>.</p>
+<p>tags: <a href="/tag/machine-learning.html">Machine learning</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>When we talk about machine learning, it's mostly a black box, where everything is nicely wrapped in easy to call library functions.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Scipy, Numpy, Scikit-learn help us abstract all the nitty gritty details underlying machine learning</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>In this post, we're going to see where exactly the learning takes place, and …</p>
+                <a class="readmore" href="/learning-in-machine-learning.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/word2vec-and-skip-gram.html" rel="bookmark"
+                           title="Permalink to Word2Vec">Word2Vec</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-01-20T14:24:00+00:00">
+                Published: Sun 20 January 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/data-science.html">Data Science</a>.</p>
+<p>tags: <a href="/tag/text-processing.html">Text processing</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>In the field of machine learning, when we're dealing with text processing, we can't just read in the strings of the sentence to train our model. The model requires numerical vectors, and word embedding is a way to convert your sentences into these vectors.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>There are various word embedding techniques …</p>
+                <a class="readmore" href="/word2vec-and-skip-gram.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/270.html" rel="bookmark"
+                           title="Permalink to No title [270]">No title [270]</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-01-14T22:13:00+00:00">
+                Published: Mon 14 January 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                
+                <a class="readmore" href="/270.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/text-processing.html" rel="bookmark"
+                           title="Permalink to Text Processing">Text Processing</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-01-13T18:41:00+00:00">
+                Published: Sun 13 January 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/data-science.html">Data Science</a>.</p>
+<p>tags: <a href="/tag/text-processing.html">Text processing</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>In this post, we're going to be exploring some typical methods for text processing for machine learning. When we're talking about machine learning with text, there are several areas of interest including </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+
+<ul>
+<li>Sentiment Analysis</li>
+<li>Question Answering</li>
+<li>Information Retrieval</li>
+</ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+
+<p>Before we do that, we must first understand that a machine learning …</p>
+                <a class="readmore" href="/text-processing.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/pass-the-hash-attack.html" rel="bookmark"
+                           title="Permalink to Pass The Hash Attack">Pass The Hash Attack</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-01-06T10:45:00+00:00">
+                Published: Sun 06 January 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/security.html">Security</a>.</p>
+<p>tags: <a href="/tag/pass-the-hash.html">Pass the hash</a> <a href="/tag/windows.html">Windows</a> </p>
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>Passing the Hash attack is a way of logging on to the machine without knowing the actual password of the user. It uses the hash value for authentication, instead of the plain text passwords.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>This attack vector is possible in Windows, due to how they store the passwords in their …</p>
+                <a class="readmore" href="/pass-the-hash-attack.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/setting-up-your-own-ids.html" rel="bookmark"
+                           title="Permalink to Setting Up Your Own IDS">Setting Up Your Own IDS</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-12-30T19:49:00+00:00">
+                Published: Sun 30 December 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/security.html">Security</a>.</p>
+<p>tags: <a href="/tag/mininet.html">Mininet</a> <a href="/tag/sdn.html">SDN</a> <a href="/tag/snort.html">Snort</a> </p>
+</footer><!-- /.post-info -->                <h1>Mininet Floodlight Snort</h1>
+<p>In this post, we're going to be building our own IDS setup to play around with.</p>
+<p>This setup can be used as a POC, or to just see how an IDS works. We're going to be using 3 technologies here.</p>
+<ol>
+<li>Mininet, which is a program to create …</li></ol>
+                <a class="readmore" href="/setting-up-your-own-ids.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/software-defined-networking-sdn.html" rel="bookmark"
+                           title="Permalink to Software Defined Networking (SDN)">Software Defined Networking (SDN)</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-12-23T10:29:00+00:00">
+                Published: Sun 23 December 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/security.html">Security</a>.</p>
+<p>tags: <a href="/tag/sdn.html">SDN</a> </p>
+</footer><!-- /.post-info -->                <h1>What is an SDN</h1>
+<hr>
+<p>Software Defined Networking is a way of abstracting away the control logic of networking and packet switching away from the physical switches, and passing that control to a SDN Controller.</p>
+<p>The main idea of this is to allow the control to perform decision making on what …</p>
+                <a class="readmore" href="/software-defined-networking-sdn.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/kaggle-boiler-plate.html" rel="bookmark"
+                           title="Permalink to Kaggle Boiler Plate">Kaggle Boiler Plate</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-12-16T21:33:00+00:00">
+                Published: Sun 16 December 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/data-science.html">Data Science</a>.</p>
+
+</footer><!-- /.post-info -->                <p>I've been playing around with Kaggle competitions for a while, and there are usually quite a few steps to perform.</p>
+<p>I've compiled a list of them below, in sequential order. These are by no means hard and fast rules, but simple heuristics to follow!</p>
+<p>I've added links here and there …</p>
+                <a class="readmore" href="/kaggle-boiler-plate.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/async-and-await-in-c.html" rel="bookmark"
+                           title="Permalink to Async and Await in C#">Async and Await in C#</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-12-09T22:40:00+00:00">
+                Published: Sun 09 December 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/software-engineering.html">Software Engineering</a>.</p>
+<p>tags: <a href="/tag/async.html">Async</a> <a href="/tag/await.html">Await</a> </p>
+</footer><!-- /.post-info -->                <h2>Async and Await in C</h2>
+<p><code>async</code> and <code>await</code> are used when we are doing asynchronous programming. Why we would want to do asynchronous programming, is due to performance issues. When we have two unrelated tasks that are in the program, and one task takes a long time to process, it …</p>
+                <a class="readmore" href="/async-and-await-in-c.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/the-culture-code.html" rel="bookmark"
+                           title="Permalink to The Culture Code">The Culture Code</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-12-02T22:38:00+00:00">
+                Published: Sun 02 December 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/review.html">Review</a>.</p>
+<p>tags: <a href="/tag/readings.html">Readings</a> <a href="/tag/the-culture-code.html">The Culture Code</a> </p>
+</footer><!-- /.post-info -->                <h2>Culture Code</h2>
+<p>I've just finsihed reading <a href="https://www.amazon.com/Culture-Code-Secrets-Highly-Successful/dp/0525492461">The Culture Code</a>, and it was a really good book. Good books are those that either introduces new ideas, or reintroduces known ideas to be relevant.</p>
+<p>In this book, he explores what are the cultural values that make up successful team. 3 cultural values …</p>
+                <a class="readmore" href="/the-culture-code.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/c-pass-by-value.html" rel="bookmark"
+                           title="Permalink to C# Pass By Value">C# Pass By Value</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-11-25T22:37:00+00:00">
+                Published: Sun 25 November 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/software-engineering.html">Software Engineering</a>.</p>
+
+</footer><!-- /.post-info -->                <h2>Pass by Value vs Reference</h2>
+<h3>Pass by value</h3>
+<hr>
+<p>When we pass call a function, we sometimes pass in some values for the function to use. Typically, it would look like this</p>
+<p><code>(parameters)</code></p>
+<p>or</p>
+<p><code>void swapValues(int x, int y)</code></p>
+<p>When we pass a value to the function <code>swapValue()</code>, we are …</p>
+                <a class="readmore" href="/c-pass-by-value.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/how-https-works.html" rel="bookmark"
+                           title="Permalink to How HTTPS Works">How HTTPS Works</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-11-18T22:36:00+00:00">
+                Published: Sun 18 November 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/security.html">Security</a>.</p>
+<p>tags: <a href="/tag/https.html">HTTPS</a> </p>
+</footer><!-- /.post-info -->                <h2>How does HTTPS work?</h2>
+<p>We all know to use a HTTPS site instead of a HTTP, because it is more secure. We roughly know that the messages sent to and fro the client and server are encrypted, so any snooping person wouldn't know the contents, but how does it all …</p>
+                <a class="readmore" href="/how-https-works.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/kernel-module-signing.html" rel="bookmark"
+                           title="Permalink to Kernel Module Signing">Kernel Module Signing</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-11-11T22:35:00+00:00">
+                Published: Sun 11 November 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/security.html">Security</a>.</p>
+<p>tags: <a href="/tag/kernel-module.html">Kernel Module</a> </p>
+</footer><!-- /.post-info -->                <h1>Linux Kernel Signing</h1>
+<h2>Kernel Tainting</h2>
+<hr>
+<p>When dealing with offensive secuirty in the Linux space, we typically concern ourselves with kernel tainting. A kernel taint occurs when an unsigned module is loaded into the Linux kernel, which may potentially be used for malicious purposes.</p>
+<p>A kernel taint does not always mean …</p>
+                <a class="readmore" href="/kernel-module-signing.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/python-tips-and-tricks.html" rel="bookmark"
+                           title="Permalink to Python Tips and Tricks">Python Tips and Tricks</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-11-04T22:32:00+00:00">
+                Published: Sun 04 November 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/software-engineering.html">Software Engineering</a>.</p>
+
+</footer><!-- /.post-info -->                <h2>Summary of Python tips, tricks, and to-dos</h2>
+<p>These pointers are what I picked up from the book <code>Python Tricks: The Book</code></p>
+<p>The book itself is a summary, and here i'll be doing a summary of a summary.</p>
+<p>Python is great because of its flexibility, but that itself could potentially be …</p>
+                <a class="readmore" href="/python-tips-and-tricks.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/98.html" rel="bookmark"
+                           title="Permalink to No title [98]">No title [98]</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-10-31T22:12:00+00:00">
+                Published: Wed 31 October 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                
+                <a class="readmore" href="/98.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/datascience.html" rel="bookmark"
+                           title="Permalink to Kaggle Data Science">Kaggle Data Science</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-10-31T22:11:00+00:00">
+                Published: Wed 31 October 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>I'm branching out my learning into Data Science, mostly from Kaggle.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>You'll find my Kaggle kernels here.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+
+<h2>Predicting Taxi Fare</h2>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p><a href="https://www.kaggle.com/c/new-york-city-taxi-fare-prediction">https://www.kaggle.com/c/new-york-city-taxi-fare-prediction</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Notebook: <a href="https://github.com/jinhaochan/TaxiFare/blob/master/Taxi%20Fares.ipynb">https://github.com/jinhaochan/TaxiFare/blob/master/Taxi%20Fares.ipynb</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p><strong>RMSE: 3.88522</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p><strong>Model: XGBoost</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>In this problem, I was supposed to predict …</p>
+                <a class="readmore" href="/datascience.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/non-kaggle.html" rel="bookmark"
+                           title="Permalink to Non-Kaggle">Non-Kaggle</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-10-31T21:43:00+00:00">
+                Published: Wed 31 October 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <!-- wp:paragraph -->
+
+<p>Here, you'll find Data science projects that work on data sets not from Kaggle.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Detecting Botnet traffic</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Dataset: <a href="https://mcfp.weebly.com/the-ctu-13-dataset-a-labeled-dataset-with-botnet-normal-and-background-traffic.html">https://mcfp.weebly.com/the-ctu-13-dataset-a-labeled-dataset-with-botnet-normal-and-background-traffic.html</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Notebook: <a href="https://github.com/Charmanderander/BotnetDetection/blob/master/NetFlow-Botnet.ipynb">https://github.com/jinhaochan/BotnetDetection/blob/master/NetFlow-Botnet.ipynb</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>In this data set, we were given traffic of both Botnet and normal traffic. I built …</p>
+                <a class="readmore" href="/non-kaggle.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/70.html" rel="bookmark"
+                           title="Permalink to No title [70]">No title [70]</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-10-30T22:55:00+00:00">
+                Published: Tue 30 October 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                
+                <a class="readmore" href="/70.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/fullstack-website.html" rel="bookmark"
+                           title="Permalink to Side Projects">Side Projects</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-10-30T22:38:00+00:00">
+                Published: Tue 30 October 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <p>When I'm not busy at work churning out ideas and code, I'll be dabbling around with other technologies.</p>
+<p>My goals whenever I try out a new technology, is to not only learn how it works, but to be proficient enough to create a simple product.</p>
+<p>Here are some of the …</p>
+                <a class="readmore" href="/fullstack-website.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/61.html" rel="bookmark"
+                           title="Permalink to No title [61]">No title [61]</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-10-30T22:31:00+00:00">
+                Published: Tue 30 October 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                
+                <a class="readmore" href="/61.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/kernel-modules-in-linux.html" rel="bookmark"
+                           title="Permalink to Kernel Modules in Linux">Kernel Modules in Linux</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-10-29T22:31:00+00:00">
+                Published: Mon 29 October 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/security.html">Security</a>.</p>
+
+</footer><!-- /.post-info -->                <p>The Linux kernel is an open source operating system, as compared to propitiatory ones like Windows, or MacOS.</p>
+<p>The entire source code of the Linux kernel can be found here: <a href="https://elixir.bootlin.com/linux/latest/source">Source Code</a>.</p>
+<p>TLDR of a Linux kernel is that it's made up of many different modules.</p>
+<p>The bare Linux kernel …</p>
+                <a class="readmore" href="/kernel-modules-in-linux.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/subtle-art-of-not-giving-a-fck.html" rel="bookmark"
+                           title="Permalink to Subtle Art Of Not Giving a F*CK">Subtle Art Of Not Giving a F*CK</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-09-01T16:24:00+00:00">
+                Published: Sat 01 September 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+
+</footer><!-- /.post-info -->                <p>So I've seen this book around for quite some time, but have been avoiding it because i'm quite saturated with self-help books. However, one day I decided to make an impulse purchase on this, and I've definitely not regretted it.</p>
+<p>Below are some of the summary points he made:</p>
+<ol>
+<li>Not …</li></ol>
+                <a class="readmore" href="/subtle-art-of-not-giving-a-fck.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/bioinformatics.html" rel="bookmark"
+                           title="Permalink to Bioinformatics">Bioinformatics</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-07-18T16:03:00+00:00">
+                Published: Wed 18 July 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+<p>tags: <a href="/tag/bioinformatics.html">Bioinformatics</a> <a href="/tag/coursera.html">Coursera</a> </p>
+</footer><!-- /.post-info -->                <p>I've been doing this Coursera Specialization called Bioinformatics <a href="https://www.coursera.org/specializations/bioinformatics">(Link to course page)</a></p>
+<p>The course shows us how to apply computational solutions to non-computational, but highly complex problems. The complexity of Bioinformatics comes from the huge amount of data (huge meaning billions), and how different permutations and combinations of those data …</p>
+                <a class="readmore" href="/bioinformatics.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/how-netflix-thinks-of-devops.html" rel="bookmark"
+                           title="Permalink to How Netflix Thinks of DevOps">How Netflix Thinks of DevOps</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-07-13T07:02:00+00:00">
+                Published: Fri 13 July 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/software-engineering.html">Software Engineering</a>.</p>
+
+</footer><!-- /.post-info -->                <p><a href="https://www.youtube.com/watch?v=UTKIT6STSVM">Link to the video of how Netflix thinks about DevOps(Hint: They don't)</a></p>
+<p><a href="https://netflix.github.io/">Netflix Github Page</a></p>
+<p>Instead, what they do focus on is a lot about culture, which is really be what every company should be focusing on. In this era, for better or for worse, we as humans have …</p>
+                <a class="readmore" href="/how-netflix-thinks-of-devops.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/core-design-principles.html" rel="bookmark"
+                           title="Permalink to Core Design Principles">Core Design Principles</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-07-12T09:08:00+00:00">
+                Published: Thu 12 July 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/software-engineering.html">Software Engineering</a>.</p>
+
+</footer><!-- /.post-info -->                <p><a href="https://www.youtube.com/watch?v=llGgO74uXMI">Core Design Principles for Software Developers by Venkat Subramaniam</a></p>
+<p>Devoxx is a conference directed towards the Java, Android and HTML5 community.</p>
+<p>Some points that are language agnostic, and can be applied universally are summarized below:</p>
+<ol>
+<li><strong>Good code can be changed without much hassle.</strong></li>
+<li>It is always impossible to get it …</li></ol>
+                <a class="readmore" href="/core-design-principles.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/contact.html" rel="bookmark"
+                           title="Permalink to Contact">Contact</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-07-10T09:52:00+00:00">
+                Published: Tue 10 July 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <p>[contact-form][contact-field label="Name" type="name" required="1"/][contact-field label="Email" type="email" required="1"/][contact-field label="Comment" type="textarea" required="1"/][/contact-form]</p>
+                <a class="readmore" href="/contact.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/the-journey-begins.html" rel="bookmark"
+                           title="Permalink to Printing Subsets in a List">Printing Subsets in a List</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-07-10T09:52:00+00:00">
+                Published: Tue 10 July 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/software-engineering.html">Software Engineering</a>.</p>
+<p>tags: <a href="/tag/codexercise.html">codexercise</a> </p>
+</footer><!-- /.post-info -->                <p><strong><u> Problem Statement </u></strong></p>
+<p>Given a list of distinct items (or a set), print out all of its subset lists.</p>
+<p>Input:</p>
+<p><code>[1, 2, 3, 4]</code></p>
+<p>Output:</p>
+<p><code>:empty set: 1 1,2 1,3 1,4 1,2,3 1,2,4 1,3,4 1,2,3,4 2 2,3 2 …</code></p>
+                <a class="readmore" href="/the-journey-begins.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/the-anomaly.html" rel="bookmark"
+                           title="Permalink to The Anomaly">The Anomaly</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-02-25T16:27:00+00:00">
+                Published: Sun 25 February 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+
+</footer><!-- /.post-info -->                <p>Death is not an anomaly to life.</p>
+<p>Life is an anomaly to death.</p>
+<p>Life is the antithesis to the hundreds and millions of years of nonexistence.</p>
+<p>A sudden spurt of existence, and all the emotions that come along with it.</p>
+<p>Happiness and sadness. Lust and love. Compassion and scorn. Empathy …</p>
+                <a class="readmore" href="/the-anomaly.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/on-doing-and-happiness.html" rel="bookmark"
+                           title="Permalink to On Doing and Happiness">On Doing and Happiness</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-01-14T10:11:00+00:00">
+                Published: Sun 14 January 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+
+</footer><!-- /.post-info -->                <p>I wrote some post a while back that explored what I felt that I should do, and to some extent, embarking on my passion hunt.</p>
+<p>I now feel that passion should not be tied down to one specific action. Be it a passion for sports, or drawing, or technology. Passion …</p>
+                <a class="readmore" href="/on-doing-and-happiness.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/hypervigilance-and-mindfulness.html" rel="bookmark"
+                           title="Permalink to Hypervigilance and Mindfulness">Hypervigilance and Mindfulness</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-12-26T13:35:00+00:00">
+                Published: Tue 26 December 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+
+</footer><!-- /.post-info -->                <p>Hypervigilance is being in a constant state of look out for potential dangers and threats. Everything in a normal day could be viewed as a potential threat, and the endless worst case scenarios play out in all their different ways.</p>
+<p>Being in this state usually has a history behind it …</p>
+                <a class="readmore" href="/hypervigilance-and-mindfulness.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/receiving-and-giving.html" rel="bookmark"
+                           title="Permalink to Receiving and Giving">Receiving and Giving</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-10-16T01:26:00+00:00">
+                Published: Mon 16 October 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+
+</footer><!-- /.post-info -->                <p>There are two ways to achieve happiness. You either receive something from both yourself or others, or you can give something to others. </p>
+<p>Examples of receiving something that makes you happy: you eat good food; you have received a good meal. You have a good sleep; you have received a …</p>
+                <a class="readmore" href="/receiving-and-giving.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/the-meaning.html" rel="bookmark"
+                           title="Permalink to The Meaning">The Meaning</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-09-02T06:09:00+00:00">
+                Published: Sat 02 September 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+
+</footer><!-- /.post-info -->                <p>What is the meaning of life? Big question, and I approach this knowing that I can never find the answer. It is however, not the end that matters, but the means. The thought process. If I cannot find out what life is, at least I can deduce what life is …</p>
+                <a class="readmore" href="/the-meaning.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/meditations-book-3-in-carnuntum-by-marcus-aurelius.html" rel="bookmark"
+                           title="Permalink to MEDITATIONS; Book 3; IN CARNUNTUM by Marcus Aurelius">MEDITATIONS; Book 3; IN CARNUNTUM by Marcus Aurelius</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-07-24T13:34:00+00:00">
+                Published: Mon 24 July 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+
+</footer><!-- /.post-info -->                <p>"Don’t waste the rest of your time here worrying about<br>
+other people—unless it affects the common good. It will<br>
+keep you from doing anything useful. You’ll be too<br>
+preoccupied with what so-and-so is doing, and why, and<br>
+what they’re saying, and what they’re thinking, and …</p>
+                <a class="readmore" href="/meditations-book-3-in-carnuntum-by-marcus-aurelius.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/what-kind-of-life-do-i-want-to-lead.html" rel="bookmark"
+                           title="Permalink to What Kind Of Life Do I Want To Lead?">What Kind Of Life Do I Want To Lead?</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-07-22T15:11:00+00:00">
+                Published: Sat 22 July 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+
+</footer><!-- /.post-info -->                <p>That's a question I've began to re-ask myself. I think that over the short period my career as a Software Engineer (Or a Systems Analyst) for 2 years has changed my perceptions quite a bit.</p>
+<p>Things were much more straightforward as a fresh graduate. The only thing we were worried …</p>
+                <a class="readmore" href="/what-kind-of-life-do-i-want-to-lead.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/triggers-and-the-environment.html" rel="bookmark"
+                           title="Permalink to Triggers and the Environment">Triggers and the Environment</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-04-12T10:05:00+00:00">
+                Published: Wed 12 April 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+
+</footer><!-- /.post-info -->                <p>I've recently finished reading a book by Marshall Goldsmith titled "Triggers", and in it details some very interesting bits of information.</p>
+<p>Before I go on to explain them, I would like to say that in the past, I was rather skeptical about reading such books. Books that teach you about …</p>
+                <a class="readmore" href="/triggers-and-the-environment.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/the-subjectivity-of-suffering-2.html" rel="bookmark"
+                           title="Permalink to The Subjectivity of Suffering.">The Subjectivity of Suffering.</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-03-28T07:03:00+00:00">
+                Published: Tue 28 March 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+
+</footer><!-- /.post-info -->                <p>How do we come to conclude that a certain event, or despairing predicament a person is in amounts to suffering?</p>
+<p>We know that we are suffering if we feel a certain amount of personal discomfort. The Sun is beating down on your exposed skin. Your legs weary from standing. Your …</p>
+                <a class="readmore" href="/the-subjectivity-of-suffering-2.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/shadow-goodness-and-badness.html" rel="bookmark"
+                           title="Permalink to Shadow Goodness and Badness">Shadow Goodness and Badness</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2016-12-23T14:06:00+00:00">
+                Published: Fri 23 December 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+
+</footer><!-- /.post-info -->                <p>The Shadow, a concept taken from a book I read, is a hidden part of our subconciousness. It works from the shadows, influencing our actions, our thoughts and our speech. All these happens, unknowing to us, while we are still left thinking we have full control of everything about us …</p>
+                <a class="readmore" href="/shadow-goodness-and-badness.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/religious-again.html" rel="bookmark"
+                           title="Permalink to Religious again?">Religious again?</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2016-12-11T10:16:00+00:00">
+                Published: Sun 11 December 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+
+</footer><!-- /.post-info -->                <p>Should I go back to being religious? It seems like I have strayed away from the person I sought myself to be.</p>
+<p>After doing away with religion, I have fallen back on pure logic. Pure naturalistic logic, while at the same time compromising on abstracted morals related to certain actions …</p>
+                <a class="readmore" href="/religious-again.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/top-down-or-bottom-up.html" rel="bookmark"
+                           title="Permalink to Top-down or Bottom-up">Top-down or Bottom-up</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2016-12-02T00:19:00+00:00">
+                Published: Fri 02 December 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+
+</footer><!-- /.post-info -->                <p>Life is a peculiar thing, in which we can have different views about it, and they will all be perfectly valid. The view that it is all about suffering, the view that it is about maximizing pleasure or the view that it has no meaning at all. And these are …</p>
+                <a class="readmore" href="/top-down-or-bottom-up.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/like-water-like-life.html" rel="bookmark"
+                           title="Permalink to Like Water, Like Life">Like Water, Like Life</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2016-11-01T13:05:00+00:00">
+                Published: Tue 01 November 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+
+</footer><!-- /.post-info -->                <p>Life is analogous to water.</p>
+<p>Water flows; to give life; to create; to quench a thirst; to show beauty.</p>
+<p>To destroy; to drown; to wash away; to drench a man.</p>
+<p>What does your water flow for?</p>
+<p>What is your life for?</p>
+<p>How you direct your energy of life, decides how …</p>
+                <a class="readmore" href="/like-water-like-life.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/goals-and-how-to-make-one.html" rel="bookmark"
+                           title="Permalink to Goals, and how to make one">Goals, and how to make one</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2016-10-21T01:14:00+00:00">
+                Published: Fri 21 October 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+
+</footer><!-- /.post-info -->                <p>If the essence of life has inherent positivity, then there would be no such thing as boredom.</p>
+<p>Just by mere existence, would bring about satisfaction and content. Just by being, will suffice. But that is never the case.</p>
+<p>We get bored, and we feel valueless when we merely exist. The …</p>
+                <a class="readmore" href="/goals-and-how-to-make-one.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/live-for-today-live-for-the-future.html" rel="bookmark"
+                           title="Permalink to Live for today, live for the future">Live for today, live for the future</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2016-10-20T13:27:00+00:00">
+                Published: Thu 20 October 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+
+</footer><!-- /.post-info -->                <p>There is no point in living in the future, if you're not living for today.</p>
+<p>We've been sold a belief that there is some goal in the future that we must toil for today.</p>
+<p>We've been told to plan and envision where we want to be in the future.</p>
+<p>So …</p>
+                <a class="readmore" href="/live-for-today-live-for-the-future.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/the-subjectivity-of-suffering.html" rel="bookmark"
+                           title="Permalink to The Subjectivity of Suffering.">The Subjectivity of Suffering.</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2016-10-10T14:04:00+00:00">
+                Published: Mon 10 October 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+
+</footer><!-- /.post-info -->                <p>So i wrote a piece for one of my friend. Initally it had some religious context, but then we spoke about something more general on Suffering:</p>
+<p>How do we come to conclude that a certain event, or despairing predicament a person is in amounts to suffering?</p>
+<p>We know that we …</p>
+                <a class="readmore" href="/the-subjectivity-of-suffering.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/what-should-be-learnt.html" rel="bookmark"
+                           title="Permalink to What should be learnt">What should be learnt</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2016-10-09T14:55:00+00:00">
+                Published: Sun 09 October 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+
+</footer><!-- /.post-info -->                <p>Life is but a tiny room. We can't fit a lot in it, so we have to be prudent to choose what we pick to put in the room.</p>
+<p>I believe that technical skills, while important for one to earn his keep and prove his worth, possibly even grow a …</p>
+                <a class="readmore" href="/what-should-be-learnt.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/the-layers-to-happiness.html" rel="bookmark"
+                           title="Permalink to The layers to happiness">The layers to happiness</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2016-06-05T04:24:00+00:00">
+                Published: Sun 05 June 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+
+</footer><!-- /.post-info -->                <p>We always try to find happiness. We try to seek it, as it were an object to endeavor finding. But what if it wasn't an end goal, but a by product? What if it was like a shadow, only appearing in the absence of light, it only appears in the …</p>
+                <a class="readmore" href="/the-layers-to-happiness.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/five-actions-for-happiness-to-others-and-yourself.html" rel="bookmark"
+                           title="Permalink to Five actions for happiness (To others and yourself)">Five actions for happiness (To others and yourself)</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2016-04-19T11:16:00+00:00">
+                Published: Tue 19 April 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+
+</footer><!-- /.post-info -->                <p><strong>G.R.E.A.T</strong></p>
+<ol>
+<li>Give</li>
+<li>Relate</li>
+<li>Exercise</li>
+<li>Appreciate</li>
+<li>Teach yourself</li>
+</ol>
+<p>[<strong>Give</strong>]{style="text-decoration:underline;"}</p>
+<p>Giving is the greatest way to achieve happiness, both to the receiver and yourself. Giving can be done in many ways, such as money, words, and even time. By giving something you have to another …</p>
+                <a class="readmore" href="/five-actions-for-happiness-to-others-and-yourself.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/why-i-work.html" rel="bookmark"
+                           title="Permalink to Why I work">Why I work</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2016-04-18T15:48:00+00:00">
+                Published: Mon 18 April 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+
+</footer><!-- /.post-info -->                <p>After reading this book (still in progress) called Happiness by Richard Layard, it got me thinking on the subject i've been bothered for quite some time now: Why do we work?</p>
+<p>Here are a few simple points i've gathered:</p>
+<ol>
+<li>I work to be a useful contributing member of the society …</li></ol>
+                <a class="readmore" href="/why-i-work.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/hemorrhoidectomy.html" rel="bookmark"
+                           title="Permalink to Hemorrhoidectomy">Hemorrhoidectomy</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2016-04-18T15:20:00+00:00">
+                Published: Mon 18 April 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+
+</footer><!-- /.post-info -->                <p>Ive always had trouble spelling that word, but after going through it last Sunday (10th April), i've been searching up and reading about it so much, especially the recovery period.</p>
+<p>I'm writing this posts now, because i've been inspired by all other posts by people who have gone through hemorrhoidectomy …</p>
+                <a class="readmore" href="/hemorrhoidectomy.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/digging-into-happiness.html" rel="bookmark"
+                           title="Permalink to Digging into happiness">Digging into happiness</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2016-04-06T14:05:00+00:00">
+                Published: Wed 06 April 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+
+</footer><!-- /.post-info -->                <p>I realized that i am writing lesser now. lt appears thet somehow I find it to be a chore. Perhaps I will start writing shorter paragraphs, and more spontaneous posts. Something like tweets.</p>
+<p>These few days I have been thinking about happiness, probably due to my new job. After digging …</p>
+                <a class="readmore" href="/digging-into-happiness.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/the-stresses-at-work.html" rel="bookmark"
+                           title="Permalink to The stresses at work">The stresses at work</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2016-03-08T15:25:00+00:00">
+                Published: Tue 08 March 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+
+</footer><!-- /.post-info -->                <p>Does it motivate me?</p>
+<p>Do I wake up dying to go to work, or rather die than go to work?</p>
+<p>Is the process avoidable, or is there anyway I can improve it?</p>
+<p>No. No. No.</p>
+<p>I'm currently reading up on the tradeoffs for high-paying high-stress job, for a low-paying low-stress …</p>
+                <a class="readmore" href="/the-stresses-at-work.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/the-gusto-for-life.html" rel="bookmark"
+                           title="Permalink to The Gusto for life">The Gusto for life</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2016-02-09T10:31:00+00:00">
+                Published: Tue 09 February 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+
+</footer><!-- /.post-info -->                <p>How do you stay motivated in life? It constantly berates you, constantly throws repulsive things at you. Occasionally it gives you a flower and a lovely sight, but most of the time, believe me you, you'll be in a shit hole. So how does one stay positive in such a …</p>
+                <a class="readmore" href="/the-gusto-for-life.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/identification-of-personalities.html" rel="bookmark"
+                           title="Permalink to Identification of Personalities">Identification of Personalities</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2016-01-26T14:13:00+00:00">
+                Published: Tue 26 January 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+
+</footer><!-- /.post-info -->                <p>[Idea taken from Unlimited Power by Anthony Robbins]</p>
+<p>I recently finished reading this book by Anthony Robbins, called Unlimited Power. It teaches a lot of personal mastery techniques which, surprisingly to my highly skeptical nature, actually works!</p>
+<p>Here are a few high level abstractions of the lessons he taught:</p>
+<ol>
+<li>
+<p>[Changing …</p></li></ol>
+                <a class="readmore" href="/identification-of-personalities.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/the-i-in-i.html" rel="bookmark"
+                           title="Permalink to The I in Me">The I in Me</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2015-12-20T13:59:00+00:00">
+                Published: Sun 20 December 2015
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+
+</footer><!-- /.post-info -->                <p>Okay, i think i'm gonna update my blog more often now. And by more often i mean at least once a month. I find i always have all these thoughts in my mind that makes me question many things, but after i get home and play a few rounds of …</p>
+                <a class="readmore" href="/the-i-in-i.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/long-term-goals-and-short-term-decision-dichotomy.html" rel="bookmark"
+                           title="Permalink to Long term goals and Short term decision dichotomy">Long term goals and Short term decision dichotomy</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2015-09-06T05:43:00+00:00">
+                Published: Sun 06 September 2015
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+
+</footer><!-- /.post-info -->                <p>When we talk about goal setting, we have our Long term goals that we want to achieve within a certain period of time. The long term goal achievement rate is highly correlated to our short term decision making. However, <strong>the persistent separation of these 2 items can have detrimental effects …</strong></p>
+                <a class="readmore" href="/long-term-goals-and-short-term-decision-dichotomy.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/three-pins-to-two-holes.html" rel="bookmark"
+                           title="Permalink to Three pins to two holes">Three pins to two holes</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2015-05-11T17:19:00+00:00">
+                Published: Mon 11 May 2015
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+
+</footer><!-- /.post-info -->                <p>Know that this world was not made to accomodate you. Not everything will go according to your plan. Not all of your hopes will come true. Not everyone will like you.</p>
+<p>Reality is truely different from how we wish it to be, and often it can be hurting. We may …</p>
+                <a class="readmore" href="/three-pins-to-two-holes.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/finding-meaning-and-purpose-in-our-lives-importance-of-hope-and-idealism-seeing-more-in-others.html" rel="bookmark"
+                           title="Permalink to "Finding meaning and purpose in our lives -- importance of hope and idealism" Seeing more in others">"Finding meaning and purpose in our lives -- importance of hope and idealism" Seeing more in others</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2015-05-11T04:35:00+00:00">
+                Published: Mon 11 May 2015
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+
+</footer><!-- /.post-info -->                <p>https://youtu.be/p9sMoRUJQGA</p>
+<p>I find this video holding a lot of truth to it. It says that if we see someone for who they actually are, we are not doing justice to them. We are taking them merely at face value, which holds very little information or moral description …</p>
+                <a class="readmore" href="/finding-meaning-and-purpose-in-our-lives-importance-of-hope-and-idealism-seeing-more-in-others.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/the-separation-of-primal-wants-with-moral-needs.html" rel="bookmark"
+                           title="Permalink to The separation of Primal wants with Moral needs">The separation of Primal wants with Moral needs</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2015-04-25T16:12:00+00:00">
+                Published: Sat 25 April 2015
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+
+</footer><!-- /.post-info -->                <p>Part of me connects with the universe, understanding that the human life is fleeting and insignficant, that life should never be taken so seriously, because in the end, no one remembers the trivial bickerings but your own memory, which disappears with you as you perish in this vast planet floating …</p>
+                <a class="readmore" href="/the-separation-of-primal-wants-with-moral-needs.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/the-self-competition.html" rel="bookmark"
+                           title="Permalink to The Self-Competition">The Self-Competition</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2015-04-09T15:46:00+00:00">
+                Published: Thu 09 April 2015
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+<p>tags: <a href="/tag/competition.html">competition</a> <a href="/tag/improvement.html">improvement</a> <a href="/tag/self.html">self</a> </p>
+</footer><!-- /.post-info -->                <p>The world is absolutely relative. Kind of an oxymoron, but absolutely true. We find no worth in things, unless it is relative to something else. There needs to be a comparison to show the contrast, to show the greater value over something. Relativity thus requires at least one object in …</p>
+                <a class="readmore" href="/the-self-competition.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/our-life-is-a-stage.html" rel="bookmark"
+                           title="Permalink to Our life is a stage.">Our life is a stage.</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2015-02-15T16:27:00+00:00">
+                Published: Sun 15 February 2015
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+<p>tags: <a href="/tag/life.html">Life</a> <a href="/tag/people.html">people</a> <a href="/tag/self.html">self</a> <a href="/tag/society.html">society</a> </p>
+</footer><!-- /.post-info -->                <p>Our life is a stage. A play directed and acted by us and us alone. We are the main characters in our play, and all the other people in our lives are calefares. Sure, there are some really important people in your life, like family, friends and lovers. They are …</p>
+                <a class="readmore" href="/our-life-is-a-stage.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/on-governance.html" rel="bookmark"
+                           title="Permalink to On Governance">On Governance</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2015-01-27T14:26:00+00:00">
+                Published: Tue 27 January 2015
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+<p>tags: <a href="/tag/governance.html">governance</a> <a href="/tag/government.html">government</a> <a href="/tag/society.html">society</a> </p>
+</footer><!-- /.post-info -->                <p>The more incessant the denigration of government and duty, the quicker the domino pieces would fall, with the last and cardinal piece being the very defense of the nation.</p>
+<p>Pillars such as economics and social stability will be shaken in the absence of national identity, when you start hearing people …</p>
+                <a class="readmore" href="/on-governance.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/swimmers-body-illusion.html" rel="bookmark"
+                           title="Permalink to Swimmers Body Illusion.">Swimmers Body Illusion.</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-05-14T14:13:00+00:00">
+                Published: Wed 14 May 2014
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+<p>tags: <a href="/tag/life.html">Life</a> <a href="/tag/rolf-dobelli.html">Rolf Dobelli</a> <a href="/tag/swimmers-body-illusion.html">Swimmers body Illusion</a> </p>
+</footer><!-- /.post-info -->                <blockquote>
+<h2 id="theswimmers-body-illusion.--rolf-dobelli" style="color:#c9d9fb;">The Swimmers Body Illusion. - <a href="http://www.dobelli.com/">Rolf Dobelli</a></h2>
+</blockquote>
+<p>Are swimmer's body good looking because of their constant swimming activities? Or do they excel in swimming because of their good physic? It is important not to confuse the cause with the effect, but apparently it is happening almost everywhere.</p>
+<p>Education: People tend to …</p>
+                <a class="readmore" href="/swimmers-body-illusion.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/a-conversation-with-my-professor.html" rel="bookmark"
+                           title="Permalink to A Conversation with my Professor">A Conversation with my Professor</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-01-26T06:54:00+00:00">
+                Published: Sun 26 January 2014
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+<p>tags: <a href="/tag/non-realism.html">non-realism</a> <a href="/tag/philosophy.html">philosophy</a> <a href="/tag/realism.html">realism</a> <a href="/tag/religion.html">religion</a> </p>
+</footer><!-- /.post-info -->                <div dir="ltr">
+
+Below is the email conversation between me and professor regard the realism and non-realism view on religion. Realism views that a person who subscribes to religion attributes his faith solely in a divine being, while non-realism attributes it to human experiences and human feelings that they would search for a …</div>
+                <a class="readmore" href="/a-conversation-with-my-professor.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/a-theistic-affair-for-an-atheist-p-1.html" rel="bookmark"
+                           title="Permalink to A Theistic affair for an Atheist P.1">A Theistic affair for an Atheist P.1</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-01-20T13:26:00+00:00">
+                Published: Mon 20 January 2014
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/ramblings.html">Ramblings</a>.</p>
+<p>tags: <a href="/tag/atheist.html">Atheist</a> <a href="/tag/christianity.html">Christianity</a> <a href="/tag/chruch.html">Chruch</a> </p>
+</footer><!-- /.post-info -->                <p>My interest in religion has always been immensely vast. I've always been asking questions about the meaning of life and what happens after death, and apparently religion is the ONLY outlet that (attempts) to answer these variants of question.</p>
+<p>I've been a Buddhist for quite some time, say around 18-20 …</p>
+                <a class="readmore" href="/a-theistic-affair-for-an-atheist-p-1.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/about.html" rel="bookmark"
+                           title="Permalink to About">About</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-01-18T08:01:00+00:00">
+                Published: Sat 18 January 2014
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <p>This is an example of a page. Unlike posts, which are displayed on your blog’s front page in the order they’re published, pages are better suited for more timeless content that you want to be easily accessible, like your About or Contact information. Click the Edit link to …</p>
+                <a class="readmore" href="/about.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

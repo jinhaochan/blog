@@ -33,7 +33,7 @@ Similar to XGBoost, LightGBM is a gradient boosted tree based algorithm. Unlike 
 <!-- wp:image {"id":227} -->
 
 <figure class="wp-block-image">
-![](https://chanjinhao.files.wordpress.com/2018/12/1-AZsSoXb8lc5N6mnhqX5JCg-1.png){.wp-image-227}  
+![]({attach}media/2018/12/1-AZsSoXb8lc5N6mnhqX5JCg-1.png){.wp-image-227}  
 
 <figcaption>
 LightGBM leaf-wise growth. This allows for deeper vertical growth
@@ -45,7 +45,7 @@ LightGBM leaf-wise growth. This allows for deeper vertical growth
 <!-- wp:image {"id":228} -->
 
 <figure class="wp-block-image">
-![](https://chanjinhao.files.wordpress.com/2018/12/1-whSa8rY4sgFQj1rEcWr8Ag-1.png){.wp-image-228}  
+![]({attach}media/2018/12/1-whSa8rY4sgFQj1rEcWr8Ag-1.png){.wp-image-228}  
 
 <figcaption>
 Other gradient boosted algortihms grow level wise, which results in longer horizontal growth

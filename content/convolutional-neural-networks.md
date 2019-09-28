@@ -78,7 +78,7 @@ As we know, all models only take in numerical inputs to perform their actions. N
 <div class="wp-block-media-text alignwide">
 
 <figure class="wp-block-media-text__media">
-![](https://chanjinhao.files.wordpress.com/2018/12/1_zy1qfb9affzz66yxxoi2aw1.gif){.wp-image-190}
+![]({attach}media/2018/12/1_zy1qfb9affzz66yxxoi2aw1.gif){.wp-image-190}
 </figure>
 <div class="wp-block-media-text__content">
 
@@ -137,7 +137,7 @@ The term *convolution* refers to the resulting third function, as well as the 
 <div class="wp-block-media-text alignwide">
 
 <figure class="wp-block-media-text__media">
-![](https://chanjinhao.files.wordpress.com/2018/12/convolution_of_box_signal_with_itself2.gif){.wp-image-192}
+![]({attach}media/2018/12/convolution_of_box_signal_with_itself2.gif){.wp-image-192}
 </figure>
 <div class="wp-block-media-text__content">
 
@@ -190,7 +190,7 @@ Next, we take a smaller matrix of size *m x m*, where *m &lt; n*, and slide it
 <div class="wp-block-media-text alignwide" style="grid-template-columns:23% auto;">
 
 <figure class="wp-block-media-text__media">
-![](https://chanjinhao.files.wordpress.com/2018/12/screen-shot-2016-07-24-at-11-25-13-pm2.png){.wp-image-196}
+![]({attach}media/2018/12/screen-shot-2016-07-24-at-11-25-13-pm2.png){.wp-image-196}
 </figure>
 <div class="wp-block-media-text__content">
 
@@ -212,7 +212,7 @@ Image that has been converted to a matrix of numbers. For simplicity, we'll just
 <div class="wp-block-media-text alignwide" style="grid-template-columns:15% auto;">
 
 <figure class="wp-block-media-text__media">
-![](https://chanjinhao.files.wordpress.com/2018/12/screen-shot-2016-07-24-at-11-25-24-pm1.png){.wp-image-197}
+![]({attach}media/2018/12/screen-shot-2016-07-24-at-11-25-24-pm1.png){.wp-image-197}
 </figure>
 <div class="wp-block-media-text__content">
 
@@ -234,7 +234,7 @@ A smaller matrix, called a filter, that we'll use to slide over the original mat
 <div class="wp-block-media-text alignwide">
 
 <figure class="wp-block-media-text__media">
-![](https://chanjinhao.files.wordpress.com/2018/12/convolution_schematic.gif){.wp-image-198}
+![]({attach}media/2018/12/convolution_schematic.gif){.wp-image-198}
 </figure>
 <div class="wp-block-media-text__content">
 
@@ -265,7 +265,7 @@ The intuition behind this is that we are using the filter to extract features fr
 
 <!-- wp:paragraph {"align":"center"} -->
 
-![](https://chanjinhao.files.wordpress.com/2018/12/screen-shot-2016-08-05-at-11-03-00-pm.png){.wp-image-200}
+![]({attach}media/2018/12/screen-shot-2016-08-05-at-11-03-00-pm.png){.wp-image-200}
 
 <!-- /wp:paragraph -->
 
@@ -280,7 +280,7 @@ We can also use multiple filters to produce multiple Convoluted feature maps, wh
 <div class="wp-block-image">
 
 <figure class="aligncenter is-resized">
-![](https://chanjinhao.files.wordpress.com/2018/12/screen-shot-2016-08-10-at-3-42-35-am.png){.wp-image-204 width="374" height="188"}
+![]({attach}media/2018/12/screen-shot-2016-08-10-at-3-42-35-am.png){.wp-image-204 width="374" height="188"}
 </figure>
 
 </div>
@@ -339,7 +339,7 @@ The resulting feature map after applying ReLU is called a Rectified feature map.
 <!-- wp:image {"id":201} -->
 
 <figure class="wp-block-image">
-![](https://chanjinhao.files.wordpress.com/2018/12/screen-shot-2016-08-07-at-6-18-19-pm.png){.wp-image-201}  
+![]({attach}media/2018/12/screen-shot-2016-08-07-at-6-18-19-pm.png){.wp-image-201}  
 
 <figcaption>
 Convoluted feature map becomes a Rectified feature map, after ReLU is applied to each pixel.  
@@ -376,7 +376,7 @@ In doing Max pooling, we define yet another window size *k x k*, but in this ca
 <!-- wp:image {"id":203} -->
 
 <figure class="wp-block-image">
-![](https://chanjinhao.files.wordpress.com/2018/12/screen-shot-2016-08-10-at-3-38-39-am.png){.wp-image-203}  
+![]({attach}media/2018/12/screen-shot-2016-08-10-at-3-38-39-am.png){.wp-image-203}  
 
 <figcaption>
 A Max pooling window size of 2x2.  
@@ -448,7 +448,7 @@ We can repeat this step numerous times to reduce the image, and extract out impo
 <div class="wp-block-image">
 
 <figure class="aligncenter is-resized">
-![](https://chanjinhao.files.wordpress.com/2018/12/screen-shot-2016-08-08-at-2-26-09-am.png){.wp-image-205 width="606" height="144"}  
+![]({attach}media/2018/12/screen-shot-2016-08-08-at-2-26-09-am.png){.wp-image-205 width="606" height="144"}  
 <figcaption>
 Repeated Convolution + ReLU and Pooling to reduce the image and extract important features.
 </figcaption>
@@ -469,7 +469,7 @@ The more layers we have, the more complicated features we can extract out from t
 <div class="wp-block-media-text alignwide">
 
 <figure class="wp-block-media-text__media">
-![](https://chanjinhao.files.wordpress.com/2018/12/screen-shot-2016-08-10-at-12-58-30-pm.png){.wp-image-206}
+![]({attach}media/2018/12/screen-shot-2016-08-10-at-12-58-30-pm.png){.wp-image-206}
 </figure>
 <div class="wp-block-media-text__content">
 
@@ -511,7 +511,7 @@ In another example, we can visually see how the CNN breaks down an image using C
 <div class="wp-block-image">
 
 <figure class="aligncenter is-resized">
-![](https://chanjinhao.files.wordpress.com/2018/12/conv_all.png){.wp-image-207 width="748" height="423"}
+![]({attach}media/2018/12/conv_all.png){.wp-image-207 width="748" height="423"}
 </figure>
 
 </div>

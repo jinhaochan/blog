@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>A Pelican Blog - misc</title><link href="/" rel="alternate"></link><link href="/feeds/misc.atom.xml" rel="self"></link><id>/</id><updated>2019-01-14T22:13:00+00:00</updated><entry><title>No title [270]</title><link href="/270.html" rel="alternate"></link><published>2019-01-14T22:13:00+00:00</published><updated>2019-01-14T22:13:00+00:00</updated><author><name>jinhaochan</name></author><id>tag:None,2019-01-14:/270.html</id><content type="html"></content></entry><entry><title>No title [98]</title><link href="/98.html" rel="alternate"></link><published>2018-10-31T22:12:00+00:00</published><updated>2018-10-31T22:12:00+00:00</updated><author><name>jinhaochan</name></author><id>tag:None,2018-10-31:/98.html</id><content type="html"></content></entry><entry><title>Kaggle Data Science</title><link href="/datascience.html" rel="alternate"></link><published>2018-10-31T22:11:00+00:00</published><updated>2018-10-31T22:11:00+00:00</updated><author><name>jinhaochan</name></author><id>tag:None,2018-10-31:/datascience.html</id><summary type="html">&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;I'm branching out my learning into Data Science, mostly from Kaggle.&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;You'll find my Kaggle kernels here.&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:heading --&gt;
+
+&lt;h2&gt;Predicting Taxi Fare&lt;/h2&gt;
+&lt;!-- /wp:heading --&gt;
+
+&lt;!-- wp:separator --&gt;
+
+&lt;hr&gt;
+&lt;!-- /wp:separator --&gt;
+
+&lt;p&gt;&lt;/p&gt;
+&lt;!-- wp:paragraph --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.kaggle.com/c/new-york-city-taxi-fare-prediction"&gt;https://www.kaggle.com/c/new-york-city-taxi-fare-prediction&lt;/a&gt;&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;Notebook: &lt;a href="https://github.com/jinhaochan/TaxiFare/blob/master/Taxi%20Fares.ipynb"&gt;https://github.com/jinhaochan/TaxiFare/blob/master/Taxi%20Fares.ipynb&lt;/a&gt;&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;&lt;strong&gt;RMSE: 3.88522&lt;/strong&gt;&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;&lt;strong&gt;Model: XGBoost&lt;/strong&gt;&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;In this problem, I was supposed to predict …&lt;/p&gt;</summary><content type="html">&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;I'm branching out my learning into Data Science, mostly from Kaggle.&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;You'll find my Kaggle kernels here.&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:heading --&gt;
+
+&lt;h2&gt;Predicting Taxi Fare&lt;/h2&gt;
+&lt;!-- /wp:heading --&gt;
+
+&lt;!-- wp:separator --&gt;
+
+&lt;hr&gt;
+&lt;!-- /wp:separator --&gt;
+
+&lt;p&gt;&lt;/p&gt;
+&lt;!-- wp:paragraph --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.kaggle.com/c/new-york-city-taxi-fare-prediction"&gt;https://www.kaggle.com/c/new-york-city-taxi-fare-prediction&lt;/a&gt;&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;Notebook: &lt;a href="https://github.com/jinhaochan/TaxiFare/blob/master/Taxi%20Fares.ipynb"&gt;https://github.com/jinhaochan/TaxiFare/blob/master/Taxi%20Fares.ipynb&lt;/a&gt;&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;&lt;strong&gt;RMSE: 3.88522&lt;/strong&gt;&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;&lt;strong&gt;Model: XGBoost&lt;/strong&gt;&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;In this problem, I was supposed to predict taxi fares in NYC. It can be modeled as a regression problem.&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;There was a lot of data cleaning to do, with many odd numbered features such as passenger size, and coordinates on the water.&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;Without the airport features, my model has an RMSE of 4.14398. After adding in those features, it drastically dropped to 3.88522. Those are some really strong features!&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:heading --&gt;
+
+&lt;h2&gt;Movie Sentiment Analysis&lt;/h2&gt;
+&lt;!-- /wp:heading --&gt;
+
+&lt;!-- wp:separator --&gt;
+
+&lt;hr&gt;
+&lt;!-- /wp:separator --&gt;
+
+&lt;p&gt;&lt;/p&gt;
+&lt;!-- wp:paragraph --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.kaggle.com/c/movie-review-sentiment-analysis-kernels-only"&gt;https://www.kaggle.com/c/movie-review-sentiment-analysis-kernels-only&lt;/a&gt;&lt;a href="https://www.kaggle.com/earthshaker/lstm-cnn-glove-bidirectional-gru-aggregation"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;Notebook: &lt;a href="https://github.com/Charmanderander/SentimentAnalysis/blob/master/sentanalysis.ipynb"&gt;https://github.com/jinhaochan/SentimentAnalysis/blob/master/sentanalysis.ipynb&lt;/a&gt;&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;&lt;strong&gt;Accuracy: 0.65095&lt;/strong&gt;&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;&lt;strong&gt;Model: Ensemble by Voting&lt;/strong&gt;&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;In this problem, we were given a collection of phrases, which were broken down from sentences. Instead of predicting the sentiment for each sentence, we had to predict the sentiment for each phrase.&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;The pre-processing steps I did were&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:list {"ordered":true} --&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Lower casing&lt;/li&gt;
+&lt;li&gt;Removing non alphabets&lt;/li&gt;
+&lt;li&gt;Lemmatization&lt;/li&gt;
+&lt;/ol&gt;
+&lt;!-- /wp:list --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;The final output for each phrase was then chosen by voting from all the models.&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:list {"ordered":true} --&gt;
+
+&lt;ol&gt;
+&lt;li&gt;LSTM&lt;/li&gt;
+&lt;li&gt;CNN&lt;/li&gt;
+&lt;li&gt;Glove Transfer-Learning with Bidirectional GRU&lt;/li&gt;
+&lt;/ol&gt;
+&lt;!-- /wp:list --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;Interestingly enough, Glove + CNN performs poorer than just CNN. This may be because the word vectors trained in Glove were in a different context (i.e. not Movie Sentiment Analysis)&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:heading --&gt;
+
+&lt;h2&gt;Predicting Future Sales&lt;/h2&gt;
+&lt;!-- /wp:heading --&gt;
+
+&lt;!-- wp:separator --&gt;
+
+&lt;hr&gt;
+&lt;!-- /wp:separator --&gt;
+
+&lt;p&gt;&lt;/p&gt;
+&lt;!-- wp:paragraph --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.kaggle.com/c/competitive-data-science-predict-future-sales"&gt;https://www.kaggle.com/c/competitive-data-science-predict-future-sales&lt;/a&gt;&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;Notebook: &lt;a href="https://github.com/Charmanderander/salesforcast/blob/master/saleforecast.ipynb"&gt;https://github.com/jinhaochan/salesforcast/blob/master/saleforecast.ipynb&lt;/a&gt;&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;&lt;strong&gt;RMSE: 1.16462&lt;/strong&gt;&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;&lt;strong&gt;Model: LSTM + GRU&lt;/strong&gt;&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;In this competition, we had to predict what the next month's sale was for each item for each shop.&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;The data given to us was daily sales for each item, so we had to do some data aggregation to convert it to a monthly sales value.&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;We were given 33 months of training data, so I modeled it to a time series problem.&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;For training, months 0 - 32 was the training data, and month 33 was the target value.&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;For testing, months 1 - 33 was the testing data, and we need to predict the values for month 34.&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;The model I used was a 2 layer GRU using a dropout layer of 0.3  &lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;</content></entry><entry><title>Non-Kaggle</title><link href="/non-kaggle.html" rel="alternate"></link><published>2018-10-31T21:43:00+00:00</published><updated>2018-10-31T21:43:00+00:00</updated><author><name>jinhaochan</name></author><id>tag:None,2018-10-31:/non-kaggle.html</id><summary type="html">&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;Here, you'll find Data science projects that work on data sets not from Kaggle.&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:heading {"level":3} --&gt;
+
+&lt;h3&gt;Detecting Botnet traffic&lt;/h3&gt;
+&lt;!-- /wp:heading --&gt;
+
+&lt;!-- wp:separator --&gt;
+
+&lt;hr&gt;
+&lt;!-- /wp:separator --&gt;
+
+&lt;p&gt;&lt;/p&gt;
+&lt;!-- wp:paragraph --&gt;&lt;/p&gt;
+&lt;p&gt;Dataset: &lt;a href="https://mcfp.weebly.com/the-ctu-13-dataset-a-labeled-dataset-with-botnet-normal-and-background-traffic.html"&gt;https://mcfp.weebly.com/the-ctu-13-dataset-a-labeled-dataset-with-botnet-normal-and-background-traffic.html&lt;/a&gt;&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;Notebook: &lt;a href="https://github.com/Charmanderander/BotnetDetection/blob/master/NetFlow-Botnet.ipynb"&gt;https://github.com/jinhaochan/BotnetDetection/blob/master/NetFlow-Botnet.ipynb&lt;/a&gt;&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;In this data set, we were given traffic of both Botnet and normal traffic. I built …&lt;/p&gt;</summary><content type="html">&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;Here, you'll find Data science projects that work on data sets not from Kaggle.&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:heading {"level":3} --&gt;
+
+&lt;h3&gt;Detecting Botnet traffic&lt;/h3&gt;
+&lt;!-- /wp:heading --&gt;
+
+&lt;!-- wp:separator --&gt;
+
+&lt;hr&gt;
+&lt;!-- /wp:separator --&gt;
+
+&lt;p&gt;&lt;/p&gt;
+&lt;!-- wp:paragraph --&gt;&lt;/p&gt;
+&lt;p&gt;Dataset: &lt;a href="https://mcfp.weebly.com/the-ctu-13-dataset-a-labeled-dataset-with-botnet-normal-and-background-traffic.html"&gt;https://mcfp.weebly.com/the-ctu-13-dataset-a-labeled-dataset-with-botnet-normal-and-background-traffic.html&lt;/a&gt;&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;Notebook: &lt;a href="https://github.com/Charmanderander/BotnetDetection/blob/master/NetFlow-Botnet.ipynb"&gt;https://github.com/jinhaochan/BotnetDetection/blob/master/NetFlow-Botnet.ipynb&lt;/a&gt;&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;In this data set, we were given traffic of both Botnet and normal traffic. I built a classifier to determine if a given traffic is anomalous or not.&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;I used the NetFlow data, and their features to build my model. I removed all source and destination information, as I wanted my classifier to learn solely on network behavioral data. And also, in reality, all the source and destination information will be different, so there is no use for my model to learn them.&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;In this problem, the data set was hugely unbalanced. I had significantly smaller set of Botnet traffic. To deal with this, I upsampled the amount of Botnet traffic.&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;
+
+&lt;!-- wp:paragraph --&gt;
+
+&lt;p&gt;Also, I had to find a balance between precision and recall. In detecting Botnet traffic, having a low precision and high recall is more desirable, as the cost of precision is cheap. It is more important for me to catch every single traffic that is a Botnet.&lt;/p&gt;
+&lt;!-- /wp:paragraph --&gt;</content></entry><entry><title>No title [70]</title><link href="/70.html" rel="alternate"></link><published>2018-10-30T22:55:00+00:00</published><updated>2018-10-30T22:55:00+00:00</updated><author><name>jinhaochan</name></author><id>tag:None,2018-10-30:/70.html</id><content type="html"></content></entry><entry><title>Side Projects</title><link href="/fullstack-website.html" rel="alternate"></link><published>2018-10-30T22:38:00+00:00</published><updated>2018-10-30T22:38:00+00:00</updated><author><name>jinhaochan</name></author><id>tag:None,2018-10-30:/fullstack-website.html</id><summary type="html">&lt;p&gt;When I'm not busy at work churning out ideas and code, I'll be dabbling around with other technologies.&lt;/p&gt;
+&lt;p&gt;My goals whenever I try out a new technology, is to not only learn how it works, but to be proficient enough to create a simple product.&lt;/p&gt;
+&lt;p&gt;Here are some of the …&lt;/p&gt;</summary><content type="html">&lt;p&gt;When I'm not busy at work churning out ideas and code, I'll be dabbling around with other technologies.&lt;/p&gt;
+&lt;p&gt;My goals whenever I try out a new technology, is to not only learn how it works, but to be proficient enough to create a simple product.&lt;/p&gt;
+&lt;p&gt;Here are some of the things I've made!&lt;/p&gt;
+&lt;p&gt;[&lt;strong&gt;Full Stack Web Application&lt;/strong&gt;]{style="text-decoration:underline;"}&lt;/p&gt;
+&lt;p&gt;This web app was made for fun as a joke between friends.&lt;/p&gt;
+&lt;p&gt;The stack I used was Django, Bootstrap, and Postgres. It is hosted on Heroku.&lt;/p&gt;
+&lt;p&gt;It allows users to login via Facebook, and write posts to suggest challenges to my friends&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://stormy-caverns-87920.herokuapp.com/"&gt;https://stormy-caverns-87920.herokuapp.com/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;[Android Mobile Game]{style="text-decoration:underline;"}&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;I decided to dabble around with writing a mobile application, and came up with a simple game, where players had to tap either Left or Right, depending on the instruction shown on the screen.&lt;/p&gt;
+&lt;p&gt;I successfully published it on the App Store, and it currently has a 4 Star Review (By 2 people. It's mean to be a joke). However, it is currently unavailable on the App store, as there was some settings that need to be changed, and I decided it wasn't worth the effort.&lt;/p&gt;
+&lt;p&gt;If anyone wants me to republish it, let me know!&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/Charmanderander/Tapper"&gt;https://github.com/Charmanderander/Tapper&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;[Telegram Bot for Guitar Chords]{style="text-decoration:underline;"}&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Do you play the guitar? Ever wanted chords to a song now, but feeling too lazy to browse your mobile phone to search for chords, and even if you find a link, it's poorly optimized for the mobile screen, resulting in you not being able to see the entire chords in one line?&lt;/p&gt;
+&lt;p&gt;If so, use this bot!&lt;/p&gt;
+&lt;p&gt;When you send it a name, it searches and crawls &lt;a href="https://www.ultimate-guitar.com/"&gt;https://www.ultimate-guitar.com/&lt;/a&gt; for the song, and returns you the chords in a readable format!&lt;/p&gt;
+&lt;p&gt;The bot is currently not running, because I can't find a more permanent place to host it other than my Raspberry Pi.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/Charmanderander/telegramBot"&gt;https://github.com/Charmanderander/telegramBot&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;[Automated LumberJack Game on Telegram]{style="text-decoration:underline;"}&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Playing around with C#, I built a Windows executable program to automatically play the LumberJack game on Telegram.&lt;/p&gt;
+&lt;p&gt;It uses a basic form of image recognition to find the play zone, and send commands based on the current position of the Lumber Jack&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/Charmanderander/LumberHack"&gt;https://github.com/Charmanderander/LumberHack&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;... More to come!&lt;/p&gt;</content></entry><entry><title>No title [61]</title><link href="/61.html" rel="alternate"></link><published>2018-10-30T22:31:00+00:00</published><updated>2018-10-30T22:31:00+00:00</updated><author><name>jinhaochan</name></author><id>tag:None,2018-10-30:/61.html</id><content type="html"></content></entry><entry><title>Contact</title><link href="/contact.html" rel="alternate"></link><published>2018-07-10T09:52:00+00:00</published><updated>2018-07-10T09:52:00+00:00</updated><author><name>jinhaochan</name></author><id>tag:None,2018-07-10:/contact.html</id><content type="html">&lt;p&gt;[contact-form][contact-field label="Name" type="name" required="1"/][contact-field label="Email" type="email" required="1"/][contact-field label="Comment" type="textarea" required="1"/][/contact-form]&lt;/p&gt;</content></entry><entry><title>About</title><link href="/about.html" rel="alternate"></link><published>2014-01-18T08:01:00+00:00</published><updated>2014-01-18T08:01:00+00:00</updated><author><name>jinhaochan</name></author><id>tag:None,2014-01-18:/about.html</id><summary type="html">&lt;p&gt;This is an example of a page. Unlike posts, which are displayed on your blog’s front page in the order they’re published, pages are better suited for more timeless content that you want to be easily accessible, like your About or Contact information. Click the Edit link to …&lt;/p&gt;</summary><content type="html">&lt;p&gt;This is an example of a page. Unlike posts, which are displayed on your blog’s front page in the order they’re published, pages are better suited for more timeless content that you want to be easily accessible, like your About or Contact information. Click the Edit link to make changes to this page or &lt;a href="/wp-admin/post-new.php?post_type=page" title="Direct link to Add New in the Admin Dashboard"&gt;add another page&lt;/a&gt;.&lt;/p&gt;</content></entry></feed>

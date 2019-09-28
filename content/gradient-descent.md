@@ -52,7 +52,7 @@ We can plot all possible weights w1 and w2 can have, to all possible errors on a
 <!-- wp:image {"id":165} -->
 
 <figure class="wp-block-image">
-![](https://chanjinhao.files.wordpress.com/2018/11/gradient_descent_method.png){.wp-image-165}  
+![]({attach}media/2018/11/gradient_descent_method.png){.wp-image-165}  
 
 <figcaption>
 The X and Y axis represents the values of w1 and w2.  
@@ -77,7 +77,7 @@ So how do we know, at each point of time on the bowl shape, where do we move to?
 <!-- wp:image {"id":166} -->
 
 <figure class="wp-block-image">
-![](https://chanjinhao.files.wordpress.com/2018/11/512px-gradient_descent-svg.png){.wp-image-166}  
+![]({attach}media/2018/11/512px-gradient_descent-svg.png){.wp-image-166}  
 
 <figcaption>
 Top down view of the bowl. As we shift w1 and w2 around, the point on the bowl shifts as well. We want the point to slowly traverse towards the center, where error is minimized.
@@ -132,7 +132,7 @@ In reality, the error surface isn't always so smooth in the shape of a bowl, but
 <!-- wp:image {"id":167} -->
 
 <figure class="wp-block-image">
-![](https://chanjinhao.files.wordpress.com/2018/11/saddle_point-svg.png){.wp-image-167}  
+![]({attach}media/2018/11/saddle_point-svg.png){.wp-image-167}  
 
 <figcaption>
 The point stops at a saddle point, which has a zero gradient as well. Clearly that is not the lowest point on the graph, and our algorithm has prematurely halted.  
