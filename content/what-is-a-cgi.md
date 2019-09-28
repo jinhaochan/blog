@@ -29,7 +29,7 @@ The CGI program takes in input from the user via the webpage, does the processin
 <div class="wp-block-image">
 
 <figure class="aligncenter">
-![]({attach}media/2019/04/cgi.gif){.wp-image-392}
+![placeholder]({attach}media/2019/04/cgi.gif){.wp-image-392}
 </figure>
 
 </div>

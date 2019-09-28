@@ -106,7 +106,7 @@ For example if we have 5 different categories of cars, and we change them numeri
 
 So to prevent this problem of false importance, we use one-hot-encoding. The idea of one-hot-encoding can be visually represented as such
 
-![]({attach}media/2018/12/mtimfxh.png?w=300){.alignnone .wp-image-170 width="560" height="220"}
+![placeholder]({attach}media/2018/12/mtimfxh.png?w=300){.alignnone .wp-image-170 width="560" height="220"}
 
 This way, the categories are represented as 1s and 0s, which minimizes the possibility of learning false importance.
 

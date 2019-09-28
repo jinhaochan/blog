@@ -140,7 +140,7 @@
 <p>For discrete data, the categories in the data can be one-hot-encoded. The reason why we do that is because when we change the categories to numeric values, we don't want to accidentally imply meaning and hierarchy between the numbers.</p>
 <p>For example if we have 5 different categories of cars, and we change them numerically to 0, 1, 2, 3, 4, the machine may end up learning that the 4th category is more important than the 0th category, based on the simple fact that 4 is greater than 0.</p>
 <p>So to prevent this problem of false importance, we use one-hot-encoding. The idea of one-hot-encoding can be visually represented as such</p>
-<p><img alt="" class="alignnone wp-image-170" height="220" src="/media/2018/12/mtimfxh.png?w=300" width="560"></p>
+<p><img alt="placeholder" class="alignnone wp-image-170" height="220" src="/media/2018/12/mtimfxh.png?w=300" width="560"></p>
 <p>This way, the categories are represented as 1s and 0s, which minimizes the possibility of learning false importance.</p>
 <p>We should take note that one-hot-encoding should be done on your train and test set combined. The reason why we want to do this is so we don't miss out data that is in the test and not in the train, vice-versa. If there is missing data, and we perform one-hot-encoding separately on the train and test, we will end up with missing columns, as one-hot-encoding does not generate them.</p>
 <h3>Feature Interaction</h3>

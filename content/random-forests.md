@@ -36,7 +36,7 @@ Decision Trees try to encode and separate the data into if-else rules. It breaks
 <div class="wp-block-image">
 
 <figure class="aligncenter">
-![]({attach}media/2019/03/1_jaey3kp7tu2q6hn6lasmrw.png){.wp-image-331}
+![placeholder]({attach}media/2019/03/1_jaey3kp7tu2q6hn6lasmrw.png){.wp-image-331}
 </figure>
 
 </div>
@@ -60,7 +60,7 @@ Intuitively, we want to reduce entropy of the data, so that we can separate them
 <div class="wp-block-image">
 
 <figure class="aligncenter">
-![]({attach}media/2019/03/0_klhgarh43lgdoksn.png){.wp-image-332}  
+![placeholder]({attach}media/2019/03/0_klhgarh43lgdoksn.png){.wp-image-332}  
 <figcaption>
 When there are 0 samples of class P, Entropy is 0.  
 When 0.5 of the samples are class P, Entropy is 1.  
@@ -117,7 +117,7 @@ Ensembling revolves around the idea of putting together several weak learners to
 <div class="wp-block-image">
 
 <figure class="aligncenter">
-![]({attach}media/2019/03/skitch.jpg){.wp-image-333}  
+![placeholder]({attach}media/2019/03/skitch.jpg){.wp-image-333}  
 <figcaption>
 Blue dots represent the data points.  
 Grey lines represent the weak learners.  

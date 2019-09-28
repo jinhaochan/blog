@@ -52,7 +52,7 @@ The first source that contributes to a local minima is **model identifiability**
 <!-- wp:image {"id":181,"width":435,"height":388} -->
 
 <figure class="wp-block-image is-resized">
-![]({attach}media/2018/12/multi-layer_neural_network-vector2.png){.wp-image-181 width="435" height="388"}  
+![placeholder]({attach}media/2018/12/multi-layer_neural_network-vector2.png){.wp-image-181 width="435" height="388"}  
 
 <figcaption>
 Different paths and connections in the neural network may give the same output. This give rise to the characteristics of being non-identifiable.
@@ -174,7 +174,7 @@ This approach of remembering previous gradients is called **Momentum**. This tec
 <!-- wp:image {"id":178} -->
 
 <figure class="wp-block-image">
-![]({attach}media/2018/12/movingaverage.gif){.wp-image-178}  
+![placeholder]({attach}media/2018/12/movingaverage.gif){.wp-image-178}  
 
 <figcaption>
 Fluctuations in the stock market price are reduced by looking at the averag

@@ -48,7 +48,7 @@ The mathematical definition of Regularization is the process of adding informati
 <div class="wp-block-image">
 
 <figure class="aligncenter is-resized">
-![]({attach}media/2019/01/1280px-regularization.png){.wp-image-248 width="238" height="228"}  
+![placeholder]({attach}media/2019/01/1280px-regularization.png){.wp-image-248 width="238" height="228"}  
 <figcaption>
 The blue line shows the model before regularization, while the green line shows the model after regularization.  
   
@@ -88,7 +88,7 @@ To put this into a machine learning context, for each model we use, we have a lo
 <!-- wp:image {"id":249} -->
 
 <figure class="wp-block-image">
-![]({attach}media/2019/01/rss.png){.wp-image-249}  
+![placeholder]({attach}media/2019/01/rss.png){.wp-image-249}  
 
 <figcaption>
 RSS loss function we want to minimize
@@ -125,7 +125,7 @@ To combat this, we add in a regularization factor, which will shrink the estimat
 <!-- wp:image {"id":250} -->
 
 <figure class="wp-block-image">
-![]({attach}media/2019/01/ridge.png){.wp-image-250}
+![placeholder]({attach}media/2019/01/ridge.png){.wp-image-250}
 
 </figure>
 <!-- /wp:image -->
@@ -164,7 +164,7 @@ When ***λ→∞***, the penalty term, the penalty term grows large, and your es
 <!-- wp:image {"id":251} -->
 
 <figure class="wp-block-image">
-![]({attach}media/2019/01/lasso.png){.wp-image-251}
+![placeholder]({attach}media/2019/01/lasso.png){.wp-image-251}
 
 </figure>
 <!-- /wp:image -->
@@ -228,7 +228,7 @@ Regularization in deep learning works by occasionally ignoring a fraction of the
 <!-- wp:image {"id":252} -->
 
 <figure class="wp-block-image">
-![]({attach}media/2019/01/dropout.png){.wp-image-252}
+![placeholder]({attach}media/2019/01/dropout.png){.wp-image-252}
 
 </figure>
 <!-- /wp:image -->
