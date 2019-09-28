@@ -85,9 +85,9 @@ The top line of an LSTM cell represents the cell state
 
 <div class="wp-block-image">
 
-<figure class="aligncenter">
+
 ![placeholder]({attach}media/2019/03/lstm3-c-line.png){.wp-image-357}
-</figure>
+
 
 </div>
 
@@ -159,7 +159,7 @@ In all the 3 gates, there exists the common Sigmoid layer. This layer outputs a 
 <figcaption>
 The common Sigmoid layer in all 3 gates
 </figcaption>
-</figure>
+
 
 </div>
 
@@ -212,7 +212,7 @@ This gate has the Sigmoid activation function. It takes in the previous time ste
 <figure class="wp-block-image">
 ![placeholder]({attach}media/2019/03/lstm3-focus-f.png){.wp-image-359}
 
-</figure>
+
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
@@ -244,7 +244,7 @@ The next gate is the input gate, which is a combination of both the Sigmoid and 
 <figure class="wp-block-image">
 ![placeholder]({attach}media/2019/03/lstm3-focus-i.png){.wp-image-360}
 
-</figure>
+
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
@@ -288,7 +288,7 @@ The last gate, output gate, decides what value the cell would output. The output
 <figure class="wp-block-image">
 ![placeholder]({attach}media/2019/03/lstm3-focus-o.png){.wp-image-361}
 
-</figure>
+
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
@@ -327,7 +327,7 @@ The cell states in each LSTM cell are modified either by the forget gate, or the
 <figure class="wp-block-image">
 ![placeholder]({attach}media/2019/03/lstm3-focus-c-2.png){.wp-image-364}
 
-</figure>
+
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
@@ -432,12 +432,12 @@ The key to LSTM preventing the vanexplgrad (I just made that up) is cell state u
 
 <div class="wp-block-image">
 
-<figure class="aligncenter">
+
 ![placeholder]({attach}media/2019/03/untitled-1.png){.wp-image-369}  
 <figcaption>
 Calculating the current cell state using values from the previous cell state
 </figcaption>
-</figure>
+
 
 </div>
 
@@ -461,12 +461,12 @@ When performing backpropagation, we find the derivative w.r.t the error. This gi
 
 <div class="wp-block-image">
 
-<figure class="aligncenter">
+
 ![placeholder]({attach}media/2019/03/2.png){.wp-image-368}  
 <figcaption>
 Derivative of w.r.t the error
 </figcaption>
-</figure>
+
 
 </div>
 

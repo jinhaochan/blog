@@ -34,12 +34,12 @@ For example, writing this piece of code fetches the image resource from www.w3sc
 
 <div class="wp-block-image">
 
-<figure class="aligncenter">
+
 ![W3Schools.com](https://www.w3schools.com/images/w3schools_green.jpg)  
 <figcaption>
 Image retrieved from w3 schools
 </figcaption>
-</figure>
+
 
 </div>
 

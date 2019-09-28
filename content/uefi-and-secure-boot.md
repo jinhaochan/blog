@@ -52,7 +52,7 @@ UEFI provides faster boot time, more security features (such as Secure Boot), an
 Side by side visual comparison of BIOS and UEFI
 
 </figcaption>
-</figure>
+
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->

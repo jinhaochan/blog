@@ -59,7 +59,7 @@ The X and Y axis represents the values of w1 and w2.
 The Z axis represents the values of the error.
 
 </figcaption>
-</figure>
+
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
@@ -83,7 +83,7 @@ So how do we know, at each point of time on the bowl shape, where do we move to?
 Top down view of the bowl. As we shift w1 and w2 around, the point on the bowl shifts as well. We want the point to slowly traverse towards the center, where error is minimized.
 
 </figcaption>
-</figure>
+
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
@@ -138,7 +138,7 @@ In reality, the error surface isn't always so smooth in the shape of a bowl, but
 The point stops at a saddle point, which has a zero gradient as well. Clearly that is not the lowest point on the graph, and our algorithm has prematurely halted.  
 
 </figcaption>
-</figure>
+
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->

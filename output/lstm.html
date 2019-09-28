@@ -151,9 +151,8 @@
 
 <div class="wp-block-image">
 
-<figure class="aligncenter">
 ![placeholder]({attach}media/2019/03/lstm3-c-line.png){.wp-image-357}
-</figure>
+
 
 </div>
 
@@ -217,7 +216,7 @@
 <figcaption>
 The common Sigmoid layer in all 3 gates
 </figcaption>
-</figure>
+
 
 </div>
 
@@ -263,28 +262,30 @@ The common Sigmoid layer in all 3 gates
 <figure class="wp-block-image">
 ![placeholder]({attach}media/2019/03/lstm3-focus-f.png){.wp-image-359}
 
-</figure>
-
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
 
-<p>The two inputs are concatenated, and passed through the Sigmoid layer.</p>
+The two inputs are concatenated, and passed through the Sigmoid layer.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>Recall that a Sigmoid activation function outputs a value from 0 to 1. A value of 0 means completely forget this input value, while 1 means to remember the value entirely.</p>
+Recall that a Sigmoid activation function outputs a value from 0 to 1. A value of 0 means completely forget this input value, while 1 means to remember the value entirely.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":4} -->
 
-<h4>Input Gate</h4>
+#### Input Gate
+
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
 
-<p>The next gate is the input gate, which is a combination of both the Sigmoid and tanh activation function. This gate decides what new information to add to the cell state.</p>
+The next gate is the input gate, which is a combination of both the Sigmoid and tanh activation function. This gate decides what new information to add to the cell state.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"id":360} -->
@@ -292,38 +293,43 @@ The common Sigmoid layer in all 3 gates
 <figure class="wp-block-image">
 ![placeholder]({attach}media/2019/03/lstm3-focus-i.png){.wp-image-360}
 
-</figure>
 
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
 
-<p>There are two steps in the input gate phase</p>
+There are two steps in the input gate phase
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>In the first step, the output of the previous time step and the input of the current time step are concatenated together, and passed into a Sigmoid. This layer decides which cell state values to update. (0 means do not update, 1 means update entirely)</p>
+In the first step, the output of the previous time step and the input of the current time step are concatenated together, and passed into a Sigmoid. This layer decides which cell state values to update. (0 means do not update, 1 means update entirely)
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>The inputs are also passed into a tanh activation function, which tells the model what to update the cells states with.</p>
+The inputs are also passed into a tanh activation function, which tells the model what to update the cells states with.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>The multiplicative combination of these two outputs tells us which cell state to update (from the sigmoid layer), and what to update it with (tanh layer)</p>
+The multiplicative combination of these two outputs tells us which cell state to update (from the sigmoid layer), and what to update it with (tanh layer)
+
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":4} -->
 
-<h4>Output Gate</h4>
+#### Output Gate
+
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
 
-<p>The last gate, output gate, decides what value the cell would output. The output is derived from multiplying the outputs from the Sigmoid layer and tanh layer</p>
+The last gate, output gate, decides what value the cell would output. The output is derived from multiplying the outputs from the Sigmoid layer and tanh layer
+
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"id":361} -->
@@ -331,33 +337,38 @@ The common Sigmoid layer in all 3 gates
 <figure class="wp-block-image">
 ![placeholder]({attach}media/2019/03/lstm3-focus-o.png){.wp-image-361}
 
-</figure>
 
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
 
-<p>The Sigmoid layer takes in the previous and current time step values, and outputs values 0 to 1 for each value in the cell. A value of 0 means do not output this cell state value at all, and 1 means to output the entire value.</p>
+The Sigmoid layer takes in the previous and current time step values, and outputs values 0 to 1 for each value in the cell. A value of 0 means do not output this cell state value at all, and 1 means to output the entire value.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>The tanh layer takes in the current cell state, which scales the values to be from -1 to 1. This value is then multiplied by the output of the Sigmoid layer to get the final output value.</p>
+The tanh layer takes in the current cell state, which scales the values to be from -1 to 1. This value is then multiplied by the output of the Sigmoid layer to get the final output value.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3} -->
 
-<h3>Modification of the Cell State</h3>
+### Modification of the Cell State
+
 <!-- /wp:heading -->
 
 <!-- wp:separator -->
 
-<hr>
+------------------------------------------------------------------------
+
 <!-- /wp:separator -->
 
-<p></p>
-<!-- wp:paragraph --></p>
-<p>The cell states in each LSTM cell are modified either by the forget gate, or the input gate.</p>
+</p>
+<!-- wp:paragraph -->
+
+The cell states in each LSTM cell are modified either by the forget gate, or the input gate.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"id":364} -->
@@ -365,100 +376,117 @@ The common Sigmoid layer in all 3 gates
 <figure class="wp-block-image">
 ![placeholder]({attach}media/2019/03/lstm3-focus-c-2.png){.wp-image-364}
 
-</figure>
 
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
 
-<p>The forget gate outputs values 0-1, and is multiplied by the cell state. Cell states multiplied by 0 will be completely forgotten, while those multiplied by value &gt; 0 will be remembered by varying degrees.</p>
+The forget gate outputs values 0-1, and is multiplied by the cell state. Cell states multiplied by 0 will be completely forgotten, while those multiplied by value &gt; 0 will be remembered by varying degrees.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>The input gate then updates each value in the cell state by a candidate amount (from the tanh layer), scaled by a factor (decided from the Sigmoid layer)</p>
+The input gate then updates each value in the cell state by a candidate amount (from the tanh layer), scaled by a factor (decided from the Sigmoid layer)
+
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3} -->
 
-<h3>Conclusion</h3>
+### Conclusion
+
 <!-- /wp:heading -->
 
 <!-- wp:separator -->
 
-<hr>
+------------------------------------------------------------------------
+
 <!-- /wp:separator -->
 
-<p></p>
-<!-- wp:paragraph --></p>
-<p>In each LSTM cell, there contains a cell state.</p>
+</p>
+<!-- wp:paragraph -->
+
+In each LSTM cell, there contains a cell state.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>Forget gate decides what to drop from the cell state</p>
+Forget gate decides what to drop from the cell state
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>Input gate creates candidate values to update the cell state</p>
+Input gate creates candidate values to update the cell state
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>Output gate decides what values to output from the cell state</p>
+Output gate decides what values to output from the cell state
+
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3} -->
 
-<h3>Final Notes</h3>
+### Final Notes
+
 <!-- /wp:heading -->
 
 <!-- wp:separator -->
 
-<hr>
+------------------------------------------------------------------------
+
 <!-- /wp:separator -->
 
-<p></p>
-<!-- wp:paragraph --></p>
-<p>I usually end with the conclusion, but all the information above was all the technical aspects of an LSTM. Here are some further questions relating to LSTM.</p>
+</p>
+<!-- wp:paragraph -->
+
+I usually end with the conclusion, but all the information above was all the technical aspects of an LSTM. Here are some further questions relating to LSTM.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>Q: What are you actually training when you do your Backpropagation through time on an LSTM?</p>
+Q: What are you actually training when you do your Backpropagation through time on an LSTM?
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>A: Recall that the gates have to control what to forget, input and output from each LSTM cell. What exactly to forget, input and output are the variables being trained.</p>
+A: Recall that the gates have to control what to forget, input and output from each LSTM cell. What exactly to forget, input and output are the variables being trained.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>Q: So... how does it combat vanishing/exploding gradients?</p>
+Q: So... how does it combat vanishing/exploding gradients?
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>Gradients explode when their values are greater than 1, and vanish when their values are lesser than 1, and are backpropagated for too large a time step.</p>
+Gradients explode when their values are greater than 1, and vanish when their values are lesser than 1, and are backpropagated for too large a time step.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>The key to LSTM preventing the vanexplgrad (I just made that up) is cell state updating step. Below shows the formula for updating the cell</p>
+The key to LSTM preventing the vanexplgrad (I just made that up) is cell state updating step. Below shows the formula for updating the cell
+
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"id":369,"align":"center"} -->
 
 <div class="wp-block-image">
 
-<figure class="aligncenter">
+
 ![placeholder]({attach}media/2019/03/untitled-1.png){.wp-image-369}  
 <figcaption>
 Calculating the current cell state using values from the previous cell state
 </figcaption>
-</figure>
+
 
 </div>
 
@@ -466,28 +494,28 @@ Calculating the current cell state using values from the previous cell state
 
 <!-- wp:list -->
 
-<ul>
-<li><code>c(t)</code> is the current cell state to compute</li>
-<li><code>i</code> is the input gate that decides which cell state to update, <code>g</code> is the actual value changes to be made to the cell state. These two are multiplied together to get final cell state changes.</li>
-<li><code>f</code> is the forget gate, and <code>c(t-1)</code> is the previous cell state. These two are multiplied to drop values from the previous cell state.</li>
-</ul>
+-   `c(t)` is the current cell state to compute
+-   `i` is the input gate that decides which cell state to update, `g` is the actual value changes to be made to the cell state. These two are multiplied together to get final cell state changes.
+-   `f` is the forget gate, and `c(t-1)` is the previous cell state. These two are multiplied to drop values from the previous cell state.
+
 <!-- /wp:list -->
 
 <!-- wp:paragraph -->
 
-<p>When performing backpropagation, we find the derivative w.r.t the error. This gives us the formula</p>
+When performing backpropagation, we find the derivative w.r.t the error. This gives us the formula
+
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"id":368,"align":"center"} -->
 
 <div class="wp-block-image">
 
-<figure class="aligncenter">
+
 ![placeholder]({attach}media/2019/03/2.png){.wp-image-368}  
 <figcaption>
 Derivative of w.r.t the error
 </figcaption>
-</figure>
+
 
 </div>
 
@@ -495,7 +523,8 @@ Derivative of w.r.t the error
 
 <!-- wp:paragraph -->
 
-<p>This formula does not have any multiplicative element in it, and so when BPTT occurs, a <em>linear carousel</em> occurs, thus preventing vanexplgrad.</p>
+This formula does not have any multiplicative element in it, and so when BPTT occurs, a *linear carousel* occurs, thus preventing vanexplgrad.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->

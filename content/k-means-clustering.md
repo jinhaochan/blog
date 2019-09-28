@@ -71,7 +71,7 @@ How do we choose K? Well, iteratively of cause. We define K to be a range of val
 <figure class="wp-block-image">
 ![placeholder]({attach}media/2019/03/introduction-to-k-means-clustering-elbow-point-example-1.jpg){.wp-image-341}
 
-</figure>
+
 <!-- /wp:image -->
 
 <!-- wp:heading {"level":3} -->

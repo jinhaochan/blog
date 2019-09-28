@@ -79,7 +79,7 @@ As we know, all models only take in numerical inputs to perform their actions. N
 
 <figure class="wp-block-media-text__media">
 ![placeholder]({attach}media/2018/12/1_zy1qfb9affzz66yxxoi2aw1.gif){.wp-image-190}
-</figure>
+
 <div class="wp-block-media-text__content">
 
 <!-- wp:paragraph -->
@@ -138,7 +138,7 @@ The term *convolution* refers to the resulting third function, as well as the 
 
 <figure class="wp-block-media-text__media">
 ![placeholder]({attach}media/2018/12/convolution_of_box_signal_with_itself2.gif){.wp-image-192}
-</figure>
+
 <div class="wp-block-media-text__content">
 
 <!-- wp:paragraph -->
@@ -191,7 +191,7 @@ Next, we take a smaller matrix of size *m x m*, where *m &lt; n*, and slide it
 
 <figure class="wp-block-media-text__media">
 ![placeholder]({attach}media/2018/12/screen-shot-2016-07-24-at-11-25-13-pm2.png){.wp-image-196}
-</figure>
+
 <div class="wp-block-media-text__content">
 
 <!-- wp:paragraph -->
@@ -213,7 +213,7 @@ Image that has been converted to a matrix of numbers. For simplicity, we'll just
 
 <figure class="wp-block-media-text__media">
 ![placeholder]({attach}media/2018/12/screen-shot-2016-07-24-at-11-25-24-pm1.png){.wp-image-197}
-</figure>
+
 <div class="wp-block-media-text__content">
 
 <!-- wp:paragraph -->
@@ -235,7 +235,7 @@ A smaller matrix, called a filter, that we'll use to slide over the original mat
 
 <figure class="wp-block-media-text__media">
 ![placeholder]({attach}media/2018/12/convolution_schematic.gif){.wp-image-198}
-</figure>
+
 <div class="wp-block-media-text__content">
 
 <!-- wp:paragraph -->
@@ -281,7 +281,7 @@ We can also use multiple filters to produce multiple Convoluted feature maps, wh
 
 <figure class="aligncenter is-resized">
 ![placeholder]({attach}media/2018/12/screen-shot-2016-08-10-at-3-42-35-am.png){.wp-image-204 width="374" height="188"}
-</figure>
+
 
 </div>
 
@@ -346,7 +346,7 @@ Convoluted feature map becomes a Rectified feature map, after ReLU is applied to
 This process changes all negative values to a 0 value
 
 </figcaption>
-</figure>
+
 <!-- /wp:image -->
 
 <!-- wp:heading {"level":3} -->
@@ -384,7 +384,7 @@ After we pass the Convolved feature map through ReLU, we get a Rectified feature
 We take the maximum value of the window size to get the reduced matrix.  
 
 </figcaption>
-</figure>
+
 <!-- /wp:image -->
 
 <!-- wp:heading {"level":3} -->
@@ -452,7 +452,7 @@ We can repeat this step numerous times to reduce the image, and extract out impo
 <figcaption>
 Repeated Convolution + ReLU and Pooling to reduce the image and extract important features.
 </figcaption>
-</figure>
+
 
 </div>
 
@@ -470,7 +470,7 @@ The more layers we have, the more complicated features we can extract out from t
 
 <figure class="wp-block-media-text__media">
 ![placeholder]({attach}media/2018/12/screen-shot-2016-08-10-at-12-58-30-pm.png){.wp-image-206}
-</figure>
+
 <div class="wp-block-media-text__content">
 
 <!-- wp:paragraph {"align":"left"} -->
@@ -512,7 +512,7 @@ In another example, we can visually see how the CNN breaks down an image using C
 
 <figure class="aligncenter is-resized">
 ![placeholder]({attach}media/2018/12/conv_all.png){.wp-image-207 width="748" height="423"}
-</figure>
+
 
 </div>
 

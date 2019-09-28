@@ -146,7 +146,7 @@
 
 <figure class="wp-block-media-text__media">
 ![placeholder]({attach}media/2018/12/1_zy1qfb9affzz66yxxoi2aw1.gif){.wp-image-190}
-</figure>
+
 <div class="wp-block-media-text__content">
 
 <!-- wp:paragraph -->
@@ -199,7 +199,7 @@ This gives us a resulting numerical vector representation of an image
 
 <figure class="wp-block-media-text__media">
 ![placeholder]({attach}media/2018/12/convolution_of_box_signal_with_itself2.gif){.wp-image-192}
-</figure>
+
 <div class="wp-block-media-text__content">
 
 <!-- wp:paragraph -->
@@ -246,7 +246,7 @@ By sliding function *g(t*) onto *f(t)*, we produce a third function *(f\*g)(t)*.
 
 <figure class="wp-block-media-text__media">
 ![placeholder]({attach}media/2018/12/screen-shot-2016-07-24-at-11-25-13-pm2.png){.wp-image-196}
-</figure>
+
 <div class="wp-block-media-text__content">
 
 <!-- wp:paragraph -->
@@ -268,7 +268,7 @@ Image that has been converted to a matrix of numbers. For simplicity, we'll just
 
 <figure class="wp-block-media-text__media">
 ![placeholder]({attach}media/2018/12/screen-shot-2016-07-24-at-11-25-24-pm1.png){.wp-image-197}
-</figure>
+
 <div class="wp-block-media-text__content">
 
 <!-- wp:paragraph -->
@@ -290,7 +290,7 @@ A smaller matrix, called a filter, that we'll use to slide over the original mat
 
 <figure class="wp-block-media-text__media">
 ![placeholder]({attach}media/2018/12/convolution_schematic.gif){.wp-image-198}
-</figure>
+
 <div class="wp-block-media-text__content">
 
 <!-- wp:paragraph -->
@@ -332,7 +332,7 @@ As we slide the filter over the matrix, we do a matrix multiplication, and take 
 
 <figure class="aligncenter is-resized">
 ![placeholder]({attach}media/2018/12/screen-shot-2016-08-10-at-3-42-35-am.png){.wp-image-204 width="374" height="188"}
-</figure>
+
 
 </div>
 
@@ -388,34 +388,37 @@ Convoluted feature map becomes a Rectified feature map, after ReLU is applied to
 This process changes all negative values to a 0 value
 
 </figcaption>
-</figure>
 
 <!-- /wp:image -->
 
 <!-- wp:heading {"level":3} -->
 
-<h3>Dimensionality Reduction through Pooling</h3>
+### Dimensionality Reduction through Pooling
+
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
 
-<p>After we have extracted the Convoluted feature map, and passed it through our ReLU function to produce a Rectified feature map, we can reduce the feature map through a process called pooling.</p>
+After we have extracted the Convoluted feature map, and passed it through our ReLU function to produce a Rectified feature map, we can reduce the feature map through a process called pooling.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>There are 3 types of pooling: Max pooling, Sum pooling and Average pooling. We'll talk about Max pooling, because it works better in practice, and once you understand Max pooling, Sum pooling and Average pooling works the same way.</p>
+There are 3 types of pooling: Max pooling, Sum pooling and Average pooling. We'll talk about Max pooling, because it works better in practice, and once you understand Max pooling, Sum pooling and Average pooling works the same way.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>In doing Max pooling, we define yet another window size <em>k x k</em>, but in this case, we do not slide the window across the Rectified feature map. Instead, we divide the feature map up into the window size, and take the max value from it.</p>
+In doing Max pooling, we define yet another window size *k x k*, but in this case, we do not slide the window across the Rectified feature map. Instead, we divide the feature map up into the window size, and take the max value from it.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"id":203} -->
 
 <figure class="wp-block-image">
-![placeholder]({attach}media/2018/12/screen-shot-2016-08-10-at-3-38-39-am.png){.wp-image-203}
+![placeholder]({attach}media/2018/12/screen-shot-2016-08-10-at-3-38-39-am.png){.wp-image-203}  
 
 <figcaption>
 A Max pooling window size of 2x2.  
@@ -423,53 +426,63 @@ After we pass the Convolved feature map through ReLU, we get a Rectified feature
 We take the maximum value of the window size to get the reduced matrix.  
 
 </figcaption>
-</figure>
 
 <!-- /wp:image -->
 
 <!-- wp:heading {"level":3} -->
 
-<h3>The Fully Connected Layer</h3>
+### The Fully Connected Layer
+
 <!-- /wp:heading -->
 
 <!-- wp:separator -->
 
-<hr>
+------------------------------------------------------------------------
+
 <!-- /wp:separator -->
 
-<p></p>
-<!-- wp:paragraph --></p>
-<p>After we have broken down the image through iterative process of Convolution, ReLU and pooling, we get a set of matrices to represent the important features of the original image.</p>
+</p>
+<!-- wp:paragraph -->
+
+After we have broken down the image through iterative process of Convolution, ReLU and pooling, we get a set of matrices to represent the important features of the original image.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>We then line up each of the values of the pooled matrix into a single vector, and feed it into a fully connected neural network.</p>
+We then line up each of the values of the pooled matrix into a single vector, and feed it into a fully connected neural network.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>When the neural network does it's learning via gradient descent or some other optimization algorithm, only the weights in the neural network and the values in the filter layer changes. The size of the filter and step size do not change.</p>
+When the neural network does it's learning via gradient descent or some other optimization algorithm, only the weights in the neural network and the values in the filter layer changes. The size of the filter and step size do not change.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3} -->
 
-<h3>Features at each Layer</h3>
+### Features at each Layer
+
 <!-- /wp:heading -->
 
 <!-- wp:separator -->
 
-<hr>
+------------------------------------------------------------------------
+
 <!-- /wp:separator -->
 
-<p></p>
-<!-- wp:paragraph --></p>
-<p>We now have the 3 basic steps of a CNN: Convolution, ReLU and Pooling.</p>
+</p>
+<!-- wp:paragraph -->
+
+We now have the 3 basic steps of a CNN: Convolution, ReLU and Pooling.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>We can repeat this step numerous times to reduce the image, and extract out important features.</p>
+We can repeat this step numerous times to reduce the image, and extract out important features.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"id":205,"align":"center","width":606,"height":144} -->
@@ -481,7 +494,7 @@ We take the maximum value of the window size to get the reduced matrix.
 <figcaption>
 Repeated Convolution + ReLU and Pooling to reduce the image and extract important features.
 </figcaption>
-</figure>
+
 
 </div>
 
@@ -489,7 +502,8 @@ Repeated Convolution + ReLU and Pooling to reduce the image and extract importan
 
 <!-- wp:paragraph -->
 
-<p>The more layers we have, the more complicated features we can extract out from the image. At each layer, we reconstruct simple layers to form more complex layers.</p>
+The more layers we have, the more complicated features we can extract out from the image. At each layer, we reconstruct simple layers to form more complex layers.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:media-text {"mediaId":206,"mediaType":"image"} -->
@@ -498,7 +512,7 @@ Repeated Convolution + ReLU and Pooling to reduce the image and extract importan
 
 <figure class="wp-block-media-text__media">
 ![placeholder]({attach}media/2018/12/screen-shot-2016-08-10-at-12-58-30-pm.png){.wp-image-206}
-</figure>
+
 <div class="wp-block-media-text__content">
 
 <!-- wp:paragraph {"align":"left"} -->
@@ -530,7 +544,8 @@ In the last layer, we can form the full face from all the layers
 
 <!-- wp:paragraph -->
 
-<p>In another example, we can visually see how the CNN breaks down an image using Convolution + ReLU and pooling to extract important features, and make a classification at the end.</p>
+In another example, we can visually see how the CNN breaks down an image using Convolution + ReLU and pooling to extract important features, and make a classification at the end.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"id":207,"align":"center","width":748,"height":423} -->
@@ -539,7 +554,7 @@ In the last layer, we can form the full face from all the layers
 
 <figure class="aligncenter is-resized">
 ![placeholder]({attach}media/2018/12/conv_all.png){.wp-image-207 width="748" height="423"}
-</figure>
+
 
 </div>
 
@@ -547,35 +562,39 @@ In the last layer, we can form the full face from all the layers
 
 <!-- wp:paragraph -->
 
-<p>The intuition here is that we are making predictions here based on several features maps. If we have feature maps telling us there is two eyes, a nose and a mouth, we can make a prediction that it is a face.</p>
+The intuition here is that we are making predictions here based on several features maps. If we have feature maps telling us there is two eyes, a nose and a mouth, we can make a prediction that it is a face.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3} -->
 
-<h3>Conclusion</h3>
+### Conclusion 
+
 <!-- /wp:heading -->
 
 <!-- wp:separator -->
 
-<hr>
+------------------------------------------------------------------------
+
 <!-- /wp:separator -->
 
-<p></p>
-<!-- wp:paragraph --></p>
-<p>We've seen in this post how to do the following steps in a CNN</p>
+</p>
+<!-- wp:paragraph -->
+
+We've seen in this post how to do the following steps in a CNN
+
 <!-- /wp:paragraph -->
 
 <!-- wp:list {"ordered":true} -->
 
-<ol>
-<li>Transform an image to a numerical vector</li>
-<li>Apply a filter to extract a Convoluted feature map</li>
-<li>Apply ReLU to transform negative values to 0</li>
-<li>Apply Pooling to get your Rectified feature map</li>
-<li>Repeat until extract important features</li>
-<li>Pass them into a fully connected layer to perform prediction</li>
-<li>Learning only changes the weights of the connected layer and the filter matrix values</li>
-</ol>
+1.  Transform an image to a numerical vector
+2.  Apply a filter to extract a Convoluted feature map
+3.  Apply ReLU to transform negative values to 0
+4.  Apply Pooling to get your Rectified feature map
+5.  Repeat until extract important features
+6.  Pass them into a fully connected layer to perform prediction
+7.  Learning only changes the weights of the connected layer and the filter matrix values
+
 <!-- /wp:list -->
   </div>
   <div class="tag-cloud">

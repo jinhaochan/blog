@@ -26,7 +26,7 @@ For example, in a simple linear model, we use the equation `y=mx + c` , and `m` 
 Given different parameter values, we get different models. In the case of a linear model, each model is a different line on the graph.
 
 </figcaption>
-</figure>
+
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
@@ -71,7 +71,7 @@ For example, given the following training data distribution points:
 <figure class="wp-block-image">
 ![placeholder]({attach}media/2019/01/1-z3jjgvetojmplfvmwiur3q.png){.wp-image-287}
 
-</figure>
+
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
@@ -85,7 +85,7 @@ We want to find out which of the graphs below has the highest probability of plo
 <figure class="wp-block-image">
 ![placeholder]({attach}media/2019/01/1-ulkl0nz1vfg6bmfiqpckzq.png){.wp-image-288}
 
-</figure>
+
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
@@ -128,7 +128,7 @@ For a single data point for an assume Gaussian distribution, we have the followi
 Probability for observing 1 point
 
 </figcaption>
-</figure>
+
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
@@ -146,7 +146,7 @@ For 3 data points, we have the following joint probability:
 Joint probability for observing 3 points
 
 </figcaption>
-</figure>
+
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->

@@ -49,7 +49,7 @@ I'll like to highlight the 2 important lessons I took away from this book
 <figure class="wp-block-image">
 ![placeholder]({attach}media/2019/05/picture1.png){.wp-image-439}
 
-</figure>
+
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->

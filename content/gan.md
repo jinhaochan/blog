@@ -88,7 +88,7 @@ The Discriminator gets the feedback for optimization from the ground truth, and 
 
 <figure class="aligncenter is-resized">
 ![placeholder]({attach}media/2019/02/gans.png){.wp-image-314 width="503" height="218"}
-</figure>
+
 
 </div>
 
@@ -118,7 +118,7 @@ We can visualize how the Generator learns to generate outputs that goes closer t
 <figure class="wp-block-image">
 ![placeholder]({attach}media/2019/02/iterations-1.gif){.wp-image-315}
 
-</figure>
+
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
@@ -156,9 +156,9 @@ The Discriminator tries to identify if the data is from the true distribution `x
 
 <div class="wp-block-image">
 
-<figure class="aligncenter">
+
 ![placeholder]({attach}media/2019/02/1-4xahmaugxeoqnnjhzjq-4q.jpeg){.wp-image-316}
-</figure>
+
 
 </div>
 
@@ -180,9 +180,9 @@ On the other hand, the Generator `G` tries to generates data to fool the Discrim
 
 <div class="wp-block-image">
 
-<figure class="aligncenter">
+
 ![placeholder]({attach}media/2019/02/1-n235xeigxkl3ktl08d-cza.jpeg){.wp-image-317}
-</figure>
+
 
 </div>
 
@@ -199,7 +199,7 @@ By maximizing `D` and minimizing `G`, we get the function:
 <figure class="wp-block-image">
 ![placeholder]({attach}media/2019/02/1-ihk3whuaz_0uek4sjicyfw.png){.wp-image-318}
 
-</figure>
+
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
@@ -225,7 +225,7 @@ The Discriminator usually wins early on against the Generator, as initially, it 
 <figure class="wp-block-image">
 ![placeholder]({attach}media/2019/02/1-6so6q3dwurg8qrmwk1y3jw.jpeg){.wp-image-319}
 
-</figure>
+
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->

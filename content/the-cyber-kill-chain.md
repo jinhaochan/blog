@@ -17,7 +17,7 @@ The Cyber Kill Chain (CKC) is a sequential set of steps that takes place when an
 <figure class="wp-block-image">
 ![placeholder]({attach}media/2019/05/the-cyber-kill-chain-body.png.pc-adaptive.1920.medium.png){.wp-image-447}
 
-</figure>
+
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->

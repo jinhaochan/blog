@@ -161,7 +161,7 @@
 
 <figure class="aligncenter is-resized">
 ![placeholder]({attach}media/2019/02/gans.png){.wp-image-314 width="503" height="218"}
-</figure>
+
 
 </div>
 
@@ -187,42 +187,46 @@
 <figure class="wp-block-image">
 ![placeholder]({attach}media/2019/02/iterations-1.gif){.wp-image-315}
 
-</figure>
-
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
 
-<p>We can see that initially, the distribution by the Generator was random and scattered all over. Over several iterations, the Generator starts producing outputs that have a distribution getting closer to the actual distribution.</p>
+We can see that initially, the distribution by the Generator was random and scattered all over. Over several iterations, the Generator starts producing outputs that have a distribution getting closer to the actual distribution.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3} -->
 
-<h3>Math for GAN</h3>
+### Math for GAN
+
 <!-- /wp:heading -->
 
 <!-- wp:separator -->
 
-<hr>
+------------------------------------------------------------------------
+
 <!-- /wp:separator -->
 
-<p></p>
-<!-- wp:paragraph --></p>
-<p>We have a joint loss function, with the two models (Generative <code>G</code> and Discriminative <code>D</code>) optimizing for different things.</p>
+</p>
+<!-- wp:paragraph -->
+
+We have a joint loss function, with the two models (Generative `G` and Discriminative `D`) optimizing for different things.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>The Discriminator tries to identify if the data is from the true distribution <code>x</code>, and outputs a value <code>D(x)</code>. The Discriminator also tries to recognize if the data comes from the Generator <code>G</code>, which outputs a value <code>D(G(z))</code>. (or <code>1 - D(G(z))</code>, because the inverse of the Generated data is the data from the true distribution) Putting these two together, we get the loss function:</p>
+The Discriminator tries to identify if the data is from the true distribution `x`, and outputs a value `D(x)`. The Discriminator also tries to recognize if the data comes from the Generator `G`, which outputs a value `D(G(z))`. (or `1 - D(G(z))`, because the inverse of the Generated data is the data from the true distribution) Putting these two together, we get the loss function:
+
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"id":316,"align":"center"} -->
 
 <div class="wp-block-image">
 
-<figure class="aligncenter">
+
 ![placeholder]({attach}media/2019/02/1-4xahmaugxeoqnnjhzjq-4q.jpeg){.wp-image-316}
-</figure>
+
 
 </div>
 
@@ -230,21 +234,23 @@
 
 <!-- wp:paragraph -->
 
-<p>The Discriminator <code>D</code> wants to maximize this, as it wants to correctly identify true data <code>x</code> and <code>1 - D(G(z))</code></p>
+The Discriminator `D` wants to maximize this, as it wants to correctly identify true data `x` and `1 - D(G(z))`
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>On the other hand, the Generator <code>G</code> tries to generates data to fool the Discriminator, and it wants to minimize the second half of the loss function:</p>
+On the other hand, the Generator `G` tries to generates data to fool the Discriminator, and it wants to minimize the second half of the loss function:
+
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"id":317,"align":"center"} -->
 
 <div class="wp-block-image">
 
-<figure class="aligncenter">
+
 ![placeholder]({attach}media/2019/02/1-n235xeigxkl3ktl08d-cza.jpeg){.wp-image-317}
-</figure>
+
 
 </div>
 
@@ -252,7 +258,8 @@
 
 <!-- wp:paragraph -->
 
-<p>By maximizing <code>D</code> and minimizing <code>G</code>, we get the function:</p>
+By maximizing `D` and minimizing `G`, we get the function:
+
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"id":318} -->
@@ -260,23 +267,25 @@
 <figure class="wp-block-image">
 ![placeholder]({attach}media/2019/02/1-ihk3whuaz_0uek4sjicyfw.png){.wp-image-318}
 
-</figure>
 
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
 
-<p>We then use alternating gradient descent, one step to Maximize the function by Discriminator <code>D</code>, and the other step to Minimize the function by Generator <code>G</code></p>
+We then use alternating gradient descent, one step to Maximize the function by Discriminator `D`, and the other step to Minimize the function by Generator `G`
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>We fix the Generator's parameters, and perform one iteration of Gradient Descent on the Discriminator. Then we switch and fix the Discriminator's parameters, and perform one iteration of Gradient Descent on the Generator. We keep alternating these steps of Gradient Descent of both models until convergence.</p>
+We fix the Generator's parameters, and perform one iteration of Gradient Descent on the Discriminator. Then we switch and fix the Discriminator's parameters, and perform one iteration of Gradient Descent on the Generator. We keep alternating these steps of Gradient Descent of both models until convergence.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>The Discriminator usually wins early on against the Generator, as initially, it is very easy for the Discriminator to identify Generated data because the Generator has not learnt anything yet. As such, the Generator will get diminished gradient, and learning will be very slow. GAN therefore modifies the loss function slightly to backpropagate the gradient to the Generator</p>
+The Discriminator usually wins early on against the Generator, as initially, it is very easy for the Discriminator to identify Generated data because the Generator has not learnt anything yet. As such, the Generator will get diminished gradient, and learning will be very slow. GAN therefore modifies the loss function slightly to backpropagate the gradient to the Generator
+
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"id":319} -->
@@ -284,38 +293,44 @@
 <figure class="wp-block-image">
 ![placeholder]({attach}media/2019/02/1-6so6q3dwurg8qrmwk1y3jw.jpeg){.wp-image-319}
 
-</figure>
 
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
 
-<p>As the gradient backpropagated to the Generator approaches 0, the GAN changes the function to another one to ensure the gradient to the Generator does not vanish.</p>
+As the gradient backpropagated to the Generator approaches 0, the GAN changes the function to another one to ensure the gradient to the Generator does not vanish.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3} -->
 
-<h3>Tips for training a GAN</h3>
+### Tips for training a GAN
+
 <!-- /wp:heading -->
 
 <!-- wp:separator -->
 
-<hr>
+------------------------------------------------------------------------
+
 <!-- /wp:separator -->
 
-<p></p>
-<!-- wp:paragraph --></p>
-<p>When training the Generator, hold the values of the Discriminator constant.</p>
+</p>
+<!-- wp:paragraph -->
+
+When training the Generator, hold the values of the Discriminator constant.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>When training the Discriminator, hold the values of the Generator constant.</p>
+When training the Discriminator, hold the values of the Generator constant.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>You may train one network that is stronger than the other, giving adverse results: If the Generator is too strong, it will always successfully deceive the Discriminator, leading to a lot of false negatives. If the Discriminator is too strong, it will give outputs that are close to 0 or 1, and the Generator will struggle during learning from gradient descent.  </p>
+You may train one network that is stronger than the other, giving adverse results: If the Generator is too strong, it will always successfully deceive the Discriminator, leading to a lot of false negatives. If the Discriminator is too strong, it will give outputs that are close to 0 or 1, and the Generator will struggle during learning from gradient descent.  
+
 <!-- /wp:paragraph -->
   </div>
   <div class="tag-cloud">

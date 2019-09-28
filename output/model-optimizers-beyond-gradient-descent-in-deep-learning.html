@@ -130,141 +130,167 @@
 Different paths and connections in the neural network may give the same output. This give rise to the characteristics of being non-identifiable.
 
 </figcaption>
-</figure>
 
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
 
-<p>Why this is so is because there exists a huge number of different permutations of neuron connections within the model that will produce the same output. A network with <em>n</em> neurons has <em>n!</em> possible parameter combinations.</p>
+Why this is so is because there exists a huge number of different permutations of neuron connections within the model that will produce the same output. A network with *n* neurons has *n!* possible parameter combinations.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>So why is model non-identifiability not an issue with Deep Learning models? That is because, even though the models themselves are non-identifiable, they all have the same behaviors. So given a group of non-identifiable models, they will all react the same way to the same inputs. And because of this property, there exists only a single local minima for a given non-identifiable model.</p>
+So why is model non-identifiability not an issue with Deep Learning models? That is because, even though the models themselves are non-identifiable, they all have the same behaviors. So given a group of non-identifiable models, they will all react the same way to the same inputs. And because of this property, there exists only a single local minima for a given non-identifiable model.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":4} -->
 
-<h4>Spurious Local Minima</h4>
+#### Spurious Local Minima  
+
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
 
-<p>Another problem that a local minima can give us is being spurious. Spurious means giving false information about itself, and a spurious local minima means that the local minima incurring a higher loss function value than the true local minima. In a sense, the local minima is lying to us, and presents itself as the global minima.</p>
+Another problem that a local minima can give us is being spurious. Spurious means giving false information about itself, and a spurious local minima means that the local minima incurring a higher loss function value than the true local minima. In a sense, the local minima is lying to us, and presents itself as the global minima.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>However, there has been many studies that shows that the local minima actually exhibits similar properties to the global minima, and hence, this too isn't a problem.</p>
+However, there has been many studies that shows that the local minima actually exhibits similar properties to the global minima, and hence, this too isn't a problem.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3} -->
 
-<h3>Wrong Directions in Gradient Descent</h3>
+### Wrong Directions in Gradient Descent
+
 <!-- /wp:heading -->
 
 <!-- wp:separator -->
 
-<hr>
+------------------------------------------------------------------------
+
 <!-- /wp:separator -->
 
-<p></p>
-<!-- wp:heading {"level":4} --></p>
-<h4>Non-Uniform and Changing Gradients</h4>
+</p>
+<!-- wp:heading {"level":4} -->
+
+#### Non-Uniform and Changing Gradients  
+
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
 
-<p>The actual challenge to Gradient Descent as we shall see, is not the problem of local minima, but finding the right path for the algorithm to descend towards.</p>
+The actual challenge to Gradient Descent as we shall see, is not the problem of local minima, but finding the right path for the algorithm to descend towards.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>Intuitively, the gradient is supposed to descend towards the steepest direction, or the direction that brings the gradient value closer to zero. However, just by using this simple heuristic alone can be problematic on complex error surfaces (which is a common property of Deep Learning Models).</p>
+Intuitively, the gradient is supposed to descend towards the steepest direction, or the direction that brings the gradient value closer to zero. However, just by using this simple heuristic alone can be problematic on complex error surfaces (which is a common property of Deep Learning Models).
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>A complex error surface has the properties of uneven gradients, and hence when we move from point to point, the gradient underneath our path may possibly change. This is opposed to a simple error surface that is circular, where the gradient is constant throughout a single direction. Having this changing gradient may result in our algorithm going towards the wrong direction, because it doesn't account for the changes that happens as we are moving.  </p>
+A complex error surface has the properties of uneven gradients, and hence when we move from point to point, the gradient underneath our path may possibly change. This is opposed to a simple error surface that is circular, where the gradient is constant throughout a single direction. Having this changing gradient may result in our algorithm going towards the wrong direction, because it doesn't account for the changes that happens as we are moving.  
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>Mathematically, we can quantify how much the gradient changes as we are moving by calculating the second derivative. This can be captured by calculating how much the gradient as w2 changes as we change the value of w1, and we store this value in a Hessian Matrix. And a Hessian Matrix that tells us the gradient changes as we move, is called an <strong>ill-conditioned</strong> matrix.</p>
+Mathematically, we can quantify how much the gradient changes as we are moving by calculating the second derivative. This can be captured by calculating how much the gradient as w2 changes as we change the value of w1, and we store this value in a Hessian Matrix. And a Hessian Matrix that tells us the gradient changes as we move, is called an **ill-conditioned** matrix.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>Calculating this Hessian matrix turns out to be extremely expensive if we do it at each step, and so to tackle the problem of changing gradients, we factor in the <strong>momentum</strong> parameter.  </p>
+Calculating this Hessian matrix turns out to be extremely expensive if we do it at each step, and so to tackle the problem of changing gradients, we factor in the **momentum** parameter.  
+
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3} -->
 
-<h3>Momentum-Based Optimization</h3>
+### Momentum-Based Optimization  
+
 <!-- /wp:heading -->
 
 <!-- wp:separator -->
 
-<hr>
+------------------------------------------------------------------------
+
 <!-- /wp:separator -->
 
-<p></p>
-<!-- wp:paragraph --></p>
-<p>Earlier, we stated that we may go into the wrong direction because we don't account for changing gradients, and also, if we decide to account for changing gradients using second derivatives, calculating a Hessian Matrix is extremely expensive.</p>
+</p>
+<!-- wp:paragraph -->
+
+Earlier, we stated that we may go into the wrong direction because we don't account for changing gradients, and also, if we decide to account for changing gradients using second derivatives, calculating a Hessian Matrix is extremely expensive.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>The solution to this is instead of calculating the Hessian Matrix at every optimization step, we factor in the value of the previous gradient into the calculation of the current gradient. By taking into account of the previous gradient value to find the current gradient, the fluctuations of gradient value is drastically reduced.</p>
+The solution to this is instead of calculating the Hessian Matrix at every optimization step, we factor in the value of the previous gradient into the calculation of the current gradient. By taking into account of the previous gradient value to find the current gradient, the fluctuations of gradient value is drastically reduced.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>This approach of remembering previous gradients is called <strong>Momentum</strong>. This technique is analogous to taking a moving average of stock prices the market  </p>
+This approach of remembering previous gradients is called **Momentum**. This technique is analogous to taking a moving average of stock prices the market  
+
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"id":178} -->
 
 <figure class="wp-block-image">
-![placeholder]({attach}media/2018/12/movingaverage.gif){.wp-image-178}
+![placeholder]({attach}media/2018/12/movingaverage.gif){.wp-image-178}  
 
 <figcaption>
 Fluctuations in the stock market price are reduced by looking at the averag
 
 </figcaption>
-</figure>
 
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
 
-<p>We can thinking of the wildly fluctuating gradients at each point being represented by the green line, while the average is represented by the yellow line. Momentum based optimizers use the yellow line to calculate the change in gradient.  </p>
+We can thinking of the wildly fluctuating gradients at each point being represented by the green line, while the average is represented by the yellow line. Momentum based optimizers use the yellow line to calculate the change in gradient.  
+
+
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3} -->
 
-<h3>Conclusion</h3>
+### Conclusion
+
 <!-- /wp:heading -->
 
 <!-- wp:separator -->
 
-<hr>
+------------------------------------------------------------------------
+
 <!-- /wp:separator -->
 
-<p></p>
-<!-- wp:paragraph --></p>
-<p>To conclude this post, we have seen how there are problems applying simple gradient descent to complex error surfaces that are present in Deep Learning models.</p>
+</p>
+<!-- wp:paragraph -->
+
+To conclude this post, we have seen how there are problems applying simple gradient descent to complex error surfaces that are present in Deep Learning models.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>Local minimas are not a problem, but changing gradients due to its complex surface are a problem. To try to factor in changing surfaces, we could calculate the Hessian Matrix, but that turns out to be extremely expensive.</p>
+Local minimas are not a problem, but changing gradients due to its complex surface are a problem. To try to factor in changing surfaces, we could calculate the Hessian Matrix, but that turns out to be extremely expensive.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>As a solution, we use Momentum based optimizers instead, which factors in previous gradient values to the calculation of the current gradient.  </p>
+As a solution, we use Momentum based optimizers instead, which factors in previous gradient values to the calculation of the current gradient.  
+
 <!-- /wp:paragraph -->
   </div>
   <div class="tag-cloud">

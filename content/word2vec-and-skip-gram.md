@@ -109,7 +109,7 @@ In the example below, the windows size is 2, which is to say 2 words before, and
 http://mccormickml.com/2016/04/19/word2vec-tutorial-the-skip-gram-model/
 
 </figcaption>
-</figure>
+
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
@@ -153,7 +153,7 @@ Our model will look something like this
 <figure class="wp-block-image">
 ![placeholder]({attach}media/2018/11/presentation11.jpg){.wp-image-139}
 
-</figure>
+
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
@@ -177,7 +177,7 @@ Once the model is trained, we're interested only in the hidden layer. The weight
 Word Vector for each word, generated from the hidden layer  
 
 </figcaption>
-</figure>
+
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->

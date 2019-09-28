@@ -104,38 +104,44 @@
 Given different parameter values, we get different models. In the case of a linear model, each model is a different line on the graph.
 
 </figcaption>
-</figure>
 
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
 
-<p>Maximum likelihood is a technique for parameter value estimation.</p>
+Maximum likelihood is a technique for parameter value estimation.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3} -->
 
-<h3>MLE Parameter Estimation</h3>
+### MLE Parameter Estimation
+
 <!-- /wp:heading -->
 
 <!-- wp:separator -->
 
-<hr>
+------------------------------------------------------------------------
+
 <!-- /wp:separator -->
 
-<p></p>
-<!-- wp:paragraph --></p>
-<p>Whenever we create a model with certain parameters, the outputs of the model (or the prediction) can be plotted as a probability distribution as well.</p>
+</p>
+<!-- wp:paragraph -->
+
+Whenever we create a model with certain parameters, the outputs of the model (or the prediction) can be plotted as a probability distribution as well.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>What MLE does it to try to make the distribution of the model close to the distribution of the observed data. Intuitively, this makes the model more accurate, as it becomes more representative of the actual data.</p>
+What MLE does it to try to make the distribution of the model close to the distribution of the observed data. Intuitively, this makes the model more accurate, as it becomes more representative of the actual data.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>For example, given the following training data distribution points:</p>
+For example, given the following training data distribution points:
+
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"id":287} -->
@@ -143,13 +149,13 @@ Given different parameter values, we get different models. In the case of a line
 <figure class="wp-block-image">
 ![placeholder]({attach}media/2019/01/1-z3jjgvetojmplfvmwiur3q.png){.wp-image-287}
 
-</figure>
 
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
 
-<p>We want to find out which of the graphs below has the highest probability of plotting those points. Each graph has different parameter values, and so they are plotted in different spaces on the graph.</p>
+We want to find out which of the graphs below has the highest probability of plotting those points. Each graph has different parameter values, and so they are plotted in different spaces on the graph.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"id":288} -->
@@ -157,104 +163,117 @@ Given different parameter values, we get different models. In the case of a line
 <figure class="wp-block-image">
 ![placeholder]({attach}media/2019/01/1-ulkl0nz1vfg6bmfiqpckzq.png){.wp-image-288}
 
-</figure>
 
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
 
-<p>Just by visual inspection, we can see that the blue line is the graph with the correct parameters that produces those data points. But of course in a machine, there is no visual inspection, only <strong>maths</strong>.</p>
+Just by visual inspection, we can see that the blue line is the graph with the correct parameters that produces those data points. But of course in a machine, there is no visual inspection, only **maths**.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3} -->
 
-<h3>Calculating the MLE</h3>
+### Calculating the MLE  
+
 <!-- /wp:heading -->
 
 <!-- wp:separator -->
 
-<hr>
+------------------------------------------------------------------------
+
 <!-- /wp:separator -->
 
-<p></p>
-<!-- wp:paragraph --></p>
-<p>We want to calculate what is the total probability of observing all the generated data, or the joint probability of all the data points.</p>
+</p>
+<!-- wp:paragraph -->
+
+We want to calculate what is the total probability of observing all the generated data, or the joint probability of all the data points.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>For a single data point for an assume Gaussian distribution, we have the following equation</p>
+For a single data point for an assume Gaussian distribution, we have the following equation
+
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"id":289} -->
 
 <figure class="wp-block-image">
-![placeholder]({attach}media/2019/01/1-t4zrihvhtlzjzsvcx3jrjg.png){.wp-image-289}
+![placeholder]({attach}media/2019/01/1-t4zrihvhtlzjzsvcx3jrjg.png){.wp-image-289}  
 
 <figcaption>
 Probability for observing 1 point
 
 </figcaption>
-</figure>
 
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
 
-<p>For 3 data points, we have the following joint probability:</p>
+For 3 data points, we have the following joint probability:
+
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"id":290} -->
 
 <figure class="wp-block-image">
-![placeholder]({attach}media/2019/01/1-rfzbq614ir4zewbm3k1v0q.png){.wp-image-290}
+![placeholder]({attach}media/2019/01/1-rfzbq614ir4zewbm3k1v0q.png){.wp-image-290}  
 
 <figcaption>
 Joint probability for observing 3 points
 
 </figcaption>
-</figure>
 
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
 
-<p>This can be extended to <code>n</code> number of points</p>
+This can be extended to `n` number of points
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>To calculate the MLE of the parameters, we need to find the values of the parameters in the equation that gives us the maximum value of the probability. To find the maximum, we get the differential of the equation and set it to 0, and solve for the parameters.  </p>
+To calculate the MLE of the parameters, we need to find the values of the parameters in the equation that gives us the maximum value of the probability. To find the maximum, we get the differential of the equation and set it to 0, and solve for the parameters.  
+
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3} -->
 
-<h3>Extending the MLE to the least squares method</h3>
+### Extending the MLE to the least squares method
+
 <!-- /wp:heading -->
 
 <!-- wp:separator -->
 
-<hr>
+------------------------------------------------------------------------
+
 <!-- /wp:separator -->
 
-<p></p>
-<!-- wp:paragraph --></p>
-<p>When the distribution is Gaussian, the process of finding the MLE is similar to the least squared method.</p>
+</p>
+<!-- wp:paragraph -->
+
+When the distribution is Gaussian, the process of finding the MLE is similar to the least squared method.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>For least squares estimation we want to find the line that minimizes the total squared distance between the data points and the regression line.</p>
+For least squares estimation we want to find the line that minimizes the total squared distance between the data points and the regression line.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>When the data distribution is assumed to be Gaussian, the maximum probability is found when the data points get closer to the mean value.</p>
+When the data distribution is assumed to be Gaussian, the maximum probability is found when the data points get closer to the mean value.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>Since the Gaussian distribution is symmetric, this is equivalent to minimizing the distance between the data points and the mean value.</p>
+Since the Gaussian distribution is symmetric, this is equivalent to minimizing the distance between the data points and the mean value.
+
 <!-- /wp:paragraph -->
   </div>
   <div class="tag-cloud">

@@ -113,7 +113,7 @@ https://www.youtube.com/watch?time\_continue=1&v=hpw8Lz5Fg9I
 
 </div>
 
-</figure>
+
 <!-- /wp:core-embed/youtube -->
 
 <!-- wp:heading {"level":3} -->

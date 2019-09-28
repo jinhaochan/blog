@@ -54,7 +54,7 @@ The blue line shows the model before regularization, while the green line shows 
   
 Regularization makes the model less complex.  
 </figcaption>
-</figure>
+
 
 </div>
 
@@ -94,7 +94,7 @@ To put this into a machine learning context, for each model we use, we have a lo
 RSS loss function we want to minimize
 
 </figcaption>
-</figure>
+
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
@@ -127,7 +127,7 @@ To combat this, we add in a regularization factor, which will shrink the estimat
 <figure class="wp-block-image">
 ![placeholder]({attach}media/2019/01/ridge.png){.wp-image-250}
 
-</figure>
+
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
@@ -166,7 +166,7 @@ When ***λ→∞***, the penalty term, the penalty term grows large, and your es
 <figure class="wp-block-image">
 ![placeholder]({attach}media/2019/01/lasso.png){.wp-image-251}
 
-</figure>
+
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
@@ -230,7 +230,7 @@ Regularization in deep learning works by occasionally ignoring a fraction of the
 <figure class="wp-block-image">
 ![placeholder]({attach}media/2019/01/dropout.png){.wp-image-252}
 
-</figure>
+
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->

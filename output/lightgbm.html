@@ -114,44 +114,48 @@
 LightGBM leaf-wise growth. This allows for deeper vertical growth
 
 </figcaption>
-</figure>
 
 <!-- /wp:image -->
 
 <!-- wp:image {"id":228} -->
 
 <figure class="wp-block-image">
-![placeholder]({attach}media/2018/12/1-whSa8rY4sgFQj1rEcWr8Ag-1.png){.wp-image-228}
+![placeholder]({attach}media/2018/12/1-whSa8rY4sgFQj1rEcWr8Ag-1.png){.wp-image-228}  
 
 <figcaption>
 Other gradient boosted algortihms grow level wise, which results in longer horizontal growth
 
 </figcaption>
-</figure>
 
 <!-- /wp:image -->
 
 <!-- wp:heading {"level":3} -->
 
-<h3>Dealing with Non-Numeric Data</h3>
+### Dealing with Non-Numeric Data
+
 <!-- /wp:heading -->
 
 <!-- wp:separator -->
 
-<hr>
+------------------------------------------------------------------------
+
 <!-- /wp:separator -->
 
-<p></p>
-<!-- wp:paragraph --></p>
-<p>The nice thing about LightGBM is that it can take in data as a whole, and it does not require inputs to be converted into numerical format! This means that if your data has a mix of numbers and strings, you can simply throw everything into the model to learn.</p>
+</p>
+<!-- wp:paragraph -->
+
+The nice thing about LightGBM is that it can take in data as a whole, and it does not require inputs to be converted into numerical format! This means that if your data has a mix of numbers and strings, you can simply throw everything into the model to learn.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>The one thing you have to do however, is to specify the string columns as <code>category</code>. Below is a example of how we do it with Pandas Dataframe</p>
+The one thing you have to do however, is to specify the string columns as `category`. Below is a example of how we do it with Pandas Dataframe
+
 <!-- /wp:paragraph -->
 
 <!-- wp:code -->
+
 
 <div class="highlight"><pre><span></span><span class="n">dtypes</span> <span class="o">=</span> <span class="err">{</span>
         <span class="s1">&#39;MachineIdentifier&#39;</span><span class="p">:</span><span class="s1">&#39;category&#39;</span><span class="p">,</span>
@@ -168,69 +172,82 @@ Other gradient boosted algortihms grow level wise, which results in longer horiz
 </pre></div>
 
 
+
 <!-- /wp:code -->
 
 <!-- wp:paragraph -->
 
-<p>Or if you're creating new features, you have to recast the datatype of the new column to categories</p>
+Or if you're creating new features, you have to recast the datatype of the new column to categories
+
 <!-- /wp:paragraph -->
 
 <!-- wp:code -->
+
 
 <div class="highlight"><pre><span></span><span class="k">for</span> <span class="nv">feature</span> <span class="nv">in</span> <span class="nv">newFeatures</span>:
     <span class="nv">Train</span>[<span class="nv">feature</span> ] <span class="o">=</span> <span class="nv">Train</span>[<span class="nv">feature</span> ].<span class="nv">astype</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">category</span><span class="s1">&#39;</span><span class="ss">)</span>
 </pre></div>
 
 
+
 <!-- /wp:code -->
 
 <!-- wp:heading {"level":3} -->
 
-<h3>Important Parameters to Tune</h3>
+### Important Parameters to Tune
+
 <!-- /wp:heading -->
 
 <!-- wp:separator -->
 
-<hr>
+------------------------------------------------------------------------
+
 <!-- /wp:separator -->
 
-<p></p>
-<!-- wp:paragraph --></p>
-<p>LightGBM has a huge array of parameters to tune, and I wont be listing them here. I will however be highlighting those I think are important, and has helped me increase my model predictions</p>
+</p>
+<!-- wp:paragraph -->
+
+LightGBM has a huge array of parameters to tune, and I wont be listing them here. I will however be highlighting those I think are important, and has helped me increase my model predictions
+
 <!-- /wp:paragraph -->
 
 <!-- wp:list -->
 
-<ul>
-<li><code>max_depth</code>: Defines how deep the tree grows</li>
-<li><code>num_leaves</code>: Defines the maximum number of leaves in a node</li>
-<li><code>max_bin</code>: Defines the maximum number of bins your feature will be bucketed in</li>
-</ul>
+-   `max_depth`: Defines how deep the tree grows
+-   `num_leaves`: Defines the maximum number of leaves in a node
+-   `max_bin`: Defines the maximum number of bins your feature will be bucketed in
+
 <!-- /wp:list -->
 
 <!-- wp:paragraph -->
 
-<p>For a more comprehensive read, <a href="https://lightgbm.readthedocs.io/en/latest/Parameters-Tuning.html">click here!</a></p>
+For a more comprehensive read, [click here!](https://lightgbm.readthedocs.io/en/latest/Parameters-Tuning.html)
+
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3} -->
 
-<h3>Conclusion</h3>
+### Conclusion
+
 <!-- /wp:heading -->
 
 <!-- wp:separator -->
 
-<hr>
+------------------------------------------------------------------------
+
 <!-- /wp:separator -->
 
-<p></p>
-<!-- wp:paragraph --></p>
-<p>In this short post, we've very briefly covered about LightGBM, how it is different from other gradient boosted machines, and how to define categories for training.</p>
+</p>
+<!-- wp:paragraph -->
+
+In this short post, we've very briefly covered about LightGBM, how it is different from other gradient boosted machines, and how to define categories for training.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>An important thing to know is that LightGBM is very sensitive to overfitting, and should not be used for small data sets &lt;10,000 rows.</p>
+An important thing to know is that LightGBM is very sensitive to overfitting, and should not be used for small data sets &lt;10,000 rows.
+
 <!-- /wp:paragraph -->
   </div>
   <div class="tag-cloud">

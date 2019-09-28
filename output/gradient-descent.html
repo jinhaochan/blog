@@ -131,123 +131,137 @@ The X and Y axis represents the values of w1 and w2.
 The Z axis represents the values of the error.
 
 </figcaption>
-</figure>
 
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
 
-<p>What we're tweaking here are the values of  w1 and w2. When we start shifting the values around the X and Y axis, the point on the bowl shape also shifts correspondingly. The goal here is to tweak the values of w1 and w2 such that the point on the bowl rests directly at the bottom, which has the lowest error value.</p>
+What we're tweaking here are the values of  w1 and w2. When we start shifting the values around the X and Y axis, the point on the bowl shape also shifts correspondingly. The goal here is to tweak the values of w1 and w2 such that the point on the bowl rests directly at the bottom, which has the lowest error value.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>So how do we know, at each point of time on the bowl shape, where do we move to? Here's where we calculate the gradient of that point of the bowl. At the bottom of the bowl, the gradient will be 0, because it'll be a horizontal surface. All other points on the bowl will have a non-zero gradient value.</p>
+So how do we know, at each point of time on the bowl shape, where do we move to? Here's where we calculate the gradient of that point of the bowl. At the bottom of the bowl, the gradient will be 0, because it'll be a horizontal surface. All other points on the bowl will have a non-zero gradient value.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"id":166} -->
 
 <figure class="wp-block-image">
-![placeholder]({attach}media/2018/11/512px-gradient_descent-svg.png){.wp-image-166}
+![placeholder]({attach}media/2018/11/512px-gradient_descent-svg.png){.wp-image-166}  
 
 <figcaption>
 Top down view of the bowl. As we shift w1 and w2 around, the point on the bowl shifts as well. We want the point to slowly traverse towards the center, where error is minimized.
 
 </figcaption>
-</figure>
 
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
 
-<p>The heuristic we'll use is to a new point such that the new gradient value on the bowl is getting smaller. This is the idea of descending gradient, until it reaches a minimum.</p>
+The heuristic we'll use is to a new point such that the new gradient value on the bowl is getting smaller. This is the idea of descending gradient, until it reaches a minimum.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>One hyper-parameter we can tune in our optimization algorithm is how fast the point moves. That is to say, at each descent step, how far away should the new point be. A big step might get you to the bottom faster, but you might end up overshooting, and be perpetually oscillating around the bottom, never reaching the end. A small step on the other hand will take a much longer time. This distance of each descent step is called the <strong>learning rate</strong>.</p>
+One hyper-parameter we can tune in our optimization algorithm is how fast the point moves. That is to say, at each descent step, how far away should the new point be. A big step might get you to the bottom faster, but you might end up overshooting, and be perpetually oscillating around the bottom, never reaching the end. A small step on the other hand will take a much longer time. This distance of each descent step is called the **learning rate**.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>In mathematical terms, Gradient Descent is the partial derivative of the error or loss function, with respect to the weights.</p>
+In mathematical terms, Gradient Descent is the partial derivative of the error or loss function, with respect to the weights.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3} -->
 
-<h3>Stochastic Gradient Descent</h3>
+### Stochastic Gradient Descent
+
 <!-- /wp:heading -->
 
 <!-- wp:separator -->
 
-<hr>
+------------------------------------------------------------------------
+
 <!-- /wp:separator -->
 
-<p></p>
-<!-- wp:paragraph --></p>
-<p>The process we described above is the vanilla way of doing Gradient Descent, and it's called <strong>Batch Gradient Descent</strong>. This means that we take all the possible data points in a single batch, and compute the error surface, or the bowl.</p>
+</p>
+<!-- wp:paragraph -->
+
+The process we described above is the vanilla way of doing Gradient Descent, and it's called **Batch Gradient Descent**. This means that we take all the possible data points in a single batch, and compute the error surface, or the bowl.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>In reality, the error surface isn't always so smooth in the shape of a bowl, but may consist several saddle points. Saddle points are points on the graph that are almost horizontal, but it's not the true minimum of the graph. This can lead to an issue of early stoppage, where our Gradient Descent thinks it has found the lowest point on the error surface.</p>
+In reality, the error surface isn't always so smooth in the shape of a bowl, but may consist several saddle points. Saddle points are points on the graph that are almost horizontal, but it's not the true minimum of the graph. This can lead to an issue of early stoppage, where our Gradient Descent thinks it has found the lowest point on the error surface.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"id":167} -->
 
 <figure class="wp-block-image">
-![placeholder]({attach}media/2018/11/saddle_point-svg.png){.wp-image-167}
+![placeholder]({attach}media/2018/11/saddle_point-svg.png){.wp-image-167}  
 
 <figcaption>
 The point stops at a saddle point, which has a zero gradient as well. Clearly that is not the lowest point on the graph, and our algorithm has prematurely halted.  
 
 </figcaption>
-</figure>
 
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
 
-<p>One of the solutions to this is <strong>Stochastic Gradient Descent</strong>. In batch, we take all possible data points and plot the error surface. In Stochastic, we only use one single data point, and we estimate the error surface. The result is a dynamic error surface, which decreases the chance of us encountering a saddle point.</p>
+One of the solutions to this is **Stochastic Gradient Descent**. In batch, we take all possible data points and plot the error surface. In Stochastic, we only use one single data point, and we estimate the error surface. The result is a dynamic error surface, which decreases the chance of us encountering a saddle point.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>The downside to Stochastic Gradient Descent is that we're performing an estimation of the error surface based only on 1 point, which may not be an accurate representation of the error surface.</p>
+The downside to Stochastic Gradient Descent is that we're performing an estimation of the error surface based only on 1 point, which may not be an accurate representation of the error surface.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>And the obvious solution to this is called <strong>Mini-Batch Gradient Descent</strong>, where instead of performing the error surface estimation based on one point, we use a group of points, or mini batches.</p>
+And the obvious solution to this is called **Mini-Batch Gradient Descent**, where instead of performing the error surface estimation based on one point, we use a group of points, or mini batches.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3} -->
 
-<h3>Conclusion</h3>
+### Conclusion
+
 <!-- /wp:heading -->
 
 <!-- wp:separator -->
 
-<hr>
+------------------------------------------------------------------------
+
 <!-- /wp:separator -->
 
-<p></p>
-<!-- wp:paragraph --></p>
-<p>To recap, in this post we've talked about one of the optimization algorithm, Gradient Descent. This algorithm tells you how to tweak your weights to minimize the loss function of your model.</p>
+</p>
+<!-- wp:paragraph -->
+
+To recap, in this post we've talked about one of the optimization algorithm, Gradient Descent. This algorithm tells you how to tweak your weights to minimize the loss function of your model.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>There are three models, each improving on the other:</p>
+There are three models, each improving on the other:
+
 <!-- /wp:paragraph -->
 
 <!-- wp:list {"ordered":true} -->
 
-<ol>
-<li>Batch Gradient Descent: Plots the error surface based on all points. This might lead to early convergence on saddle points.</li>
-<li>Stochastic Gradient Descent: Estimates and plots the error surface based on a single point. This leads to a poor estimation of the error surface.</li>
-<li>Mini-batch Gradient Descent: Uses small batches of the data set to perform the error surface estimation.</li>
-</ol>
+1.  Batch Gradient Descent: Plots the error surface based on all points. This might lead to early convergence on saddle points.
+2.  Stochastic Gradient Descent: Estimates and plots the error surface based on a single point. This leads to a poor estimation of the error surface.
+3.  Mini-batch Gradient Descent: Uses small batches of the data set to perform the error surface estimation.
+
 <!-- /wp:list -->
   </div>
   <div class="tag-cloud">

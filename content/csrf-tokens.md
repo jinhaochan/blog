@@ -21,7 +21,7 @@ If we look at source codes of HTML forms, we typically can spot this field being
   
 
 </figcaption>
-</figure>
+
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
@@ -60,7 +60,7 @@ CSRF stands for Cross-Site Request Forgery, and understanding how it works is a 
 <figure class="wp-block-image">
 ![placeholder]({attach}media/2019/04/csrf-cross-site-request-forgery.png){.wp-image-421}
 
-</figure>
+
 <!-- /wp:image -->
 
 <!-- wp:list {"ordered":true} -->

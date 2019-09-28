@@ -55,7 +55,7 @@ Lets look at what happens when we ping `google.com`
 <figure class="wp-block-image">
 ![placeholder]({attach}media/2019/04/untitled.png){.wp-image-415}
 
-</figure>
+
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
@@ -69,7 +69,7 @@ The TTL that is show there is the Echo Reply that Google has sent us, and when i
 <figure class="wp-block-image">
 ![placeholder]({attach}media/2019/04/untitled-1.png){.wp-image-416}
 
-</figure>
+
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->

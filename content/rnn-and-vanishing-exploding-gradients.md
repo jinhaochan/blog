@@ -49,7 +49,7 @@ A Recurrent Neural Network (RNN) is a variant of neural networks, where in each 
 Each neuron's output cycle back to themselves, as compared to a feed-forward neural network
 
 </figcaption>
-</figure>
+
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
@@ -136,12 +136,12 @@ These derivatives are then used by Gradient Descent to tweak the weights of the 
 
 <div class="wp-block-image">
 
-<figure class="aligncenter">
+
 ![placeholder]({attach}media/2019/03/0_fbugysciqjnfi3n6.png){.wp-image-346}  
 <figcaption>
 Forward propagation to get the outputs, error estimate calculation, and backpropgation to get the gradients of the error w.r.t. the weights, and apply gradient descent.  
 </figcaption>
-</figure>
+
 
 </div>
 
@@ -176,12 +176,12 @@ As mentioned earlier, each neuron will 2 sources of inputs: The current input, a
 
 <div class="wp-block-image">
 
-<figure class="aligncenter">
+
 ![placeholder]({attach}media/2019/03/0_ynlojw7yvjarwmd4-copy.png){.wp-image-348}  
 <figcaption>
 The output of the RNN cell is fed back.
 </figcaption>
-</figure>
+
 
 </div>
 
@@ -197,12 +197,12 @@ In the next time step, it will take the current input plus the previous output. 
 
 <div class="wp-block-image">
 
-<figure class="aligncenter">
+
 ![placeholder]({attach}media/2019/03/0_ynlojw7yvjarwmd4.png){.wp-image-349}  
 <figcaption>
 An unolled RNN to visualize what happens to the cell at each time step
 </figcaption>
-</figure>
+
 
 </div>
 
@@ -218,12 +218,12 @@ The image above shows what happens when you unroll one recurrent neuron. In a ne
 
 <div class="wp-block-image">
 
-<figure class="aligncenter">
+
 ![placeholder]({attach}media/2019/03/dpln_0423.png){.wp-image-350}  
 <figcaption>
 Hidden layers 1 and 2 are recurrent. Here we unroll them for 3 time steps
 </figcaption>
-</figure>
+
 
 </div>
 

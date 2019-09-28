@@ -487,7 +487,7 @@ Plot feature importances...
 <figure class="wp-block-image">
 ![placeholder]({attach}media/2019/01/output_9_1.png){.wp-image-241}
 
-</figure>
+
 <!-- /wp:image -->
 
 <!-- wp:image {"id":242} -->
@@ -495,7 +495,7 @@ Plot feature importances...
 <figure class="wp-block-image">
 ![placeholder]({attach}media/2019/01/output_9_3.png){.wp-image-242}
 
-</figure>
+
 <!-- /wp:image -->
 
 <!-- wp:code -->
