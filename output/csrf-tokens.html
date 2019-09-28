@@ -22,12 +22,12 @@
 
 
 <meta name="author" content="jinhaochan" />
-<meta name="description" content="If we look at source codes of HTML forms, we typically can spot this field being rendered on the webpage ![placeholder]({attach}media/2019/04/token.png){.wp-image-420} Sometimes it doesn&#39;t have the name called CSRF Token, and it just appears as a random gibberish value being loaded. This post …" />
+<meta name="description" content="If we look at source codes of HTML forms, we typically can spot this field being rendered on the webpage Sometimes it doesn&#39;t have the name called CSRF Token, and it just appears as a random gibberish value being loaded. This post breaks down the purpose of the token, and …" />
 <meta name="keywords" content="CSRF">
 
 <meta property="og:site_name" content="glob"/>
 <meta property="og:title" content="CSRF Tokens"/>
-<meta property="og:description" content="If we look at source codes of HTML forms, we typically can spot this field being rendered on the webpage ![placeholder]({attach}media/2019/04/token.png){.wp-image-420} Sometimes it doesn&#39;t have the name called CSRF Token, and it just appears as a random gibberish value being loaded. This post …"/>
+<meta property="og:description" content="If we look at source codes of HTML forms, we typically can spot this field being rendered on the webpage Sometimes it doesn&#39;t have the name called CSRF Token, and it just appears as a random gibberish value being loaded. This post breaks down the purpose of the token, and …"/>
 <meta property="og:locale" content="en_US"/>
 <meta property="og:url" content="/csrf-tokens.html"/>
 <meta property="og:type" content="article"/>
@@ -93,11 +93,8 @@
 
 <!-- wp:image {"id":420} -->
 
-<figure class="wp-block-image">
-![placeholder]({attach}media/2019/04/token.png){.wp-image-420}
-
+<p><img alt="placeholder" class="wp-image-420" src="/media/2019/04/token.png">  </p>
 <figcaption>
-
 
 </figcaption>
 
@@ -105,141 +102,123 @@
 
 <!-- wp:paragraph -->
 
-Sometimes it doesn't have the name called CSRF Token, and it just appears as a random gibberish value being loaded.
-
+<p>Sometimes it doesn't have the name called CSRF Token, and it just appears as a random gibberish value being loaded.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-This post breaks down the purpose of the token, and what happens behind the scenes with the token
-
+<p>This post breaks down the purpose of the token, and what happens behind the scenes with the token</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3} -->
 
-### Understanding CSRF  
-
+<h3>Understanding CSRF</h3>
 <!-- /wp:heading -->
 
 <!-- wp:separator -->
 
-------------------------------------------------------------------------
-
+<hr>
 <!-- /wp:separator -->
 
-</p>
-<!-- wp:paragraph -->
-
-CSRF stands for Cross-Site Request Forgery, and understanding how it works is a prerequisite to understanding CSRF tokens. Below shows a picture of what a CSRF attack looks like
-
+<p></p>
+<!-- wp:paragraph --></p>
+<p>CSRF stands for Cross-Site Request Forgery, and understanding how it works is a prerequisite to understanding CSRF tokens. Below shows a picture of what a CSRF attack looks like</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"id":421} -->
 
-<figure class="wp-block-image">
-![placeholder]({attach}media/2019/04/csrf-cross-site-request-forgery.png){.wp-image-421}
-
-
+<p><img alt="placeholder" class="wp-image-421" src="/media/2019/04/csrf-cross-site-request-forgery.png"></p>
 <!-- /wp:image -->
 
 <!-- wp:list {"ordered":true} -->
 
-1.  The attacker crafts a GET requests that triggers a fund transfer to his account
-    -   `GET http://bank.com/transfer.php?account=Attacker&amount=100`
-2.  The attacker embeds this request as a hyperlink
-    -   `<a href="http://bank.com transfer.php?account=Attacker&amount=100"> READ MORE... </a>`</code>
-3.  When the user clicks on the link, it triggers the `GET` request on behalf of the victim
-4.  The `GET` request is triggered by the victim, and funds are transferred to the Attacker
-
+<ol>
+<li>The attacker crafts a GET requests that triggers a fund transfer to his account<ul>
+<li><code>GET http://bank.com/transfer.php?account=Attacker&amp;amount=100</code></li>
+</ul>
+</li>
+<li>The attacker embeds this request as a hyperlink<ul>
+<li><code>&lt;a href="http://bank.com transfer.php?account=Attacker&amp;amount=100"&gt; READ MORE... &lt;/a&gt;</code></code></li>
+</ul>
+</li>
+<li>When the user clicks on the link, it triggers the <code>GET</code> request on behalf of the victim</li>
+<li>The <code>GET</code> request is triggered by the victim, and funds are transferred to the Attacker</li>
+</ol>
 <!-- /wp:list -->
 
 <!-- wp:paragraph -->
 
-This attack hinges on the fact that the Victim must be logged in to the service, and is already authenticated with an open session with the service.
-
+<p>This attack hinges on the fact that the Victim must be logged in to the service, and is already authenticated with an open session with the service.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-If the Victim is not logged in, when he clicks on the malicious link, instead of triggering the bad `GET` request, it will redirect him to the login page instead, thus rendering the attack useless.
-
+<p>If the Victim is not logged in, when he clicks on the malicious link, instead of triggering the bad <code>GET</code> request, it will redirect him to the login page instead, thus rendering the attack useless.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3} -->
 
-### CSRF Tokens
-
+<h3>CSRF Tokens</h3>
 <!-- /wp:heading -->
 
 <!-- wp:separator -->
 
-------------------------------------------------------------------------
-
+<hr>
 <!-- /wp:separator -->
 
-</p>
-<!-- wp:paragraph -->
-
-CSRF token is a simple concept where include one more argument of a token, that is sort of like a secret password.
-
+<p></p>
+<!-- wp:paragraph --></p>
+<p>CSRF token is a simple concept where include one more argument of a token, that is sort of like a secret password.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-`http://bank.com/transfer.php?account=User&amount=100&token=32Sa2dsa10gB88vcx9cz08f331j=Da`
-
+<p><code>http://bank.com/transfer.php?account=User&amp;amount=100&amp;token=32Sa2dsa10gB88vcx9cz08f331j=Da</code></p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-This token value is a high-entropy value which is hard to guess by the attacker. If on the server side, it receives a wrong or missing CSRF token value, the `GET` request is rejected and does not execute
-
+<p>This token value is a high-entropy value which is hard to guess by the attacker. If on the server side, it receives a wrong or missing CSRF token value, the <code>GET</code> request is rejected and does not execute</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-The CSRF token works this way:
-
+<p>The CSRF token works this way:</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:list {"ordered":true} -->
 
-1.  Client requests for a HTML page that contains a form
-2.  Server generates two distinct tokens, and sends one as a cookie to the client, and embeds the other as a hidden field in the form
-3.  When the client submits the form, both CSRF tokens must be sent back to the server. The one embedded in the form, and the one in the cookie.
-4.  If the request does not contain both tokens, it's rejected
-
+<ol>
+<li>Client requests for a HTML page that contains a form</li>
+<li>Server generates two distinct tokens, and sends one as a cookie to the client, and embeds the other as a hidden field in the form</li>
+<li>When the client submits the form, both CSRF tokens must be sent back to the server. The one embedded in the form, and the one in the cookie.</li>
+<li>If the request does not contain both tokens, it's rejected</li>
+</ol>
 <!-- /wp:list -->
 
 <!-- wp:paragraph -->
 
-The CSRF token value should be regularly invalidated at a time interval, per request, or when the user logs out.
-
+<p>The CSRF token value should be regularly invalidated at a time interval, per request, or when the user logs out.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3} -->
 
-### CSRF Token Vulnerabilities
-
+<h3>CSRF Token Vulnerabilities</h3>
 <!-- /wp:heading -->
 
 <!-- wp:separator -->
 
-------------------------------------------------------------------------
-
+<hr>
 <!-- /wp:separator -->
 
-</p>
-<!-- wp:paragraph -->
-
-If traffic carrying the token is not encrypted over HTTPS, the Attacker can sniff the traffic and obtain the CSRF token value and the Cookie, and perform a CSRF token replay attack.
-
+<p></p>
+<!-- wp:paragraph --></p>
+<p>If traffic carrying the token is not encrypted over HTTPS, the Attacker can sniff the traffic and obtain the CSRF token value and the Cookie, and perform a CSRF token replay attack.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-The solution to this is obvious: Always use encryption for communication. Aside from that, per-request-tokens can also be implemented.
-
+<p>The solution to this is obvious: Always use encryption for communication. Aside from that, per-request-tokens can also be implemented.</p>
 <!-- /wp:paragraph -->
   </div>
   <div class="tag-cloud">

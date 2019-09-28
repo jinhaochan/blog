@@ -134,7 +134,7 @@ I've attached screen grabs on how to point the Nameservers to your `ns1.dnsserve
 
 <!-- wp:image {"id":405} -->
 
-<figure class="wp-block-image">
+
 ![placeholder]({attach}media/2019/04/2.png){.wp-image-405}
 
 
@@ -148,7 +148,7 @@ When setting up your glue records for the Nameservers, you can use the same IP a
 
 <!-- wp:image {"id":406} -->
 
-<figure class="wp-block-image">
+
 ![placeholder]({attach}media/2019/04/1.png){.wp-image-406}
 
 

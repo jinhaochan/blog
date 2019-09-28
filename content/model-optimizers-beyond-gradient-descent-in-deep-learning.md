@@ -173,7 +173,7 @@ This approach of remembering previous gradients is called **Momentum**. This tec
 
 <!-- wp:image {"id":178} -->
 
-<figure class="wp-block-image">
+
 ![placeholder]({attach}media/2018/12/movingaverage.gif){.wp-image-178}  
 
 <figcaption>

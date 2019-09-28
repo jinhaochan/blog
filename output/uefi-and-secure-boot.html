@@ -119,9 +119,7 @@
 
 <!-- wp:image {"id":398} -->
 
-<figure class="wp-block-image">
-![placeholder]({attach}media/2019/04/ximg_5913814ed5e9f.png.pagespeed.gpjpjwpjwsjsrjrprwricpmd.ic_.9qc4wyodnr.png){.wp-image-398}
-
+<p><img alt="placeholder" class="wp-image-398" src="/media/2019/04/ximg_5913814ed5e9f.png.pagespeed.gpjpjwpjwsjsrjrprwricpmd.ic_.9qc4wyodnr.png">  </p>
 <figcaption>
 Side by side visual comparison of BIOS and UEFI
 
@@ -131,104 +129,90 @@ Side by side visual comparison of BIOS and UEFI
 
 <!-- wp:paragraph -->
 
-The typical sequence for the BIOS when booting up is:
-
+<p>The typical sequence for the BIOS when booting up is:</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:list {"ordered":true} -->
 
-1.  Perform POST (Power-On Self Test), which checks that the hardware configuration is proper
-2.  Look for the MBR (Master Boot Record) on the boot device to launch the boot loader
-3.  Boot loader then launches the Operating System
-
+<ol>
+<li>Perform POST (Power-On Self Test), which checks that the hardware configuration is proper</li>
+<li>Look for the MBR (Master Boot Record) on the boot device to launch the boot loader</li>
+<li>Boot loader then launches the Operating System</li>
+</ol>
 <!-- /wp:list -->
 
 <!-- wp:paragraph -->
 
-On the other hand, UEFI boots the system by launching EFI's (Extensible Firmware Interfaces) executables, as opposed to running the MBR.
-
+<p>On the other hand, UEFI boots the system by launching EFI's (Extensible Firmware Interfaces) executables, as opposed to running the MBR.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3} -->
 
-### Drawbacks of BIOS
-
+<h3>Drawbacks of BIOS</h3>
 <!-- /wp:heading -->
 
 <!-- wp:separator -->
 
-------------------------------------------------------------------------
-
+<hr>
 <!-- /wp:separator -->
 
-</p>
-<!-- wp:paragraph -->
-
-Some major drawbacks of BIOS booting are it can only boot from an MBR-partitioned disk, and the MBR-partitioned disk can only support up to 2TB of partitions. What this means is that if you use a disk bigger than 2TB as your boot loader, it will only show that it has 2TB of space.
-
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Some major drawbacks of BIOS booting are it can only boot from an MBR-partitioned disk, and the MBR-partitioned disk can only support up to 2TB of partitions. What this means is that if you use a disk bigger than 2TB as your boot loader, it will only show that it has 2TB of space.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-GPT partitioning can support partitions more than 2TB, but BIOS cannot boot from GPT-partitioned disk, only MBR-partitioned disk
-
+<p>GPT partitioning can support partitions more than 2TB, but BIOS cannot boot from GPT-partitioned disk, only MBR-partitioned disk</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-Also, BIOS runs in 16-bit processor mode, and only has 1MB of memory space to execute in. As such due to its limited space, it cannot initialize multiple hardware at once, which leads to a slower boot time.
-
+<p>Also, BIOS runs in 16-bit processor mode, and only has 1MB of memory space to execute in. As such due to its limited space, it cannot initialize multiple hardware at once, which leads to a slower boot time.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-These drawbacks are solved by UEFI
-
+<p>These drawbacks are solved by UEFI</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3} -->
 
-### UEFI
-
+<h3>UEFI</h3>
 <!-- /wp:heading -->
 
 <!-- wp:separator -->
 
-------------------------------------------------------------------------
-
+<hr>
 <!-- /wp:separator -->
 
-</p>
-<!-- wp:paragraph -->
-
-One of the biggest change is that the UEFI can run in 32-bit or 64-bit mode, which has way more address space, and is able to boot a lot faster. It also has other features such as
-
+<p></p>
+<!-- wp:paragraph --></p>
+<p>One of the biggest change is that the UEFI can run in 32-bit or 64-bit mode, which has way more address space, and is able to boot a lot faster. It also has other features such as</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:list {"ordered":true} -->
 
-1.  Being able to boot from a GPT-partitioned disk, hence being able to support disks more than 2TB
-2.  Giving a nice GUI
-3.  Secure Boot feature (more on this later)
-4.  Network boot
-5.  Firmware specification
-
+<ol>
+<li>Being able to boot from a GPT-partitioned disk, hence being able to support disks more than 2TB</li>
+<li>Giving a nice GUI</li>
+<li>Secure Boot feature (more on this later)</li>
+<li>Network boot</li>
+<li>Firmware specification</li>
+</ol>
 <!-- /wp:list -->
 
 <!-- wp:paragraph -->
 
-Just like the BIOS which targets the MBR to boot up the OS, UEFI marks one of the GPT-partition with a boot flag, and that partition becomes an EFI partition with its own EFI filesystem in FAT32 format.
-
+<p>Just like the BIOS which targets the MBR to boot up the OS, UEFI marks one of the GPT-partition with a boot flag, and that partition becomes an EFI partition with its own EFI filesystem in FAT32 format.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-The layout of the EFI filesystem is such that every OS has its own directory, which stores all the necessary files for loading the OS
-
+<p>The layout of the EFI filesystem is such that every OS has its own directory, which stores all the necessary files for loading the OS</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:code -->
-
 
 <div class="highlight"><pre><span></span><span class="o">/</span><span class="n">EFI</span>
     <span class="o">/</span><span class="n">Boot</span>
@@ -237,112 +221,91 @@ The layout of the EFI filesystem is such that every OS has its own directory, wh
 </pre></div>
 
 
-
 <!-- /wp:code -->
 
 <!-- wp:heading {"level":3} -->
 
-### UEFI Legacy Mode  
-
+<h3>UEFI Legacy Mode</h3>
 <!-- /wp:heading -->
 
 <!-- wp:separator -->
 
-------------------------------------------------------------------------
-
+<hr>
 <!-- /wp:separator -->
 
-</p>
-<!-- wp:paragraph -->
-
-Operating Systems that are installed in BIOS mode cannot be booted using UEFI, vice-versa. To boot a BIOS install OS in UEFI mode, you have to reinstall the entire system. To get around this hassle, UEFI supports legacy mode
-
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Operating Systems that are installed in BIOS mode cannot be booted using UEFI, vice-versa. To boot a BIOS install OS in UEFI mode, you have to reinstall the entire system. To get around this hassle, UEFI supports legacy mode</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-UEFI Legacy will make the UEFI act just like a BIOS, and this throws away many of the features such as Fast Boot and Secure Boot. UEFI Legacy allows the system to boot from MBR-partitioned disks, and allows booting to be not from EFI partitions.
-
+<p>UEFI Legacy will make the UEFI act just like a BIOS, and this throws away many of the features such as Fast Boot and Secure Boot. UEFI Legacy allows the system to boot from MBR-partitioned disks, and allows booting to be not from EFI partitions.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3} -->
 
-### Secure Boot
-
+<h3>Secure Boot</h3>
 <!-- /wp:heading -->
 
 <!-- wp:separator -->
 
-------------------------------------------------------------------------
-
+<hr>
 <!-- /wp:separator -->
 
-</p>
-<!-- wp:paragraph -->
-
-Advanced malwares target the bootloader as a vector of attack, which launches their malicious process before the OS is launched.
-
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Advanced malwares target the bootloader as a vector of attack, which launches their malicious process before the OS is launched.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-Secure Boot is a feature in UEFI which aims to make the booting process more secure by disallowing unsigned code to run in the pre-boot phase. Secure Boot only allows signed bootloaders and drivers that are trusted by the Original Equipment Manufacturer (OEM) to run.
-
+<p>Secure Boot is a feature in UEFI which aims to make the booting process more secure by disallowing unsigned code to run in the pre-boot phase. Secure Boot only allows signed bootloaders and drivers that are trusted by the Original Equipment Manufacturer (OEM) to run.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-When the PC first runs, it checks the signature of each piece of booting software. If the signatures are valid, then the firmware passes control to the OS.
-
+<p>When the PC first runs, it checks the signature of each piece of booting software. If the signatures are valid, then the firmware passes control to the OS.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-The OEMs creates Secure Boot keys and store them on the firmware, which are used for the verification process of Secure Boot.
-
+<p>The OEMs creates Secure Boot keys and store them on the firmware, which are used for the verification process of Secure Boot.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-Secure Boot is also customizable, and you can control which signing certificates are present for checking. You can install or remove certificates that Secure Boot uses for checking. For example, if an organization uses Linux, they can remove all of Microsoft's certificates, and install their own organization's certificate in place. Secure Boot then uses those certificates for verification.
-
+<p>Secure Boot is also customizable, and you can control which signing certificates are present for checking. You can install or remove certificates that Secure Boot uses for checking. For example, if an organization uses Linux, they can remove all of Microsoft's certificates, and install their own organization's certificate in place. Secure Boot then uses those certificates for verification.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-This customization is also available to any individual user, where you can sign your own bootloader and device drivers.
-
+<p>This customization is also available to any individual user, where you can sign your own bootloader and device drivers.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3} -->
 
-### Secure Boot and Linux
-
+<h3>Secure Boot and Linux</h3>
 <!-- /wp:heading -->
 
 <!-- wp:separator -->
 
-------------------------------------------------------------------------
-
+<hr>
 <!-- /wp:separator -->
 
-</p>
-<!-- wp:paragraph -->
-
-The whole concept of Secure Boot was built around Microsoft systems, and Linux distros were not made in mind for this. As such, there were a few hurdles to overcome when applying Secure Boot to Linux distros.
-
+<p></p>
+<!-- wp:paragraph --></p>
+<p>The whole concept of Secure Boot was built around Microsoft systems, and Linux distros were not made in mind for this. As such, there were a few hurdles to overcome when applying Secure Boot to Linux distros.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-The first money grabbing move by Microsoft was to let Linux distros pay a one-time fee of \$99 on Microsoft Sysdev Portal to apply for their bootloaders to be signed and recognized by Secure Boot. This way, these Linux distros work with Secure Boot out-of-the-box in the machines.
-
+<p>The first money grabbing move by Microsoft was to let Linux distros pay a one-time fee of \$99 on Microsoft Sysdev Portal to apply for their bootloaders to be signed and recognized by Secure Boot. This way, these Linux distros work with Secure Boot out-of-the-box in the machines.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-In Linux, it's common for developers to develop their own third party modules, which are all unsigned, and will be rejected by the system when trying to `insmod` them. Linux therefore provides a way to sign their custom binaries or modules using the command `sbsign` and `kmodsign` respectively.
-
+<p>In Linux, it's common for developers to develop their own third party modules, which are all unsigned, and will be rejected by the system when trying to <code>insmod</code> them. Linux therefore provides a way to sign their custom binaries or modules using the command <code>sbsign</code> and <code>kmodsign</code> respectively.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->

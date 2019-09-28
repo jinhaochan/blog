@@ -102,7 +102,7 @@ In the example below, the windows size is 2, which is to say 2 words before, and
 
 <!-- wp:image {"id":135} -->
 
-<figure class="wp-block-image">
+
 ![placeholder]({attach}media/2018/11/training_data.png){.wp-image-135}  
 
 <figcaption>
@@ -150,7 +150,7 @@ Our model will look something like this
 
 <!-- wp:image {"id":139} -->
 
-<figure class="wp-block-image">
+
 ![placeholder]({attach}media/2018/11/presentation11.jpg){.wp-image-139}
 
 
@@ -170,7 +170,7 @@ Once the model is trained, we're interested only in the hidden layer. The weight
 
 <!-- wp:image {"id":138} -->
 
-<figure class="wp-block-image">
+
 ![placeholder]({attach}media/2018/11/weightmatrix1.jpg){.wp-image-138}  
 
 <figcaption>

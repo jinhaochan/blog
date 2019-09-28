@@ -101,7 +101,7 @@ Since the hostname is encrypted, no one knows im going to `www.badsite.com`, and
 
 <!-- wp:image {"id":452} -->
 
-<figure class="wp-block-image">
+
 ![placeholder]({attach}media/2019/06/1.png){.wp-image-452}
 
 
@@ -109,7 +109,7 @@ Since the hostname is encrypted, no one knows im going to `www.badsite.com`, and
 
 <!-- wp:image {"id":453} -->
 
-<figure class="wp-block-image">
+
 ![placeholder]({attach}media/2019/06/2.png){.wp-image-453}
 
 

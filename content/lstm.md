@@ -205,7 +205,7 @@ This gate has the Sigmoid activation function. It takes in the previous time ste
 
 <!-- wp:image {"id":359} -->
 
-<figure class="wp-block-image">
+
 ![placeholder]({attach}media/2019/03/lstm3-focus-f.png){.wp-image-359}
 
 
@@ -237,7 +237,7 @@ The next gate is the input gate, which is a combination of both the Sigmoid and 
 
 <!-- wp:image {"id":360} -->
 
-<figure class="wp-block-image">
+
 ![placeholder]({attach}media/2019/03/lstm3-focus-i.png){.wp-image-360}
 
 
@@ -281,7 +281,7 @@ The last gate, output gate, decides what value the cell would output. The output
 
 <!-- wp:image {"id":361} -->
 
-<figure class="wp-block-image">
+
 ![placeholder]({attach}media/2019/03/lstm3-focus-o.png){.wp-image-361}
 
 
@@ -320,7 +320,7 @@ The cell states in each LSTM cell are modified either by the forget gate, or the
 
 <!-- wp:image {"id":364} -->
 
-<figure class="wp-block-image">
+
 ![placeholder]({attach}media/2019/03/lstm3-focus-c-2.png){.wp-image-364}
 
 

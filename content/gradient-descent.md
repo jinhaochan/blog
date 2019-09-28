@@ -51,7 +51,7 @@ We can plot all possible weights w1 and w2 can have, to all possible errors on a
 
 <!-- wp:image {"id":165} -->
 
-<figure class="wp-block-image">
+
 ![placeholder]({attach}media/2018/11/gradient_descent_method.png){.wp-image-165}  
 
 <figcaption>
@@ -76,7 +76,7 @@ So how do we know, at each point of time on the bowl shape, where do we move to?
 
 <!-- wp:image {"id":166} -->
 
-<figure class="wp-block-image">
+
 ![placeholder]({attach}media/2018/11/512px-gradient_descent-svg.png){.wp-image-166}  
 
 <figcaption>
@@ -131,7 +131,7 @@ In reality, the error surface isn't always so smooth in the shape of a bowl, but
 
 <!-- wp:image {"id":167} -->
 
-<figure class="wp-block-image">
+
 ![placeholder]({attach}media/2018/11/saddle_point-svg.png){.wp-image-167}  
 
 <figcaption>

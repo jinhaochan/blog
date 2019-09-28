@@ -108,188 +108,152 @@
 
 <p></p>
 <!-- wp:image {"id":457} --></p>
-<figure class="wp-block-image">
-![placeholder]({attach}media/2019/06/1-1.png){.wp-image-457}
-
+<p><img alt="placeholder" class="wp-image-457" src="/media/2019/06/1-1.png"></p>
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
 
-Forward proxies are setup such that the clients are behind a proxy server that passes all the network traffic from the clients to the server.
-
+<p>Forward proxies are setup such that the clients are behind a proxy server that passes all the network traffic from the clients to the server.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-Such a setup is viable for several security reasons, such as centralized scanning of traffic, identify protection and blocking of content.
-
+<p>Such a setup is viable for several security reasons, such as centralized scanning of traffic, identify protection and blocking of content.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-The downsides of this is that all the clients share the same bandwidth on the proxy server, thus potentially slowing the network speed for everyone.
-
+<p>The downsides of this is that all the clients share the same bandwidth on the proxy server, thus potentially slowing the network speed for everyone.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3} -->
 
-### Reverse Proxy
-
+<h3>Reverse Proxy</h3>
 <!-- /wp:heading -->
 
 <!-- wp:separator -->
 
-------------------------------------------------------------------------
-
+<hr>
 <!-- /wp:separator -->
 
-</p>
-<!-- wp:image {"id":458} -->
-
-<figure class="wp-block-image">
-![placeholder]({attach}media/2019/06/2-1.png){.wp-image-458}
-
-
+<p></p>
+<!-- wp:image {"id":458} --></p>
+<p><img alt="placeholder" class="wp-image-458" src="/media/2019/06/2-1.png"></p>
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
 
-A reverse proxy is the same as the forward proxy, but it's implemented on the server side instead. Multiple servers sit behind the reverse proxy, and the proxy routes the network traffic to the correct servers based on packet information.
-
+<p>A reverse proxy is the same as the forward proxy, but it's implemented on the server side instead. Multiple servers sit behind the reverse proxy, and the proxy routes the network traffic to the correct servers based on packet information.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-The reasons for a reverse proxy also pertain to security such as DDoS protection, but also includes load balancing, where the reverse proxy can detect which server is being overloaded, and redirect the traffic to other servers.
-
-<!-- /wp:paragraph -->
-
-<!-- wp:heading {"level":3} -->
-
-### Types of Proxies
-
-<!-- /wp:heading -->
-
-<!-- wp:separator -->
-
-------------------------------------------------------------------------
-
-<!-- /wp:separator -->
-
-</p>
-<!-- wp:heading {"level":4} -->
-
-#### HTTP Proxies
-
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-
-HTTP proxies are designed specifically for proxying HTTP information. HTTP proxies cannot proxy for other types of protocols.
-
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
-There is also an encrypted version of a HTTPS proxy to prevent the proxy (or anyone along the pipeline) from seeing any data being transferred.
-
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
-Because HTTP or HTTPS runs on TCP, this means that the HTTP proxy only supports TCP protocols
-
-<!-- /wp:paragraph -->
-
-<!-- wp:heading {"level":4} -->
-
-#### SOCKS Proxies
-
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-
-While HTTP proxies are only meant for HTTP traffic, SOCKS operate on a lower level, and thus can support almost all protocols including both TCP and UDP types, as well as HTTP traffic.
-
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
-The SOCKS proxy server establishes the TCP connection on behalf of the client with an external server, and then uses that connection to route traffic between the client and server.
-
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
-SOCKS does not touch the data stream at all, only setting up the connection and routing the traffic.
-
+<p>The reasons for a reverse proxy also pertain to security such as DDoS protection, but also includes load balancing, where the reverse proxy can detect which server is being overloaded, and redirect the traffic to other servers.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3} -->
 
-### Comparison between the Proxies
-
+<h3>Types of Proxies</h3>
 <!-- /wp:heading -->
 
 <!-- wp:separator -->
 
-------------------------------------------------------------------------
-
+<hr>
 <!-- /wp:separator -->
 
-</p>
-<!-- wp:heading {"level":4} -->
-
-#### Security
-
+<p></p>
+<!-- wp:heading {"level":4} --></p>
+<h4>HTTP Proxies</h4>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
 
-In both proxies (HTTPS and SOCKS, not HTTP), encryption is present, thus your data flowing through is secure.
+<p>HTTP proxies are designed specifically for proxying HTTP information. HTTP proxies cannot proxy for other types of protocols.</p>
+<!-- /wp:paragraph -->
 
+<!-- wp:paragraph -->
+
+<p>There is also an encrypted version of a HTTPS proxy to prevent the proxy (or anyone along the pipeline) from seeing any data being transferred.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Because HTTP or HTTPS runs on TCP, this means that the HTTP proxy only supports TCP protocols</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":4} -->
 
-#### Speed
-
+<h4>SOCKS Proxies</h4>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
 
-As SOCKS proxies only route data traffic and never touches the data inside, they can route the data much faster. However, most of the time the speed differences are negligible.
+<p>While HTTP proxies are only meant for HTTP traffic, SOCKS operate on a lower level, and thus can support almost all protocols including both TCP and UDP types, as well as HTTP traffic.</p>
+<!-- /wp:paragraph -->
 
+<!-- wp:paragraph -->
+
+<p>The SOCKS proxy server establishes the TCP connection on behalf of the client with an external server, and then uses that connection to route traffic between the client and server.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>SOCKS does not touch the data stream at all, only setting up the connection and routing the traffic.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Comparison between the Proxies</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:heading {"level":4} --></p>
+<h4>Security</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+
+<p>In both proxies (HTTPS and SOCKS, not HTTP), encryption is present, thus your data flowing through is secure.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":4} -->
 
-#### Features
-
+<h4>Speed</h4>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
 
-Since SOCKS proxies supports multiple protocols including HTTP, why still do we need a HTTP proxy?
+<p>As SOCKS proxies only route data traffic and never touches the data inside, they can route the data much faster. However, most of the time the speed differences are negligible.</p>
+<!-- /wp:paragraph -->
 
+<!-- wp:heading {"level":4} -->
+
+<h4>Features</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+
+<p>Since SOCKS proxies supports multiple protocols including HTTP, why still do we need a HTTP proxy?</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-Because HTTP proxies understand the HTTP traffic that is flowing through, the client and the external server can both talk to the proxy server over HTTP. This can allow the HTTP proxy to do things like caching to improve performance.
-
+<p>Because HTTP proxies understand the HTTP traffic that is flowing through, the client and the external server can both talk to the proxy server over HTTP. This can allow the HTTP proxy to do things like caching to improve performance.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-The SOCKS proxy on the other hand, does not understand HTTP traffic, and only routes the data that is flowing through. You cannot talk directly to the SOCKS server in HTTP.
-
+<p>The SOCKS proxy on the other hand, does not understand HTTP traffic, and only routes the data that is flowing through. You cannot talk directly to the SOCKS server in HTTP.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-Also, SOCKS proxies support both TCP and UDP connections, which can be used by more programs.
-
+<p>Also, SOCKS proxies support both TCP and UDP connections, which can be used by more programs.</p>
 <!-- /wp:paragraph -->
   </div>
   <div class="tag-cloud">

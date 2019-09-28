@@ -103,54 +103,42 @@
 
 <!-- wp:image {"id":294} -->
 
-<figure class="wp-block-image">
-![placeholder]({attach}media/2019/01/xgb2.png){.wp-image-294}
-
+<p><img alt="placeholder" class="wp-image-294" src="/media/2019/01/xgb2.png"></p>
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
 
-We can also observe the huge disparity between the training error and validation error. A training error of `0%`? And validation error of `~8%`? Something is really wrong.
-
+<p>We can also observe the huge disparity between the training error and validation error. A training error of <code>0%</code>? And validation error of <code>~8%</code>? Something is really wrong.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3} -->
 
-### Preventing overfitting in XGB
-
+<h3>Preventing overfitting in XGB</h3>
 <!-- /wp:heading -->
 
 <!-- wp:separator -->
 
-------------------------------------------------------------------------
-
+<hr>
 <!-- /wp:separator -->
 
-</p>
-<!-- wp:paragraph -->
-
-Since I've used XGBoost, there are several techniques available to combat overfitting, such as regularization, maximum depth of tree and bagging fractions. After applying all of those, I get a final CV score of `~74%`, but if we observe the disparity between the training error and validation error, the difference is only `~2%`!
-
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Since I've used XGBoost, there are several techniques available to combat overfitting, such as regularization, maximum depth of tree and bagging fractions. After applying all of those, I get a final CV score of <code>~74%</code>, but if we observe the disparity between the training error and validation error, the difference is only <code>~2%</code>!</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"id":293} -->
 
-<figure class="wp-block-image">
-![placeholder]({attach}media/2019/01/xgb1.png){.wp-image-293}
-
-
+<p><img alt="placeholder" class="wp-image-293" src="/media/2019/01/xgb1.png"></p>
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
 
-After uploading that to the leader board, I see my score rise up to `0.69`. The difference between my CV score and the LB is drop drastically from `~30%` to `~3%`! Classic example of overfitting.
-
+<p>After uploading that to the leader board, I see my score rise up to <code>0.69</code>. The difference between my CV score and the LB is drop drastically from <code>~30%</code> to <code>~3%</code>! Classic example of overfitting.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-Aside from feature engineering, a lot of effort should also go into ensuring your model is not too complex for very simple data.
-
+<p>Aside from feature engineering, a lot of effort should also go into ensuring your model is not too complex for very simple data.</p>
 <!-- /wp:paragraph -->
   </div>
   <div class="tag-cloud">

@@ -33,7 +33,7 @@ Typically, it would sit between a client and a server, where the client is usual
 </p>
 <!-- wp:image {"id":457} -->
 
-<figure class="wp-block-image">
+
 ![placeholder]({attach}media/2019/06/1-1.png){.wp-image-457}
 
 
@@ -72,7 +72,7 @@ The downsides of this is that all the clients share the same bandwidth on the pr
 </p>
 <!-- wp:image {"id":458} -->
 
-<figure class="wp-block-image">
+
 ![placeholder]({attach}media/2019/06/2-1.png){.wp-image-458}
 
 

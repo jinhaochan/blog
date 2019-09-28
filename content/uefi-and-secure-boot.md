@@ -45,7 +45,7 @@ UEFI provides faster boot time, more security features (such as Secure Boot), an
 
 <!-- wp:image {"id":398} -->
 
-<figure class="wp-block-image">
+
 ![placeholder]({attach}media/2019/04/ximg_5913814ed5e9f.png.pagespeed.gpjpjwpjwsjsrjrprwricpmd.ic_.9qc4wyodnr.png){.wp-image-398}  
 
 <figcaption>

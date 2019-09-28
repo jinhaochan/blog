@@ -115,7 +115,7 @@ We can visualize how the Generator learns to generate outputs that goes closer t
 
 <!-- wp:image {"id":315} -->
 
-<figure class="wp-block-image">
+
 ![placeholder]({attach}media/2019/02/iterations-1.gif){.wp-image-315}
 
 
@@ -196,7 +196,7 @@ By maximizing `D` and minimizing `G`, we get the function:
 
 <!-- wp:image {"id":318} -->
 
-<figure class="wp-block-image">
+
 ![placeholder]({attach}media/2019/02/1-ihk3whuaz_0uek4sjicyfw.png){.wp-image-318}
 
 
@@ -222,7 +222,7 @@ The Discriminator usually wins early on against the Generator, as initially, it 
 
 <!-- wp:image {"id":319} -->
 
-<figure class="wp-block-image">
+
 ![placeholder]({attach}media/2019/02/1-6so6q3dwurg8qrmwk1y3jw.jpeg){.wp-image-319}
 
 

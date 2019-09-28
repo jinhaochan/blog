@@ -225,7 +225,7 @@ Also, don't be afraid to read up on other people's kernels to gain inspiration!
 
 <!-- wp:image -->
 
-<figure class="wp-block-image">
+
 <img alt></img>
 
 

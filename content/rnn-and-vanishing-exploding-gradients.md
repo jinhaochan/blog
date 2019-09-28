@@ -42,7 +42,7 @@ A Recurrent Neural Network (RNN) is a variant of neural networks, where in each 
 
 <!-- wp:image {"id":345} -->
 
-<figure class="wp-block-image">
+
 ![placeholder]({attach}media/2019/03/0_mrhhgabskajpbt21.png){.wp-image-345}  
 
 <figcaption>
