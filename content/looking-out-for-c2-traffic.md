@@ -84,7 +84,7 @@ Below shows an image of the packet sizes versus time, and we can see the start d
 
 <!-- wp:image {"id":435,"align":"center"} -->
 
->
+
 
 
 ![placeholder]({attach}media/2019/05/eta-blake-fig-2.png){.wp-image-435}

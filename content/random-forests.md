@@ -33,7 +33,7 @@ Decision Trees try to encode and separate the data into if-else rules. It breaks
 
 <!-- wp:image {"id":331,"align":"center"} -->
 
->
+
 
 
 ![placeholder]({attach}media/2019/03/1_jaey3kp7tu2q6hn6lasmrw.png){.wp-image-331}
@@ -57,7 +57,7 @@ Intuitively, we want to reduce entropy of the data, so that we can separate them
 
 <!-- wp:image {"id":332,"align":"center"} -->
 
->
+
 
 
 ![placeholder]({attach}media/2019/03/0_klhgarh43lgdoksn.png){.wp-image-332}  
@@ -114,7 +114,7 @@ Ensembling revolves around the idea of putting together several weak learners to
 
 <!-- wp:image {"id":333,"align":"center"} -->
 
->
+
 
 
 ![placeholder]({attach}media/2019/03/skitch.jpg){.wp-image-333}  

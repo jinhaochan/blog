@@ -32,7 +32,7 @@ Here's a sample graph that is not linearly separable:
 
 <!-- wp:image {"id":302,"align":"center","width":284,"height":277} -->
 
->
+
 
 <figure class="aligncenter is-resized">
 ![placeholder]({attach}media/2019/02/simple2_data.png){.wp-image-302 width="284" height="277"}
@@ -50,7 +50,7 @@ When we try to use a linear model to discriminate the two data, we get a poorly 
 
 <!-- wp:image {"id":303,"align":"center","width":278,"height":271} -->
 
->
+
 
 <figure class="aligncenter is-resized">
 ![placeholder]({attach}media/2019/02/simple2_linear.png){.wp-image-303 width="278" height="271"}
@@ -68,7 +68,7 @@ Neural Networks, with the interactions of their hidden layers and nodes, are abl
 
 <!-- wp:image {"id":304,"align":"center","width":270,"height":263} -->
 
->
+
 
 <figure class="aligncenter is-resized">
 ![placeholder]({attach}media/2019/02/simple2_0.png){.wp-image-304 width="270" height="263"}
@@ -86,7 +86,7 @@ What a Neural Networks does is that it warps the space of the problem so that it
 
 <!-- wp:image {"id":305,"align":"center","width":281,"height":274} -->
 
->
+
 
 <figure class="aligncenter is-resized">
 ![placeholder]({attach}media/2019/02/simple2_1.png){.wp-image-305 width="281" height="274"}
@@ -129,7 +129,7 @@ Given a complex data set that resembles a spiral shape, and a neural network mod
 
 <!-- wp:image {"id":308,"align":"center","width":364,"height":355} -->
 
->
+
 
 <figure class="aligncenter is-resized">
 ![placeholder]({attach}media/2019/02/spiral.2.2-2-2-2-2-2-2.gif){.wp-image-308 width="364" height="355"}
@@ -147,7 +147,7 @@ Here's the same spiral graph, but with enough hidden layers and nodes to transfo
 
 <!-- wp:image {"id":307,"align":"center","width":344,"height":336} -->
 
->
+
 
 <figure class="aligncenter is-resized">
 ![placeholder]({attach}media/2019/02/spiral.1-2.2-2-2-2-2-2-1.gif){.wp-image-307 width="344" height="336"}
@@ -178,7 +178,7 @@ In the last example, we see a more complex example, and see how a neural network
 
 <!-- wp:image {"id":309,"align":"center","width":376,"height":283} -->
 
->
+
 
 <figure class="aligncenter is-resized">
 ![placeholder]({attach}media/2019/02/topology_base.png){.wp-image-309 width="376" height="283"}
@@ -196,7 +196,7 @@ Given a circular topology data, a shallow neural network will have difficulties 
 
 <!-- wp:image {"id":310,"align":"center","width":351,"height":343} -->
 
->
+
 
 <figure class="aligncenter is-resized">
 ![placeholder]({attach}media/2019/02/topology_2d-2d_train.gif){.wp-image-310 width="351" height="343"}

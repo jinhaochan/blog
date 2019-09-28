@@ -135,7 +135,6 @@ Each neuron's output cycle back to themselves, as compared to a feed-forward neu
 <p>These derivatives are then used by Gradient Descent to tweak the weights of the model, and ultimately try to minimize the error estimate, so that the predicted output is close to the true output.</p>
 <!-- wp:image {"id":346,"align":"center"} -->
 
-<blockquote></blockquote>
 <p><img alt="placeholder" class="wp-image-346" src="/media/2019/03/0_fbugysciqjnfi3n6.png"><br>
 <figcaption>
 Forward propagation to get the outputs, error estimate calculation, and backpropgation to get the gradients of the error w.r.t. the weights, and apply gradient descent.<br>
@@ -150,7 +149,6 @@ Forward propagation to get the outputs, error estimate calculation, and backprop
 <p>As mentioned earlier, each neuron will 2 sources of inputs: The current input, and the most recent previous input.</p>
 <!-- wp:image {"id":348,"align":"center"} -->
 
-<blockquote></blockquote>
 <p><img alt="placeholder" class="wp-image-348" src="/media/2019/03/0_ynlojw7yvjarwmd4-copy.png"><br>
 <figcaption>
 The output of the RNN cell is fed back.
@@ -158,7 +156,6 @@ The output of the RNN cell is fed back.
 <p>In the next time step, it will take the current input plus the previous output. We can visualize this by "unrolling" the RNN, so we can see what happens at each time step.</p>
 <!-- wp:image {"id":349,"align":"center"} -->
 
-<blockquote></blockquote>
 <p><img alt="placeholder" class="wp-image-349" src="/media/2019/03/0_ynlojw7yvjarwmd4.png"><br>
 <figcaption>
 An unolled RNN to visualize what happens to the cell at each time step
@@ -166,7 +163,6 @@ An unolled RNN to visualize what happens to the cell at each time step
 <p>The image above shows what happens when you unroll one recurrent neuron. In a network with 100s of neurons, some layers recurrent, things can get really messy.</p>
 <!-- wp:image {"id":350,"align":"center"} -->
 
-<blockquote></blockquote>
 <p><img alt="placeholder" class="wp-image-350" src="/media/2019/03/dpln_0423.png"><br>
 <figcaption>
 Hidden layers 1 and 2 are recurrent. Here we unroll them for 3 time steps

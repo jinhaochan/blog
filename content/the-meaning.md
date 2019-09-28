@@ -21,7 +21,7 @@ Meaning, when used as a description, simply describes an action, a word or anyth
 But when we refer to meaning as a significance, we are not describing anything, but ascribing something to it. Ascription, is defined as
 
 > * to refer to a supposed cause, source, or author*
->
+
 > *<https://www.merriam-webster.com/dictionary/ascribe>*
 
 That is to say, when we ask what is the meaning of life, we ascribe a significance to it, and that significance is the supposed cause of life. The supposed cause of why we are here.

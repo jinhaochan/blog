@@ -82,7 +82,7 @@ The ROC curve plots TPR against FPR.
 
 <!-- wp:image {"id":257,"align":"center"} -->
 
->
+
 
 
 ![placeholder]({attach}media/2019/01/roc-curves.png){.wp-image-257}  

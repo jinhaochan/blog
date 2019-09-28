@@ -14,7 +14,7 @@ The structure of a deep learning model consists mainly of nodes, and connections
 
 <!-- wp:image {"id":260,"align":"center"} -->
 
->
+
 
 
 ![placeholder]({attach}media/2019/01/2.png){.wp-image-260}  
@@ -35,7 +35,7 @@ Within each node is a mathematical equation, decides, based on the input values 
 
 <!-- wp:image {"id":261,"align":"center"} -->
 
->
+
 
 
 ![placeholder]({attach}media/2019/01/3.png){.wp-image-261}  
@@ -78,7 +78,7 @@ There are several kinds of Activation Functions, or in other words, different ki
 
 <!-- wp:image {"id":262,"align":"center"} -->
 
->
+
 
 
 ![placeholder]({attach}media/2019/01/4.png){.wp-image-262}  

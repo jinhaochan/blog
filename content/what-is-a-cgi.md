@@ -26,7 +26,7 @@ The CGI program takes in input from the user via the webpage, does the processin
 
 <!-- wp:image {"id":392,"align":"center"} -->
 
->
+
 
 
 ![placeholder]({attach}media/2019/04/cgi.gif){.wp-image-392}

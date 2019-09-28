@@ -84,7 +84,7 @@ The Discriminator gets the feedback for optimization from the ground truth, and 
 
 <!-- wp:image {"id":314,"align":"center","width":503,"height":218} -->
 
->
+
 
 <figure class="aligncenter is-resized">
 ![placeholder]({attach}media/2019/02/gans.png){.wp-image-314 width="503" height="218"}
@@ -154,7 +154,7 @@ The Discriminator tries to identify if the data is from the true distribution `x
 
 <!-- wp:image {"id":316,"align":"center"} -->
 
->
+
 
 
 ![placeholder]({attach}media/2019/02/1-4xahmaugxeoqnnjhzjq-4q.jpeg){.wp-image-316}
@@ -178,7 +178,7 @@ On the other hand, the Generator `G` tries to generates data to fool the Discrim
 
 <!-- wp:image {"id":317,"align":"center"} -->
 
->
+
 
 
 ![placeholder]({attach}media/2019/02/1-n235xeigxkl3ktl08d-cza.jpeg){.wp-image-317}

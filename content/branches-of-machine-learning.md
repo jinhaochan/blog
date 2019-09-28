@@ -29,7 +29,7 @@ In the book, he goes over the 5 main branches (or tribes) of Machine Learning. T
 
 <!-- wp:image {"id":323,"align":"center"} -->
 
->
+
 
 
 ![placeholder]({attach}media/2019/02/master-algo_thumb.png){.wp-image-323}
@@ -305,7 +305,7 @@ Models in this tribe are K-Nearest-Neighbor and Support Vector Machines.
 </p>
 <!-- wp:image {"id":325,"align":"center","width":487,"height":487} -->
 
->
+
 
 <figure class="aligncenter is-resized">
 ![placeholder]({attach}media/2019/02/puzzle_thumb.png){.wp-image-325 width="487" height="487"}

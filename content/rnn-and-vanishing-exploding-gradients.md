@@ -134,7 +134,7 @@ These derivatives are then used by Gradient Descent to tweak the weights of the 
 
 <!-- wp:image {"id":346,"align":"center"} -->
 
->
+
 
 
 ![placeholder]({attach}media/2019/03/0_fbugysciqjnfi3n6.png){.wp-image-346}  
@@ -174,7 +174,7 @@ As mentioned earlier, each neuron will 2 sources of inputs: The current input, a
 
 <!-- wp:image {"id":348,"align":"center"} -->
 
->
+
 
 
 ![placeholder]({attach}media/2019/03/0_ynlojw7yvjarwmd4-copy.png){.wp-image-348}  
@@ -195,7 +195,7 @@ In the next time step, it will take the current input plus the previous output. 
 
 <!-- wp:image {"id":349,"align":"center"} -->
 
->
+
 
 
 ![placeholder]({attach}media/2019/03/0_ynlojw7yvjarwmd4.png){.wp-image-349}  
@@ -216,7 +216,7 @@ The image above shows what happens when you unroll one recurrent neuron. In a ne
 
 <!-- wp:image {"id":350,"align":"center"} -->
 
->
+
 
 
 ![placeholder]({attach}media/2019/03/dpln_0423.png){.wp-image-350}  
