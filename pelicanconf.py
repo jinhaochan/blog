@@ -28,8 +28,8 @@ LINKS = (('All', '/'),
          ('Ramblings', '/category/ramblings.html'),)
 
 # Social widget
-SOCIAL = (('linkedin', 'linkedin.com/in/jinhao-hao-chan-162630120/'),
-          ('github', 'github.com/jinhaochan'),)
+SOCIAL = (('linkedin', 'https://www.linkedin.com/in/jinhao-hao-chan-162630120/'),
+        ('github', 'https://www.github.com/jinhaochan'),)
 
 DEFAULT_PAGINATION = 10
 
