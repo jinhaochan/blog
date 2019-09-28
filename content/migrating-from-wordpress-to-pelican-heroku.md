@@ -30,7 +30,7 @@ In this step, you simply go to your Wordpress site, hit on Tools, and export bot
 ---
 Once you got your back up ready, we're now going to setup Pelican on your local machine, before pushing it up to Heroku
 
-Its pretty straight forward, and you can follow the guide here: [http://doc.getpelican.com/en/latest/quickstart.html](Pelican Quickstart)
+Its pretty straight forward, and you can follow the guide here: [Pelican Quickstart](http://doc.getpelican.com/en/latest/quickstart.html)
 
 Basically you
 
@@ -78,7 +78,7 @@ All the pictures and media within your posts are linked to the Wordpress format,
 
 `![](chanjinhao.files.wordpress.com/2019/01/img.png)`
 
-This would work, as proper rendering would look something like this
+This would not work, as proper rendering would look something like this
 
 `![placeholder]({attach}media/img.png)`
 
@@ -109,13 +109,13 @@ git push heroku master
 
 And your new website should be live!
 
-I've aliased those 3 commands to `GOGOGO` (since they all start with G, and it saves a lot of keustrokes)
+I've aliased those 3 commands to `GOGOGO` (since they all start with G, and it saves a lot of keystrokes)
 
 ### Others
 
 ---
 If you wanna play around with the whole setup, you can look at things like Pelican themes, and Pelican plugins
 
-[https://github.com/getpelican/pelican-themes](Themes)
-[https://github.com/getpelican/pelican-plugins](Plugins)
+[Themes](https://github.com/getpelican/pelican-themes)
+[Plugins](https://github.com/getpelican/pelican-plugins)
 

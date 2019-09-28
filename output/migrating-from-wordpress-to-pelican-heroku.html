@@ -100,7 +100,7 @@
 <h3>Setting up Pelican</h3>
 <hr>
 <p>Once you got your back up ready, we're now going to setup Pelican on your local machine, before pushing it up to Heroku</p>
-<p>Its pretty straight forward, and you can follow the guide here: <a href="Pelican Quickstart">http://doc.getpelican.com/en/latest/quickstart.html</a></p>
+<p>Its pretty straight forward, and you can follow the guide here: <a href="http://doc.getpelican.com/en/latest/quickstart.html">Pelican Quickstart</a></p>
 <p>Basically you</p>
 <ol>
 <li>Install Pelican</li>
@@ -136,7 +136,7 @@
 <p>But wait! You're not done yet.</p>
 <p>All the pictures and media within your posts are linked to the Wordpress format, which would look something like this</p>
 <p><code>![](chanjinhao.files.wordpress.com/2019/01/img.png)</code></p>
-<p>This would work, as proper rendering would look something like this</p>
+<p>This would not work, as proper rendering would look something like this</p>
 <p><code>![placeholder]({attach}media/img.png)</code></p>
 <p>To make your life easier, heres a command to replace all strings, in all files</p>
 <p><code>find . -name '*.md' -exec sed -i -e 's/&lt;old&gt;/&lt;new&gt;/g' {} \;</code></p>
@@ -155,12 +155,12 @@
 
 
 <p>And your new website should be live!</p>
-<p>I've aliased those 3 commands to <code>GOGOGO</code> (since they all start with G, and it saves a lot of keustrokes)</p>
+<p>I've aliased those 3 commands to <code>GOGOGO</code> (since they all start with G, and it saves a lot of keystrokes)</p>
 <h3>Others</h3>
 <hr>
 <p>If you wanna play around with the whole setup, you can look at things like Pelican themes, and Pelican plugins</p>
-<p><a href="Themes">https://github.com/getpelican/pelican-themes</a>
-<a href="Plugins">https://github.com/getpelican/pelican-plugins</a></p>
+<p><a href="https://github.com/getpelican/pelican-themes">Themes</a>
+<a href="https://github.com/getpelican/pelican-plugins">Plugins</a></p>
   </div>
   <div class="tag-cloud">
     <p>
