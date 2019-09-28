@@ -51,15 +51,10 @@ An unrolled RNN cell
 
 <!-- wp:image {"id":356} -->
 
-<figure class="wp-block-image">
 ![placeholder]({attach}media/2019/03/lstm3-chain.png) 
 
-<figcaption>
 An unrolled LSTM cell
 
-</figcaption>
-</figure>
-<!-- /wp:image -->
 
 <!-- wp:paragraph -->
 
