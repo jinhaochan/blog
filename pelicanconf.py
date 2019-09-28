@@ -20,15 +20,15 @@ AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
 # Blogroll
-LINKS = (('All', 'http://getpelican.com/'),
-         ('Data Science', '#/category/data-science.html'),
-         ('Cyber Security', 'http://jinja.pocoo.org/'),
-         ('Book Reviews', 'http://jinja.pocoo.org/'),
-         ('Ramblings', 'http://jinja.pocoo.org/'),)
+LINKS = (('All', '/'),
+         ('Data Science', '/category/data-science.html'),
+         ('Cyber Security', '/category/security.html'),
+         ('Book Reviews', '/category/review.html'),
+         ('Ramblings', '/category/ramblings.html'),)
 
 # Social widget
-SOCIAL = (('Linkedin', 'linkedin.com/in/jinhao-hao-chan-162630120/'),
-          ('Github', 'github.com/jinhaochan'),)
+SOCIAL = (('linkedin', 'linkedin.com/in/jinhao-hao-chan-162630120/'),
+          ('github', 'github.com/jinhaochan'),)
 
 DEFAULT_PAGINATION = 10
 
