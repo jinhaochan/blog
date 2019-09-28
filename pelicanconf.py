@@ -21,7 +21,7 @@ AUTHOR_FEED_RSS = None
 
 # Blogroll
 LINKS = (('All', 'http://getpelican.com/'),
-         ('Data Science', 'http://python.org/'),
+         ('Data Science', '/category/data-science.html'),
          ('Cyber Security', 'http://jinja.pocoo.org/'),
          ('Book Reviews', 'http://jinja.pocoo.org/'),
          ('Ramblings', 'http://jinja.pocoo.org/'),)
