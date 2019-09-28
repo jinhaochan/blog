@@ -88,7 +88,7 @@
 
   <div>
     <p>I used to write my blog posts on Wordpress, and it was doing a good job. I had a few blogs on WP, one was my technical blog, and another was just me rambling about life. But I realized that Wordpress was not very friendly to <code>coding blog posts</code>. Sure, they had a code block segment, but the horrible switching from blockmode to classic mode was a pain</p>
-<p>Also, I found out that I really wanted control of the things that I am building. Building my own site (Well... with the help of Pelican) gave me the granularity of control I want. While i'm not building everything from ground up, as least I have the power to control the things around my blog. </p>
+<p>Also, I found out that I really wanted control of the things that I am building. Building my own site (Well... with the help of Pelican) gave me the granularity of control I want. While I'm not building everything from ground up, at least I have the power to control the things around my blog. </p>
 <p>And writing in markdown is fun!</p>
 <p>In this post, I'm going to run through the thing I did to make this happen. It took literally one day for me to migrate all my posts over to Pelican.</p>
 <hr>
@@ -138,7 +138,7 @@
 <p><code>![](chanjinhao.files.wordpress.com/2019/01/img.png)</code></p>
 <p>This would not work, as proper rendering would look something like this</p>
 <p><code>![placeholder]({attach}media/img.png)</code></p>
-<p>To make your life easier, heres a command to replace all strings, in all files</p>
+<p>To make your life easier, here's a command to replace all strings, in all files</p>
 <p><code>find . -name '*.md' -exec sed -i -e 's/&lt;old&gt;/&lt;new&gt;/g' {} \;</code></p>
 <p>What this does is to find all files ending with <code>.md</code>, and execute a <code>sed</code> replacement call. In this case, our command would look like this:</p>
 <p><code>find . -name '*.md' -exec sed -i -e 's/chanjinhao.files.wordpress.com\{attach\}media//g' {} \;</code></p>
