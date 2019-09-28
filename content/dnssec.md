@@ -105,7 +105,7 @@ Without DNSSEC, non-existent domains are return with NXDOMAIN. With DNSSEC, non-
 ------------------------------------------------------------------------
 
 
-![DNS resolution with DNSSEC](2019/09/untitled-1.png)
+![DNS resolution with DNSSEC](media/2019/09/untitled-1.png)
 
 
 Up front, you can see that there is an additional layer called the Validating Resolver, which handles the DNSSEC process.
