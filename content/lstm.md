@@ -74,7 +74,6 @@ The biggest difference, aside from the more complex internal structure of the LS
 
 <!-- /wp:separator -->
 
-</p>
 <!-- wp:paragraph -->
 
 The top line of an LSTM cell represents the cell state
@@ -83,13 +82,10 @@ The top line of an LSTM cell represents the cell state
 
 <!-- wp:image {"id":357,"align":"center"} -->
 
-<div class="wp-block-image">
 
 
 ![placeholder]({attach}media/2019/03/lstm3-c-line.png){.wp-image-357}
 
-
-</div>
 
 <!-- /wp:image -->
 
@@ -152,7 +148,7 @@ In all the 3 gates, there exists the common Sigmoid layer. This layer outputs a 
 
 <!-- wp:image {"id":365,"align":"center","width":87,"height":106} -->
 
-<div class="wp-block-image">
+>
 
 <figure class="aligncenter is-resized">
 ![placeholder]({attach}media/2019/03/lstm3-gate.png){.wp-image-365 width="87" height="106"}  
@@ -161,7 +157,7 @@ The common Sigmoid layer in all 3 gates
 </figcaption>
 
 
-</div>
+
 
 <!-- /wp:image -->
 
@@ -430,7 +426,7 @@ The key to LSTM preventing the vanexplgrad (I just made that up) is cell state u
 
 <!-- wp:image {"id":369,"align":"center"} -->
 
-<div class="wp-block-image">
+>
 
 
 ![placeholder]({attach}media/2019/03/untitled-1.png){.wp-image-369}  
@@ -439,7 +435,7 @@ Calculating the current cell state using values from the previous cell state
 </figcaption>
 
 
-</div>
+
 
 <!-- /wp:image -->
 
@@ -459,7 +455,7 @@ When performing backpropagation, we find the derivative w.r.t the error. This gi
 
 <!-- wp:image {"id":368,"align":"center"} -->
 
-<div class="wp-block-image">
+>
 
 
 ![placeholder]({attach}media/2019/03/2.png){.wp-image-368}  
@@ -468,7 +464,7 @@ Derivative of w.r.t the error
 </figcaption>
 
 
-</div>
+
 
 <!-- /wp:image -->
 

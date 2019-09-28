@@ -45,7 +45,7 @@ The mathematical definition of Regularization is the process of adding informati
 
 <!-- wp:image {"id":248,"align":"center","width":238,"height":228} -->
 
-<div class="wp-block-image">
+>
 
 <figure class="aligncenter is-resized">
 ![placeholder]({attach}media/2019/01/1280px-regularization.png){.wp-image-248 width="238" height="228"}  
@@ -56,7 +56,7 @@ Regularization makes the model less complex.
 </figcaption>
 
 
-</div>
+
 
 <!-- /wp:image -->
 

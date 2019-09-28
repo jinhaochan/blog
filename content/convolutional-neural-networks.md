@@ -95,9 +95,9 @@ This gives us a resulting numerical vector representation of an image
 <p>
 <!-- /wp:paragraph -->
 
-</div>
 
-</div>
+
+
 
 <!-- /wp:media-text -->
 
@@ -148,9 +148,9 @@ By sliding function *g(t*) onto *f(t)*, we produce a third function *(f\*g)(t)*.
 <p>
 <!-- /wp:paragraph -->
 
-</div>
 
-</div>
+
+
 
 <!-- /wp:media-text -->
 
@@ -201,9 +201,9 @@ Image that has been converted to a matrix of numbers. For simplicity, we'll just
 <p>
 <!-- /wp:paragraph -->
 
-</div>
 
-</div>
+
+
 
 <!-- /wp:media-text -->
 
@@ -223,9 +223,9 @@ A smaller matrix, called a filter, that we'll use to slide over the original mat
 <p>
 <!-- /wp:paragraph -->
 
-</div>
 
-</div>
+
+
 
 <!-- /wp:media-text -->
 
@@ -245,9 +245,9 @@ As we slide the filter over the matrix, we do a matrix multiplication, and take 
 <p>
 <!-- /wp:paragraph -->
 
-</div>
 
-</div>
+
+
 
 <!-- /wp:media-text -->
 
@@ -277,13 +277,13 @@ We can also use multiple filters to produce multiple Convoluted feature maps, wh
 
 <!-- wp:image {"id":204,"align":"center","width":374,"height":188} -->
 
-<div class="wp-block-image">
+>
 
 <figure class="aligncenter is-resized">
 ![placeholder]({attach}media/2018/12/screen-shot-2016-08-10-at-3-42-35-am.png){.wp-image-204 width="374" height="188"}
 
 
-</div>
+
 
 <!-- /wp:image -->
 
@@ -445,7 +445,7 @@ We can repeat this step numerous times to reduce the image, and extract out impo
 
 <!-- wp:image {"id":205,"align":"center","width":606,"height":144} -->
 
-<div class="wp-block-image">
+>
 
 <figure class="aligncenter is-resized">
 ![placeholder]({attach}media/2018/12/screen-shot-2016-08-08-at-2-26-09-am.png){.wp-image-205 width="606" height="144"}  
@@ -454,7 +454,7 @@ Repeated Convolution + ReLU and Pooling to reduce the image and extract importan
 </figcaption>
 
 
-</div>
+
 
 <!-- /wp:image -->
 
@@ -494,9 +494,9 @@ In the last layer, we can form the full face from all the layers
 <p>
 <!-- /wp:paragraph -->
 
-</div>
 
-</div>
+
+
 
 <!-- /wp:media-text -->
 
@@ -508,13 +508,13 @@ In another example, we can visually see how the CNN breaks down an image using C
 
 <!-- wp:image {"id":207,"align":"center","width":748,"height":423} -->
 
-<div class="wp-block-image">
+>
 
 <figure class="aligncenter is-resized">
 ![placeholder]({attach}media/2018/12/conv_all.png){.wp-image-207 width="748" height="423"}
 
 
-</div>
+
 
 <!-- /wp:image -->
 

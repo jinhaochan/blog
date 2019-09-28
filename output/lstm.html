@@ -142,20 +142,14 @@
 <hr>
 <!-- /wp:separator -->
 
-<p></p>
-<!-- wp:paragraph --></p>
+<!-- wp:paragraph -->
+
 <p>The top line of an LSTM cell represents the cell state</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"id":357,"align":"center"} -->
 
-<div class="wp-block-image">
-
-![placeholder]({attach}media/2019/03/lstm3-c-line.png){.wp-image-357}
-
-
-</div>
-
+<p><img alt="placeholder" class="wp-image-357" src="/media/2019/03/lstm3-c-line.png"></p>
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
@@ -209,8 +203,7 @@
 
 <!-- wp:image {"id":365,"align":"center","width":87,"height":106} -->
 
-<div class="wp-block-image">
-
+<blockquote></blockquote>
 <figure class="aligncenter is-resized">
 ![placeholder]({attach}media/2019/03/lstm3-gate.png){.wp-image-365 width="87" height="106"}  
 <figcaption>
@@ -218,49 +211,56 @@ The common Sigmoid layer in all 3 gates
 </figcaption>
 
 
-</div>
 
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->
 
-<p>The Sigmoid layer outputs a value from 0 to 1. This value corresponds to a value in the cell state, and this would mean different things for different gates.</p>
+The Sigmoid layer outputs a value from 0 to 1. This value corresponds to a value in the cell state, and this would mean different things for different gates.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>In the Forget gate, 0 would mean forget the value in the cell state, and 1 would mean remember the value entirely.</p>
+In the Forget gate, 0 would mean forget the value in the cell state, and 1 would mean remember the value entirely.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>In the Input gate, 0 would mean do not update this value at all, and 1 would mean update the value entirely.</p>
+In the Input gate, 0 would mean do not update this value at all, and 1 would mean update the value entirely.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>In the Output gate, 0 would mean do not output this cell state value, and 1 would mean output this value entirely.</p>
+In the Output gate, 0 would mean do not output this cell state value, and 1 would mean output this value entirely.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":4} -->
 
-<h4>Forget Gate</h4>
+#### Forget Gate
+
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
 
-<p>The first gate is the forget gate. This gate decides what information to discard from the cell state.</p>
+The first gate is the forget gate. This gate decides what information to discard from the cell state.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
 
-<p>This gate has the Sigmoid activation function. It takes in the previous time step's output, and the current time step input.</p>
+This gate has the Sigmoid activation function. It takes in the previous time step's output, and the current time step input.
+
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"id":359} -->
 
 <figure class="wp-block-image">
 ![placeholder]({attach}media/2019/03/lstm3-focus-f.png){.wp-image-359}
+
 
 <!-- /wp:image -->
 
@@ -479,7 +479,7 @@ The key to LSTM preventing the vanexplgrad (I just made that up) is cell state u
 
 <!-- wp:image {"id":369,"align":"center"} -->
 
-<div class="wp-block-image">
+>
 
 
 ![placeholder]({attach}media/2019/03/untitled-1.png){.wp-image-369}  
@@ -488,7 +488,7 @@ Calculating the current cell state using values from the previous cell state
 </figcaption>
 
 
-</div>
+
 
 <!-- /wp:image -->
 
@@ -508,7 +508,7 @@ When performing backpropagation, we find the derivative w.r.t the error. This gi
 
 <!-- wp:image {"id":368,"align":"center"} -->
 
-<div class="wp-block-image">
+>
 
 
 ![placeholder]({attach}media/2019/03/2.png){.wp-image-368}  
@@ -517,7 +517,7 @@ Derivative of w.r.t the error
 </figcaption>
 
 
-</div>
+
 
 <!-- /wp:image -->
 

@@ -32,7 +32,7 @@ For example, writing this piece of code fetches the image resource from www.w3sc
 
 <!-- wp:image {"align":"center"} -->
 
-<div class="wp-block-image">
+>
 
 
 ![W3Schools.com](https://www.w3schools.com/images/w3schools_green.jpg)  
@@ -41,7 +41,7 @@ Image retrieved from w3 schools
 </figcaption>
 
 
-</div>
+
 
 <!-- /wp:image -->
 
