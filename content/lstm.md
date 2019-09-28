@@ -148,9 +148,7 @@ In all the 3 gates, there exists the common Sigmoid layer. This layer outputs a 
 
 <!-- wp:image {"id":365,"align":"center","width":87,"height":106} -->
 
->
 
-<figure class="aligncenter is-resized">
 ![placeholder]({attach}media/2019/03/lstm3-gate.png){.wp-image-365 width="87" height="106"}  
 <figcaption>
 The common Sigmoid layer in all 3 gates
