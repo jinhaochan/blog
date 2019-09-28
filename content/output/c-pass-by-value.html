@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>C# Pass By Value</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="A Pelican Blog Atom Feed" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">A Pelican Blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/book-review.html">Book Review</a></li>
+                    <li><a href="/category/data-science.html">Data Science</a></li>
+                    <li><a href="/category/misc.html">misc</a></li>
+                    <li><a href="/category/ramblings.html">Ramblings</a></li>
+                    <li><a href="/category/review.html">Review</a></li>
+                    <li><a href="/category/security.html">Security</a></li>
+                    <li class="active"><a href="/category/software-engineering.html">Software Engineering</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/c-pass-by-value.html" rel="bookmark"
+           title="Permalink to C# Pass By Value">C# Pass By Value</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-11-25T22:37:00+00:00">
+                Published: Sun 25 November 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/software-engineering.html">Software Engineering</a>.</p>
+
+</footer><!-- /.post-info -->      <h2>Pass by Value vs Reference</h2>
+<h3>Pass by value</h3>
+<hr>
+<p>When we pass call a function, we sometimes pass in some values for the function to use. Typically, it would look like this</p>
+<p><code>(parameters)</code></p>
+<p>or</p>
+<p><code>void swapValues(int x, int y)</code></p>
+<p>When we pass a value to the function <code>swapValue()</code>, we are passing it by value.</p>
+<p>What this means is that, a new memory region is allocated from the stack for the new parameters <code>x</code> and <code>y</code>, and the value of that memory region is set to the value that was passed to it.</p>
+<p>I'll write a post on what happens in the memory region when a function is called in the future (dealing with functions stack frame allocation etc). But for now, when we call a function, it is allocated a function stack frame, with all its variables and paramters contained within the frame.</p>
+<p>Let's look at the following code block</p>
+<p>[code lang=text]<br>
+public static void Main()<br>
+{<br>
+int x = 10;<br>
+int y = 20;</p>
+<p>swapValues(10, 20);<br>
+}</p>
+<p>void swapValues(int x, int y)<br>
+{<br>
+int temp;</p>
+<p>temp = x;<br>
+x = y;<br>
+y = temp;<br>
+}<br>
+[/code]</p>
+<p>When <code>Main()</code> calls <code>swapValues()</code>, a new stack frame is allocated just for <code>swapValues()</code> to store all its local variables, and parameters passed into it. The stack frame will be the new memory region for the two paramters <code>x</code> and <code>y</code>, and assigns them to the values that was passed to them, which are <code>10</code> and <code>20</code>.</p>
+<p>Because it's a new memory region, whatever changes that are done in the function <code>swapValues()</code> will only affect the newly allocated memory regions of <code>x</code> and <code>y</code> in the stack frame of <code>swapValues()</code>.</p>
+<p>That is to say, the values of <code>x</code> and <code>y</code> in the <code>Main</code> function stack frame will be left untouched!</p>
+<p>This kind of defeats the purpose of the function...</p>
+<p>So how do we fix it?</p>
+<h3>Pass by Reference</h3>
+<hr>
+<p>Let's tweak the code above slightly to make it pass by reference</p>
+<p>[code lang=text]<br>
+public static void Main()<br>
+{<br>
+int x = 10;<br>
+int y = 20;</p>
+<p>swapValues(10, 20);<br>
+}</p>
+<p>void swapValues(ref int x, ref int y)<br>
+{<br>
+int temp;</p>
+<p>temp = x;<br>
+x = y;<br>
+y = temp;<br>
+}<br>
+[/code]</p>
+<p>The only difference is adding the keyword <code>ref</code> in front of the function parameters, which tell the function to reference to the objects passed in. This means that whatever work that is done in <code>swapValues()</code> will work directly on the values in <code>Main()</code></p>
+<p>The difference between passing by value and passing by reference is shown below</p>
+<ul>
+<li>
+<p>Passing by value: Allocates memory space on the stack frame and assigns it the value of the object that were passed into the function</p>
+</li>
+<li>
+<p>Passing by reference: Does not allocate memory space on the stack frame, uses the object that was passed in directly</p>
+</li>
+</ul>
+<p>In this case, whatever changes done to <code>x</code> and <code>y</code> in the function <code>swapValues()</code> will directly modify the values inside the stack frame of <code>Main()</code>!</p>
+<h3>Reference Objects</h3>
+<hr>
+<h3>Modifying the reference object part 1</h3>
+<p>Now heres the tricky part. Some objects are reference objects, which is to say they are pointers to begin with. An example would be a string in C, or an array object.</p>
+<p>[code lang=text]<br>
+public static void Main()<br>
+{<br>
+int[] myArrayMain = new int[] {1, 2, 3, 4, 5};</p>
+<p>editArray(myArrayMain);<br>
+}</p>
+<p>void editArray(int[] myArrayParam)<br>
+{<br>
+myArrayParam[0] = 7;<br>
+}<br>
+[/code]</p>
+<p>The above code will changes <code>myArrayMain</code> to <code>{0, 2, 3, 4, 5}</code></p>
+<p>When we call the function <code>editArray()</code>, we create a new stack frame for <code>editArray()</code> to hold its local variables and paramters. Because <code>myArrayParam</code> is a reference object, we create a pointer on the stack frame to hold any value that is passed into <code>myArrayParam</code>.</p>
+<p>We are passing in <code>myArrayMain</code>, which is a reference object. That means, the value of <code>myArrayMain</code> is an address, which points to the first element in the array.</p>
+<p>When we pass <code>myArrayMain</code> to <code>myArrayParam</code>, we are assigning <code>myArrayParam</code> to the value of the <code>myArrayMain</code>, which is an address that points to the first element of <code>myArrayMain</code>!</p>
+<p>Memory pointer layout:</p>
+<p><code>myArrayParam</code> --&gt; <code>myArrayMain</code> --&gt; <code>memory of first element in myArrayMain (1)</code></p>
+<p>So any changes made to <code>myArrayParam</code> in <code>editArray()</code> will be propagated to the <code>myArrayMain</code></p>
+<h3>Modifying the reference object part 2</h3>
+<p>Now what happens when we change <code>editArray()</code> to create a new array? Will <code>myArrayMain</code> be overwritten?</p>
+<p>[code lang=text]<br>
+public static void Main()<br>
+{<br>
+int[] myArrayMain = new int[] {1, 2, 3, 4, 5};</p>
+<p>editArray(myArrayMain);<br>
+}</p>
+<p>void editArray(int[] myArrayParam)<br>
+{<br>
+myArrayParam[0] = new int[] {6, 7, 8, 9, 10};<br>
+}<br>
+[/code]</p>
+<p>Nope. <code>myArrayMain</code> will still remain as <code>{1, 2, 3, 4, 5}</code></p>
+<p>When we call <code>myArrayParam[0] = new int[] {6, 7, 8, 9, 10};</code>, we are repointing <code>myArrayParam</code> to something else. This breaks the memory pointer layout above</p>
+<p>[code lang=text]<br>
+myArrayParam --&gt; myArrayMain --&gt; memory of first element in myArrayMain (1)</p>
+<p>becomes</p>
+<p>myArrayParam --&gt; memory of first element in myArrayParam (6)</p>
+<p>myArrayMain --&gt; memory of first element in myArrayMain (1)<br>
+[/code]</p>
+<h3>Modifying the reference object part 3</h3>
+<p>Lets look at the final attempt. This time, we call <code>ref</code> on the array that is passed in</p>
+<p>[code lang=text]<br>
+public static void Main()<br>
+{<br>
+int[] myArrayMain = new int[] {1, 2, 3, 4, 5};</p>
+<p>editArray(myArrayMain);<br>
+}</p>
+<p>void editArray(ref int[] myArrayParam)<br>
+{<br>
+myArrayParam[0] = new int[] {6, 7, 8, 9, 10};<br>
+}<br>
+[/code]</p>
+<p>Remember that when we call <code>ref</code>, in the stack frame of <code>editArray()</code>, no new memory is allocted, and the original <code>myArrayMain</code> is used.</p>
+<p>The memory pointer layout is now</p>
+<p>[code lang=text]<br>
+myArrayParam --&gt; memory of first element in myArrayMain (1)</p>
+<p>myArrayMain --&gt; memory of first element in myArrayMain (1)<br>
+[/code]</p>
+<p>Both <code>myArrayParam</code> and <code>myArrayMain</code> now point to the first element in <code>myArrayMain</code></p>
+<p>So when the code block is ran, <code>myArrayMain</code> will change to <code>{6, 7, 8, 9, 10}</code>!</p>
+<h3>Conclusion</h3>
+<hr>
+<p>Phew! That was a long and confusing read, so here's a TLDR:</p>
+<ul>
+<li>C# passes by value</li>
+<li>When a function is called, a stack frame is allocated for local and parameter variables</li>
+<li>The parameter variables are assigned to the value that was passed in</li>
+<li>No memory in the stack frame is allocated for parameters that are prefixed with <code>ref</code>, but are accessed directly from the caller function</li>
+<li>Arrays are reference objects</li>
+<li>The values they hold are the memory space of the first element in the array</li>
+</ul>
+<p>Thanks for reading!!</p>
+<p>Further reading: http://www.yoda.arachsys.com/csharp/parameters.html Excellent page!!!</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

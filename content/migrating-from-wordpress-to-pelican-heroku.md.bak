@@ -8,7 +8,7 @@ Status: published
 
 I used to write my blog posts on Wordpress, and it was doing a good job. I had a few blogs on WP, one was my technical blog, and another was just me rambling about life. But I realized that Wordpress was not very friendly to `coding blog posts`. Sure, they had a code block segment, but the horrible switching from blockmode to classic mode was a pain
 
-Also, I found out that I really wanted control of the things that I am building. Building my own site (Well... with the help of Pelican) gave me the granularity of control I want. While I'm not building everything from ground up, at least I have the power to control the things around my blog. 
+Also, I found out that I really wanted control of the things that I am building. Building my own site (Well... with the help of Pelican) gave me the granularity of control I want. While i'm not building everything from ground up, at least I have the power to control the things around my blog. 
 
 And writing in markdown is fun!
 
@@ -82,7 +82,7 @@ This would not work, as proper rendering would look something like this
 
 `![placeholder]({attach}media/img.png)`
 
-To make your life easier, here's a command to replace all strings, in all files
+To make your life easier, heres a command to replace all strings, in all files
 
 `find . -name '*.md' -exec sed -i -e 's/<old>/<new>/g' {} \;`
 

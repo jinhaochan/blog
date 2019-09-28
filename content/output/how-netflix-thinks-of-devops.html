@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>How Netflix Thinks of DevOps</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="A Pelican Blog Atom Feed" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">A Pelican Blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/book-review.html">Book Review</a></li>
+                    <li><a href="/category/data-science.html">Data Science</a></li>
+                    <li><a href="/category/misc.html">misc</a></li>
+                    <li><a href="/category/ramblings.html">Ramblings</a></li>
+                    <li><a href="/category/review.html">Review</a></li>
+                    <li><a href="/category/security.html">Security</a></li>
+                    <li class="active"><a href="/category/software-engineering.html">Software Engineering</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/how-netflix-thinks-of-devops.html" rel="bookmark"
+           title="Permalink to How Netflix Thinks of DevOps">How Netflix Thinks of DevOps</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-07-13T07:02:00+00:00">
+                Published: Fri 13 July 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/software-engineering.html">Software Engineering</a>.</p>
+
+</footer><!-- /.post-info -->      <p><a href="https://www.youtube.com/watch?v=UTKIT6STSVM">Link to the video of how Netflix thinks about DevOps(Hint: They don't)</a></p>
+<p><a href="https://netflix.github.io/">Netflix Github Page</a></p>
+<p>Instead, what they do focus on is a lot about culture, which is really be what every company should be focusing on. In this era, for better or for worse, we as humans have become more "Me"-centric. How we actualize the vision of ourselves, and how much the company supports that actualization is an important factor influencing the decision of choosing where to work.</p>
+<p>I digress. Below are the summary points of the video of what Netflix does. It's entirely non-DevOps related, and entirely cultural.</p>
+<ol>
+<li>Don't build systems that say NO to developers and engineers.<ul>
+<li>In some companies, there's the concept of a "Need-To-Know-Basis", both on data access, and system access. There is absolutely no reason to do so, after all, we all have the same vision the company has (If not, why are you even there?). By denying access to both data and systems, you're essentially telling your engineers: "This is not your problem. You have no business to be looking at this. Focus only on what you're hired to do".</li>
+<li>In addition to breaking engineering serendipity and spontaneity, you're inducing a lot of overhead for policy crafting, determining who has access to what, and enforcing those rules.</li>
+</ul>
+</li>
+<li>Freedom and Responsibility<ul>
+<li>Hire smart people, and get out of their way. Let them do what they were hired to do, and trust that they would do it. The engineers should have the freedom to choose and architect solutions they see best. The company should not restrain the engineer in the worst way possible; restrain their engineering choices.</li>
+</ul>
+</li>
+<li>Trading [X] for Innovation<ul>
+<li>Where [X] is your core business concern. For Netflix, it was uptime of their services, and trading off some concerns for uptime to invest in innovation was one of their strategies. Think about what [X] is in your company, and instead of obsessing over the optimization of [X], ensure that an equal (if not more) effort is spent in innovation.</li>
+<li>The by-product of innovation also optimizes [X], and should not be seen as an activity to do "only if you have free time". That should be the main job you're doing: Innovation.</li>
+</ul>
+</li>
+<li>Cut down on Processes and Procedures (P&amp;P)<ul>
+<li>These "safety guardrails" do nothing but induce more administrative overhead. The opposite of introducing P&amp;Ps is to cultivate more trust. Trust that your employees are doing the correct and right thing, instead of making them document everything and request permission.</li>
+<li>Having trust implicitly means delegating authority to them, and that means no P&amp;Ps to request unnecessary permission.</li>
+</ul>
+</li>
+<li>Context<ul>
+<li>Make sure the people you are working with have a quality and constant flow of context of the business, and business decisions. Being too caught up in your technical mumbo-jumbo and into the rabbit hole can lead you to lose sight of the bigger picture. Context of the business, and exactly why you are doing what you're doing should be constantly reinforced.</li>
+</ul>
+</li>
+<li>Required Standard<ul>
+<li>Not "No required coding standards.", but rather no required tech stack requirements. Don't enforce tools to use, don't enforce tech stack to use. Instead, enable your engineers to choose what they want.</li>
+</ul>
+</li>
+<li>Silos/Walls/Fences Should be torn down<ul>
+<li>As if this isn't obvious enough. Know your internal dependencies and consumers. Know exactly what is it they do and want, and know exactly what is expected of you. Knowing what each team does reduces the need for guessing, and cuts the cost of wrong anticipation.</li>
+</ul>
+</li>
+<li>Guesses/Instinct/Tradition<ul>
+<li>Don't rely on instinct. Back it up with quantitative data. Don't fall victim to tradition. Always challenge for a better alternative.</li>
+</ul>
+</li>
+<li>Finally, Culture<ul>
+<li>Know what culture you have. The 8 points above are an example of what culture is. To give an example of a counter-culture:<ul>
+<li>I build tightly controlled systems, and only allow relevant engineers to access the system.</li>
+<li>I tell the engineers exactly what to do, and rob them from their freedom.</li>
+<li>I forsake innovation, and focus only on KPIs.</li>
+<li>I introduce numerous P&amp;Ps, because I don't trust my engineers to do the right thing.</li>
+<li>I don't focus on the Why enough, and only how the How and What</li>
+<li>I restrict my engineers to use a predefined tech stack, because change is bad, and we only support such technology.</li>
+<li>I silo my teams, and everything internal to one team is a "Need-To-Know" basis to another team</li>
+<li>It has always been done this why, so don't ask why. If it ain't broke, don't fix it.</li>
+</ul>
+</li>
+<li>Make your comapny culture well-known, and when you ask every engineer what the culture is, they should be able to tell it to you right away. If you have differing cultures, and groups of people optimizing for different things, you'll end up with a lot of problems. Internal cohesion falls apart, and different groups will work towards different goals. This will tear the company from inside out. Pass on brilliant people if they do not fit into your culture.</li>
+</ul>
+</li>
+</ol>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

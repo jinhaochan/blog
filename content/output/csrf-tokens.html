@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>CSRF Tokens</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="A Pelican Blog Atom Feed" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">A Pelican Blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/book-review.html">Book Review</a></li>
+                    <li><a href="/category/data-science.html">Data Science</a></li>
+                    <li><a href="/category/misc.html">misc</a></li>
+                    <li><a href="/category/ramblings.html">Ramblings</a></li>
+                    <li><a href="/category/review.html">Review</a></li>
+                    <li class="active"><a href="/category/security.html">Security</a></li>
+                    <li><a href="/category/software-engineering.html">Software Engineering</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/csrf-tokens.html" rel="bookmark"
+           title="Permalink to CSRF Tokens">CSRF Tokens</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-04-24T16:13:00+00:00">
+                Published: Wed 24 April 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/security.html">Security</a>.</p>
+<p>tags: <a href="/tag/csrf.html">CSRF</a> </p>
+</footer><!-- /.post-info -->      <p>If we look at source codes of HTML forms, we typically can spot this field being rendered on the webpage</p>
+<!-- wp:image {"id":420} -->
+
+<p><img alt="placeholder" class="wp-image-420" src="/media/2019/04/token.png">  </p>
+<figcaption>
+
+</figcaption>
+
+<p>Sometimes it doesn't have the name called CSRF Token, and it just appears as a random gibberish value being loaded.</p>
+<p>This post breaks down the purpose of the token, and what happens behind the scenes with the token</p>
+<!-- wp:heading {"level":3} -->
+
+<h3>Understanding CSRF</h3>
+<hr>
+<p>CSRF stands for Cross-Site Request Forgery, and understanding how it works is a prerequisite to understanding CSRF tokens. Below shows a picture of what a CSRF attack looks like</p>
+<!-- wp:image {"id":421} -->
+
+<p><img alt="placeholder" class="wp-image-421" src="/media/2019/04/csrf-cross-site-request-forgery.png"></p>
+<!-- wp:list {"ordered":true} -->
+
+<ol>
+<li>The attacker crafts a GET requests that triggers a fund transfer to his account<ul>
+<li><code>GET http://bank.com/transfer.php?account=Attacker&amp;amount=100</code></li>
+</ul>
+</li>
+<li>The attacker embeds this request as a hyperlink<ul>
+<li><code>&lt;a href="http://bank.com transfer.php?account=Attacker&amp;amount=100"&gt; READ MORE... &lt;/a&gt;</code></code></li>
+</ul>
+</li>
+<li>When the user clicks on the link, it triggers the <code>GET</code> request on behalf of the victim</li>
+<li>The <code>GET</code> request is triggered by the victim, and funds are transferred to the Attacker</li>
+</ol>
+<p>This attack hinges on the fact that the Victim must be logged in to the service, and is already authenticated with an open session with the service.</p>
+<p>If the Victim is not logged in, when he clicks on the malicious link, instead of triggering the bad <code>GET</code> request, it will redirect him to the login page instead, thus rendering the attack useless.</p>
+<!-- wp:heading {"level":3} -->
+
+<h3>CSRF Tokens</h3>
+<hr>
+<p>CSRF token is a simple concept where include one more argument of a token, that is sort of like a secret password.</p>
+<p><code>http://bank.com/transfer.php?account=User&amp;amount=100&amp;token=32Sa2dsa10gB88vcx9cz08f331j=Da</code></p>
+<p>This token value is a high-entropy value which is hard to guess by the attacker. If on the server side, it receives a wrong or missing CSRF token value, the <code>GET</code> request is rejected and does not execute</p>
+<p>The CSRF token works this way:</p>
+<!-- wp:list {"ordered":true} -->
+
+<ol>
+<li>Client requests for a HTML page that contains a form</li>
+<li>Server generates two distinct tokens, and sends one as a cookie to the client, and embeds the other as a hidden field in the form</li>
+<li>When the client submits the form, both CSRF tokens must be sent back to the server. The one embedded in the form, and the one in the cookie.</li>
+<li>If the request does not contain both tokens, it's rejected</li>
+</ol>
+<p>The CSRF token value should be regularly invalidated at a time interval, per request, or when the user logs out.</p>
+<!-- wp:heading {"level":3} -->
+
+<h3>CSRF Token Vulnerabilities</h3>
+<hr>
+<p>If traffic carrying the token is not encrypted over HTTPS, the Attacker can sniff the traffic and obtain the CSRF token value and the Cookie, and perform a CSRF token replay attack.</p>
+<p>The solution to this is obvious: Always use encryption for communication. Aside from that, per-request-tokens can also be implemented.</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

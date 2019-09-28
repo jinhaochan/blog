@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>A Pelican Blog - ASLR</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="A Pelican Blog Atom Feed" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">A Pelican Blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/book-review.html">Book Review</a></li>
+                    <li><a href="/category/data-science.html">Data Science</a></li>
+                    <li><a href="/category/misc.html">misc</a></li>
+                    <li><a href="/category/ramblings.html">Ramblings</a></li>
+                    <li><a href="/category/review.html">Review</a></li>
+                    <li><a href="/category/security.html">Security</a></li>
+                    <li><a href="/category/software-engineering.html">Software Engineering</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/how-to-harden-a-linux-kernel.html">How to harden a Linux Kernel</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2019-04-17T11:21:00+00:00">
+                Published: Wed 17 April 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/security.html">Security</a>.</p>
+<p>tags: <a href="/tag/aslr.html">ASLR</a> <a href="/tag/smap.html">SMAP</a> <a href="/tag/smep.html">SMEP</a> </p>
+</footer><!-- /.post-info --><p>Hardening means to make the something more secure and resilient to attacks. When people talk about hardening, they usually talk about server hardening, which includes things like</p>
+<ul>
+<li>IP / MAC address white listing</li>
+<li>Closing unused ports</li>
+<li>Uninstalling unused systems</li>
+<li>Disabling <code>root</code> login (no one can login as root, only a normal user who can <code>sudo</code>)</li>
+</ul>
+<p>These are legitimate areas of hardening, but another area of hardening involves securing the kernel itself at compile time. This deals with much lower level of security such as Address Space Layout Randomization (ASLR) or Read/Write permissions at different memory regions (SMEP/SMAP). In this post, I'll be writing about these 2 technologies.</p>
+<!-- wp:heading {"level":3} -->
+
+<h3>Kernel Level Hardening</h3>
+<hr>
+<!-- wp:heading {"level":4} -->
+
+<h4>Kernel Address Space Layout Randomization (KASLR)</h4>
+<p>ASLR is a memory protection technique that randomizes the address layout of the executables that are loaded in memory. How this prevent an attack is to disallow memory space predictability.</p>
+<p>An attacker, if he knows your target OS (example Ubuntu 14.04), he can spin up the exact same OS in his testing environment. If there is no ASLR, the executables such as <code>glibc</code> will be loaded in the same address space every time, allowing him to make an exploit targeting predictable addresses.</p>
+<p>With ASLR, the executable will always be in a different address space, and it will cause the kernel to crash (Memory access violation) if an exploit runs.</p>
+<p>ASLR can be configured at <code>/proc/sys/kernel/randomize_va_space</code> with the following values:</p>
+<ul>
+<li>0 - No Randomization: All addresses are static</li>
+<li>1 - Conserved Randomization:<ul>
+<li>Stack ASLR: Each execution of a program results in different stack memory layout</li>
+<li>LIBS/MMAP ASLR: Each execution of a program results in different <code>mmap</code> memory space layout</li>
+<li>EXEC ASLR: Each program that was complied with <code>-fPIE -pie</code>, which stands for Position Independent Executables, will get loaded into different memory locations</li>
+</ul>
+</li>
+<li>2 - Full Randomization: <code>brk</code> ASLR<ul>
+<li>All of the above, including <code>brk</code> ASLR</li>
+<li>Previously, <code>brk</code> memory areas were always allocated after the EXEC memory area</li>
+<li><code>brk</code> ASLR randomizes the <code>brk</code> memory area relative to the EXEC memory area</li>
+</ul>
+</li>
+</ul>
+<p>Possible Exploits: One of the weakness of ASLR is that even though the libraries and executables are randomly located within the memory space, within the library, the functions are still at a fixed offset. This means that if the attack want to leverage on a <code>glibc</code> function, all he has to do is find the starting point of <code>glibc</code>, and the function will always be at the same offset</p>
+<!-- wp:heading {"level":4} -->
+
+<h4>SMEP/SMAP</h4>
+<p>Supervisor Mode Execution Protection (SMEP) and Supervisor Mode Access Prevention (SMAP) are techniques to prevent unauthorized memory access.</p>
+<p>SMAP prevents supervisor mode from accessing (rw) user-space memory space.</p>
+<p>SMEP prevents user mode from executing (x) in kernel memory space</p>
+<p>SMAP is important because while you're in kernel space, you have full privileges to perform any actions. If we allow this privilege to "escape" and return to user-space memory, he can perform even more unauthorized actions and get user data.</p>
+<p>SMEP is important for similar reasons, where the user cannot execute in kernel space to perform unprivileged actions affecting the kernel.</p>
+<p>Possible Exploits: Linux kernel has a function <code>native_write_cr4</code> which can overwrite bits in the CR4 control register. One of the bit controls if SMEP/SMAP is on or off. If the attack can call the function to overwrite the bits in the control register, he can turn of SMEP/SMAP</p>                </article>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

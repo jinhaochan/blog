@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Non-Kaggle</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="A Pelican Blog Atom Feed" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">A Pelican Blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/book-review.html">Book Review</a></li>
+                    <li><a href="/category/data-science.html">Data Science</a></li>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                    <li><a href="/category/ramblings.html">Ramblings</a></li>
+                    <li><a href="/category/review.html">Review</a></li>
+                    <li><a href="/category/security.html">Security</a></li>
+                    <li><a href="/category/software-engineering.html">Software Engineering</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/non-kaggle.html" rel="bookmark"
+           title="Permalink to Non-Kaggle">Non-Kaggle</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-10-31T21:43:00+00:00">
+                Published: Wed 31 October 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <p>Here, you'll find Data science projects that work on data sets not from Kaggle.</p>
+<!-- wp:heading {"level":3} -->
+
+<h3>Detecting Botnet traffic</h3>
+<hr>
+<p>Dataset: <a href="https://mcfp.weebly.com/the-ctu-13-dataset-a-labeled-dataset-with-botnet-normal-and-background-traffic.html">https://mcfp.weebly.com/the-ctu-13-dataset-a-labeled-dataset-with-botnet-normal-and-background-traffic.html</a></p>
+<p>Notebook: <a href="https://github.com/Charmanderander/BotnetDetection/blob/master/NetFlow-Botnet.ipynb">https://github.com/jinhaochan/BotnetDetection/blob/master/NetFlow-Botnet.ipynb</a></p>
+<p>In this data set, we were given traffic of both Botnet and normal traffic. I built a classifier to determine if a given traffic is anomalous or not.</p>
+<p>I used the NetFlow data, and their features to build my model. I removed all source and destination information, as I wanted my classifier to learn solely on network behavioral data. And also, in reality, all the source and destination information will be different, so there is no use for my model to learn them.</p>
+<p>In this problem, the data set was hugely unbalanced. I had significantly smaller set of Botnet traffic. To deal with this, I upsampled the amount of Botnet traffic.</p>
+<p>Also, I had to find a balance between precision and recall. In detecting Botnet traffic, having a low precision and high recall is more desirable, as the cost of precision is cheap. It is more important for me to catch every single traffic that is a Botnet.</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>A Pelican Blog - Kaggle</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="A Pelican Blog Atom Feed" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">A Pelican Blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/book-review.html">Book Review</a></li>
+                    <li><a href="/category/data-science.html">Data Science</a></li>
+                    <li><a href="/category/misc.html">misc</a></li>
+                    <li><a href="/category/ramblings.html">Ramblings</a></li>
+                    <li><a href="/category/review.html">Review</a></li>
+                    <li><a href="/category/security.html">Security</a></li>
+                    <li><a href="/category/software-engineering.html">Software Engineering</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/tips-for-kaggling.html">Tips for Kaggling</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2019-05-12T11:31:00+00:00">
+                Published: Sun 12 May 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/data-science.html">Data Science</a>.</p>
+<p>tags: <a href="/tag/kaggle.html">Kaggle</a> </p>
+</footer><!-- /.post-info --><p>I've been doing Kaggle competitions for awhile (although with not much success), and I've learning quite a few things along the way. One of which is how to properly approach the problem, and iterate through it to climb the LB (leader board).</p>
+<!-- wp:heading {"level":3} -->
+
+<h3>Setting the baseline</h3>
+<hr>
+<p>The first thing I would do is to use some very simple features, and build a quick model that has a relatively low bias.</p>
+<p>I'll then use cross validation to ensure that I have low variance between train-test splits. This ensures that i'm not overfitting to any segment of the training data.</p>
+<p>After getting a satisfactory bias and variance value, we cross our fingers, and submit our prediction to see how well it does on the LB!</p>
+<p>There are now 3 things you need to take note of:</p>
+<p>Cross Validation Score (CV Score)</p>
+<p>Leader board Score (LB Score)</p>
+<p>Difference between CV and LB Score (Your variance on the testing set)</p>
+<p>If the difference between your CV and LB is high, you're overfitting the training data. Try to tune your model so that the difference isn't too high.</p>
+<!-- wp:heading {"level":3} -->
+
+<h3>Feature Generation</h3>
+<hr>
+<p>Now that you got your baseline, <strong>Do Not Modify Your Model's Parameters!</strong>..... yet</p>
+<p>Using parameters for the baseline model, you want to generate more features to increase your CV score. Then you make submissions to the LB to checkout your LB score. If your CV score increases, but your LB score stays the same or decreases, you're overfitting.</p>
+<p>Here's a snippet of my comments I used to keep track of my CV/LB climb:</p>
+<!-- wp:code -->
+
+<div class="highlight"><pre><span></span><span class="nv">xgb_params</span> <span class="o">=</span> {
+    <span class="s1">&#39;</span><span class="s">max_depth</span><span class="s1">&#39;</span>: <span class="mi">4</span>,  # <span class="nv">the</span> <span class="nv">maximum</span> <span class="nv">depth</span> <span class="nv">of</span> <span class="nv">each</span> <span class="nv">tree</span>
+    <span class="s1">&#39;</span><span class="s">eta</span><span class="s1">&#39;</span>: <span class="mi">0</span>.<span class="mi">01</span>,  # <span class="nv">the</span> <span class="nv">training</span> <span class="nv">step</span> <span class="k">for</span> <span class="nv">each</span> <span class="nv">iteration</span>
+    <span class="s1">&#39;</span><span class="s">silent</span><span class="s1">&#39;</span>: <span class="mi">1</span>,  # <span class="nv">logging</span> <span class="nv">mode</span> <span class="o">-</span> <span class="nv">quiet</span>
+    <span class="s1">&#39;</span><span class="s">objective</span><span class="s1">&#39;</span>: <span class="s1">&#39;</span><span class="s">multi:softprob</span><span class="s1">&#39;</span>,  # <span class="nv">error</span> <span class="nv">evaluation</span> <span class="k">for</span> <span class="nv">multiclass</span> <span class="nv">training</span>
+    <span class="s1">&#39;</span><span class="s">gamma</span><span class="s1">&#39;</span>: <span class="mi">0</span>.<span class="mi">9</span>,
+    <span class="s1">&#39;</span><span class="s">alpha</span><span class="s1">&#39;</span>: <span class="mi">0</span>.<span class="mi">3</span>,
+    <span class="s1">&#39;</span><span class="s">colsample_bytree</span><span class="s1">&#39;</span> : <span class="mi">0</span>.<span class="mi">09</span>,
+    <span class="s1">&#39;</span><span class="s">subsample</span><span class="s1">&#39;</span> : <span class="mi">0</span>.<span class="mi">09</span>,
+    <span class="s1">&#39;</span><span class="s">num_class</span><span class="s1">&#39;</span>: <span class="mi">9</span>}  # <span class="nv">the</span> <span class="nv">number</span> <span class="nv">of</span> <span class="nv">classes</span> <span class="nv">that</span> <span class="nv">exist</span> <span class="nv">in</span> <span class="nv">this</span> <span class="nv">datset</span>
+
+## <span class="nv">Original</span>
+<span class="nv">nfolds</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="nv">CV</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">7299</span>
+<span class="nv">std</span>: <span class="mi">0</span>.<span class="mi">0112</span>
+<span class="nv">LB</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">67291</span>
+
+<span class="nv">Difference</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">05699</span>
+
+## <span class="nv">changed</span> <span class="nv">rolling</span> <span class="nv">window</span> <span class="nv">size</span>
+<span class="nv">nfolds</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="nv">CV</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">7458</span>
+<span class="nv">std</span>: <span class="mi">0</span>.<span class="mi">0207</span>
+<span class="nv">LB</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">67995</span>
+
+<span class="nv">Difference</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">06585</span>
+
+## <span class="nv">added</span> <span class="nv">quantile</span> <span class="nv">features</span>
+<span class="nv">nfolds</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="nv">CV</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">7564</span>
+<span class="nv">std</span>: <span class="mi">0</span>.<span class="mi">0167</span>
+<span class="nv">LB</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">68347</span>
+
+<span class="nv">Difference</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">07293</span>
+
+## <span class="nv">dropping</span> <span class="nv">mean</span>
+<span class="nv">using</span> <span class="nv">smaller</span> <span class="nv">feature</span> <span class="nv">set</span> <span class="ss">(</span><span class="mi">50</span><span class="ss">)</span>
+<span class="nv">nfolds</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="nv">CV</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">7670</span>
+<span class="nv">std</span>: <span class="mi">0</span>.<span class="mi">0243</span>
+<span class="nv">LB</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">69284</span>
+
+<span class="nv">Difference</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">07416</span>
+
+## <span class="nv">adding</span> <span class="nv">iqr</span> <span class="nv">and</span> <span class="nv">trimming</span> <span class="nv">mean</span>
+<span class="nv">using</span> <span class="nv">smaller</span> <span class="nv">feature</span> <span class="nv">set</span> <span class="ss">(</span><span class="mi">70</span><span class="ss">)</span>
+<span class="nv">nfolds</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="nv">CV</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">7740</span>
+<span class="nv">std</span>: <span class="mi">0</span>.<span class="mi">0257</span>
+<span class="nv">LB</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">69988</span>
+
+<span class="nv">Difference</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">07412</span>
+</pre></div>
+
+
+<!-- /wp:code -->
+
+<p>As you can see, my parameters are the same, and I'm only adding or removing features to push up my CV and LB</p>
+<!-- wp:heading {"level":3} -->
+
+<h3>Feature Selection</h3>
+<hr>
+<p>Feature generation was the process of adding in new features, but using all the features (if you have a lot of them), is usually too noisy.</p>
+<p>Most models like XGBoost and LightGBM have functions to tell you which features have the most impact on your prediction. You would want to trim your selected features to only include those high impact ones.</p>
+<p>By doing this, I was able to push my score up just a little bit more!</p>
+<!-- wp:heading {"level":3} -->
+
+<h3>Parameter Tuning</h3>
+<hr>
+<p>Once you're done with Feature Generation and Feature Selection, then we come to parameter tuning phase.</p>
+<p>In this phase, we want to tune the parameters to reduce bias, variance, and CV-LB difference. You can use functions like GridSearch to efficiently search across a range of parameters</p>
+<!-- wp:heading {"level":3} -->
+
+<h3>Conclusion</h3>
+<hr>
+<p>Baseline -&gt; Feature Generation -&gt; Feature Selection -&gt; Parameter Tuning!</p>
+<p>This isn't a silver bullet to all competitions, but its the strategy that I use regularly.</p>
+<p>In data science and Kaggle, there are plenty of moving parts, and it's easy to get lost in the myriad of factors affecting your prediction. It's always good to have a system to isolate and tackle the problem!</p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/microsoft-kaggle-competition.html" rel="bookmark"
+                           title="Permalink to Microsoft Kaggle Competition">Microsoft Kaggle Competition</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-03-31T09:38:00+00:00">
+                Published: Sun 31 March 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/data-science.html">Data Science</a>.</p>
+<p>tags: <a href="/tag/kaggle.html">Kaggle</a> </p>
+</footer><!-- /.post-info -->                <p>This is the write up for my solution for the Microsoft Malware Prediction</p>
+<p><a href="https://www.kaggle.com/c/microsoft-malware-prediction">https://www.kaggle.com/c/microsoft-malware-prediction</a></p>
+<p>I got pretty high up the leader board, but it was nothing that I was proud of, because:</p>
+<!-- wp:list {"ordered":true} -->
+
+<ol>
+<li>I grossly overfitted my model</li>
+<li>The final result was a blend of another …</li></ol>
+                <a class="readmore" href="/microsoft-kaggle-competition.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>
