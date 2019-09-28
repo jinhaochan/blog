@@ -1,0 +1,22 @@
+Title: Long term goals and Short term decision dichotomy
+Date: 2015-09-06 05:43
+Author: jinhaochan
+Category: Ramblings
+Slug: long-term-goals-and-short-term-decision-dichotomy
+Status: published
+
+When we talk about goal setting, we have our Long term goals that we want to achieve within a certain period of time. The long term goal achievement rate is highly correlated to our short term decision making. However, **the persistent separation of these 2 items can have detrimental effects on you achieving your goals as a whole**. We should therefore align our short term decision making with our long term goals, and in this way, they both complement each other.
+
+A long term goal would be something you want to achieve in 10 years, or 20 years time. These could be things like saving for retirement, buying a house or a car, or saving for you children's education. A long term goal can also lie within a year, where the goal is to get healthy, or achieve good grades in their final exams.
+
+Short term decisions are tiny milestones we have that bring us closer towards the long term goal. They could be things like choosing your meals for the day, deciding on what to buy. The devil lies in the short term decision making, because we are influenced by many factors that will cloud our decision. The main game-breaker is the feeling of instant gratification.
+
+Say we have a goal to lose weight within the next year. The goal set has been **Specific, Measurable, Attainable, Realistic, and Time-bound (SMART framework)**, and all is set for you to go and achieve it. From now till the next year, countless of decisions will be made, many of which will affect the success factor of the long term goal. Of which they are things like should I head out for an exercise today because the weather is too hot? Should I eat fast-food because the canteen is too crowded? Should I skip a meal because there is too much work to do? As we start to allow instant gratification to influence our short term decision making, it starts to accumulate and fester, and soon enough, you will forget the goal you had in the first place.
+
+The way to overcome and **block out instant gratification from clouding our short term decision making, is to use short term reasoning**. We can always reason to ourselves that a fast food today won't hurt, skipping just one running session won't do any harm, or sleeping in for a day is perfectly fine. These will lead to the brain learning the behavior of "Oh, I skipped running last week, and it felt perfectly fine, therefore skipping it this week would be absolutely fine as well." Here, instant gratification of "feeling perfectly fine" clouds our decision making.
+
+We should start to reason in ways that are aligned with our long term goal. Do not reason to yourself that "Skipping a run will make me feel comfortable at home", or "eating fast-food is convenient due to the crowd". These are thoughts of instant gratification. Instead, reason to yourself that "Running will clear my mind, and make me feel refreshed throughout the day", or "eating fast food will lead me to feel extremely tired and groggy later on, due to the high fat content," "Drinking a can of sugar drink will lead me to have a sugar crash later on in the day". **These short term reasons and short term incentives are aligned with your long term goal of losing weight**.
+
+Instead of having the mentality that doing the right thing is hard, "Buying a salad is expensive","running takes up time and it's hot","eating the right food is difficult to choose", we should change our thinking entirely, such that doing the right thing is perfectly reasonable. "Buying a salad is healthy and keeps me refreshed","Running clears up my mind and allows me to destress","eating the right food is cheaper than fast food". If we constantly think that the right thing to do is hard, and we have to come up with reasons to do it, our brain will eventually think that doing the right thing is wrong.
+
+Therefore, **we should not think of reasons why, but reasons why not**. If we change our short term decision making by removing instant gratification with positive reasoning, we will be on the right track. **Come up with short term incentives to entice the brain to do the right thing**. If we allow instant gratification to influence our short term decisions, and we come up with reasons not to do it, we will eventually fail.

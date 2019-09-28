@@ -1,35 +1,7 @@
 Title: About
-Date: 2018-10-29 13:57
+Date: 2014-01-18 08:01
 Author: jinhaochan
 Slug: about
 Status: published
 
-<!-- wp:paragraph -->
-
-I plan to learn a new skill each year, and this year, i'll be focusing on Data Science and Machine learning
-
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
-Over here, you'll find me writing about stuff I found interesting and over the course of learning about Machine Learning
-
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
-If you want to read my non-technical ramblings, here over to my other blog here, although it isn't as updated as this blog: <https://jayhayche.wordpress.com/>
-
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
-Feel free to leave a comment, or challenge my ideas and assumptions in any of my posts. I deeply appreciate any feedback from you.
-
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
-I hope you find the content equally interesting, and hopefully helpful too!
-
-<!-- /wp:paragraph -->
+This is an example of a page. Unlike posts, which are displayed on your blog’s front page in the order they’re published, pages are better suited for more timeless content that you want to be easily accessible, like your About or Contact information. Click the Edit link to make changes to this page or [add another page](/wp-admin/post-new.php?post_type=page "Direct link to Add New in the Admin Dashboard").
