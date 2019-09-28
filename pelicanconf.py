@@ -33,7 +33,10 @@ SOCIAL = (('linkedin', 'https://www.linkedin.com/in/jinhao-hao-chan-162630120/')
 
 DEFAULT_PAGINATION = 10
 
-THEME = "Flex"
+THEME = "theme/Flex"
+
+PLUGIN_PATHS = ['plugins']
+PLUGINS = ['deadlinks', 'readtime', 'post_stats']
 
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
