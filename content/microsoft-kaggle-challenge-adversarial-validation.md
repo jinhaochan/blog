@@ -18,7 +18,7 @@ Status: published
 
 
 
-</p>
+
 
 
 This was a concept I came across while doing a Kaggle challenge issued by Microsoft to predict if a computer would get hit by a malware or not.
@@ -89,7 +89,7 @@ This gives us some problems if we use the standard solution of cross validation 
 
 
 
-</p>
+
 
 
 In comes adversarial validation. The idea of this actually really simple.
@@ -126,7 +126,7 @@ And so, instead of the conventional validation methods, we use these rows classi
 
 
 
-</p>
+
 
 
 One of the downsides of doing this is that, once the testing data set changes again to something that is dissimilar to the current data, we the adversarial validation technique would perform poorly again.

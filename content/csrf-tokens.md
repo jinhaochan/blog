@@ -48,7 +48,7 @@ This post breaks down the purpose of the token, and what happens behind the scen
 
 
 
-</p>
+
 
 
 CSRF stands for Cross-Site Request Forgery, and understanding how it works is a prerequisite to understanding CSRF tokens. Below shows a picture of what a CSRF attack looks like
@@ -98,7 +98,7 @@ If the Victim is not logged in, when he clicks on the malicious link, instead of
 
 
 
-</p>
+
 
 
 CSRF token is a simple concept where include one more argument of a token, that is sort of like a secret password.
@@ -150,7 +150,7 @@ The CSRF token value should be regularly invalidated at a time interval, per req
 
 
 
-</p>
+
 
 
 If traffic carrying the token is not encrypted over HTTPS, the Attacker can sniff the traffic and obtain the CSRF token value and the Cookie, and perform a CSRF token replay attack.

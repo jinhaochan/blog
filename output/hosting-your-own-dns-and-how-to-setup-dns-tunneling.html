@@ -92,8 +92,8 @@
 
 <h3>Components</h3>
 <hr>
-<p></p>
-<!-- wp:list {"ordered":true} --></p>
+<!-- wp:list {"ordered":true} -->
+
 <ol>
 <li>VM with a static IP address, and allowed ingress/egress connections for port 53.<ul>
 <li>For this, I spun up a VM on GCP with minimal settings to reduce the cost</li>
@@ -109,8 +109,6 @@
 
 <h3>Concepts</h3>
 <hr>
-</p>
-
 <ul>
 <li>DNS Resolution<ul>
 <li>When you send a query for a domain name, it queries your DNS for the corresponding IP address tied to the domain name</li>
@@ -132,8 +130,8 @@
 
 <h3>Execution</h3>
 <hr>
-<p></p>
-<!-- wp:heading {"level":4} --></p>
+<!-- wp:heading {"level":4} -->
+
 <h4>GCP</h4>
 <p>We will need to spin up the VM, get it's static IP, and host a DNS server on it. this VM will be our <code>ns1.dnsserver.tk</code></p>
 <p>You can follow this guide on how to setup bind9 on your VM https://www.digitalocean.com/community/tutorials/how-to-configure-bind-as-an-authoritative-only-dns-server-on-ubuntu-14-04</p>
@@ -159,8 +157,6 @@
 
 <h3>Conclusion</h3>
 <hr>
-</p>
-
 <p>When you set a new Nameserver, you need to wait a few hours for it to propagate the information over to other DNS servers.</p>
 <p>In your DNS server, you can choose to return whatever you want when a DNS request comes to your server. In this way, it can be possible to craft it as a C2 communication server. I won't go into details on how to set that up, but this is one of the steps.</p>
   </div>

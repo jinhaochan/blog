@@ -30,7 +30,7 @@ Typically, it would sit between a client and a server, where the client is usual
 
 
 
-</p>
+
 <!-- wp:image {"id":457} -->
 
 
@@ -69,7 +69,7 @@ The downsides of this is that all the clients share the same bandwidth on the pr
 
 
 
-</p>
+
 <!-- wp:image {"id":458} -->
 
 
@@ -102,7 +102,7 @@ The reasons for a reverse proxy also pertain to security such as DDoS protection
 
 
 
-</p>
+
 <!-- wp:heading {"level":4} -->
 
 #### HTTP Proxies
@@ -163,7 +163,7 @@ SOCKS does not touch the data stream at all, only setting up the connection and 
 
 
 
-</p>
+
 <!-- wp:heading {"level":4} -->
 
 #### Security

@@ -33,7 +33,7 @@ In this post, we're going to be looking at:
 
 
 
-</p>
+
 
 
 A Recurrent Neural Network (RNN) is a variant of neural networks, where in each neuron, the outputs cycle back to themselves, hence being recurrent.
@@ -107,7 +107,7 @@ Like a normal feed-forward NN, the RNN also has a weight matrix, but with one ad
 
 
 
-</p>
+
 
 
 This weight updating phase for an RNN is called Backpropagation Though Time. Lets examine first how a feed-forward NN does forward and backward propagation for weight correction
@@ -165,7 +165,7 @@ In an RNN, there is an additional component of the recurrent input in each neuro
 
 
 
-</p>
+
 
 
 As mentioned earlier, each neuron will 2 sources of inputs: The current input, and the most recent previous input.
@@ -241,7 +241,7 @@ Hidden layers 1 and 2 are recurrent. Here we unroll them for 3 time steps
 
 
 
-</p>
+
 
 
 When we combine the two concepts of applying Backpropagation on an unrolled RNN, we get Backpropagation through time (BPTT).
@@ -296,7 +296,7 @@ Both exploding and vanishing gradients are problematic, because then Gradient De
 
 
 
-</p>
+
 
 
 To recap on a feed-forward NN:

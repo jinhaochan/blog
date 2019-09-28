@@ -92,8 +92,8 @@
 
 <h3>Challenges with Gradient Descent</h3>
 <hr>
-<p></p>
-<!-- wp:heading {"level":4} --></p>
+<!-- wp:heading {"level":4} -->
+
 <h4>Too many Local Minimas</h4>
 <p>One of the problems that Gradient Descent faces is having a the algorithm converge to a local minima, instead of the true global minima. Even in a simple 2 dimensional problem, we face the issue, which gets even worse when our problem scales up to higher dimensions. But here we'll see that the local minima problem is not a huge issue with Deep Learning models.  </p>
 <p>The first source that contributes to a local minima is <strong>model identifiability</strong>. An identifiable model is a model that given an output, the weights or the structure of the network can be identified. In other words, there is a one-to-one mapping of parameters to out. If a model is non-identifiable, it means that for a given output, there exists more than one set of parameters that can produce it. <strong>A fully connected feed-forward neural network is non-identifiable</strong>.</p>
@@ -151,7 +151,7 @@ However, there has been many studies that shows that the local minima actually e
 
 
 
-</p>
+
 <!-- wp:heading {"level":4} -->
 
 #### Non-Uniform and Changing Gradients  
@@ -200,7 +200,7 @@ Calculating this Hessian matrix turns out to be extremely expensive if we do it 
 
 
 
-</p>
+
 
 
 Earlier, we stated that we may go into the wrong direction because we don't account for changing gradients, and also, if we decide to account for changing gradients using second derivatives, calculating a Hessian Matrix is extremely expensive.
@@ -250,7 +250,7 @@ We can thinking of the wildly fluctuating gradients at each point being represen
 
 
 
-</p>
+
 
 
 To conclude this post, we have seen how there are problems applying simple gradient descent to complex error surfaces that are present in Deep Learning models.

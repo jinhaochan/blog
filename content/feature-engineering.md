@@ -41,7 +41,7 @@ A typical workflow would look something like this
 
 
 
-</p>
+
 
 
 -   Data cleaning (Outlier detection, Missing values)
@@ -68,7 +68,7 @@ I would classify these as data massaging, as you're just changing the data (exce
 
 
 
-</p>
+
 
 
 There are a few ways to create new features from existing ones
@@ -181,7 +181,7 @@ Another way to create new features is to bring in new data such as Geolocation i
 
 
 
-</p>
+
 
 
 Indicator Features, Feature Interactions, Feature Representation, External Data Augmentation are all several way to engineer new features. This is different from data massaging.

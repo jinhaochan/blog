@@ -265,8 +265,8 @@
 
 <h2>Feature Engineering</h2>
 <hr>
-<p></p>
-<!-- wp:code --></p>
+<!-- wp:code -->
+
 <div class="highlight"><pre><span></span><span class="nv">def</span> <span class="nv">add_noise</span><span class="ss">(</span><span class="nv">series</span>, <span class="nv">noise_level</span><span class="ss">)</span>:
     <span class="k">return</span> <span class="nv">series</span> <span class="o">*</span> <span class="ss">(</span><span class="mi">1</span> <span class="o">+</span> <span class="nv">noise_level</span> <span class="o">*</span> <span class="nv">np</span>.<span class="k">random</span>.<span class="nv">randn</span><span class="ss">(</span><span class="nv">len</span><span class="ss">(</span><span class="nv">series</span><span class="ss">)))</span>
 
@@ -343,8 +343,8 @@
 
 <h2>Training</h2>
 <hr>
-<p></p>
-<!-- wp:code --></p>
+<!-- wp:code -->
+
 <div class="highlight"><pre><span></span><span class="nb">params</span> <span class="o">=</span> {
     <span class="s1">&#39;</span><span class="s">boosting_type</span><span class="s1">&#39;</span> : <span class="s1">&#39;</span><span class="s">gbdt</span><span class="s1">&#39;</span>, 
     <span class="s1">&#39;</span><span class="s">objective</span><span class="s1">&#39;</span> : <span class="s1">&#39;</span><span class="s">binary</span><span class="s1">&#39;</span>,

@@ -63,7 +63,7 @@ It's a very simple concept, and we can make use of this functionality and twist 
 
 
 
-</p>
+
 
 
 If we can setup our own server that hosts resources, we can secretly embed invisible images, or elements that makes requests to our servers to retrieve those resources.
@@ -88,7 +88,7 @@ This way, when the document is opened, the tries to render itself by making a re
 
 
 
-</p>
+
 
 
 The obvious drawback to this is that, once the document is taken to an offline premise, the image can no longer make a request to our server. This means that we will not be notified when the tripwire is activated.

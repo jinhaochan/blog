@@ -24,7 +24,7 @@ A random forest is an ensemble approach of combining multiple decision trees. En
 
 
 
-</p>
+
 
 
 Decision Trees try to encode and separate the data into if-else rules. It breaks the data down into smaller and smaller subsets. Each node poses the question, and each branch represents the decision.
@@ -105,7 +105,7 @@ That was a gist of a decision tree, now lets look at ensembling and Random Fores
 
 
 
-</p>
+
 
 
 Ensembling revolves around the idea of putting together several weak learners to form a strong learner. In Random Forest, the weak learners are Decision Trees
@@ -173,7 +173,7 @@ Downside of Random Forest are:
 
 
 
-</p>
+
 
 
 This post was a fairly simple and straightforwad one, cover basic, but essential topics.

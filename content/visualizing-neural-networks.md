@@ -23,7 +23,7 @@ Neural Networks have always been sort of a black box when it comes to it's imple
 
 
 
-</p>
+
 
 
 Here's a sample graph that is not linearly separable:
@@ -34,7 +34,7 @@ Here's a sample graph that is not linearly separable:
 
 
 
-<figure class="aligncenter is-resized">
+
 ![placeholder]({attach}media/2019/02/simple2_data.png){.wp-image-302 width="284" height="277"}
 
 
@@ -52,7 +52,7 @@ When we try to use a linear model to discriminate the two data, we get a poorly 
 
 
 
-<figure class="aligncenter is-resized">
+
 ![placeholder]({attach}media/2019/02/simple2_linear.png){.wp-image-303 width="278" height="271"}
 
 
@@ -70,7 +70,7 @@ Neural Networks, with the interactions of their hidden layers and nodes, are abl
 
 
 
-<figure class="aligncenter is-resized">
+
 ![placeholder]({attach}media/2019/02/simple2_0.png){.wp-image-304 width="270" height="263"}
 
 
@@ -88,7 +88,7 @@ What a Neural Networks does is that it warps the space of the problem so that it
 
 
 
-<figure class="aligncenter is-resized">
+
 ![placeholder]({attach}media/2019/02/simple2_1.png){.wp-image-305 width="281" height="274"}
 
 
@@ -120,7 +120,7 @@ So what happens if the data distribution is too complex, or your neural network 
 
 
 
-</p>
+
 
 
 Given a complex data set that resembles a spiral shape, and a neural network model that is too simple, we can see it struggling to find a representation that is separable. This means that there is not enough hidden layers and hidden nodes to transform the data. We need to go deeper!
@@ -131,7 +131,7 @@ Given a complex data set that resembles a spiral shape, and a neural network mod
 
 
 
-<figure class="aligncenter is-resized">
+
 ![placeholder]({attach}media/2019/02/spiral.2.2-2-2-2-2-2-2.gif){.wp-image-308 width="364" height="355"}
 
 
@@ -149,7 +149,7 @@ Here's the same spiral graph, but with enough hidden layers and nodes to transfo
 
 
 
-<figure class="aligncenter is-resized">
+
 ![placeholder]({attach}media/2019/02/spiral.1-2.2-2-2-2-2-2-1.gif){.wp-image-307 width="344" height="336"}
 
 
@@ -169,7 +169,7 @@ Here's the same spiral graph, but with enough hidden layers and nodes to transfo
 
 
 
-</p>
+
 
 
 In the last example, we see a more complex example, and see how a neural network can separate the data.
@@ -180,7 +180,7 @@ In the last example, we see a more complex example, and see how a neural network
 
 
 
-<figure class="aligncenter is-resized">
+
 ![placeholder]({attach}media/2019/02/topology_base.png){.wp-image-309 width="376" height="283"}
 
 
@@ -198,7 +198,7 @@ Given a circular topology data, a shallow neural network will have difficulties 
 
 
 
-<figure class="aligncenter is-resized">
+
 ![placeholder]({attach}media/2019/02/topology_2d-2d_train.gif){.wp-image-310 width="351" height="343"}
 
 
@@ -232,7 +232,7 @@ By introducing more hidden layers and nodes and going deeper, we see that the da
 
 
 
-</p>
+
 
 
 In this post, I wanted to show how neural networks warp the space of the data make them separable, and how a shallow network might fail to perform well.

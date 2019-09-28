@@ -94,225 +94,69 @@
 
 <h3>What is Regularization</h3>
 <hr>
-</p>
-
 <p>The mathematical definition of Regularization is the process of adding information in order to solve ill-posed problems, or to prevent overfitting. Ill-posed meaning that the solution is highly sensitive to the changes in the data.</p>
 <!-- wp:image {"id":248,"align":"center","width":238,"height":228} -->
 
-<figure class="aligncenter is-resized">
-![placeholder]({attach}media/2019/01/1280px-regularization.png){.wp-image-248 width="238" height="228"}  
+<p><img alt="placeholder" class="wp-image-248" height="228" src="/media/2019/01/1280px-regularization.png" width="238"><br>
 <figcaption>
-The blue line shows the model before regularization, while the green line shows the model after regularization.
-
-Regularization makes the model less complex.  
-</figcaption>
-
-
-
-
-
-
-
-
-By introducing regularization, we reduce the complexity of the learned model. This means that we're reducing the accuracy of the model for a given data set, but in doing so we're making it generalize across data sets. This action reduces variance, while not changing your bias too much, and bring us to the idea situation of low-bias low-variance.
-
-
-
+The blue line shows the model before regularization, while the green line shows the model after regularization.  </p>
+<p>Regularization makes the model less complex.<br>
+</figcaption></p>
+<p>By introducing regularization, we reduce the complexity of the learned model. This means that we're reducing the accuracy of the model for a given data set, but in doing so we're making it generalize across data sets. This action reduces variance, while not changing your bias too much, and bring us to the idea situation of low-bias low-variance.</p>
 <!-- wp:heading {"level":3} -->
 
-### Regularization in Machine Learning
-
-
-
-
-
-------------------------------------------------------------------------
-
-
-
-</p>
-
-
-To put this into a machine learning context, for each model we use, we have a loss function we wish to minimize. We'll use the RSS (Residual Sum Squares) loss function in this example.
-
-
-
+<h3>Regularization in Machine Learning</h3>
+<hr>
+<p>To put this into a machine learning context, for each model we use, we have a loss function we wish to minimize. We'll use the RSS (Residual Sum Squares) loss function in this example.</p>
 <!-- wp:image {"id":249} -->
 
-
-![placeholder]({attach}media/2019/01/rss.png){.wp-image-249}  
-
+<p><img alt="placeholder" class="wp-image-249" src="/media/2019/01/rss.png">  </p>
 <figcaption>
 RSS loss function we want to minimize
 
 </figcaption>
 
-
-
-
-
-This will calculate how much to adjust your parameters based on your training data. But if your training data has noise, then your parameters will be adjusted to pick up the noise, and your model will be optimized towards the noise in the data. That's overfitting.
-
-
-
-
-
-To combat this, we add in a regularization factor, which will shrink the estimated value to adjust your parameters. This way, your parameters won't move too much towards learning the noise in the data.
-
-
-
+<p>This will calculate how much to adjust your parameters based on your training data. But if your training data has noise, then your parameters will be adjusted to pick up the noise, and your model will be optimized towards the noise in the data. That's overfitting.</p>
+<p>To combat this, we add in a regularization factor, which will shrink the estimated value to adjust your parameters. This way, your parameters won't move too much towards learning the noise in the data.</p>
 <!-- wp:heading {"level":3} -->
 
-### Ridge Regression (L2)
-
-
-
-
-
-------------------------------------------------------------------------
-
-
-
-</p>
+<h3>Ridge Regression (L2)</h3>
+<hr>
 <!-- wp:image {"id":250} -->
 
-
-![placeholder]({attach}media/2019/01/ridge.png){.wp-image-250}
-
-
-
-
-
-
-Ridge Regression adds a shrinkage quantity to the original loss function RSS. This works by preventing the change in parameters from being too high in value.
-
-
-
-
-
-When *λ = 0* , the penalty term is essentially taken out. Your estimated value to modify the parameters will then simply be RSS
-
-
-
-
-
-When ***λ→∞***, the penalty term, the penalty term grows large, and your estimated value to modify the parameters will approach 0. (But never being 0). Because it never reaches 0, the impact of those noisy features will only be minimized, but never removed.
-
-
-
+<p><img alt="placeholder" class="wp-image-250" src="/media/2019/01/ridge.png"></p>
+<p>Ridge Regression adds a shrinkage quantity to the original loss function RSS. This works by preventing the change in parameters from being too high in value.</p>
+<p>When <em>λ = 0</em> , the penalty term is essentially taken out. Your estimated value to modify the parameters will then simply be RSS</p>
+<p>When <strong><em>λ→∞</em></strong>, the penalty term, the penalty term grows large, and your estimated value to modify the parameters will approach 0. (But never being 0). Because it never reaches 0, the impact of those noisy features will only be minimized, but never removed.</p>
 <!-- wp:heading {"level":3} -->
 
-### Lasso Regression (L1)
-
-
-
-
-
-------------------------------------------------------------------------
-
-
-
-</p>
+<h3>Lasso Regression (L1)</h3>
+<hr>
 <!-- wp:image {"id":251} -->
 
-
-![placeholder]({attach}media/2019/01/lasso.png){.wp-image-251}
-
-
-
-
-
-
-Lasso Regression also adds a shrinkage quantity, but the difference is that it only penalizes high valued coefficients.
-
-
-
-
-
-The penalty term uses ***|β1|*** instead of ***β1²*** , hence it is named L1, while  
-Ridge regularization is named L2.
-
-
-
-
-
-Lasso also differs from from Ridge in that it can set coefficients to 0, making them not relevant at all. In the end, because the coefficients are 0, you may end up with lesser features, which is an advantage!
-
-
-
+<p><img alt="placeholder" class="wp-image-251" src="/media/2019/01/lasso.png"></p>
+<p>Lasso Regression also adds a shrinkage quantity, but the difference is that it only penalizes high valued coefficients.</p>
+<p>The penalty term uses <strong><em>|β1|</em></strong> instead of <strong><em>β1²</em></strong> , hence it is named L1, while<br>
+Ridge regularization is named L2.</p>
+<p>Lasso also differs from from Ridge in that it can set coefficients to 0, making them not relevant at all. In the end, because the coefficients are 0, you may end up with lesser features, which is an advantage!</p>
 <!-- wp:heading {"level":3} -->
 
-### Regularization in Deep Learning - Drop Out
-
-
-
-
-
-------------------------------------------------------------------------
-
-
-
-</p>
-
-
-Regularization in deep learning is slightly different from shallow learning.
-
-
-
-
-
-In deep learning, we have neurons that are for the most times fully connected. That's to say, every single neuron is connected to every other neuron in the next layer.
-
-
-
-
-
-This may cause some problems like overfitting again, because the neurons may develop false co-dependencies among each other (which may be due to noise).
-
-
-
-
-
-Regularization in deep learning works by occasionally ignoring a fraction of the neurons during the training phase.
-
-
-
+<h3>Regularization in Deep Learning - Drop Out</h3>
+<hr>
+<p>Regularization in deep learning is slightly different from shallow learning.</p>
+<p>In deep learning, we have neurons that are for the most times fully connected. That's to say, every single neuron is connected to every other neuron in the next layer.</p>
+<p>This may cause some problems like overfitting again, because the neurons may develop false co-dependencies among each other (which may be due to noise).</p>
+<p>Regularization in deep learning works by occasionally ignoring a fraction of the neurons during the training phase.</p>
 <!-- wp:image {"id":252} -->
 
-
-![placeholder]({attach}media/2019/01/dropout.png){.wp-image-252}
-
-
-
-
-
-
-By using dropout, you're forcing the model to learn more robust features, as opposed to random combinations of neurons. Also, it roughly doubles the number of iterations required to converge.
-
-
-
+<p><img alt="placeholder" class="wp-image-252" src="/media/2019/01/dropout.png"></p>
+<p>By using dropout, you're forcing the model to learn more robust features, as opposed to random combinations of neurons. Also, it roughly doubles the number of iterations required to converge.</p>
 <!-- wp:heading {"level":3} -->
 
-### Conclusion
-
-
-
-
-
-------------------------------------------------------------------------
-
-
-
-</p>
-
-
-To conclude, we've talked about methods in shallow learning and deep learning to combat overfitting by regularization.
-
-
-
-
-
-Regularization is the process of adding new information to reduce the value to modify the parameters. This prevents it from learning any noise that is specific to the data set, and reduce the chances of overfitting
+<h3>Conclusion</h3>
+<hr>
+<p>To conclude, we've talked about methods in shallow learning and deep learning to combat overfitting by regularization.</p>
+<p>Regularization is the process of adding new information to reduce the value to modify the parameters. This prevents it from learning any noise that is specific to the data set, and reduce the chances of overfitting</p>
   </div>
   <div class="tag-cloud">
     <p>

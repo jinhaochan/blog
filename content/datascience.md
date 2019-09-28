@@ -29,7 +29,7 @@ Predicting Taxi Fare
 
 
 
-</p>
+
 
 
 <https://www.kaggle.com/c/new-york-city-taxi-fare-prediction>
@@ -85,7 +85,7 @@ Movie Sentiment Analysis
 
 
 
-</p>
+
 
 
 <https://www.kaggle.com/c/movie-review-sentiment-analysis-kernels-only>[](https://www.kaggle.com/earthshaker/lstm-cnn-glove-bidirectional-gru-aggregation)
@@ -163,7 +163,7 @@ Predicting Future Sales
 
 
 
-</p>
+
 
 
 <https://www.kaggle.com/c/competitive-data-science-predict-future-sales>

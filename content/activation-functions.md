@@ -60,7 +60,7 @@ The activation function is in the middle box, which performs an operation on the
 
 
 
-</p>
+
 
 
 There are several kinds of Activation Functions, or in other words, different kinds of mathematical operations that a node can take. They are:
@@ -109,7 +109,7 @@ These activation functions take in the inputs `z` from the previous layer, and f
 
 
 
-</p>
+
 
 
 The TanH function is almost strictly superior to the Sigmoid function, because the TanH function has it's mean centered at `0`. This feature will result in a higher value of derivative, and a faster learning rate. Also, having a `0` value mean will avoid having bias in the gradients.
@@ -128,7 +128,7 @@ The TanH function is almost strictly superior to the Sigmoid function, because t
 
 
 
-</p>
+
 
 
 The drawback of both Sigmoid and TanH, given that they have a curved graph, is that if the value of `z` is either extremely large or small, the gradient on the curve will be extremely small as well. This small gradient will have an adverse effect on the learning rate when performing Gradient Descent.
@@ -153,7 +153,7 @@ The solution to this is ReLU (Rectified Linear Unit), which has a constant gradi
 
 
 
-</p>
+
 
 
 Yes, Activation Function must always be non-linear. Having multiple linear activation functions can be condensed together, effectively negating the need for any hidden layers or hidden nodes.
@@ -172,7 +172,7 @@ Yes, Activation Function must always be non-linear. Having multiple linear activ
 
 
 
-</p>
+
 
 
 In this post, we talked very briefly about the different kinds of Activation Functions, and compared their pro and cons.

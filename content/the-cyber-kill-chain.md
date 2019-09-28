@@ -44,7 +44,7 @@ At each step, there are examples of what an Adversary could do, and what Defende
 
 
 
-</p>
+
 
 
 Before carrying out the attack, the adversary will scope out and survey the target. This phase is extremely broad, and can cover technical and non-technical aspects.
@@ -108,7 +108,7 @@ The goal here is to prevent information leakage, as well as detecting informatio
 
 
 
-</p>
+
 
 
 In this stage, the adversary starts to prepare the payload for attack.
@@ -163,7 +163,7 @@ By doing so, you are preventing, or making it very hard for adversaries to perfo
 
 
 
-</p>
+
 
 
 In the delivery stage, the attacker sends the Weaponized tools to the victim, either via software (Email, links, direct to the webserver) or physical means (USB insertion)
@@ -218,7 +218,7 @@ Airgapped machines, web proxies and proper staff security education all limit th
 
 
 
-</p>
+
 
 
 If you failed to prevent Delivery, the adversaries would be able to enter the machine. Once inside, the next step for them is to perform exploitation to either gain privilege escalation, or to gain unauthorized information. This can either be a software or hardware vulnerability that the adversary leverages on.
@@ -273,7 +273,7 @@ By hardening your systems and educating your users, you're limiting the amount o
 
 
 
-</p>
+
 
 
 Once the adversary gets into your system and performs exploitation, it is highly likely that he would have escalated privileges, and can install other tools he wants to allow him to perform other actions.
@@ -322,7 +322,7 @@ At this phase, since the adversary already has exploited the system and has esca
 
 
 
-</p>
+
 
 
 After installing rootkits and backdoors, the malware needs to receive commands remotely from their server. This is done by establishing a C2 connection out from the victim machine to the adversary.
@@ -371,7 +371,7 @@ Blocking and preventing unauthorized network traffic. Disabling unneeded service
 
 
 
-</p>
+
 
 
 In the CKC, it shows this as the final step after performing all previous actions. Actions On Objects could mean acquiring user credentials, collecting and exfiltrating data or lateral movement. But these actions need not be the final step of the CKC, after establishing a C2 or performing Exploitation.

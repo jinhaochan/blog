@@ -111,14 +111,18 @@ Connection: Keep-Alive<br>
 <p>During the handshake, the following steps are taken:</p>
 <p>1) Hello</p>
 <ul>
-<li>The client initiates the request by sending a <code>ClientHello</code>, which contains the information needed by the server to connect to the client via SSL, such as the cipher suites the client supports, and the SSL versions it supports.
-    </p></li>
-<li>The server then responds with a <code>ServerHello</code>, which contains similar information, and with the decision to use which cipher suite and SSL version to use</li>
+<li>
+<p>The client initiates the request by sending a <code>ClientHello</code>, which contains the information needed by the server to connect to the client via SSL, such as the cipher suites the client supports, and the SSL versions it supports.</p>
+</li>
+<li>
+<p>The server then responds with a <code>ServerHello</code>, which contains similar information, and with the decision to use which cipher suite and SSL version to use</p>
+</li>
 </ul>
 <p>2) Certificate Verification</p>
 <ul>
-<li>The server now has to prove it's identity to the client, and it does so by an SSL certificate
-    </p></li>
+<li>
+<p>The server now has to prove it's identity to the client, and it does so by an SSL certificate</p>
+</li>
 <li>
 <p>An SSL certificate is a file that contains information about the server. This includes domain name, server name or hostname, organization name, location, the server's public key and certificate validity.</p>
 </li>
@@ -128,8 +132,9 @@ Connection: Keep-Alive<br>
 </ul>
 <p>3) Key Exchange</p>
 <ul>
-<li>Once the client trusts the server, and the cipher suites have been chosen, the client generates a symmetric key to be used for encryption and decryption.
-    </p></li>
+<li>
+<p>Once the client trusts the server, and the cipher suites have been chosen, the client generates a symmetric key to be used for encryption and decryption.</p>
+</li>
 <li>
 <p>The symmetric key is then encrypted using the server's public key, an sent over to the server. (Asymmetric encryption is used to encrypt the symmetric key to be used. Encrypt-ception!)</p>
 </li>

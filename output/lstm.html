@@ -94,8 +94,6 @@
 
 <h3>LSTM Structure</h3>
 <hr>
-</p>
-
 <p>Lets visually inspect the difference between a normal RNN cell and an LSTM cell.</p>
 <!-- wp:image {"id":362} -->
 
@@ -120,8 +118,6 @@
 
 <h3>LSTM Gates</h3>
 <hr>
-</p>
-
 <p>The LSTM has 3 gates in the cell:</p>
 <!-- wp:list {"ordered":true} -->
 
@@ -179,8 +175,6 @@ The common Sigmoid layer in all 3 gates
 
 <h3>Modification of the Cell State</h3>
 <hr>
-</p>
-
 <p>The cell states in each LSTM cell are modified either by the forget gate, or the input gate.</p>
 <!-- wp:image {"id":364} -->
 
@@ -191,16 +185,12 @@ The common Sigmoid layer in all 3 gates
 
 <h3>Conclusion</h3>
 <hr>
-</p>
-
 <p>In each LSTM cell, there contains a cell state.</p>
 <p>Forget gate decides what to drop from the cell state</p>
 <p>Input gate creates candidate values to update the cell state</p>
 <p>Output gate decides what values to output from the cell state</p>
 <h3>Final Notes</h3>
 <hr>
-</p>
-
 <p>I usually end with the conclusion, but all the information above was all the technical aspects of an LSTM. Here are some further questions relating to LSTM.</p>
 <p>Q: What are you actually training when you do your Backpropagation through time on an LSTM?</p>
 <p>A: Recall that the gates have to control what to forget, input and output from each LSTM cell. What exactly to forget, input and output are the variables being trained.</p>

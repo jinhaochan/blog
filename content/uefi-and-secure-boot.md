@@ -30,7 +30,7 @@ Before we talk about secure boot and how it works, we need to have some understa
 
 
 
-</p>
+
 
 
 Both UEFI and BIOS are firmwares, and are programs that run upon booting your system.
@@ -87,7 +87,7 @@ On the other hand, UEFI boots the system by launching EFI's (Extensible Firmware
 
 
 
-</p>
+
 
 
 Some major drawbacks of BIOS booting are it can only boot from an MBR-partitioned disk, and the MBR-partitioned disk can only support up to 2TB of partitions. What this means is that if you use a disk bigger than 2TB as your boot loader, it will only show that it has 2TB of space.
@@ -124,7 +124,7 @@ These drawbacks are solved by UEFI
 
 
 
-</p>
+
 
 
 One of the biggest change is that the UEFI can run in 32-bit or 64-bit mode, which has way more address space, and is able to boot a lot faster. It also has other features such as
@@ -176,7 +176,7 @@ The layout of the EFI filesystem is such that every OS has its own directory, wh
 
 
 
-</p>
+
 
 
 Operating Systems that are installed in BIOS mode cannot be booted using UEFI, vice-versa. To boot a BIOS install OS in UEFI mode, you have to reinstall the entire system. To get around this hassle, UEFI supports legacy mode
@@ -201,7 +201,7 @@ UEFI Legacy will make the UEFI act just like a BIOS, and this throws away many o
 
 
 
-</p>
+
 
 
 Advanced malwares target the bootloader as a vector of attack, which launches their malicious process before the OS is launched.
@@ -250,7 +250,7 @@ This customization is also available to any individual user, where you can sign 
 
 
 
-</p>
+
 
 
 The whole concept of Secure Boot was built around Microsoft systems, and Linux distros were not made in mind for this. As such, there were a few hurdles to overcome when applying Secure Boot to Linux distros.

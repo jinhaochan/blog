@@ -30,7 +30,7 @@ In this post, we're going to look at how to setup and host your own DNS server. 
 
 
 
-</p>
+
 <!-- wp:list {"ordered":true} -->
 
 1.  VM with a static IP address, and allowed ingress/egress connections for port 53.
@@ -53,7 +53,7 @@ In this post, we're going to look at how to setup and host your own DNS server. 
 
 
 
-</p>
+
 
 
 -   DNS Resolution
@@ -82,7 +82,7 @@ In this post, we're going to look at how to setup and host your own DNS server. 
 
 
 
-</p>
+
 <!-- wp:heading {"level":4} -->
 
 #### GCP
@@ -172,7 +172,7 @@ Instead of letting Freenom Nameservers to be the authoritative Nameserver, point
 
 
 
-</p>
+
 
 
 When you set a new Nameserver, you need to wait a few hours for it to propagate the information over to other DNS servers.

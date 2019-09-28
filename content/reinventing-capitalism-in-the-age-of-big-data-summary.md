@@ -30,7 +30,7 @@ This book talks about how data is the new currency in this era, and how the capi
 
 
 
-</p>
+
 
 
 Key ideas:
@@ -57,7 +57,7 @@ Key ideas:
 
 
 
-</p>
+
 
 
 Key ideas:
@@ -85,7 +85,7 @@ Key ideas:
 
 
 
-</p>
+
 
 
 Key Ideas:
@@ -116,7 +116,7 @@ Key Ideas:
 
 
 
-</p>
+
 
 
 Key Ideas:
@@ -152,7 +152,7 @@ Key Ideas:
 
 
 
-</p>
+
 
 
 Key Ideas:
@@ -179,7 +179,7 @@ Key Ideas:
 
 
 
-</p>
+
 
 
 Key Ideas:
@@ -213,7 +213,7 @@ Key Ideas:
 
 
 
-</p>
+
 
 
 Key Ideas:
@@ -246,7 +246,7 @@ Key Ideas:
 
 
 
-</p>
+
 
 
 Key Ideas:
@@ -280,7 +280,7 @@ Key Ideas:
 
 
 
-</p>
+
 
 
 Key Ideas:
@@ -314,7 +314,7 @@ Key Ideas:
 
 
 
-</p>
+
 
 
 Key Ideas:

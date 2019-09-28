@@ -18,7 +18,7 @@ Status: published
 
 
 
-</p>
+
 
 
 When a machine gets infected by a malware, it can start receiving command from it's C2 server to perform unwanted activities. Examples of this are a machines infected with botnets or ransomware, where the C2 server will send commands down to the victim machine, and the machines can send replies back.
@@ -43,7 +43,7 @@ The easiest way to tackle this problem is to disrupt the communication between t
 
 
 
-</p>
+
 
 
 Bad actors are well aware of this problem of having a single static IP or server for their C2, and they know that if this single IP is block or the server is taken down, their infected machines have no where to receive commands from.
@@ -74,7 +74,7 @@ The process of generating multiple domains for their malware to connect to is ca
 
 
 
-</p>
+
 
 
 DGAs automatically generate multiple domains that the malware can communicate to. These DGA's have to be random enough, so that defenders cannot predict what list of domains to block. For example, if a malware is dumb enough to change their list of domains to "badserver1", "badserver2" ... Defenders just have to block "badserver\*", and that will cover all the list of C2 servers.
@@ -129,7 +129,7 @@ def generate_domain(year, month, day):
 
 
 
-</p>
+
 
 
 Malwares need to communicate with C2's for commands. It's easy to block a single domain, or list of correlated domains.

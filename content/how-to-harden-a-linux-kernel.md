@@ -39,7 +39,7 @@ These are legitimate areas of hardening, but another area of hardening involves 
 
 
 
-</p>
+
 <!-- wp:heading {"level":4} -->
 
 #### Kernel Address Space Layout Randomization (KASLR)

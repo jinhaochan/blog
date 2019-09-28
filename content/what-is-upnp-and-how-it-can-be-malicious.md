@@ -50,7 +50,7 @@ This means that any UPnP compatible device can join the network and automaticall
 
 
 
-</p>
+
 <!-- wp:heading {"level":4} -->
 
 #### Addressing
@@ -135,7 +135,7 @@ If the device has any pages for presentation, the Control Point can receive it a
 
 
 
-</p>
+
 
 
 UPnP does not perform any sort of authentication, and assumes that any devices that is connected is trusted.

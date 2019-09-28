@@ -23,7 +23,7 @@ The ROC curve and it's AUC is a common metric for evaluation the performance of 
 
 
 
-</p>
+
 
 
 The ROC curve, or Receiver Operating Characteristic curve works on binary classification problems (True or False). It plots the following values against each other:
@@ -49,7 +49,7 @@ The ROC curve, or Receiver Operating Characteristic curve works on binary classi
 
 
 
-</p>
+
 
 
 Now that we got the formal definitions out of the way, lets talk about the intuition behind the ROC and AUC.
@@ -137,7 +137,7 @@ Looking at the random separation, the highest TPR corresponds to the highest FPR
 
 
 
-</p>
+
 
 
 A good model will thus have a lower FPR that will give a reasonable TPR (Reasonable here depends on the scenario and use case).

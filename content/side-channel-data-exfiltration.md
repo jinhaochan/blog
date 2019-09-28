@@ -36,7 +36,7 @@ The bad guys are well aware of this, and thus are looking for many innovative wa
 
 
 
-</p>
+
 
 
 <https://github.com/jamesonrader/CUE-Ultrasonic-Transmissions-Protocol>
@@ -73,7 +73,7 @@ If you can send commands, you can send data. If you can send data, it's data exf
 
 
 
-</p>
+
 
 
 <https://github.com/pentestpartners/PTP-RAT>
@@ -128,7 +128,7 @@ https://www.youtube.com/watch?time\_continue=1&v=hpw8Lz5Fg9I
 
 
 
-</p>
+
 
 
 Perhaps the most interesting of all is hijacking and manipulating the physical machine itself. In the event of an air-gapped machine where no network connection is present, getting data out can be very challenging. (Getting into an air-gapped machine is even more challenging, and can involve really complex scenarios such as supply-chain attacks)
@@ -159,7 +159,7 @@ Even more innovative ones take control of the PC fans, and control the RPM to pr
 
 
 
-</p>
+
 
 
 The techniques are endless, and as attackers continue to get more innovative, the list will continue to grow. That being said, all these attacks are considerably hard to pull off, and what we as defenders can do is the bare minimum of preventing easy ways of data exfiltration over the network.

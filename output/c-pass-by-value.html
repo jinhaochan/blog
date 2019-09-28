@@ -137,9 +137,12 @@ y = temp;<br>
 <p>The only difference is adding the keyword <code>ref</code> in front of the function parameters, which tell the function to reference to the objects passed in. This means that whatever work that is done in <code>swapValues()</code> will work directly on the values in <code>Main()</code></p>
 <p>The difference between passing by value and passing by reference is shown below</p>
 <ul>
-<li>Passing by value: Allocates memory space on the stack frame and assigns it the value of the object that were passed into the function
-    </p></li>
-<li>Passing by reference: Does not allocate memory space on the stack frame, uses the object that was passed in directly</li>
+<li>
+<p>Passing by value: Allocates memory space on the stack frame and assigns it the value of the object that were passed into the function</p>
+</li>
+<li>
+<p>Passing by reference: Does not allocate memory space on the stack frame, uses the object that was passed in directly</p>
+</li>
 </ul>
 <p>In this case, whatever changes done to <code>x</code> and <code>y</code> in the function <code>swapValues()</code> will directly modify the values inside the stack frame of <code>Main()</code>!</p>
 <h3>Reference Objects</h3>

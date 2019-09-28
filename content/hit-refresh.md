@@ -43,7 +43,7 @@ I'll like to highlight the 2 important lessons I took away from this book
 
 
 
-</p>
+
 <!-- wp:image {"id":439} -->
 
 
@@ -120,7 +120,7 @@ Culture is not related to just one issue, but to many issues within the company.
 
 
 
-</p>
+
 
 
 In the Information age, it is no longer a Zero-Sum game, where information shared would not lead to a loss of information.

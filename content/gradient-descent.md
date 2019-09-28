@@ -36,7 +36,7 @@ There are a few popular ways to perform weight tweaking and model optimization, 
 
 
 
-</p>
+
 
 
 In our model, assume we have 2 weights, w1 and w2, for optimization.
@@ -116,7 +116,7 @@ In mathematical terms, Gradient Descent is the partial derivative of the error o
 
 
 
-</p>
+
 
 
 The process we described above is the vanilla way of doing Gradient Descent, and it's called **Batch Gradient Descent**. This means that we take all the possible data points in a single batch, and compute the error surface, or the bowl.
@@ -171,7 +171,7 @@ And the obvious solution to this is called **Mini-Batch Gradient Descent**, whe
 
 
 
-</p>
+
 
 
 To recap, in this post we've talked about one of the optimization algorithm, Gradient Descent. This algorithm tells you how to tweak your weights to minimize the loss function of your model.

@@ -23,7 +23,7 @@ Before looking at DNS Attack Vectors, let's do a quick recap of what a DNS is, a
 
 
 
-</p>
+
 
 
 DNS, or Domain Name System, is a server that provides Name to IP Address resolution. When people visit websites, it's much easier for them to remember words, such as Facebook or Hotmail, and the DNS server translates these URLs to IP address such as 73.22.512.31.
@@ -60,7 +60,7 @@ DNS traffic takes place on port 53, and has both TCP and UDP protocols
 
 
 
-</p>
+
 
 
 Now that we have a rough idea of what a DNS does, lets look at the attack vectors that can target DNS servers

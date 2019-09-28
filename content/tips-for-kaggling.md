@@ -24,7 +24,7 @@ I've been doing Kaggle competitions for awhile (although with not much success),
 
 
 
-</p>
+
 
 
 The first thing I would do is to use some very simple features, and build a quick model that has a relatively low bias.
@@ -85,7 +85,7 @@ If the difference between your CV and LB is high, you're overfitting the trainin
 
 
 
-</p>
+
 
 
 Now that you got your baseline, **Do Not Modify Your Model's Parameters!**..... yet
@@ -181,7 +181,7 @@ As you can see, my parameters are the same, and I'm only adding or removing feat
 
 
 
-</p>
+
 
 
 Feature generation was the process of adding in new features, but using all the features (if you have a lot of them), is usually too noisy.
@@ -212,7 +212,7 @@ By doing this, I was able to push my score up just a little bit more!
 
 
 
-</p>
+
 
 
 Once you're done with Feature Generation and Feature Selection, then we come to parameter tuning phase.
@@ -237,7 +237,7 @@ In this phase, we want to tune the parameters to reduce bias, variance, and CV-L
 
 
 
-</p>
+
 
 
 Baseline -&gt; Feature Generation -&gt; Feature Selection -&gt; Parameter Tuning!

@@ -93,8 +93,6 @@
 
 <h3>Gradient Descent</h3>
 <hr>
-</p>
-
 <p>In our model, assume we have 2 weights, w1 and w2, for optimization.</p>
 <p>We can plot all possible weights w1 and w2 can have, to all possible errors on a graph, and this will produce an bowl shape, where the bottom of the bowl corresponds to the lowest possible error.</p>
 <!-- wp:image {"id":165} -->
@@ -123,8 +121,6 @@ Top down view of the bowl. As we shift w1 and w2 around, the point on the bowl s
 
 <h3>Stochastic Gradient Descent</h3>
 <hr>
-</p>
-
 <p>The process we described above is the vanilla way of doing Gradient Descent, and it's called <strong>Batch Gradient Descent</strong>. This means that we take all the possible data points in a single batch, and compute the error surface, or the bowl.</p>
 <p>In reality, the error surface isn't always so smooth in the shape of a bowl, but may consist several saddle points. Saddle points are points on the graph that are almost horizontal, but it's not the true minimum of the graph. This can lead to an issue of early stoppage, where our Gradient Descent thinks it has found the lowest point on the error surface.</p>
 <!-- wp:image {"id":167} -->
@@ -142,8 +138,6 @@ The point stops at a saddle point, which has a zero gradient as well. Clearly th
 
 <h3>Conclusion</h3>
 <hr>
-</p>
-
 <p>To recap, in this post we've talked about one of the optimization algorithm, Gradient Descent. This algorithm tells you how to tweak your weights to minimize the loss function of your model.</p>
 <p>There are three models, each improving on the other:</p>
 <!-- wp:list {"ordered":true} -->

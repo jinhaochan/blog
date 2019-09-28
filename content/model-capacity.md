@@ -30,7 +30,7 @@ This ties to the concept of overfitting and underfitting
 
 
 
-</p>
+
 
 
 Put simply, the capacity of the model is the complexity of the model, or the ability to represent complex relationships.
@@ -55,7 +55,7 @@ A model with high capacity can represent very complex relationships, while a mod
 
 
 
-</p>
+
 
 
 Models perform best when their capacity approximately captures the complexity of the task they need to perform.
@@ -86,7 +86,7 @@ Conversely, if the task or data set is highly complex, but the capacity of the m
 
 
 
-</p>
+
 
 
 The VC dimension is a measurement of a model's capacity, given that the task at hand is a binary classification problem.
@@ -117,7 +117,7 @@ The usage of a VC dimension usually just tells us how complex an algorithm is. A
 
 
 
-</p>
+
 
 
 The take away here is that, overly complicated models are not always better as they can overfit. A simple decision tree or random forest can be perfect for data with low complexity.

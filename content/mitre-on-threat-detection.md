@@ -30,7 +30,7 @@ The webinar sat down with the researchers who created MITRE, and it was quite in
 
 
 
-</p>
+
 <!-- wp:list {"ordered":true} -->
 
 1.  Powershell
@@ -82,7 +82,7 @@ That being said, there needs to be a fine balance to ensure we don't get too muc
 
 
 
-</p>
+
 <!-- wp:list {"ordered":true} -->
 
 1.  Process Monitoring
@@ -136,7 +136,7 @@ These 4 telemetry provides a comprehensive enough picture to perform threat hunt
 
 
 
-</p>
+
 
 
 **Know the questions you want to answer, and construct hypotheses around them. Evaluate these hypothesis using various data sources.**
@@ -161,7 +161,7 @@ Don't in go blindly. Threat hunting has to be done in a directed manner, and you
 
 
 
-</p>
+
 
 
 -   DetectionLab by Chris Long

@@ -36,7 +36,7 @@ One of the ways to overcome overfitting is Regularization
 
 
 
-</p>
+
 
 
 The mathematical definition of Regularization is the process of adding information in order to solve ill-posed problems, or to prevent overfitting. Ill-posed meaning that the solution is highly sensitive to the changes in the data.
@@ -47,7 +47,7 @@ The mathematical definition of Regularization is the process of adding informati
 
 
 
-<figure class="aligncenter is-resized">
+
 ![placeholder]({attach}media/2019/01/1280px-regularization.png){.wp-image-248 width="238" height="228"}  
 <figcaption>
 The blue line shows the model before regularization, while the green line shows the model after regularization.  
@@ -78,7 +78,7 @@ By introducing regularization, we reduce the complexity of the learned model. Th
 
 
 
-</p>
+
 
 
 To put this into a machine learning context, for each model we use, we have a loss function we wish to minimize. We'll use the RSS (Residual Sum Squares) loss function in this example.
@@ -121,7 +121,7 @@ To combat this, we add in a regularization factor, which will shrink the estimat
 
 
 
-</p>
+
 <!-- wp:image {"id":250} -->
 
 
@@ -160,7 +160,7 @@ When ***λ→∞***, the penalty term, the penalty term grows large, and your es
 
 
 
-</p>
+
 <!-- wp:image {"id":251} -->
 
 
@@ -200,7 +200,7 @@ Lasso also differs from from Ridge in that it can set coefficients to 0, making 
 
 
 
-</p>
+
 
 
 Regularization in deep learning is slightly different from shallow learning.
@@ -251,7 +251,7 @@ By using dropout, you're forcing the model to learn more robust features, as opp
 
 
 
-</p>
+
 
 
 To conclude, we've talked about methods in shallow learning and deep learning to combat overfitting by regularization.

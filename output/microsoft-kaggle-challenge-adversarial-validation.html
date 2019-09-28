@@ -90,8 +90,6 @@
 
 <h3>Overview</h3>
 <hr>
-</p>
-
 <p>This was a concept I came across while doing a Kaggle challenge issued by Microsoft to predict if a computer would get hit by a malware or not.</p>
 <p>This challenge was different from their previous one, where they wanted you to predict if the malware class of a given binary.</p>
 <p>This challenge was really interesting, because we had a lot of given information about the target machine, the list of them are:</p>
@@ -113,8 +111,6 @@
 
 <h3>Adversarial Validation</h3>
 <hr>
-</p>
-
 <p>In comes adversarial validation. The idea of this actually really simple.</p>
 <p>Based on the model we built earlier to classify is a row belongs to training or testing, we use the same model to run the classification only on the training data set.</p>
 <p>We then pick out the rows that the model identified wrongly as testing data. This means that those rows inside the training data set have features that are similar to the testing data set!</p>
@@ -123,8 +119,6 @@
 
 <h3>Downside</h3>
 <hr>
-</p>
-
 <p>One of the downsides of doing this is that, once the testing data set changes again to something that is dissimilar to the current data, we the adversarial validation technique would perform poorly again.</p>
 <p>This might mean that we need to retrain the adversarial data selection model, and pick out falsely classified rows, and retrain the prediction model all over again. And that sounds like a lot of work.</p>
   </div>

@@ -49,13 +49,13 @@ During the handshake, the following steps are taken:
 1\) Hello
 
 -   The client initiates the request by sending a `ClientHello`, which contains the information needed by the server to connect to the client via SSL, such as the cipher suites the client supports, and the SSL versions it supports.
-    </p>
+    
 -   The server then responds with a `ServerHello`, which contains similar information, and with the decision to use which cipher suite and SSL version to use
 
 2\) Certificate Verification
 
 -   The server now has to prove it's identity to the client, and it does so by an SSL certificate
-    </p>
+    
 -   An SSL certificate is a file that contains information about the server. This includes domain name, server name or hostname, organization name, location, the server's public key and certificate validity.
 
 -   The client either verifies the certificate with a CA, or implicitly trusts the certificate (Clicking on the button "Trust Anyway")
@@ -63,7 +63,7 @@ During the handshake, the following steps are taken:
 3\) Key Exchange
 
 -   Once the client trusts the server, and the cipher suites have been chosen, the client generates a symmetric key to be used for encryption and decryption.
-    </p>
+    
 -   The symmetric key is then encrypted using the server's public key, an sent over to the server. (Asymmetric encryption is used to encrypt the symmetric key to be used. Encrypt-ception!)
 
 -   The following messages sent and recieved by the client and the server are thus encrypted/decrypted by this symmetric key

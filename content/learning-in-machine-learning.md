@@ -36,7 +36,7 @@ In this post, we're going to see where exactly the learning takes place, and wha
 
 
 
-</p>
+
 
 
 In every algorithm, the learning process follows this formula:
@@ -73,7 +73,7 @@ When training the model, the learning process comes from telling the machine whe
 
 
 
-</p>
+
 
 
 When the model makes a prediction, there is bound to be errors in the the desired outcome, and the actual outcome. The difference between the desired and actual outcome can be represented in various ways called Loss Functions.  
@@ -119,7 +119,7 @@ These Loss functions tell the model how badly it has done in its job of predicti
 
 
 
-</p>
+
 
 
 To tune the way it performs predictions, the model uses Optimization Functions.  
@@ -165,7 +165,7 @@ These Optimization algorithms are optimizing, or minimizing, the Error value cal
 
 
 
-</p>
+
 
 
 So you got your Loss function to tell you how badly you did, and the Optimization function for your model to tweak it's parameters. Now all you have to do is to keep repeating these steps, and your model is "Learning". But wait!  
@@ -184,7 +184,7 @@ So you got your Loss function to tell you how badly you did, and the Optimizatio
 
 
 
-</p>
+
 
 
 Is there such a thing as learning too much? In the context of machine learning, this scenario is entirely possible, where you model learns too much about the training data, which results in poor performance on unseen data.
@@ -243,7 +243,7 @@ In Overfitting, your model is too complex. In Underfitting, your model is too si
 
 
 
-</p>
+
 
 
 So that's it! You've understood the abstracted underling principles of what happens when a machine "Learns", and the possibility of learning too much or too little.

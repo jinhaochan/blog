@@ -93,8 +93,6 @@
 
 <h3>SNI</h3>
 <hr>
-</p>
-
 <p>SNI, which stands for Server Name Indication, helps solves the issue introduced with TLS on HTTP connections.</p>
 <p>A server can be shared by many users to host their own websites. For example: AWS, Google Cloud or Azure all host multiple websites that clients can visit.</p>
 <p>In a non-TLS connection, when the request is made from the client to the server, the hostname is visible in clear text. The server then simply serves the requested hostname to the client.</p>
@@ -104,8 +102,6 @@
 
 <h3>SNI-Hostname Mismatch</h3>
 <hr>
-</p>
-
 <p>Domain fronting takes advantage of SNI presented to the server. The hostname is the actual destination the packet is going to, and it's encrypted. The only information the servers have is from the SNI, and attackers can simply spoof the SNI value to something legitimate.</p>
 <p>An example scenario:</p>
 <!-- wp:list {"ordered":true} -->
@@ -125,8 +121,6 @@
 
 <h3>Detection</h3>
 <hr>
-</p>
-
 <p>Domain fronting is used in other malicious scenarios, such as C2 communication and data exfiltration</p>
 <p>Detection of domain fronting obviously can't work just by observing the packet, as the contents are encrypted. Detection can thus only be done through behavioral analysis such as regular beaconing intervals, or suspicious packet sizes.</p>
   </div>

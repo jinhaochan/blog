@@ -89,8 +89,6 @@
   <div>
     <h2>Types of C2 Communication</h2>
 <hr>
-</p>
-
 <p>When a host gets infected with a malware, sometimes it will attempt to call back to it's Command and Control (C2) to get, or send information. There are 4 types of C2 communication traffic</p>
 <!-- wp:list {"ordered":true} -->
 
@@ -116,8 +114,6 @@
 
 <h3>Capturing C2 traffic</h3>
 <hr>
-</p>
-
 <p>There are some strategies to capture C2 traffic, such as leveraging on CTI to learn about IOCs, patterns and log entries that may indicate a compromise.</p>
 <p>Because C2 traffic is a networking phenomenon, most approaches towards network analysis, such as:</p>
 <ul>
@@ -137,8 +133,6 @@
 
 <h3>Machine Learning to capture C2 traffic</h3>
 <hr>
-</p>
-
 <p>Machine learning techniques can be employed to detect C2 traffic. In an extremely noisy environment like network traffic, ML perform anomaly detection by sieving out traffic that stands out.</p>
 <p>I did a small sample project which can be seen here:<a href="https://github.com/jinhaochan/BotnetDetection">https://github.com/jinhaochan/BotnetDetection</a></p>
 <p>The model trained took features only from network behavior, and had quite a good performance. Although I must say that more advanced malwares these days come up with creative techniques, and in this case, machine learning might fail to detect them due to the lack to training data. Furthermore, the malware can cleverly disguise themselves to look like normal traffic, and the model we train miss those entries</p>
@@ -146,8 +140,6 @@
 
 <h3>Analyzing C2 traffic</h3>
 <hr>
-</p>
-
 <p>Assuming that you know a malware has infected a host and is talking to a C2 server, you can either setup a honeypot, or try to reverse engineer the malware sample on the host.</p>
 <p>Setting up the honeypot is essentially performing an MITM between the malware and the C2 server. We allow the malware to connect to the C2 and internet, while isolating it from other machines on the network to prevent it from spreading. This way, we can capture all the traffic that's flowing to and from the C2, and we can find out what the motive of the malware is.</p>
 <p>The second method is getting the sample of the malware on the infected host, and perform reverse engineering to find out what functions and capabilities it has.</p>
@@ -155,16 +147,12 @@
 
 <h3>MITRE ATT&amp;CK TTP for C2</h3>
 <hr>
-</p>
-
 <p>There is a branch Tactics in the MITRE ATT&amp;CK Framework dedicated to C2, and there is a collection of Techniques they use to identify C2 communication.</p>
 <p>If you are coming up with a system or model to detect C2 traffic, the matrix can be highly beneficial. But take caution to not fit a round peg into a square hole, the list is not comprehensive. Attackers are aware of MITRE and their TTPs, and will actively build ways around them.</p>
 <!-- wp:heading {"level":3} -->
 
 <h3>Software to use for detection C2</h3>
 <hr>
-</p>
-
 <p>Bro (now renamed to Zeek) <a href="https://www.zeek.org/">https://www.zeek.org/</a></p>
 <p>There are many write ups out there on how to use Zeek to capture and analyze traffic. Zeek is not specific to capturing just C2, but a wide array of network activities</p>
   </div>

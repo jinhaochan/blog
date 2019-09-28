@@ -100,8 +100,6 @@
 
 <h3>Understanding CSRF</h3>
 <hr>
-</p>
-
 <p>CSRF stands for Cross-Site Request Forgery, and understanding how it works is a prerequisite to understanding CSRF tokens. Below shows a picture of what a CSRF attack looks like</p>
 <!-- wp:image {"id":421} -->
 
@@ -126,8 +124,6 @@
 
 <h3>CSRF Tokens</h3>
 <hr>
-</p>
-
 <p>CSRF token is a simple concept where include one more argument of a token, that is sort of like a secret password.</p>
 <p><code>http://bank.com/transfer.php?account=User&amp;amount=100&amp;token=32Sa2dsa10gB88vcx9cz08f331j=Da</code></p>
 <p>This token value is a high-entropy value which is hard to guess by the attacker. If on the server side, it receives a wrong or missing CSRF token value, the <code>GET</code> request is rejected and does not execute</p>
@@ -145,8 +141,6 @@
 
 <h3>CSRF Token Vulnerabilities</h3>
 <hr>
-</p>
-
 <p>If traffic carrying the token is not encrypted over HTTPS, the Attacker can sniff the traffic and obtain the CSRF token value and the Cookie, and perform a CSRF token replay attack.</p>
 <p>The solution to this is obvious: Always use encryption for communication. Aside from that, per-request-tokens can also be implemented.</p>
   </div>

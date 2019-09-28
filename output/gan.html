@@ -98,8 +98,6 @@
 
 <h3>How It Works</h3>
 <hr>
-</p>
-
 <p>Generator:</p>
 <ul>
 <li>The generator takes in a random numbers from a noise generator, and produces a random output</li>
@@ -115,181 +113,48 @@
 <p>The Discriminator gets the feedback for optimization from the ground truth, and the Generator gets feedback from the Discriminator.</p>
 <!-- wp:image {"id":314,"align":"center","width":503,"height":218} -->
 
-<figure class="aligncenter is-resized">
-![placeholder]({attach}media/2019/02/gans.png){.wp-image-314 width="503" height="218"}
-
-
-
-
-
+<p><img alt="placeholder" class="wp-image-314" height="218" src="/media/2019/02/gans.png" width="503"></p>
 <!-- wp:heading {"level":3} -->
 
-### Visualizing the Generator
-
-
-
-
-
-------------------------------------------------------------------------
-
-
-
-</p>
-
-
-We can visualize how the Generator learns to generate outputs that goes closer to the distribution of the real distribution
-
-
-
+<h3>Visualizing the Generator</h3>
+<hr>
+<p>We can visualize how the Generator learns to generate outputs that goes closer to the distribution of the real distribution</p>
 <!-- wp:image {"id":315} -->
 
-
-![placeholder]({attach}media/2019/02/iterations-1.gif){.wp-image-315}
-
-
-
-
-
-
-We can see that initially, the distribution by the Generator was random and scattered all over. Over several iterations, the Generator starts producing outputs that have a distribution getting closer to the actual distribution.
-
-
-
+<p><img alt="placeholder" class="wp-image-315" src="/media/2019/02/iterations-1.gif"></p>
+<p>We can see that initially, the distribution by the Generator was random and scattered all over. Over several iterations, the Generator starts producing outputs that have a distribution getting closer to the actual distribution.</p>
 <!-- wp:heading {"level":3} -->
 
-### Math for GAN
-
-
-
-
-
-------------------------------------------------------------------------
-
-
-
-</p>
-
-
-We have a joint loss function, with the two models (Generative `G` and Discriminative `D`) optimizing for different things.
-
-
-
-
-
-The Discriminator tries to identify if the data is from the true distribution `x`, and outputs a value `D(x)`. The Discriminator also tries to recognize if the data comes from the Generator `G`, which outputs a value `D(G(z))`. (or `1 - D(G(z))`, because the inverse of the Generated data is the data from the true distribution) Putting these two together, we get the loss function:
-
-
-
+<h3>Math for GAN</h3>
+<hr>
+<p>We have a joint loss function, with the two models (Generative <code>G</code> and Discriminative <code>D</code>) optimizing for different things.</p>
+<p>The Discriminator tries to identify if the data is from the true distribution <code>x</code>, and outputs a value <code>D(x)</code>. The Discriminator also tries to recognize if the data comes from the Generator <code>G</code>, which outputs a value <code>D(G(z))</code>. (or <code>1 - D(G(z))</code>, because the inverse of the Generated data is the data from the true distribution) Putting these two together, we get the loss function:</p>
 <!-- wp:image {"id":316,"align":"center"} -->
 
-
-
-
-![placeholder]({attach}media/2019/02/1-4xahmaugxeoqnnjhzjq-4q.jpeg){.wp-image-316}
-
-
-
-
-
-
-
-
-The Discriminator `D` wants to maximize this, as it wants to correctly identify true data `x` and `1 - D(G(z))`
-
-
-
-
-
-On the other hand, the Generator `G` tries to generates data to fool the Discriminator, and it wants to minimize the second half of the loss function:
-
-
-
+<p><img alt="placeholder" class="wp-image-316" src="/media/2019/02/1-4xahmaugxeoqnnjhzjq-4q.jpeg"></p>
+<p>The Discriminator <code>D</code> wants to maximize this, as it wants to correctly identify true data <code>x</code> and <code>1 - D(G(z))</code></p>
+<p>On the other hand, the Generator <code>G</code> tries to generates data to fool the Discriminator, and it wants to minimize the second half of the loss function:</p>
 <!-- wp:image {"id":317,"align":"center"} -->
 
-
-
-
-![placeholder]({attach}media/2019/02/1-n235xeigxkl3ktl08d-cza.jpeg){.wp-image-317}
-
-
-
-
-
-
-
-
-By maximizing `D` and minimizing `G`, we get the function:
-
-
-
+<p><img alt="placeholder" class="wp-image-317" src="/media/2019/02/1-n235xeigxkl3ktl08d-cza.jpeg"></p>
+<p>By maximizing <code>D</code> and minimizing <code>G</code>, we get the function:</p>
 <!-- wp:image {"id":318} -->
 
-
-![placeholder]({attach}media/2019/02/1-ihk3whuaz_0uek4sjicyfw.png){.wp-image-318}
-
-
-
-
-
-
-We then use alternating gradient descent, one step to Maximize the function by Discriminator `D`, and the other step to Minimize the function by Generator `G`
-
-
-
-
-
-We fix the Generator's parameters, and perform one iteration of Gradient Descent on the Discriminator. Then we switch and fix the Discriminator's parameters, and perform one iteration of Gradient Descent on the Generator. We keep alternating these steps of Gradient Descent of both models until convergence.
-
-
-
-
-
-The Discriminator usually wins early on against the Generator, as initially, it is very easy for the Discriminator to identify Generated data because the Generator has not learnt anything yet. As such, the Generator will get diminished gradient, and learning will be very slow. GAN therefore modifies the loss function slightly to backpropagate the gradient to the Generator
-
-
-
+<p><img alt="placeholder" class="wp-image-318" src="/media/2019/02/1-ihk3whuaz_0uek4sjicyfw.png"></p>
+<p>We then use alternating gradient descent, one step to Maximize the function by Discriminator <code>D</code>, and the other step to Minimize the function by Generator <code>G</code></p>
+<p>We fix the Generator's parameters, and perform one iteration of Gradient Descent on the Discriminator. Then we switch and fix the Discriminator's parameters, and perform one iteration of Gradient Descent on the Generator. We keep alternating these steps of Gradient Descent of both models until convergence.</p>
+<p>The Discriminator usually wins early on against the Generator, as initially, it is very easy for the Discriminator to identify Generated data because the Generator has not learnt anything yet. As such, the Generator will get diminished gradient, and learning will be very slow. GAN therefore modifies the loss function slightly to backpropagate the gradient to the Generator</p>
 <!-- wp:image {"id":319} -->
 
-
-![placeholder]({attach}media/2019/02/1-6so6q3dwurg8qrmwk1y3jw.jpeg){.wp-image-319}
-
-
-
-
-
-
-As the gradient backpropagated to the Generator approaches 0, the GAN changes the function to another one to ensure the gradient to the Generator does not vanish.
-
-
-
+<p><img alt="placeholder" class="wp-image-319" src="/media/2019/02/1-6so6q3dwurg8qrmwk1y3jw.jpeg"></p>
+<p>As the gradient backpropagated to the Generator approaches 0, the GAN changes the function to another one to ensure the gradient to the Generator does not vanish.</p>
 <!-- wp:heading {"level":3} -->
 
-### Tips for training a GAN
-
-
-
-
-
-------------------------------------------------------------------------
-
-
-
-</p>
-
-
-When training the Generator, hold the values of the Discriminator constant.
-
-
-
-
-
-When training the Discriminator, hold the values of the Generator constant.
-
-
-
-
-
-You may train one network that is stronger than the other, giving adverse results: If the Generator is too strong, it will always successfully deceive the Discriminator, leading to a lot of false negatives. If the Discriminator is too strong, it will give outputs that are close to 0 or 1, and the Generator will struggle during learning from gradient descent.
+<h3>Tips for training a GAN</h3>
+<hr>
+<p>When training the Generator, hold the values of the Discriminator constant.</p>
+<p>When training the Discriminator, hold the values of the Generator constant.</p>
+<p>You may train one network that is stronger than the other, giving adverse results: If the Generator is too strong, it will always successfully deceive the Discriminator, leading to a lot of false negatives. If the Discriminator is too strong, it will give outputs that are close to 0 or 1, and the Generator will struggle during learning from gradient descent.  </p>
   </div>
   <div class="tag-cloud">
     <p>

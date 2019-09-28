@@ -57,7 +57,7 @@ Lets look at what the 5 tribes have to offer, and their each individual "Master 
 
 
 
-</p>
+
 
 
 Master Algorithm: **Genetic Algorithm**
@@ -106,7 +106,7 @@ Evolutionaries focus on learning the structure of the model, and not so much of 
 
 
 
-</p>
+
 
 
 Master Algorithm: **Neural Networks**
@@ -155,7 +155,7 @@ It follows the notion that a concept can be represented by firing various neuron
 
 
 
-</p>
+
 
 
 Master Algorithm: **Logic**
@@ -204,7 +204,7 @@ In some cases, they can perform quite well. A model that Symbolist use are decis
 
 
 
-</p>
+
 
 
 Master Algorithm: **Graphical Models**
@@ -259,7 +259,7 @@ A Naive Bayes algorithm is one that assumes that all probabilities are independe
 
 
 
-</p>
+
 
 
 Master Algorithm: **Support Vector Machines**
@@ -302,12 +302,12 @@ Models in this tribe are K-Nearest-Neighbor and Support Vector Machines.
 
 
 
-</p>
+
 <!-- wp:image {"id":325,"align":"center","width":487,"height":487} -->
 
 
 
-<figure class="aligncenter is-resized">
+
 ![placeholder]({attach}media/2019/02/puzzle_thumb.png){.wp-image-325 width="487" height="487"}
 
 

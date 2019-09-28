@@ -30,7 +30,7 @@ Process Injection is a technique of running your own code within the address spa
 
 
 
-</p>
+
 
 
 The malware write the address pointing to its own DLL into the virtual address space of another process. The DLL is then executed by creating a remote thread within the process.
@@ -64,7 +64,7 @@ The steps performed to achieve this are:
 
 
 
-</p>
+
 
 
 Instead of passing the address of the DLL, the malware can directly copy malicious the code into the process. The code is then executed via `CreateRemoteThread`
@@ -104,7 +104,7 @@ The difference here is in step 3, where the code is copied, instead of the refer
 
 
 
-</p>
+
 
 
 Instead of injecting the address of the DLL, or copying the malicious code into the target process, malware can also overwrite the original code in the memory space of the process. This is called Process Hollowing.
@@ -140,7 +140,7 @@ The steps performed to achieve this are:
 
 
 
-</p>
+
 
 
 Instead of creating a new process that is suspended like Process Hollowing, Thread Execution Hijacking avoids creating a new process.
@@ -180,7 +180,7 @@ SIR are problematic because suspending a process mid-execution may cause the sys
 
 
 
-</p>
+
 
 
 Hooking is a technique to intercept function calls, and load their malicious DLL upon a certain event getting triggered within a specific thread.
@@ -211,7 +211,7 @@ Once the DLL is injected, the malware executes the malicious code on behalf of t
 
 
 
-</p>
+
 
 
 Malwares can insert their malicious libraries under `Appinit_Dlls` to have other processes load their libraries. Every library under this registry key is loaded into any process that calls `User32.dll`.
@@ -242,7 +242,7 @@ Image File Execution Options (IFEO) is usually used for debugging purposes. The 
 
 
 
-</p>
+
 
 
 Malwares can leverage on APC to force another thread to execute their malicious code by intercepting the APC queue of the target thread.
@@ -284,7 +284,7 @@ The steps performed to achieve this are:
 
 
 
-</p>
+
 
 
 Shims are provided by Microsoft to provide backward compatibility by allowing developers to apply fixes to their program without rewriting code. Malwares can leverage on Shims to target an executable for persistence and injection.
@@ -309,7 +309,7 @@ When Windows runs the Shim engine, it loads a binary to check shimming databases
 
 
 
-</p>
+
 
 
 IAT hooking involves modifying the Import Address Table to redirect the address of the functions there to their own malicious functions.
@@ -334,7 +334,7 @@ Inline hooking modified the API function itself, by rewriting the first few byte
 
 
 
-</p>
+
 
 
 In the past, I've only worked in the Linux space when doing process injection. One of the techniques I used was modifying the IAT, and here I've learnt a lot more other techniques that are related to the Windows OS.

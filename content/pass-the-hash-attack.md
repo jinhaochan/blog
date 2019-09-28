@@ -30,7 +30,7 @@ This attack vector is possible in Windows, due to how they store the passwords i
 
 
 
-</p>
+
 
 
 The Local Security Authority Subsystem Service, LSASS.exe, is a process that runs in memory, and it is responsible for performing tasks such as:
@@ -83,7 +83,7 @@ Because LSASS.exe is running in memory, it should be no surprise that all these 
 
 
 
-</p>
+
 
 
 Since the password hashes are all stored in memory, all we have to do is to find techniques to extract the information. There are already many existing ways to do this, the most famous being the tool [Mimikatz](https://github.com/gentilkiwi/mimikatz/wiki) 
@@ -124,7 +124,7 @@ After you have dumped the password hashes, there are two attack scenarios that c
 
 
 
-</p>
+
 
 
 You can detect Pass the Hash attack by reviewing your Windows Event Security Log.

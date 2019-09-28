@@ -60,7 +60,7 @@ CGI is a generic name for any program, or script that runs at the back end to pr
 
 
 
-</p>
+
 
 
 Most of us are familiar and have experience with the languages mentioned above, but there is a difference between conventional programming with those languages, and programming to conform to CGI standard.
@@ -118,7 +118,7 @@ There are two main differences here:
 
 
 
-</p>
+
 
 
 When programming a CGI program, there are some environment variables that are standard across all CGI, regardless of languages used.
@@ -160,7 +160,7 @@ You can see the full list of CGI environment variables by searching it online.
 
 
 
-</p>
+
 
 
 Most CGI vulnerabilities lie in the fast that the inputs from the users are not properly checked and parsed. As a result, the user can perform unintended actions on your server such as directory traversal or RCE.

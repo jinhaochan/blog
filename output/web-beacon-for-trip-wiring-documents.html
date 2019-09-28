@@ -101,16 +101,12 @@ Image retrieved from w3 schools
 
 <h3>Web Server Request Tracking</h3>
 <hr>
-</p>
-
 <p>If we can setup our own server that hosts resources, we can secretly embed invisible images, or elements that makes requests to our servers to retrieve those resources.</p>
 <p>This way, when the document is opened, the tries to render itself by making a request to our server for the resource. It acts as a tripwire that immediately triggers the moment the document is opened. And as the image is is not obvious to the threat actor, he would not be aware of this callback.</p>
 <!-- wp:heading {"level":3} -->
 
 <h3>Improvements?</h3>
 <hr>
-</p>
-
 <p>The obvious drawback to this is that, once the document is taken to an offline premise, the image can no longer make a request to our server. This means that we will not be notified when the tripwire is activated.</p>
 <p>The second drawback is: So what?</p>
 <p>So what if I know if the document has been opened by some unauthorized person, or in another location? What can I do to prevent him from opening it? Some simple solutions that I came up with are:</p>

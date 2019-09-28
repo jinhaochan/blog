@@ -90,8 +90,6 @@
 
 <h3>What is LightGBM?</h3>
 <hr>
-</p>
-
 <p>Similar to XGBoost, LightGBM is a gradient boosted tree based algorithm. Unlike other gradient boosted trees which grows hroizontally, LightGBM grows vertically. LightGBM grows Leaf-wise, while others grow Level-wise.</p>
 <!-- wp:image {"id":227} -->
 
@@ -113,8 +111,6 @@ Other gradient boosted algortihms grow level wise, which results in longer horiz
 
 <h3>Dealing with Non-Numeric Data</h3>
 <hr>
-</p>
-
 <p>The nice thing about LightGBM is that it can take in data as a whole, and it does not require inputs to be converted into numerical format! This means that if your data has a mix of numbers and strings, you can simply throw everything into the model to learn.</p>
 <p>The one thing you have to do however, is to specify the string columns as <code>category</code>. Below is a example of how we do it with Pandas Dataframe</p>
 <!-- wp:code -->
@@ -150,8 +146,6 @@ Other gradient boosted algortihms grow level wise, which results in longer horiz
 
 <h3>Important Parameters to Tune</h3>
 <hr>
-</p>
-
 <p>LightGBM has a huge array of parameters to tune, and I wont be listing them here. I will however be highlighting those I think are important, and has helped me increase my model predictions</p>
 <ul>
 <li><code>max_depth</code>: Defines how deep the tree grows</li>
@@ -163,8 +157,6 @@ Other gradient boosted algortihms grow level wise, which results in longer horiz
 
 <h3>Conclusion</h3>
 <hr>
-</p>
-
 <p>In this short post, we've very briefly covered about LightGBM, how it is different from other gradient boosted machines, and how to define categories for training.</p>
 <p>An important thing to know is that LightGBM is very sensitive to overfitting, and should not be used for small data sets &lt;10,000 rows.</p>
   </div>

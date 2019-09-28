@@ -89,8 +89,6 @@
 
 <h3>Terminologies</h3>
 <hr>
-</p>
-
 <ul>
 <li>Ping: An command to discover the availability of a target machine. It sends an ICMP Echo Request, and waits for an Echo Reply</li>
 <li>TTL: Time-To-Live, which tells the network routers how long the packet should live. For each router that passes the packet on, the TTL reduces by 1. Once TTL reaches 0, the packet is discarded, and an ICMP message is sent to the original sender to resend the packet.</li>
@@ -99,8 +97,6 @@
 
 <h3>Infering OSes From TTLs</h3>
 <hr>
-</p>
-
 <p>Each OS has a different TTL for their Echo Reply packet, and based on that, we can infer what OS is sending us the reply.</p>
 <p>Lets look at what happens when we ping <code>google.com</code></p>
 <!-- wp:image {"id":415} -->
@@ -118,8 +114,8 @@
 
 <h3>Table of TTLs for each OS</h3>
 <hr>
-<p></p>
-<!-- wp:table --></p>
+<!-- wp:table -->
+
 <hr>
 <p>Device /\        Version                 Protocol       TTL
   OS                                                      </p>

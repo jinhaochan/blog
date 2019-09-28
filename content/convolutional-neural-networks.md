@@ -29,7 +29,7 @@ In this post, we'll break down how a CNN works under the hoods.
 
 
 
-</p>
+
 
 
 If we used a traditional neural network without any of the prior convolution steps, the network would not scale well at all.
@@ -66,7 +66,7 @@ CNN was inspired the visual cortex, where in the human brain, parts of the visua
 
 
 
-</p>
+
 
 
 As we know, all models only take in numerical inputs to perform their actions. Non-numerical data such as text, and in this case images, must first be converted to numerical vectors.
@@ -83,7 +83,7 @@ As we know, all models only take in numerical inputs to perform their actions. N
 <div class="wp-block-media-text__content">
 
 
-</p>
+
 An image with multiple colors can be converted into a grayscale image, and each pixel is represented by its intensity from a range of 0-255.
 
 
@@ -113,7 +113,7 @@ This gives us a resulting numerical vector representation of an image
 
 
 
-</p>
+
 
 
 Before we talk about convolutional neural networks, we need to understand what is the meaning of convolution first.
@@ -142,7 +142,7 @@ The term *convolution* refers to the resulting third function, as well as the 
 <div class="wp-block-media-text__content">
 
 
-</p>
+
 By sliding function *g(t*) onto *f(t)*, we produce a third function *(f\*g)(t)*. We say that *(f\*g)(t)* is the convolution of *f(t)* and *g(t)*
 
 <p>
@@ -172,7 +172,7 @@ Now we have a rough idea of what convolution is, we can go back to see how convo
 
 
 
-</p>
+
 
 
 To begin, we have converted the image to a *n x n* matrix of numbers from 0-255 which indicates the intensity.
@@ -195,7 +195,7 @@ Next, we take a smaller matrix of size *m x m*, where *m &lt; n*, and slide it
 <div class="wp-block-media-text__content">
 
 
-</p>
+
 Image that has been converted to a matrix of numbers. For simplicity, we'll just use 0 and 1.
 
 <p>
@@ -217,7 +217,7 @@ Image that has been converted to a matrix of numbers. For simplicity, we'll just
 <div class="wp-block-media-text__content">
 
 
-</p>
+
 A smaller matrix, called a filter, that we'll use to slide over the original matrix
 
 <p>
@@ -239,7 +239,7 @@ A smaller matrix, called a filter, that we'll use to slide over the original mat
 <div class="wp-block-media-text__content">
 
 
-</p>
+
 As we slide the filter over the matrix, we do a matrix multiplication, and take the result of the multiplication for our convolution matrix.
 
 <p>
@@ -279,7 +279,7 @@ We can also use multiple filters to produce multiple Convoluted feature maps, wh
 
 
 
-<figure class="aligncenter is-resized">
+
 ![placeholder]({attach}media/2018/12/screen-shot-2016-08-10-at-3-42-35-am.png){.wp-image-204 width="374" height="188"}
 
 
@@ -311,7 +311,7 @@ For a given set of values, convolution (which is a set of filters) generates a n
 
 
 
-</p>
+
 
 
 After we produce a Convolved feature map from the original image, we perform another operation called ReLU (Rectified Linear Unit) on each element.
@@ -399,7 +399,7 @@ We take the maximum value of the window size to get the reduced matrix.
 
 
 
-</p>
+
 
 
 After we have broken down the image through iterative process of Convolution, ReLU and pooling, we get a set of matrices to represent the important features of the original image.
@@ -430,7 +430,7 @@ When the neural network does it's learning via gradient descent or some other op
 
 
 
-</p>
+
 
 
 We now have the 3 basic steps of a CNN: Convolution, ReLU and Pooling.
@@ -447,7 +447,7 @@ We can repeat this step numerous times to reduce the image, and extract out impo
 
 
 
-<figure class="aligncenter is-resized">
+
 ![placeholder]({attach}media/2018/12/screen-shot-2016-08-08-at-2-26-09-am.png){.wp-image-205 width="606" height="144"}  
 <figcaption>
 Repeated Convolution + ReLU and Pooling to reduce the image and extract important features.
@@ -474,7 +474,7 @@ The more layers we have, the more complicated features we can extract out from t
 <div class="wp-block-media-text__content">
 
 <!-- wp:paragraph {"align":"left"} -->
-</p>
+
 In the first layer, we pick out simple features like edges and lines.
 
 
@@ -510,7 +510,7 @@ In another example, we can visually see how the CNN breaks down an image using C
 
 
 
-<figure class="aligncenter is-resized">
+
 ![placeholder]({attach}media/2018/12/conv_all.png){.wp-image-207 width="748" height="423"}
 
 
@@ -536,7 +536,7 @@ The intuition here is that we are making predictions here based on several featu
 
 
 
-</p>
+
 
 
 We've seen in this post how to do the following steps in a CNN

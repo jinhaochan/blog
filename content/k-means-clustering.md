@@ -30,7 +30,7 @@ The number of groups are pre-defined by the user as K.
 
 
 
-</p>
+
 
 
 Before the iterative update starts, a random selection of centroid locations are picked on the graph. These centroids act as the beginning points for each cluster. (if K = 5, there will be 5 random centroids)
@@ -59,7 +59,7 @@ Before the iterative update starts, a random selection of centroid locations are
 
 
 
-</p>
+
 
 
 How do we choose K? Well, iteratively of cause. We define K to be a range of values, and run K-mean clustering through those values.
@@ -86,7 +86,7 @@ How do we choose K? Well, iteratively of cause. We define K to be a range of val
 
 
 
-</p>
+
 
 
 This was a pretty short post, but it acts as a summary of how K-means clustering works!

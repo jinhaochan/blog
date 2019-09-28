@@ -42,7 +42,7 @@ The goal of a GAN is to train a generative model that can produce outputs that a
 
 
 
-</p>
+
 
 
 Generator:
@@ -86,7 +86,7 @@ The Discriminator gets the feedback for optimization from the ground truth, and 
 
 
 
-<figure class="aligncenter is-resized">
+
 ![placeholder]({attach}media/2019/02/gans.png){.wp-image-314 width="503" height="218"}
 
 
@@ -106,7 +106,7 @@ The Discriminator gets the feedback for optimization from the ground truth, and 
 
 
 
-</p>
+
 
 
 We can visualize how the Generator learns to generate outputs that goes closer to the distribution of the real distribution
@@ -139,7 +139,7 @@ We can see that initially, the distribution by the Generator was random and scat
 
 
 
-</p>
+
 
 
 We have a joint loss function, with the two models (Generative `G` and Discriminative `D`) optimizing for different things.
@@ -246,7 +246,7 @@ As the gradient backpropagated to the Generator approaches 0, the GAN changes th
 
 
 
-</p>
+
 
 
 When training the Generator, hold the values of the Discriminator constant.

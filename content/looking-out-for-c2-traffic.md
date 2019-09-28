@@ -19,7 +19,7 @@ Types of C2 Communication
 
 
 
-</p>
+
 
 
 When a host gets infected with a malware, sometimes it will attempt to call back to it's Command and Control (C2) to get, or send information. There are 4 types of C2 communication traffic
@@ -51,7 +51,7 @@ When a host gets infected with a malware, sometimes it will attempt to call back
 
 
 
-</p>
+
 
 
 There are some strategies to capture C2 traffic, such as leveraging on CTI to learn about IOCs, patterns and log entries that may indicate a compromise.
@@ -106,7 +106,7 @@ Below shows an image of the packet sizes versus time, and we can see the start d
 
 
 
-</p>
+
 
 
 Machine learning techniques can be employed to detect C2 traffic. In an extremely noisy environment like network traffic, ML perform anomaly detection by sieving out traffic that stands out.
@@ -137,7 +137,7 @@ The model trained took features only from network behavior, and had quite a good
 
 
 
-</p>
+
 
 
 Assuming that you know a malware has infected a host and is talking to a C2 server, you can either setup a honeypot, or try to reverse engineer the malware sample on the host.
@@ -168,7 +168,7 @@ The second method is getting the sample of the malware on the infected host, and
 
 
 
-</p>
+
 
 
 There is a branch Tactics in the MITRE ATT&CK Framework dedicated to C2, and there is a collection of Techniques they use to identify C2 communication.
@@ -193,7 +193,7 @@ If you are coming up with a system or model to detect C2 traffic, the matrix can
 
 
 
-</p>
+
 
 
 Bro (now renamed to Zeek) <https://www.zeek.org/>

@@ -30,7 +30,7 @@ These problems mainly arise due to the complex error surface in Deep Learning mo
 
 
 
-</p>
+
 <!-- wp:heading {"level":4} -->
 
 #### Too many Local Minimas  
@@ -103,7 +103,7 @@ However, there has been many studies that shows that the local minima actually e
 
 
 
-</p>
+
 <!-- wp:heading {"level":4} -->
 
 #### Non-Uniform and Changing Gradients  
@@ -152,7 +152,7 @@ Calculating this Hessian matrix turns out to be extremely expensive if we do it 
 
 
 
-</p>
+
 
 
 Earlier, we stated that we may go into the wrong direction because we don't account for changing gradients, and also, if we decide to account for changing gradients using second derivatives, calculating a Hessian Matrix is extremely expensive.
@@ -202,7 +202,7 @@ We can thinking of the wildly fluctuating gradients at each point being represen
 
 
 
-</p>
+
 
 
 To conclude this post, we have seen how there are problems applying simple gradient descent to complex error surfaces that are present in Deep Learning models.

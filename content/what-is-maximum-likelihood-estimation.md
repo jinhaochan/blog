@@ -47,7 +47,7 @@ Maximum likelihood is a technique for parameter value estimation.
 
 
 
-</p>
+
 
 
 Whenever we create a model with certain parameters, the outputs of the model (or the prediction) can be plotted as a probability distribution as well.
@@ -106,7 +106,7 @@ Just by visual inspection, we can see that the blue line is the graph with the c
 
 
 
-</p>
+
 
 
 We want to calculate what is the total probability of observing all the generated data, or the joint probability of all the data points.
@@ -173,7 +173,7 @@ To calculate the MLE of the parameters, we need to find the values of the parame
 
 
 
-</p>
+
 
 
 When the distribution is Gaussian, the process of finding the MLE is similar to the least squared method.

@@ -100,8 +100,6 @@
 
 <h3>Recurrent Neural Networks</h3>
 <hr>
-</p>
-
 <p>A Recurrent Neural Network (RNN) is a variant of neural networks, where in each neuron, the outputs cycle back to themselves, hence being recurrent.</p>
 <!-- wp:image {"id":345} -->
 
@@ -127,8 +125,6 @@ Each neuron's output cycle back to themselves, as compared to a feed-forward neu
 
 <h3>Weight Updates in an RNN</h3>
 <hr>
-</p>
-
 <p>This weight updating phase for an RNN is called Backpropagation Though Time. Lets examine first how a feed-forward NN does forward and backward propagation for weight correction</p>
 <p>In a feed-forward NN, forward propagation is done to get the predicted output. An error estimate is gotten from the predicted output and the true label.</p>
 <p>Using the error estimate, we do backpropgation to find the partial derivatives of the error with respect to the weights of the network.</p>
@@ -144,8 +140,6 @@ Forward propagation to get the outputs, error estimate calculation, and backprop
 
 <h3>Unrolling an RNN</h3>
 <hr>
-</p>
-
 <p>As mentioned earlier, each neuron will 2 sources of inputs: The current input, and the most recent previous input.</p>
 <!-- wp:image {"id":348,"align":"center"} -->
 
@@ -171,8 +165,6 @@ Hidden layers 1 and 2 are recurrent. Here we unroll them for 3 time steps
 
 <h3>Vanishing/Exploding Gradient Problem</h3>
 <hr>
-</p>
-
 <p>When we combine the two concepts of applying Backpropagation on an unrolled RNN, we get Backpropagation through time (BPTT).</p>
 <p>Recall that we also need to learn the weights of the recurrent input, and BPTT is done to get the gradient by finding the partial derivatives of the error with respect to the recurrent inputs. (Just like how in a normal feed-forward NN, backpropagation is done to get the partial derivatives of the error with respect to the weights). Using the gradients, Gradient Descent is then applied.</p>
 <p>In BPTT, the error is backpropagated from the last time step all the way to the first time step to update the weights of the recurrent input.</p>
@@ -184,8 +176,6 @@ Hidden layers 1 and 2 are recurrent. Here we unroll them for 3 time steps
 
 <h3>Summary</h3>
 <hr>
-</p>
-
 <p>To recap on a feed-forward NN:</p>
 <!-- wp:list {"ordered":true} -->
 

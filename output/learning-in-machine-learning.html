@@ -93,8 +93,6 @@
 
 <h3>The Steps of Learning</h3>
 <hr>
-</p>
-
 <p>In every algorithm, the learning process follows this formula:</p>
 <p>Predict -&gt; Evaluate -&gt; Tune -&gt; Repeat</p>
 <p>When we first throw in a bunch of features, the model initially makes blind <strong>Predictions</strong> as to what the outcome is. Because it makes shots in the dark, the <strong>Evaluation</strong> of the model is going to be very poor initially. The model then learns of its errors, and <strong>Tunes</strong> its hyper-parameters to minimize the errors. After tuning, it <strong>Repeats</strong> the process of prediction, and the cycle continues until a satisfactory Error value is obtained.  </p>
@@ -103,8 +101,6 @@
 
 <h3>The Error/Loss Functions</h3>
 <hr>
-</p>
-
 <p>When the model makes a prediction, there is bound to be errors in the the desired outcome, and the actual outcome. The difference between the desired and actual outcome can be represented in various ways called Loss Functions.  </p>
 <p>Some way of calculating this Error, or Loss Function, are:</p>
 <ul>
@@ -120,8 +116,6 @@
 
 <h3>The Optimization Functions</h3>
 <hr>
-</p>
-
 <p>To tune the way it performs predictions, the model uses Optimization Functions.  </p>
 <p>Using the Error value produced by either one of those loss functions, the model then tunes itself using Optimization Functions, which adjusts its hyper-parameters, to try to minimize those Error values.</p>
 <p>There are also several ways for the model to tune it hyper-parameters based on the Error value computed. I'll only be listing them, as going through each of them requires a post on its own:</p>
@@ -136,15 +130,11 @@
 
 <h3>Repeat</h3>
 <hr>
-</p>
-
 <p>So you got your Loss function to tell you how badly you did, and the Optimization function for your model to tweak it's parameters. Now all you have to do is to keep repeating these steps, and your model is "Learning". But wait!  </p>
 <!-- wp:heading {"level":3} -->
 
 <h3>Over/Under Fitting</h3>
 <hr>
-</p>
-
 <p>Is there such a thing as learning too much? In the context of machine learning, this scenario is entirely possible, where you model learns too much about the training data, which results in poor performance on unseen data.</p>
 <p>This is analogous to a student studying for his final exam, and the way he does it is to memorize every single questions and answers from the past year papers, with little contextual understanding. Obviously when he takes the final exam, the questions will be different, and he will do very poorly.  </p>
 <p>In machine learning, overfitting is a problem when we have over-tuned the parameters in the model to a specific data set, resulting in poor performance in other data sets.</p>
@@ -162,8 +152,6 @@
 
 <h3>Conclusion</h3>
 <hr>
-</p>
-
 <p>So that's it! You've understood the abstracted underling principles of what happens when a machine "Learns", and the possibility of learning too much or too little.</p>
 <p>For each prediction, we get an error value, and using this error value, we use optimization functions to change the way we perform our prediction.  </p>
 <p>You've also seen some ways to prevent overfitting, which is a more common problem than underfitting.  </p>

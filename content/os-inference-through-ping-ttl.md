@@ -17,7 +17,7 @@ Status: published
 
 
 
-</p>
+
 
 
 -   Ping: An command to discover the availability of a target machine. It sends an ICMP Echo Request, and waits for an Echo Reply
@@ -37,7 +37,7 @@ Status: published
 
 
 
-</p>
+
 
 
 Each OS has a different TTL for their Echo Reply packet, and based on that, we can infer what OS is sending us the reply.
@@ -108,7 +108,7 @@ We can look at the table below to find out that Linux servers using ICMP protoco
 
 
 
-</p>
+
 <!-- wp:table -->
 
   ---------------- ----------------------- -------------- -----

@@ -30,7 +30,7 @@ Domain fronting relies on the SSL technology to work, where the service provider
 
 
 
-</p>
+
 
 
 SNI, which stands for Server Name Indication, helps solves the issue introduced with TLS on HTTP connections.
@@ -73,7 +73,7 @@ A simple solution is presented by SNI, which indicates the hostname in the initi
 
 
 
-</p>
+
 
 
 Domain fronting takes advantage of SNI presented to the server. The hostname is the actual destination the packet is going to, and it's encrypted. The only information the servers have is from the SNI, and attackers can simply spoof the SNI value to something legitimate.
@@ -127,7 +127,7 @@ Since the hostname is encrypted, no one knows im going to `www.badsite.com`, and
 
 
 
-</p>
+
 
 
 Domain fronting is used in other malicious scenarios, such as C2 communication and data exfiltration

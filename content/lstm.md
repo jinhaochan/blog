@@ -30,7 +30,7 @@ In this post, we're going to look at a the LSTM (Long Short Term Memory) model t
 
 
 
-</p>
+
 
 
 Lets visually inspect the difference between a normal RNN cell and an LSTM cell.
@@ -113,7 +113,7 @@ This data flow from cell to cell is modified by two operators: The multiplicatio
 
 
 
-</p>
+
 
 
 The LSTM has 3 gates in the cell:
@@ -309,7 +309,7 @@ The tanh layer takes in the current cell state, which scales the values to be fr
 
 
 
-</p>
+
 
 
 The cell states in each LSTM cell are modified either by the forget gate, or the input gate.
@@ -348,7 +348,7 @@ The input gate then updates each value in the cell state by a candidate amount (
 
 
 
-</p>
+
 
 
 In each LSTM cell, there contains a cell state.
@@ -382,7 +382,7 @@ Output gate decides what values to output from the cell state
 
 
 
-</p>
+
 
 
 I usually end with the conclusion, but all the information above was all the technical aspects of an LSTM. Here are some further questions relating to LSTM.

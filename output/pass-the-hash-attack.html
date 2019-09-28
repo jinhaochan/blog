@@ -93,8 +93,6 @@
 
 <h3>How Windows stores your passwords in memory</h3>
 <hr>
-</p>
-
 <p>The Local Security Authority Subsystem Service, LSASS.exe, is a process that runs in memory, and it is responsible for performing tasks such as:</p>
 <ul>
 <li>Enforcing Security Policies</li>
@@ -117,8 +115,6 @@
 
 <h3>Extracting Password Hash from Memory</h3>
 <hr>
-</p>
-
 <p>Since the password hashes are all stored in memory, all we have to do is to find techniques to extract the information. There are already many existing ways to do this, the most famous being the tool <a href="https://github.com/gentilkiwi/mimikatz/wiki">Mimikatz</a> </p>
 <p>One way of doing this is to dump the LSASS.exe process from memory to disk by using tools such as ProcDump (Which is a Microsoft Signed Binary, so it won't trigger any red flags when executed).</p>
 <p>After you have dumped the password hashes, there are two attack scenarios that can happen:</p>
@@ -139,8 +135,6 @@
 
 <h3>Detecting a Pass The Hash Attack using Windows Event Log</h3>
 <hr>
-</p>
-
 <p>You can detect Pass the Hash attack by reviewing your Windows Event Security Log.</p>
 <p>A Pass the Hash attack takes places with the NTLM authentication type, and it can be seen in the Event Log with the following features:</p>
 <!-- wp:list {"ordered":true} -->

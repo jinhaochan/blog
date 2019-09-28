@@ -50,7 +50,7 @@ We can also observe the huge disparity between the training error and validation
 
 
 
-</p>
+
 
 
 Since I've used XGBoost, there are several techniques available to combat overfitting, such as regularization, maximum depth of tree and bagging fractions. After applying all of those, I get a final CV score of `~74%`, but if we observe the disparity between the training error and validation error, the difference is only `~2%`!

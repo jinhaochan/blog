@@ -93,8 +93,6 @@
 
 <h3>Overview of BIOS and UEFI</h3>
 <hr>
-</p>
-
 <p>Both UEFI and BIOS are firmwares, and are programs that run upon booting your system.</p>
 <p>UEFI provides faster boot time, more security features (such as Secure Boot), and a more usable graphical interface. Below shows the visual difference between BIOS and UEFI:</p>
 <!-- wp:image {"id":398} -->
@@ -118,8 +116,6 @@ Side by side visual comparison of BIOS and UEFI
 
 <h3>Drawbacks of BIOS</h3>
 <hr>
-</p>
-
 <p>Some major drawbacks of BIOS booting are it can only boot from an MBR-partitioned disk, and the MBR-partitioned disk can only support up to 2TB of partitions. What this means is that if you use a disk bigger than 2TB as your boot loader, it will only show that it has 2TB of space.</p>
 <p>GPT partitioning can support partitions more than 2TB, but BIOS cannot boot from GPT-partitioned disk, only MBR-partitioned disk</p>
 <p>Also, BIOS runs in 16-bit processor mode, and only has 1MB of memory space to execute in. As such due to its limited space, it cannot initialize multiple hardware at once, which leads to a slower boot time.</p>
@@ -128,8 +124,6 @@ Side by side visual comparison of BIOS and UEFI
 
 <h3>UEFI</h3>
 <hr>
-</p>
-
 <p>One of the biggest change is that the UEFI can run in 32-bit or 64-bit mode, which has way more address space, and is able to boot a lot faster. It also has other features such as</p>
 <!-- wp:list {"ordered":true} -->
 
@@ -157,16 +151,12 @@ Side by side visual comparison of BIOS and UEFI
 
 <h3>UEFI Legacy Mode</h3>
 <hr>
-</p>
-
 <p>Operating Systems that are installed in BIOS mode cannot be booted using UEFI, vice-versa. To boot a BIOS install OS in UEFI mode, you have to reinstall the entire system. To get around this hassle, UEFI supports legacy mode</p>
 <p>UEFI Legacy will make the UEFI act just like a BIOS, and this throws away many of the features such as Fast Boot and Secure Boot. UEFI Legacy allows the system to boot from MBR-partitioned disks, and allows booting to be not from EFI partitions.</p>
 <!-- wp:heading {"level":3} -->
 
 <h3>Secure Boot</h3>
 <hr>
-</p>
-
 <p>Advanced malwares target the bootloader as a vector of attack, which launches their malicious process before the OS is launched.</p>
 <p>Secure Boot is a feature in UEFI which aims to make the booting process more secure by disallowing unsigned code to run in the pre-boot phase. Secure Boot only allows signed bootloaders and drivers that are trusted by the Original Equipment Manufacturer (OEM) to run.</p>
 <p>When the PC first runs, it checks the signature of each piece of booting software. If the signatures are valid, then the firmware passes control to the OS.</p>
@@ -177,8 +167,6 @@ Side by side visual comparison of BIOS and UEFI
 
 <h3>Secure Boot and Linux</h3>
 <hr>
-</p>
-
 <p>The whole concept of Secure Boot was built around Microsoft systems, and Linux distros were not made in mind for this. As such, there were a few hurdles to overcome when applying Secure Boot to Linux distros.</p>
 <p>The first money grabbing move by Microsoft was to let Linux distros pay a one-time fee of \$99 on Microsoft Sysdev Portal to apply for their bootloaders to be signed and recognized by Secure Boot. This way, these Linux distros work with Secure Boot out-of-the-box in the machines.</p>
 <p>In Linux, it's common for developers to develop their own third party modules, which are all unsigned, and will be rejected by the system when trying to <code>insmod</code> them. Linux therefore provides a way to sign their custom binaries or modules using the command <code>sbsign</code> and <code>kmodsign</code> respectively.</p>

@@ -100,8 +100,8 @@
 
 <h3>Kernel Level Hardening</h3>
 <hr>
-<p></p>
-<!-- wp:heading {"level":4} --></p>
+<!-- wp:heading {"level":4} -->
+
 <h4>Kernel Address Space Layout Randomization (KASLR)</h4>
 <p>ASLR is a memory protection technique that randomizes the address layout of the executables that are loaded in memory. How this prevent an attack is to disallow memory space predictability.</p>
 <p>An attacker, if he knows your target OS (example Ubuntu 14.04), he can spin up the exact same OS in his testing environment. If there is no ASLR, the executables such as <code>glibc</code> will be loaded in the same address space every time, allowing him to make an exploit targeting predictable addresses.</p>

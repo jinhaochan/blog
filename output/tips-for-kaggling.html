@@ -91,8 +91,6 @@
 
 <h3>Setting the baseline</h3>
 <hr>
-</p>
-
 <p>The first thing I would do is to use some very simple features, and build a quick model that has a relatively low bias.</p>
 <p>I'll then use cross validation to ensure that I have low variance between train-test splits. This ensures that i'm not overfitting to any segment of the training data.</p>
 <p>After getting a satisfactory bias and variance value, we cross our fingers, and submit our prediction to see how well it does on the LB!</p>
@@ -105,8 +103,6 @@
 
 <h3>Feature Generation</h3>
 <hr>
-</p>
-
 <p>Now that you got your baseline, <strong>Do Not Modify Your Model's Parameters!</strong>..... yet</p>
 <p>Using parameters for the baseline model, you want to generate more features to increase your CV score. Then you make submissions to the LB to checkout your LB score. If your CV score increases, but your LB score stays the same or decreases, you're overfitting.</p>
 <p>Here's a snippet of my comments I used to keep track of my CV/LB climb:</p>
@@ -174,8 +170,6 @@
 
 <h3>Feature Selection</h3>
 <hr>
-</p>
-
 <p>Feature generation was the process of adding in new features, but using all the features (if you have a lot of them), is usually too noisy.</p>
 <p>Most models like XGBoost and LightGBM have functions to tell you which features have the most impact on your prediction. You would want to trim your selected features to only include those high impact ones.</p>
 <p>By doing this, I was able to push my score up just a little bit more!</p>
@@ -183,16 +177,12 @@
 
 <h3>Parameter Tuning</h3>
 <hr>
-</p>
-
 <p>Once you're done with Feature Generation and Feature Selection, then we come to parameter tuning phase.</p>
 <p>In this phase, we want to tune the parameters to reduce bias, variance, and CV-LB difference. You can use functions like GridSearch to efficiently search across a range of parameters</p>
 <!-- wp:heading {"level":3} -->
 
 <h3>Conclusion</h3>
 <hr>
-</p>
-
 <p>Baseline -&gt; Feature Generation -&gt; Feature Selection -&gt; Parameter Tuning!</p>
 <p>This isn't a silver bullet to all competitions, but its the strategy that I use regularly.</p>
 <p>In data science and Kaggle, there are plenty of moving parts, and it's easy to get lost in the myriad of factors affecting your prediction. It's always good to have a system to isolate and tackle the problem!</p>

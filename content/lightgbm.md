@@ -23,7 +23,7 @@ For some time, XGBoost was considered the Kaggle-Killer, being the winning model
 
 
 
-</p>
+
 
 
 Similar to XGBoost, LightGBM is a gradient boosted tree based algorithm. Unlike other gradient boosted trees which grows hroizontally, LightGBM grows vertically. LightGBM grows Leaf-wise, while others grow Level-wise.
@@ -66,7 +66,7 @@ Other gradient boosted algortihms grow level wise, which results in longer horiz
 
 
 
-</p>
+
 
 
 The nice thing about LightGBM is that it can take in data as a whole, and it does not require inputs to be converted into numerical format! This means that if your data has a mix of numbers and strings, you can simply throw everything into the model to learn.
@@ -125,7 +125,7 @@ for feature in newFeatures:
 
 
 
-</p>
+
 
 
 LightGBM has a huge array of parameters to tune, and I wont be listing them here. I will however be highlighting those I think are important, and has helped me increase my model predictions
@@ -158,7 +158,7 @@ For a more comprehensive read, [click here!](https://lightgbm.readthedocs.io/en/
 
 
 
-</p>
+
 
 
 In this short post, we've very briefly covered about LightGBM, how it is different from other gradient boosted machines, and how to define categories for training.

@@ -92,8 +92,6 @@
 
 <h3>DLL Injection</h3>
 <hr>
-</p>
-
 <p>The malware write the address pointing to its own DLL into the virtual address space of another process. The DLL is then executed by creating a remote thread within the process.</p>
 <p>The steps performed to achieve this are:</p>
 <!-- wp:list {"ordered":true} -->
@@ -108,8 +106,6 @@
 
 <h3>PE Injection</h3>
 <hr>
-</p>
-
 <p>Instead of passing the address of the DLL, the malware can directly copy malicious the code into the process. The code is then executed via <code>CreateRemoteThread</code></p>
 <p>The steps performed to achieve this are:</p>
 <!-- wp:list {"ordered":true} -->
@@ -125,8 +121,6 @@
 
 <h3>Process Hollowing</h3>
 <hr>
-</p>
-
 <p>Instead of injecting the address of the DLL, or copying the malicious code into the target process, malware can also overwrite the original code in the memory space of the process. This is called Process Hollowing.</p>
 <p>The steps performed to achieve this are:</p>
 <!-- wp:list {"ordered":true} -->
@@ -143,8 +137,6 @@
 
 <h3>Thread Execution Hijacking (Suspend, Inject, Resume)</h3>
 <hr>
-</p>
-
 <p>Instead of creating a new process that is suspended like Process Hollowing, Thread Execution Hijacking avoids creating a new process.</p>
 <p>The steps performed to achieve this are:</p>
 <!-- wp:list {"ordered":true} -->
@@ -160,8 +152,6 @@
 
 <h3>Hook Injection via <code>SetWindowsHookEx</code></h3>
 <hr>
-</p>
-
 <p>Hooking is a technique to intercept function calls, and load their malicious DLL upon a certain event getting triggered within a specific thread.</p>
 <p><code>SetWindowsHookEx</code> is called to install a hook routine into the hook chain. One of the arguments that <code>SetWindowsHookEx</code> takes is a <code>threadID</code> with which this hook procedure is associated with. If this value is set to <code>0</code>, all threads within the process perform the action when the event is triggered. To generate less noise, 1 thread is usually targeted.</p>
 <p>Once the DLL is injected, the malware executes the malicious code on behalf of the process of the <code>threadID</code> that was passed into the <code>SetWindowsHookEx</code> function.</p>
@@ -169,8 +159,6 @@
 
 <h3>Injection and Persistence via Registry Modification</h3>
 <hr>
-</p>
-
 <p>Malwares can insert their malicious libraries under <code>Appinit_Dlls</code> to have other processes load their libraries. Every library under this registry key is loaded into any process that calls <code>User32.dll</code>.</p>
 <p>Malwares can also put their libraries under <code>AppCertDlls</code>, which affects any process that calls Win32 API functions such as <code>CreateProcess</code>, <code>CreateProcessAsUser</code> and <code>WinExec</code>  </p>
 <p>Image File Execution Options (IFEO) is usually used for debugging purposes. The <code>Debugger Value</code> under this registry key can be set to attach a program to another executable for debugging, and whenever that executable is launched, the attached program is also launched. Malwares can make use of this to attach themselves to a target executable.</p>
@@ -178,8 +166,6 @@
 
 <h3>Asynchronous Procedure Calls (APC)</h3>
 <hr>
-</p>
-
 <p>Malwares can leverage on APC to force another thread to execute their malicious code by intercepting the APC queue of the target thread.</p>
 <p>Each thread has a queue of APC which are waiting for execution upon the thread entering an alterable state.</p>
 <p>The steps performed to achieve this are:</p>
@@ -199,24 +185,18 @@
 
 <h3>Injection using Shims</h3>
 <hr>
-</p>
-
 <p>Shims are provided by Microsoft to provide backward compatibility by allowing developers to apply fixes to their program without rewriting code. Malwares can leverage on Shims to target an executable for persistence and injection.</p>
 <p>When Windows runs the Shim engine, it loads a binary to check shimming databases to check for appropriate fixes. Malwares can create and install their own shimming database (sdb). They can do so by calling <code>sdbinst.exe</code> (shim database installer), and install their own malicious sdb file.</p>
 <!-- wp:heading {"level":3} -->
 
 <h3>Import Address Table (IAT) and Inline Hooking</h3>
 <hr>
-</p>
-
 <p>IAT hooking involves modifying the Import Address Table to redirect the address of the functions there to their own malicious functions.</p>
 <p>Inline hooking modified the API function itself, by rewriting the first few bytes of code in the function to jump to their malicious function.</p>
 <!-- wp:heading {"level":3} -->
 
 <h3>Conclusion</h3>
 <hr>
-</p>
-
 <p>In the past, I've only worked in the Linux space when doing process injection. One of the techniques I used was modifying the IAT, and here I've learnt a lot more other techniques that are related to the Windows OS.</p>
   </div>
   <div class="tag-cloud">
