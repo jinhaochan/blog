@@ -39,14 +39,8 @@ Lets visually inspect the difference between a normal RNN cell and an LSTM cell.
 
 <!-- wp:image {"id":362} -->
 
-<figure class="wp-block-image">
 ![placeholder]({attach}media/2019/03/lstm3-simplernn.png){.wp-image-362}  
 
-<figcaption>
-An unrolled RNN cell
-
-</figcaption>
-</figure>
 <!-- /wp:image -->
 
 <!-- wp:image {"id":356} -->
