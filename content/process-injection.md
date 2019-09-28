@@ -1,7 +1,7 @@
 Title: Process Injection
 Date: 2019-04-05 14:44
 Author: jinhaochan
-Category: Hacking, Security
+Category: Security
 Tags: Process Injection
 Slug: process-injection
 Status: published

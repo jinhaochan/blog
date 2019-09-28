@@ -1,7 +1,7 @@
 Title: Setting Up Your Own IDS
 Date: 2018-12-30 19:49
 Author: jinhaochan
-Category: Networking
+Category: Security
 Tags: Mininet, SDN, Snort
 Slug: setting-up-your-own-ids
 Status: published

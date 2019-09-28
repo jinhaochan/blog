@@ -1,7 +1,7 @@
 Title: CSRF Tokens
 Date: 2019-04-24 16:13
 Author: jinhaochan
-Category: Networking, Security
+Category: Security
 Tags: CSRF
 Slug: csrf-tokens
 Status: published

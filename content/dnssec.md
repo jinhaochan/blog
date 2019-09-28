@@ -1,7 +1,7 @@
 Title: DNSSEC
 Date: 2019-09-23 14:16
 Author: jinhaochan
-Category: Uncategorized
+Category: Security
 Tags: DNSSEC
 Slug: dnssec
 Status: published

@@ -1,7 +1,7 @@
 Title: Branches of Machine Learning
 Date: 2019-06-02 15:30
 Author: jinhaochan
-Category: Book Review, Data Science
+Category: Review
 Slug: branches-of-machine-learning
 Status: published
 

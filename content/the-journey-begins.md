@@ -1,7 +1,7 @@
 Title: Printing Subsets in a List
 Date: 2018-07-10 09:52
 Author: jinhaochan
-Category: Uncategorized
+Category: Software Engineering
 Tags: codexercise
 Slug: the-journey-begins
 Status: published

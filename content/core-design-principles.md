@@ -1,7 +1,7 @@
 Title: Core Design Principles
 Date: 2018-07-12 09:08
 Author: jinhaochan
-Category: Uncategorized
+Category: Software Engineering
 Slug: core-design-principles
 Status: published
 

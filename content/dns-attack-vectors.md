@@ -1,7 +1,7 @@
 Title: DNS Attack Vectors
 Date: 2019-07-07 14:50
 Author: jinhaochan
-Category: Hacking, Networking, Security
+Category: Security
 Slug: dns-attack-vectors
 Status: published
 

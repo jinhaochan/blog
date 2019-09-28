@@ -1,7 +1,7 @@
 Title: What are Proxies?
 Date: 2019-06-21 09:57
 Author: jinhaochan
-Category: Networking
+Category: Security
 Tags: Proxy
 Slug: what-are-proxies
 Status: published

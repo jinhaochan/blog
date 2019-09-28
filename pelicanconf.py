@@ -23,6 +23,7 @@ AUTHOR_FEED_RSS = None
 LINKS = (('All', '/'),
          ('Data Science', '/category/data-science.html'),
          ('Cyber Security', '/category/security.html'),
+         ('Software Engineering', '/category/software-engineering.html'),
          ('Book Reviews', '/category/review.html'),
          ('Ramblings', '/category/ramblings.html'),)
 

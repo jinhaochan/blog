@@ -1,7 +1,7 @@
 Title: Software Defined Networking (SDN)
 Date: 2018-12-23 10:29
 Author: jinhaochan
-Category: Networking
+Category: Security
 Tags: SDN
 Slug: software-defined-networking-sdn
 Status: published

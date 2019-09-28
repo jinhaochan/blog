@@ -1,7 +1,7 @@
 Title: Looking out for C2 Traffic
 Date: 2019-05-02 16:14
 Author: jinhaochan
-Category: Networking, Security
+Category: Security
 Tags: C2, Command and Control
 Slug: looking-out-for-c2-traffic
 Status: published

@@ -1,7 +1,7 @@
 Title: The Power of Agency
 Date: 2019-05-14 21:19
 Author: jinhaochan
-Category: Uncategorized
+Category: Review
 Slug: the-power-of-agency
 Status: published
 

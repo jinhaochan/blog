@@ -1,7 +1,7 @@
 Title: Domain Fronting and SNI
 Date: 2019-06-13 10:54
 Author: jinhaochan
-Category: C2, Networking, Security
+Category: Security
 Tags: Domain Fronting, SNI
 Slug: domain-fronting-and-sni
 Status: published

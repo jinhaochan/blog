@@ -1,7 +1,7 @@
 Title: Hosting your own DNS (and how to setup DNS tunneling)
 Date: 2019-04-11 11:23
 Author: jinhaochan
-Category: Networking
+Category: Security
 Tags: DNS
 Slug: hosting-your-own-dns-and-how-to-setup-dns-tunneling
 Status: published

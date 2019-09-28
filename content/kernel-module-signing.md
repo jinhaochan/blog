@@ -1,7 +1,7 @@
 Title: Kernel Module Signing
 Date: 2018-11-11 22:35
 Author: jinhaochan
-Category: Linux
+Category: Security
 Tags: Kernel Module
 Slug: kernel-module-signing
 Status: published

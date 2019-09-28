@@ -1,7 +1,7 @@
 Title: The Culture Code
 Date: 2018-12-02 22:38
 Author: jinhaochan
-Category: Uncategorized
+Category: Review
 Tags: Readings, The Culture Code
 Slug: the-culture-code
 Status: published

@@ -1,7 +1,7 @@
 Title: Side Channel Data Exfiltration
 Date: 2019-05-10 14:39
 Author: jinhaochan
-Category: Hacking, Networking, Security
+Category: Security
 Tags: data exfiltration
 Slug: side-channel-data-exfiltration
 Status: published

@@ -1,7 +1,7 @@
 Title: Python Tips and Tricks
 Date: 2018-11-04 22:32
 Author: jinhaochan
-Category: Python, Uncategorized
+Category: Software Engineering
 Slug: python-tips-and-tricks
 Status: published
 

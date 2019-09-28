@@ -1,7 +1,7 @@
 Title: Kernel Modules in Linux
 Date: 2018-10-29 22:31
 Author: jinhaochan
-Category: Linux
+Category: Security
 Slug: kernel-modules-in-linux
 Status: published
 

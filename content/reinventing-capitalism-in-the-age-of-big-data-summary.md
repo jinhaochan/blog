@@ -1,7 +1,7 @@
 Title: Reinventing Capitalism in the Age of Big Data: Summary
 Date: 2019-04-21 20:28
 Author: jinhaochan
-Category: Book Review, Data Science
+Category: Review
 Tags: Big Data
 Slug: reinventing-capitalism-in-the-age-of-big-data-summary
 Status: published

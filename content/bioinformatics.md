@@ -1,7 +1,7 @@
 Title: Bioinformatics
 Date: 2018-07-18 16:03
 Author: jinhaochan
-Category: Uncategorized
+Category: Ramblings
 Tags: Bioinformatics, Coursera
 Slug: bioinformatics
 Status: published
