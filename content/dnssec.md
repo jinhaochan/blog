@@ -109,7 +109,6 @@ Without DNSSEC, non-existent domains are return with NXDOMAIN. With DNSSEC, non-
 </p>
 <!-- wp:image {"id":465,"sizeSlug":"large"} -->
 
-<figure class="wp-block-image size-large">
 ![](2019/09/untitled-1.png)  
 
 <figcaption>
