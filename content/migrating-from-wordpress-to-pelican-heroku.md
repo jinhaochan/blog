@@ -18,6 +18,7 @@ In this post, I'm going to run through the thing I did to make this happen. It t
 
 ### Exporting Your Wordpress Posts
 
+---
 This part is fairly simple. Thankfully, the things you create on Wordpress are yours to keep. That was one of my biggest initial fear at first, where my content was not kept by me. And if the unlikely case of Wordpress going under, all my posts are lost.
 
 In this step, you simply go to your Wordpress site, hit on Tools, and export both your posts and your media (images, videos etc)
@@ -26,9 +27,10 @@ In this step, you simply go to your Wordpress site, hit on Tools, and export bot
 
 ### Setting up Pelican
 
+---
 Once you got your back up ready, we're now going to setup Pelican on your local machine, before pushing it up to Heroku
 
-Its pretty straight forward, and you can follow the guide here: [http://doc.getpelican.com/en/latest/quickstart.html]: Pelican Quickstart
+Its pretty straight forward, and you can follow the guide here: [http://doc.getpelican.com/en/latest/quickstart.html](Pelican Quickstart)
 
 Basically you
 
@@ -38,11 +40,12 @@ Basically you
 
 ### Setting up Heroku
 
+---
 Of course, if everything was so simple, why the hell would I want to write this post? It's always the system integration where the troubles pop up.
 
 Assuming that you already have a Heroku account and downloaded Heroku toolbelt on your local machine, then getting the contents of `requirements.txt` and `Procfile` are the trickiest
 
-1. `requirements.txt`
+- `requirements.txt`
 
 ```
 pelican
@@ -52,7 +55,7 @@ gunicorn
 static
 ```
 
-2. `Procfile`
+- `Procfile`
 
 `web: pelican content --listen --port $PORT`
 
@@ -60,6 +63,7 @@ The reason for doing `$PORT` is that you can't choose which port Heroku listens 
 
 ### Importing your Wordpress contents over
 
+---
 With that done, you can start to import your Wordpress content over.
 
 Your Wordpress files downloaded earlier would be in XML format, and thankfully, Pelican has a module that does all the heavy lifting for you.
@@ -90,6 +94,7 @@ We also need to remove all the wordpress, and html stuff. I'll leave you to figu
 
 ### GOGOGO
 
+---
 Once you're done with that, run the command 
 
 `pelican`
@@ -108,8 +113,9 @@ I've aliased those 3 commands to `GOGOGO` (since they all start with G, and it s
 
 ### Others
 
+---
 If you wanna play around with the whole setup, you can look at things like Pelican themes, and Pelican plugins
 
-[https://github.com/getpelican/pelican-themes]: Themes
-[https://github.com/getpelican/pelican-plugins]: Plugins
+[https://github.com/getpelican/pelican-themes](Themes)
+[https://github.com/getpelican/pelican-plugins](Plugins)
 
