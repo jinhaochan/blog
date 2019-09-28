@@ -110,7 +110,7 @@ Without DNSSEC, non-existent domains are return with NXDOMAIN. With DNSSEC, non-
 <!-- wp:image {"id":465,"sizeSlug":"large"} -->
 
 <figure class="wp-block-image size-large">
-![](https://chanjinhao.files.wordpress.com/2019/09/untitled-1.png?w=531){.wp-image-465}  
+![](2019/09/untitled-1.png)  
 
 <figcaption>
 DNS resolution with DNSSEC
