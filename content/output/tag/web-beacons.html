@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>A Pelican Blog - Web Beacons</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="A Pelican Blog Atom Feed" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">A Pelican Blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/book-review.html">Book Review</a></li>
+                    <li><a href="/category/data-science.html">Data Science</a></li>
+                    <li><a href="/category/misc.html">misc</a></li>
+                    <li><a href="/category/ramblings.html">Ramblings</a></li>
+                    <li><a href="/category/review.html">Review</a></li>
+                    <li><a href="/category/security.html">Security</a></li>
+                    <li><a href="/category/software-engineering.html">Software Engineering</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/web-beacon-for-trip-wiring-documents.html">Web Beacon for Trip wiring documents</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2019-03-03T14:25:00+00:00">
+                Published: Sun 03 March 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/security.html">Security</a>.</p>
+<p>tags: <a href="/tag/web-beacons.html">Web Beacons</a> </p>
+</footer><!-- /.post-info --><!-- wp:paragraph -->
+
+<p>During my course of security research work, I came across this concept of web beacons, which is a clever way of knowing who has opened up a document.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>A Web Beacon is an element inside the document, that is not a saved resource. Rather, the element sends a request out to a server to retrieve the resource. An example of this would be an image tag, that requests the image resource from a server.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>For example, writing this piece of code fetches the image resource from www.w3schools.com server:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p><code>img src="https://www.w3schools.com/images/w3schools_green.jpg" alt="W3Schools.com" style="width:104px;height:142px;"</code></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"align":"center"} -->
+
+<div class="wp-block-image">
+
+<figure class="aligncenter">
+![W3Schools.com](https://www.w3schools.com/images/w3schools_green.jpg)  
+<figcaption>
+Image retrieved from w3 schools
+</figcaption>
+</figure>
+
+</div>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>It's a very simple concept, and we can make use of this functionality and twist it to be a defensive tool</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Web Server Request Tracking</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>If we can setup our own server that hosts resources, we can secretly embed invisible images, or elements that makes requests to our servers to retrieve those resources.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>This way, when the document is opened, the tries to render itself by making a request to our server for the resource. It acts as a tripwire that immediately triggers the moment the document is opened. And as the image is is not obvious to the threat actor, he would not be aware of this callback.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Improvements?</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>The obvious drawback to this is that, once the document is taken to an offline premise, the image can no longer make a request to our server. This means that we will not be notified when the tripwire is activated.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The second drawback is: So what?</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>So what if I know if the document has been opened by some unauthorized person, or in another location? What can I do to prevent him from opening it? Some simple solutions that I came up with are:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>If the requesting IP address is not in the whitelist, we return an extremely huge image, hopefully to make the document hang and not be usable.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Another improvement is, aside from image resources, what other resources can be requested, and hopefully such resources can be "executed". Of course, such a solution is considered intrusive, because then it can be used in malicious ways for remote code execution.</p>
+<!-- /wp:paragraph -->                </article>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>A Pelican Blog - RNN</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="A Pelican Blog Atom Feed" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">A Pelican Blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/book-review.html">Book Review</a></li>
+                    <li><a href="/category/data-science.html">Data Science</a></li>
+                    <li><a href="/category/misc.html">misc</a></li>
+                    <li><a href="/category/ramblings.html">Ramblings</a></li>
+                    <li><a href="/category/review.html">Review</a></li>
+                    <li><a href="/category/security.html">Security</a></li>
+                    <li><a href="/category/software-engineering.html">Software Engineering</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/rnn-and-vanishing-exploding-gradients.html">RNN and Vanishing/Exploding Gradients</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2019-06-23T16:23:00+00:00">
+                Published: Sun 23 June 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/data-science.html">Data Science</a>.</p>
+<p>tags: <a href="/tag/rnn.html">RNN</a> <a href="/tag/vanishing-gradients.html">Vanishing Gradients</a> </p>
+</footer><!-- /.post-info --><!-- wp:paragraph -->
+
+<p>In this post, we're going to be looking at:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+
+<ol>
+<li>Recurrent Neural Networks (RNN)</li>
+<li>Weight updates in an RNN</li>
+<li>Unrolling an RNN</li>
+<li>Vanishing/Exploding Gradient Problem</li>
+</ol>
+<!-- /wp:list -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Recurrent Neural Networks</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>A Recurrent Neural Network (RNN) is a variant of neural networks, where in each neuron, the outputs cycle back to themselves, hence being recurrent.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":345} -->
+
+<figure class="wp-block-image">
+![](https://chanjinhao.files.wordpress.com/2019/03/0_mrhhgabskajpbt21.png){.wp-image-345}
+
+<figcaption>
+Each neuron's output cycle back to themselves, as compared to a feed-forward neural network
+
+</figcaption>
+</figure>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>This means that each neuron in an RNN has two sources of inputs:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+
+<ol>
+<li>The present data (Which can be one or more inputs)</li>
+<li>The recent past data (A single output based on the previous set of inputs)</li>
+</ol>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+
+<p>Intuitively, this means that the network can learn whats happening now, and what happened before.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The RNN has a Short-Term memory, as the recurrent input is only derived from it's most recent past. Anything that happened way before is "forgotten".</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>For example, if we feed in the word "neuron" letter by letter, in a feed-forward NN, when we reach the letter "r", the model would have forgotten "n", "e", "u".</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>In an RNN, the model would remember the immediate past, that previously we have seen the letter "u".</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Like a normal feed-forward NN, the RNN also has a weight matrix, but with one additional weight to include the recurrent input. When doing backpropagation, this recurrent weights is also subjected to tweaking.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Weight Updates in an RNN</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>This weight updating phase for an RNN is called Backpropagation Though Time. Lets examine first how a feed-forward NN does forward and backward propagation for weight correction</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>In a feed-forward NN, forward propagation is done to get the predicted output. An error estimate is gotten from the predicted output and the true label.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Using the error estimate, we do backpropgation to find the partial derivatives of the error with respect to the weights of the network.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>These derivatives are then used by Gradient Descent to tweak the weights of the model, and ultimately try to minimize the error estimate, so that the predicted output is close to the true output.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":346,"align":"center"} -->
+
+<div class="wp-block-image">
+
+<figure class="aligncenter">
+![](https://chanjinhao.files.wordpress.com/2019/03/0_fbugysciqjnfi3n6.png){.wp-image-346}  
+<figcaption>
+Forward propagation to get the outputs, error estimate calculation, and backpropgation to get the gradients of the error w.r.t. the weights, and apply gradient descent.  
+</figcaption>
+</figure>
+
+</div>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>In an RNN, there is an additional component of the recurrent input in each neuron. This input also has its corresponding weight that needs to be tweaked. To understand how that happens, we need to be able to visualize "unrolling" an RNN</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Unrolling an RNN</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>As mentioned earlier, each neuron will 2 sources of inputs: The current input, and the most recent previous input.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":348,"align":"center"} -->
+
+<div class="wp-block-image">
+
+<figure class="aligncenter">
+![](https://chanjinhao.files.wordpress.com/2019/03/0_ynlojw7yvjarwmd4-copy.png){.wp-image-348}  
+<figcaption>
+The output of the RNN cell is fed back.
+</figcaption>
+</figure>
+
+</div>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>In the next time step, it will take the current input plus the previous output. We can visualize this by "unrolling" the RNN, so we can see what happens at each time step.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":349,"align":"center"} -->
+
+<div class="wp-block-image">
+
+<figure class="aligncenter">
+![](https://chanjinhao.files.wordpress.com/2019/03/0_ynlojw7yvjarwmd4.png){.wp-image-349}  
+<figcaption>
+An unolled RNN to visualize what happens to the cell at each time step
+</figcaption>
+</figure>
+
+</div>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>The image above shows what happens when you unroll one recurrent neuron. In a network with 100s of neurons, some layers recurrent, things can get really messy.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":350,"align":"center"} -->
+
+<div class="wp-block-image">
+
+<figure class="aligncenter">
+![](https://chanjinhao.files.wordpress.com/2019/03/dpln_0423.png){.wp-image-350}  
+<figcaption>
+Hidden layers 1 and 2 are recurrent. Here we unroll them for 3 time steps
+</figcaption>
+</figure>
+
+</div>
+
+<!-- /wp:image -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Vanishing/Exploding Gradient Problem</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>When we combine the two concepts of applying Backpropagation on an unrolled RNN, we get Backpropagation through time (BPTT).</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Recall that we also need to learn the weights of the recurrent input, and BPTT is done to get the gradient by finding the partial derivatives of the error with respect to the recurrent inputs. (Just like how in a normal feed-forward NN, backpropagation is done to get the partial derivatives of the error with respect to the weights). Using the gradients, Gradient Descent is then applied.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>In BPTT, the error is backpropagated from the last time step all the way to the first time step to update the weights of the recurrent input.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The problem comes when there are too many time steps, and BPTT has to propagate error back too many times, which will result in the gradients exploding, or vanishing.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>At each time step, the gradients are multiplied by each other via matrix multiplication because of chain rule. If the gradient is greater than 1.0, a large number of time steps will cause the gradient to "explode", or become too large.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Likewise, when the gradient is less than 1.0, multiplying it too many times by itself will cause the gradient to "vanish", or become close to zero.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Both exploding and vanishing gradients are problematic, because then Gradient Descent will performing poorly on overly large values, or overly small values.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Summary</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>To recap on a feed-forward NN:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+
+<ol>
+<li>Forward propagation is done get the output prediction</li>
+<li>An error estimate is calculated from the model output to the the true values</li>
+<li>Backpropagation is done using the error, to get partial derivative of the error w.r.t. the weights</li>
+<li>Gradient Descent is applied using the gradients to minimize the error</li>
+</ol>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+
+<p>And for an RNN:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+
+<ol>
+<li>Forward propagation is done get the output prediction</li>
+<li>An error estimate is calculated from the model output to the the true values</li>
+<li>The RNN is unrolled by the total number of time steps</li>
+<li>BPTT is done to get partial derivative of the error w.r.t. the weights</li>
+<li>Gradient Descent is applied using the gradients to minimize the error</li>
+</ol>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+
+<p>The problem comes when there are too many times steps, and performing BPTT causes the gradients to explode or vanish. This affects the final step of applying Gradient Descent.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<!-- /wp:paragraph -->                </article>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

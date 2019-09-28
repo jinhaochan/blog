@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Kernel Module Signing</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="A Pelican Blog Atom Feed" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">A Pelican Blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/book-review.html">Book Review</a></li>
+                    <li><a href="/category/data-science.html">Data Science</a></li>
+                    <li><a href="/category/misc.html">misc</a></li>
+                    <li><a href="/category/ramblings.html">Ramblings</a></li>
+                    <li><a href="/category/review.html">Review</a></li>
+                    <li class="active"><a href="/category/security.html">Security</a></li>
+                    <li><a href="/category/software-engineering.html">Software Engineering</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/kernel-module-signing.html" rel="bookmark"
+           title="Permalink to Kernel Module Signing">Kernel Module Signing</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-11-11T22:35:00+00:00">
+                Published: Sun 11 November 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/security.html">Security</a>.</p>
+<p>tags: <a href="/tag/kernel-module.html">Kernel Module</a> </p>
+</footer><!-- /.post-info -->      <h1>Linux Kernel Signing</h1>
+<h2>Kernel Tainting</h2>
+<hr>
+<p>When dealing with offensive secuirty in the Linux space, we typically concern ourselves with kernel tainting. A kernel taint occurs when an unsigned module is loaded into the Linux kernel, which may potentially be used for malicious purposes.</p>
+<p>A kernel taint does not always mean that something bad has happened to your machine, it just means that the machine's state has been unoffically modified. (Think of it as a warrantly for a device such as an Xbox. If you unoffically modify the hardware, its considered tainted, and the warranty is voided).</p>
+<p>Some actions that may cause a kernel taint are:</p>
+<p>[code lang=text]<br>
+- The use of a proprietary (or non-GPL-compatible) kernel module—this is the most common cause of tainted kernels and usually results from loading proprietary NVIDIA or AMD video drivers</p>
+<ul>
+<li>
+<p>The use of staging drivers, which are part of the kernel source code but are not fully tested</p>
+</li>
+<li>
+<p>The use of out-of-tree modules that are not included with the Linux kernel source code</p>
+</li>
+<li>
+<p>Forcible loading or unloading of a kernel module (such as forcibly inserting a module not built for the current version of the kernel)</p>
+</li>
+<li>
+<p>The use of an SMP (multiprocessor) kernel on certain unsupported uniprocessor CPUs, primarily older AMD Athlon processors</p>
+</li>
+<li>
+<p>Overriding of the ACPI DSDT, sometimes needed to correct for power-management bugs (see here for details)</p>
+</li>
+<li>
+<p>Certain critical error conditions, such as machine check exceptions and kernel oopses</p>
+</li>
+<li>
+<p>Certain serious bugs in the system firmware (BIOS, UEFI) which the kernel must work around</p>
+</li>
+</ul>
+<p>[/code]</p>
+<p><a href="https://unix.stackexchange.com/questions/118116/what-is-a-tainted-kernel-in-linux">Source from Stackoverflow</a></p>
+<p>Each of these actions will produce a certain flag that will be useful for debugging purposes by the vendor or sys admin.</p>
+<p>When you insert a module that's unsigned, a message will be logged that says</p>
+<p><code>%s module verification failed: signature and/or required key missing - tainting kernel</code></p>
+<p>This can be found in the kernel source code here: <a href="https://elixir.bootlin.com/linux/latest/source/kernel/module.c#L3691">tainted message printing</a></p>
+<p>In order to not taint the kernel, we must sign the module.</p>
+<h2>Kernel Module Signing</h2>
+<hr>
+<h4>Recap on public-private keys</h4>
+<p>Before we talk about kernel module signing, lets briefly recap on public-private key encryption</p>
+<p><img alt="Public-Private key usage" src="https://i-technet.sec.s-msft.com/dynimg/IC19080.gif"></p>
+<p><a href="https://technet.microsoft.com/en-us/library/aa998077(v=exchg.65).aspx">Source from Microsoft</a></p>
+<p>When I want to sign a module, I sign it using my private key. Anyone can use my public key to verify the signature. If another malicious software claims to be my module, the don't have my private key, and using my public key will thus result in a key mismatch.</p>
+<p>As opposed to encryption, where I use your public key to lock a message, and only you have your private key to unlock it.</p>
+<p>Signing ensures integrity, Encryption ensures confidentiality. (The last one in CIA being availability, but this is assuming the contents are always available)</p>
+<h4>Back to signing kernel modules</h4>
+<p>If you wanna read deeper, go to this post here: <a href="http://cs.dartmouth.edu/~bx/blog/2015/10/02/a-history-of-linux-kernel-module-signing.html">A History of Linux Kernel Module Signing</a></p>
+<p>I'll be talking about the main ideas.</p>
+<p>A general implementation of module signing is as follows:</p>
+<ol>
+<li>Developer builds module</li>
+<li>Developer hashes the module or parts of the module and signs the hash using their private key. The signature is embedded together with the module</li>
+<li>User retrieves the signed version of the module</li>
+<li>User hashes the same parts of the module that the developer hashed and checks that the hash they created matches the hash signed with the developer’s public key</li>
+</ol>
+<p>Over the years, different signing mechanism have came (and gone)</p>
+<h4>First version</h4>
+<div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">Signature</span> <span class="k">is</span> <span class="n">stored</span> <span class="k">in</span> <span class="n">an</span> <span class="n">ELF</span> <span class="n">section</span> <span class="n">named</span> <span class="o">`</span><span class="err">“</span><span class="n">module_sig</span><span class="err">”</span><span class="o">`</span>
+<span class="o">-</span> <span class="k">Only</span> <span class="n">the</span> <span class="n">contents</span> <span class="k">of</span> <span class="n">sections</span> <span class="n">whose</span> <span class="k">names</span> <span class="n">contain</span> <span class="n">the</span> <span class="n">string</span> <span class="err">“</span><span class="nb">text</span><span class="err">”</span> <span class="k">or</span> <span class="err">“</span><span class="k">data</span><span class="err">”</span> <span class="p">(</span><span class="n">but</span> <span class="k">not</span> <span class="err">“</span><span class="p">.</span><span class="n">rel</span><span class="p">.</span><span class="err">”</span><span class="p">)</span> <span class="k">are</span> <span class="n">hashed</span>
+</pre></div>
+
+
+<p>[code lang=text]<br>
+1 for (i = 1; i &lt; hdr-&gt;e_shnum; i++) {<br>
+2 name = secstrings+sechdrs[i].sh_name;<br>
+3<br>
+4 /* We only care about sections with "text" or<br>
+5 "data" in their names */<br>
+6 if ((strstr(name, "text") == NULL) &amp;&amp;<br>
+7 (strstr(name, "data") == NULL))<br>
+8 continue;<br>
+9 /* avoid the ".rel.*" sections too. */<br>
+10 if (strstr(name, ".rel.") != NULL)<br>
+11 continue;<br>
+12 /* add contents of section to signature */<br>
+13 ...<br>
+14 }<br>
+[/code]</p>
+<h4>Second version</h4>
+<div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">Performs</span> <span class="n">a</span> <span class="k">large</span> <span class="k">set</span> <span class="k">of</span> <span class="n">ELF</span> <span class="n">metadata</span> <span class="n">sanity</span> <span class="n">checks</span> <span class="k">before</span> <span class="n">validating</span> <span class="n">the</span> <span class="n">signature</span>
+<span class="o">-</span> <span class="n">Signature</span> <span class="n">itself</span> <span class="k">is</span> <span class="n">stored</span> <span class="k">in</span> <span class="n">a</span> <span class="err">“</span><span class="p">.</span><span class="n">module_sig</span><span class="err">”</span> <span class="n">section</span> <span class="n">just</span> <span class="k">like</span> <span class="k">in</span> <span class="k">first</span> <span class="k">version</span>
+<span class="o">-</span> <span class="n">Code</span><span class="p">,</span> <span class="k">data</span> <span class="n">section</span> <span class="n">contents</span> <span class="k">are</span> <span class="n">hashed</span><span class="p">.</span> <span class="n">Corresponding</span> <span class="n">section</span> <span class="n">headers</span> <span class="k">are</span> <span class="n">hashed</span><span class="p">.</span> <span class="n">Relocation</span> <span class="n">section</span> <span class="n">headers</span> <span class="k">and</span> <span class="n">entries</span> <span class="n">along</span> <span class="k">with</span> <span class="k">any</span> <span class="n">symbols</span> <span class="n">they</span> <span class="n">reference</span> <span class="k">get</span> <span class="n">hashed</span><span class="p">.</span>
+</pre></div>
+
+
+<h4>Third Version</h4>
+<div class="highlight"><pre><span></span><span class="o">-</span> <span class="nv">Module</span> <span class="nv">signature</span> <span class="nv">is</span> <span class="nv">wrapped</span> <span class="nv">around</span> <span class="nv">the</span> <span class="nv">notes</span> <span class="nv">section</span> `<span class="nv">SHT_NOTE</span>`, <span class="nv">and</span> <span class="nv">named</span> `.<span class="nv">module</span>.<span class="nv">sig</span>`
+<span class="o">-</span> <span class="nv">Everything</span> <span class="nv">in</span> <span class="nv">Second</span> <span class="nv">version</span> <span class="o">+</span> <span class="nv">empty</span> <span class="nv">and</span> <span class="nv">allocatable</span> <span class="nv">sections</span> <span class="ss">(</span><span class="nv">Second</span> <span class="nv">and</span> <span class="nv">first</span> <span class="nv">version</span> <span class="k">do</span> <span class="nv">not</span> <span class="nv">hash</span> <span class="nv">empty</span> <span class="nv">and</span> <span class="nv">allocatable</span> <span class="nv">sections</span><span class="ss">)</span>
+</pre></div>
+
+
+<h4>Fourth version and beyond</h4>
+<p>Lets take a deeper look into this version, as its the version thats most widely used for most kernels today.</p>
+<p>The source code for kernel version 4.17 can be found here: <a href="https://elixir.bootlin.com/linux/v4.17/source/kernel/module.c#L3659">4.17 Source code</a></p>
+<p>The function in question is <code>load_module</code>, which is called whenever you insmod a module.</p>
+<p>In <code>load_module</code>, we see that we call <code>module_sig_check</code></p>
+<p>[code lang=text]<br>
+/* Allocate and load the module: note that size of section 0 is always<br>
+zero, and we rely on this for optional sections. */<br>
+static int load_module(struct load_info *info, const char __user *uargs,<br>
+int flags)<br>
+{<br>
+struct module *mod;<br>
+long err;<br>
+char *after_dashes;</p>
+<p>err = module_sig_check(info, flags);<br>
+if (err)<br>
+goto free_copy;</p>
+<p>...<br>
+[/code]</p>
+<p>Looking at the <code>module_sig_check</code> code, it calls <code>mod_verify_signature</code></p>
+<p>[code lang=text]<br>
+static int module_sig_check(struct load_info *info, int flags)<br>
+{<br>
+int err = -ENOKEY;<br>
+const unsigned long markerlen = sizeof(MODULE_SIG_STRING) - 1;<br>
+const void *mod = info-&gt;hdr;</p>
+<p>/*<br>
+* Require flags == 0, as a module with version information<br>
+* removed is no longer the module that was signed<br>
+*/<br>
+if (flags == 0 &amp;&amp;<br>
+info-&gt;len &gt; markerlen &amp;&amp;<br>
+memcmp(mod + info-&gt;len - markerlen, MODULE_SIG_STRING, markerlen) == 0) {<br>
+/* We truncate the module to discard the signature */<br>
+info-&gt;len -= markerlen;<br>
+err = mod_verify_sig(mod, &amp;info-&gt;len);<br>
+}</p>
+<p>if (!err) {<br>
+info-&gt;sig_ok = true;<br>
+return 0;<br>
+}</p>
+<p>/* Not having a signature is only an error if we're strict. */<br>
+if (err == -ENOKEY &amp;&amp; !sig_enforce)<br>
+err = 0;</p>
+<p>return err;<br>
+}<br>
+[/code]</p>
+<p>Take note that <code>mod_verify_sig</code> has to return <code>0</code> for it to call <code>info-&amp;gt;sig_ok = true</code></p>
+<p>Finally, we look a code snippet of <code>mod_verify_sig</code></p>
+<p>[code lang=text]<br>
+struct module_signature {<br>
+u8 algo; /* Public-key crypto algorithm [0] */<br>
+u8 hash; /* Digest algorithm [0] */<br>
+u8 id_type; /* Key identifier type [PKEY_ID_PKCS7] */<br>
+u8 signer_len; /* Length of signer's name [0] */<br>
+u8 key_id_len; /* Length of key identifier [0] */<br>
+u8 __pad[3];<br>
+__be32 sig_len; /* Length of signature data */<br>
+};</p>
+<p>/*<br>
+* Verify the signature on a module.<br>
+*/<br>
+int mod_verify_sig(const void *mod, unsigned long *_modlen)<br>
+{<br>
+struct module_signature ms;<br>
+size_t modlen = *_modlen, sig_len;</p>
+<p>pr_devel("==&gt;%s(,%zu)\n", __func__, modlen);</p>
+<p>if (modlen &lt;= sizeof(ms))<br>
+return -EBADMSG;</p>
+<p>memcpy(&amp;ms, mod + (modlen - sizeof(ms)), sizeof(ms));<br>
+modlen -= sizeof(ms);</p>
+<p>sig_len = be32_to_cpu(ms.sig_len);<br>
+if (sig_len &gt;= modlen)<br>
+return -EBADMSG;<br>
+modlen -= sig_len;<br>
+*_modlen = modlen;</p>
+<p>...</p>
+<p>[/code]</p>
+<p>We see that at the end of the module, we have two pieces of information:</p>
+<ol>
+<li>Module signature struct, which stores information about the module signature</li>
+<li>The signature itself</li>
+</ol>
+<h2>Cracking it</h2>
+<hr>
+<p>I have no idea how to crack it, but if anyone finds a flaw in this and prevents kernel taint, it means that they can insert whatever malicious modules they like without tainting the kernel.</p>
+<p>Without a kernel taint, forensics and incident responders would be duped.</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

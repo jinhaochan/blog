@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Counts Based Featurization</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="A Pelican Blog Atom Feed" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">A Pelican Blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/book-review.html">Book Review</a></li>
+                    <li class="active"><a href="/category/data-science.html">Data Science</a></li>
+                    <li><a href="/category/misc.html">misc</a></li>
+                    <li><a href="/category/ramblings.html">Ramblings</a></li>
+                    <li><a href="/category/review.html">Review</a></li>
+                    <li><a href="/category/security.html">Security</a></li>
+                    <li><a href="/category/software-engineering.html">Software Engineering</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/counts-based-featurization.html" rel="bookmark"
+           title="Permalink to Counts Based Featurization">Counts Based Featurization</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-03-24T17:48:00+00:00">
+                Published: Sun 24 March 2019
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/data-science.html">Data Science</a>.</p>
+<p>tags: <a href="/tag/count-feature.html">Count Feature</a> </p>
+</footer><!-- /.post-info -->      <!-- wp:paragraph -->
+
+<p>While doing the Microsoft Malware Classification challenge, I encountered a way of Feature representation called Count Based Features (CBF).</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>CBF is good to use with very high cardinality features, and it transforms the high number of categories in the data to the number of it's occurrences. This representation is helpful because it extracts out a simple inherent feature of the data: count</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Below shows a simple example of how we get the CBF of a given feature</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:table -->
+
+<hr>
+<p><strong>Label</strong>   <strong>Feature1</strong>
+  0           A
+  0           A
+  1           A
+  0           B
+  1           B
+  1           B
+  1           B</p>
+<hr>
+<!-- /wp:table -->
+
+<!-- wp:paragraph -->
+
+<p>CBF can be done in pandas in a single line</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p><code>Train.groupby([' Feature1 '])[' Feature1 '].transform('count')</code></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The output of this will give you</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:table -->
+
+<p>Label   <strong>Feature1</strong></p>
+<hr>
+<p>0       3
+  0       3
+  1       3
+  0       4
+  1       4
+  1       4
+  1       4</p>
+<!-- /wp:table -->
+
+<!-- wp:paragraph -->
+
+<p>As you can see, the categorical values are all converted their count values!  </p>
+<!-- /wp:paragraph -->
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Kaggle Boiler Plate</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="A Pelican Blog Atom Feed" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">A Pelican Blog </a></h1>
+                <nav><ul>
+                    <li><a href="/category/book-review.html">Book Review</a></li>
+                    <li class="active"><a href="/category/data-science.html">Data Science</a></li>
+                    <li><a href="/category/misc.html">misc</a></li>
+                    <li><a href="/category/ramblings.html">Ramblings</a></li>
+                    <li><a href="/category/review.html">Review</a></li>
+                    <li><a href="/category/security.html">Security</a></li>
+                    <li><a href="/category/software-engineering.html">Software Engineering</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/kaggle-boiler-plate.html" rel="bookmark"
+           title="Permalink to Kaggle Boiler Plate">Kaggle Boiler Plate</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-12-16T21:33:00+00:00">
+                Published: Sun 16 December 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/jinhaochan.html">jinhaochan</a>
+        </address>
+<p>In <a href="/category/data-science.html">Data Science</a>.</p>
+
+</footer><!-- /.post-info -->      <p>I've been playing around with Kaggle competitions for a while, and there are usually quite a few steps to perform.</p>
+<p>I've compiled a list of them below, in sequential order. These are by no means hard and fast rules, but simple heuristics to follow!</p>
+<p>I've added links here and there to guide you a long.</p>
+<h1>Importing your libraries</h1>
+<hr>
+<p>You're gonna have to import the usual <code>pandas</code> and <code>sklearn</code> to do your dataframe manipulations, and machine learning stuff.</p>
+<p>Aside from those, you'll likely be importing other stuff that are relevant in transforming your data.</p>
+<h1>Reading in training data and testing data</h1>
+<hr>
+<p>When you first start the project, the first thing you want to do is to read in the data. It's usually named <code>train.csv</code> and probably contains a few million lines.</p>
+<p>You most probably won't be able to read in all the data at once, so you're gonna have to read in just a few lines to get a preview.</p>
+<p><code>df_train = pd.read_csv("train.csv", nrows=1000000)</code></p>
+<p>Of course when you're doing the actual training of the model, you're going to have to read in the whole thing!</p>
+<p>We also read in the test set, usually called <code>test.csv</code>. The reason why we're reading in the test set, is so that when we perform feature creation and data massaging, we can do it both on the test and train data.</p>
+<h1>Visualizing data</h1>
+<hr>
+<p>You're going to want to visualize the data you've read in to analyze for any outliers, or obvious trends that can be helpful in feature creation.</p>
+<p>For univariate analysis, I usually apply barchart, or histogram, while for bivariate analysis, I'll apply a scatter plot.</p>
+<h3>Univariate Analysis</h3>
+<p><a href="https://www.kaggle.com/residentmario/univariate-plotting-with-pandas">https://www.kaggle.com/residentmario/univariate-plotting-with-pandas</a></p>
+<h3>Bivariate Analysis</h3>
+<p><a href="https://www.kaggle.com/residentmario/bivariate-plotting-with-pandas">https://www.kaggle.com/residentmario/bivariate-plotting-with-pandas</a></p>
+<h1>Cleaning data</h1>
+<hr>
+<p>After visualizing your data, you'll more or less know the upper or lower bounds, outliers, and whats considered to be normal.</p>
+<p>You must now remove those values that lie outside those normal ranges. There are a common data abnormalities which are:</p>
+<ol>
+<li>Outliers</li>
+<li>Missing values</li>
+</ol>
+<p>Some examples are: Taxi fares with negative values, coordinates that plot on the ocean, Null or NaN values, and many more.</p>
+<p>You want to be cleaning your data BEFORE training your model. If not, there will be unnecessary noise. You'll end up with a few lesser rows than your original training set.</p>
+<p>However, DO NOT CLEAN YOUR TESTING SET. The testing set is supposed to be untouched, aside from feature engineering.</p>
+<h1>Feature Engineering</h1>
+<hr>
+<p>After looking at your data, you will definitely need to engineer some features on your own. Doing this allows you to find features that correlated more strongly with the value you're predicting.</p>
+<p>We have 2 types of data type: Continuous and Discrete, and each of the data types have to be handled differently when doing feature engineering</p>
+<p>Continuous data runs in infinite ranges, while Discrete data are things that fall into categories.</p>
+<p>Example of Continuous data are prices, age and temperature. Strings are also considered Continuous data</p>
+<p>Examples of Discrete data are gender and types of cars.</p>
+<h3>Continuous Data Feature Engineering</h3>
+<p>For continuous data, we can bin the data into intervals.</p>
+<p>An example would be age group, where individual ages might be too scattered, but by grouping them in multiples of 5s or 10s, you might get a better representation.</p>
+<div class="highlight"><pre><span></span><span class="p">[</span><span class="n">code</span> <span class="n">lang</span><span class="o">=</span><span class="ss">&quot;text&quot;</span><span class="p">]</span> <span class="mi">51</span><span class="o">-</span><span class="mi">55</span> <span class="o">=</span> <span class="k">Group</span> <span class="mi">1</span> 
+<span class="mi">56</span><span class="o">-</span><span class="mi">60</span> <span class="o">=</span> <span class="k">Group</span> <span class="mi">2</span> 
+<span class="mi">61</span><span class="o">-</span><span class="mi">65</span> <span class="o">=</span> <span class="k">Group</span> <span class="mi">3</span> 
+<span class="p">[</span><span class="mi">53</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">62</span><span class="p">,</span> <span class="mi">64</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="p">[</span><span class="o">/</span><span class="n">code</span><span class="p">]</span>
+</pre></div>
+
+
+<p>For strings, we need to extract out relevant data that can be represented in numeric form. One example is parsing of the dates. In your original data, you're given a datetime string, which isn't helpful at all. You'll want to engineer features such as the day of the week, the hour, month, year, or even the seconds. These numerical features are much more helpful as compared to a string value.</p>
+<h3>Discrete Data Feature Engineering</h3>
+<p>For discrete data, the categories in the data can be one-hot-encoded. The reason why we do that is because when we change the categories to numeric values, we don't want to accidentally imply meaning and hierarchy between the numbers.</p>
+<p>For example if we have 5 different categories of cars, and we change them numerically to 0, 1, 2, 3, 4, the machine may end up learning that the 4th category is more important than the 0th category, based on the simple fact that 4 is greater than 0.</p>
+<p>So to prevent this problem of false importance, we use one-hot-encoding. The idea of one-hot-encoding can be visually represented as such</p>
+<p><img alt="" class="alignnone wp-image-170" height="220" src="https://chanjinhao.files.wordpress.com/2018/12/mtimfxh.png?w=300" width="560"></p>
+<p>This way, the categories are represented as 1s and 0s, which minimizes the possibility of learning false importance.</p>
+<p>We should take note that one-hot-encoding should be done on your train and test set combined. The reason why we want to do this is so we don't miss out data that is in the test and not in the train, vice-versa. If there is missing data, and we perform one-hot-encoding separately on the train and test, we will end up with missing columns, as one-hot-encoding does not generate them.</p>
+<h3>Feature Interaction</h3>
+<p>There is also Feature interaction, where two or more features are correlated or have interactions between each other. We can capture this interaction between two features by creating a new feature, which is a multiplication of these two correlated features.</p>
+<h1>Splitting of Data</h1>
+<hr>
+<p>Once you've cleaned your data and created your features, you can now start training your model! But before you do that, you first need to split your data in a train and test set. This is for performing a validation test to evaluate your model.</p>
+<p><code>X_train, X_test, y_train, y_test = train_test_split(df_train, y, test_size=0.2)</code></p>
+<p>Where <code>y</code> is your target value to predict.</p>
+<p>The way you use these values are:</p>
+<ol>
+<li><code>X_train</code> and <code>y_train</code> for training the model</li>
+<li>Feed <code>X_test</code> to your model</li>
+<li>Evaluate the output with <code>y_test</code></li>
+</ol>
+<h1>Scaling Data</h1>
+<hr>
+<p>Because not all of your data will be in the same scale, we have to normalize them all to be of the same scale.</p>
+<p>For example, the scale for age can range from 0-90, while a pay range can go from 2000 - 10,000. This is bad for machine learning, because the model might attribute a hidden (but wrong) meaning to this difference in range.</p>
+<p>0 - 90 has a small range, while 2000 - 10,000 has a larger range.</p>
+<p>How we scale this is by using sklearn packages such as MinMax scaling.</p>
+<p>A potential problem to scaling is having data leakage, where we learn some attributes from the testing data set into the training dataset.</p>
+<p>How we overcome the problem of data leakage is to perform fit-transform on the training set, and only perform transform on your testing set</p>
+<h1>Training</h1>
+<hr>
+<p>You got to first identify if you're solving a classification or a regression problem, and a supervised or unsupervised problem.</p>
+<p><code>sklearn</code> provides a wide range of models for you to pick from.</p>
+<p>Models for Supervised learning in <code>sklearn</code>: <a href="http://scikit-learn.org/stable/supervised_learning.html">http://scikit-learn.org/stable/supervised_learning.html</a></p>
+<p>Models for Unsupervised learning in <code>sklearn</code>: <a href="http://scikit-learn.org/stable/unsupervised_learning.html">http://scikit-learn.org/stable/unsupervised_learning.html</a></p>
+<p>There's an overpowered model right now called XGBoost, but I highly recommend using it AFTER you've played around with other models. This is to allow you to have an understanding of how other models work, because XGBoost is definitely not a silver bullet.</p>
+<p>Installing XGBoost is a little bit tricky, because its an external library.</p>
+<p>If you're using Windows, these are the steps I followed: <a href="https://www.ibm.com/developerworks/community/blogs/jfp/entry/Installing_XGBoost_For_Anaconda_on_Windows?lang=en">https://www.ibm.com/developerworks/community/blogs/jfp/entry/Installing_XGBoost_For_Anaconda_on_Windows?lang=en</a></p>
+<p>And the Linux version:</p>
+<div class="highlight"><pre><span></span><span class="k">[code lang=&quot;text&quot;]</span>
+<span class="na">$ pip install xgboost</span>
+<span class="na">$ git clone https://github.com/dmlc/xgboost# cd xgboost-master</span>
+<span class="na">$ make</span>
+<span class="na">$ cd python-package/</span>
+<span class="na">$ python setup.py install</span>
+<span class="k">[/code]</span>
+</pre></div>
+
+
+<p>You can now <code>import xgboost</code></p>
+<p>See how much easier it is on Linux.</p>
+<h1>Validation</h1>
+<hr>
+<p>Once your model is trained, you would need to validate the output with <code>y_test</code>. <code>y_test</code> contains the true values, while your model outputs a set of predicted values.</p>
+<p>Again, <code>sklearn</code> provides a suite of tools for performing evaluation, depending on what model you were using: <a href="http://scikit-learn.org/stable/modules/model_evaluation.html">http://scikit-learn.org/stable/modules/model_evaluation.html</a></p>
+<p>If you get a bad score here, you'll want to revisit your feature engineering, or data cleaning again to see what you can do differently. Remember, more features != better model!</p>
+<h1>Prediction</h1>
+<hr>
+<p>Pump in the testing set into your model you trained, and get a set of output values. There'll be no evaluation on your side here. Evaluation will be done by Kaggle once you submit them. This is essentially your answer to their problem.</p>
+<h1>Writing to CSV</h1>
+<hr>
+<p>Kaggle usually provides a file called <code>sample_submission.csv</code> to show you the format with the competition requires for submission.</p>
+<p>Transform your answers to fit into that model, then write the answers to CSV for submission</p>
+<p><code>​​​​​df.to_csv("my_submission.csv", index=False)</code></p>
+<p>I notice that you'll want to include <code>index=False</code> to exclude the row numbers in the dataframe</p>
+<h1>Submit Your Entry</h1>
+<hr>
+<p>That's it! Go on and submit your entry to Kaggle, and see how you rank against other Kagglers. Don't be disheartened if you didn't perform well, it takes a few iterations to improve your model.</p>
+<p>Also, don't be afraid to read up on other people's kernels to gain inspiration!</p>
+<!-- wp:image -->
+
+<figure class="wp-block-image">
+<img alt></img>
+
+</figure>
+
+<!-- /wp:image -->
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>
