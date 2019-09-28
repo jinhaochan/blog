@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="jinhaochan" />
+<meta name="description" content="K-Means Clustering is an unsupervised learning algorithm. It works by grouping similar data points together to try to find underlying patterns. The number of groups are pre-defined by the user as K. How the Algorithm works Before the iterative update starts, a random selection of centroid locations are picked on …" />
+<meta name="keywords" content="K means clustering">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="K-Means Clustering"/>
+<meta property="og:description" content="K-Means Clustering is an unsupervised learning algorithm. It works by grouping similar data points together to try to find underlying patterns. The number of groups are pre-defined by the user as K. How the Algorithm works Before the iterative update starts, a random selection of centroid locations are picked on …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/k-means-clustering.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2019-06-16 21:18:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/jinhaochan.html">
+<meta property="article:section" content="Data Science"/>
+<meta property="article:tag" content="K means clustering"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; K-Means Clustering</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+          <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+          <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+          <li><a href="#" target="_blank">You can modify those links in your config file</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-You can add links in your config file" href="#" target="_blank"><i class="fa fa-You can add links in your config file"></i></a></li>
+        <li><a class="sc-Another social link" href="#" target="_blank"><i class="fa fa-Another social link"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="k-means-clustering">K-Means Clustering</h1>
+    <p>
+          Posted on Sun 16 June 2019 in <a href="/category/data-science.html">Data Science</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <!-- wp:paragraph -->
+
+<p>K-Means Clustering is an unsupervised learning algorithm. It works by grouping similar data points together to try to find underlying patterns.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The number of groups are pre-defined by the user as K.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>How the Algorithm works</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Before the iterative update starts, a random selection of centroid locations are picked on the graph. These centroids act as the beginning points for each cluster. (if K = 5, there will be 5 random centroids)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+
+<ol>
+<li>Data Assignment Step<ul>
+<li>Each data point is assigned to its nearest centroid, based on the squared Euclidean distance</li>
+</ul>
+</li>
+<li>Centroid Update<ul>
+<li>Given the new data points, re-calculate the centroid value</li>
+</ul>
+</li>
+<li>Repeat until centroid no longer changes, or until a stopping criteria.</li>
+</ol>
+<!-- /wp:list -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Choosing K</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>How do we choose K? Well, iteratively of cause. We define K to be a range of values, and run K-mean clustering through those values.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":341} -->
+
+<figure class="wp-block-image">
+![](https://chanjinhao.files.wordpress.com/2019/03/introduction-to-k-means-clustering-elbow-point-example-1.jpg){.wp-image-341}
+
+</figure>
+
+<!-- /wp:image -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Conlcusion</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>This was a pretty short post, but it acts as a summary of how K-means clustering works!</p>
+<!-- /wp:paragraph -->
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/k-means-clustering.html">K means clustering</a>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>

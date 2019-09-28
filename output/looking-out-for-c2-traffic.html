@@ -1,0 +1,299 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="jinhaochan" />
+<meta name="description" content="Types of C2 Communication When a host gets infected with a malware, sometimes it will attempt to call back to it&#39;s Command and Control (C2) to get, or send information. There are 4 types of C2 communication traffic Beacon After a host has been compromised, the malware will send a …" />
+<meta name="keywords" content="C2, Command and Control">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="Looking out for C2 Traffic"/>
+<meta property="og:description" content="Types of C2 Communication When a host gets infected with a malware, sometimes it will attempt to call back to it&#39;s Command and Control (C2) to get, or send information. There are 4 types of C2 communication traffic Beacon After a host has been compromised, the malware will send a …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/looking-out-for-c2-traffic.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2019-05-02 16:14:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/jinhaochan.html">
+<meta property="article:section" content="Networking, Security"/>
+<meta property="article:tag" content="C2"/>
+<meta property="article:tag" content="Command and Control"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; Looking out for C2 Traffic</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+          <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+          <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+          <li><a href="#" target="_blank">You can modify those links in your config file</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-You can add links in your config file" href="#" target="_blank"><i class="fa fa-You can add links in your config file"></i></a></li>
+        <li><a class="sc-Another social link" href="#" target="_blank"><i class="fa fa-Another social link"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="looking-out-for-c2-traffic">Looking out for C2 Traffic</h1>
+    <p>
+          Posted on Thu 02 May 2019 in <a href="/category/networking-security.html">Networking, Security</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <!-- wp:heading -->
+
+<h2>Types of C2 Communication</h2>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>When a host gets infected with a malware, sometimes it will attempt to call back to it's Command and Control (C2) to get, or send information. There are 4 types of C2 communication traffic</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+
+<ol>
+<li>Beacon<ul>
+<li>After a host has been compromised, the malware will send a message heartbeat to the C2 to inform them of it's status. This traffic is just to tell the C2 that it's alive.</li>
+</ul>
+</li>
+<li>Command<ul>
+<li>The command is sent from the C2 to the malware residing on the compromised host. It can either be real-time, or non-real-time. Non-real-time commands means that the command is stored and queued somewhere which the malware can retrieve to execute.</li>
+</ul>
+</li>
+<li>Exfiltration<ul>
+<li>This command is sent from the compromised host to the C2. Exfiltration means sending a payload, and this payload can either be a reply from the malware, or stolen data from the host or network. Exfiltration can be done either immediately on request, or at regular (or deliberately irregular) intervals</li>
+</ul>
+</li>
+<li>Connectivity Check<ul>
+<li>This check is done by the malware to check if it has internet connectivity out. This connection may not talk directly to the C2, but may try to connect to something as benign as Google. If it doesn't have any internet connection, it can either defer talking to the C2, or remove itself entirely from the system.</li>
+</ul>
+</li>
+</ol>
+<!-- /wp:list -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Capturing C2 traffic</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>There are some strategies to capture C2 traffic, such as leveraging on CTI to learn about IOCs, patterns and log entries that may indicate a compromise.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Because C2 traffic is a networking phenomenon, most approaches towards network analysis, such as:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+
+<ul>
+<li>Netflow Analysis for inflow and outflow</li>
+<li>IRC and P2P traffic</li>
+<li>DNS query logs (to look out for DNS tunneling or DGA)</li>
+<li>Unusual port numbers and services</li>
+<li>Unusual timing of connections</li>
+<li>Requests to Social Media at unusual hours</li>
+<li>Packet size</li>
+</ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+
+<p>Below shows an image of the packet sizes versus time, and we can see the start difference between a normal Google search and a Malware</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":435,"align":"center"} -->
+
+<div class="wp-block-image">
+
+<figure class="aligncenter">
+![](https://chanjinhao.files.wordpress.com/2019/05/eta-blake-fig-2.png){.wp-image-435}
+</figure>
+
+</div>
+
+<!-- /wp:image -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Machine Learning to capture C2 traffic</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Machine learning techniques can be employed to detect C2 traffic. In an extremely noisy environment like network traffic, ML perform anomaly detection by sieving out traffic that stands out.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>I did a small sample project which can be seen here:<a href="https://github.com/jinhaochan/BotnetDetection">https://github.com/jinhaochan/BotnetDetection</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The model trained took features only from network behavior, and had quite a good performance. Although I must say that more advanced malwares these days come up with creative techniques, and in this case, machine learning might fail to detect them due to the lack to training data. Furthermore, the malware can cleverly disguise themselves to look like normal traffic, and the model we train miss those entries</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Analyzing C2 traffic</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Assuming that you know a malware has infected a host and is talking to a C2 server, you can either setup a honeypot, or try to reverse engineer the malware sample on the host.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Setting up the honeypot is essentially performing an MITM between the malware and the C2 server. We allow the malware to connect to the C2 and internet, while isolating it from other machines on the network to prevent it from spreading. This way, we can capture all the traffic that's flowing to and from the C2, and we can find out what the motive of the malware is.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The second method is getting the sample of the malware on the infected host, and perform reverse engineering to find out what functions and capabilities it has.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>MITRE ATT&amp;CK TTP for C2</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>There is a branch Tactics in the MITRE ATT&amp;CK Framework dedicated to C2, and there is a collection of Techniques they use to identify C2 communication.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>If you are coming up with a system or model to detect C2 traffic, the matrix can be highly beneficial. But take caution to not fit a round peg into a square hole, the list is not comprehensive. Attackers are aware of MITRE and their TTPs, and will actively build ways around them.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Software to use for detection C2</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Bro (now renamed to Zeek) <a href="https://www.zeek.org/">https://www.zeek.org/</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>There are many write ups out there on how to use Zeek to capture and analyze traffic. Zeek is not specific to capturing just C2, but a wide array of network activities</p>
+<!-- /wp:paragraph -->
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/c2.html">C2</a>
+      <a href="/tag/command-and-control.html">Command and Control</a>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>

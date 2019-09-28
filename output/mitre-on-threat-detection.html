@@ -1,0 +1,293 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="jinhaochan" />
+<meta name="description" content="I just sat through a webinar by the folks at Red Canary, and they covered some questions regarding threat detection using the MITRE ATT&amp;CK framework. The webinar sat down with the researchers who created MITRE, and it was quite insightful. Here are some of the notes I took that …" />
+<meta name="keywords" content="MITRE">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="MITRE on Threat Detection"/>
+<meta property="og:description" content="I just sat through a webinar by the folks at Red Canary, and they covered some questions regarding threat detection using the MITRE ATT&amp;CK framework. The webinar sat down with the researchers who created MITRE, and it was quite insightful. Here are some of the notes I took that …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/mitre-on-threat-detection.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2019-04-25 17:37:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/jinhaochan.html">
+<meta property="article:section" content="Security"/>
+<meta property="article:tag" content="MITRE"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; MITRE on Threat Detection</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+          <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+          <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+          <li><a href="#" target="_blank">You can modify those links in your config file</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-You can add links in your config file" href="#" target="_blank"><i class="fa fa-You can add links in your config file"></i></a></li>
+        <li><a class="sc-Another social link" href="#" target="_blank"><i class="fa fa-Another social link"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="mitre-on-threat-detection">MITRE on Threat Detection</h1>
+    <p>
+          Posted on Thu 25 April 2019 in <a href="/category/security.html">Security</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <!-- wp:paragraph -->
+
+<p>I just sat through a webinar by the folks at Red Canary, and they covered some questions regarding threat detection using the MITRE ATT&amp;CK framework.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The webinar sat down with the researchers who created MITRE, and it was quite insightful. Here are some of the notes I took that may be useful for present and future work:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Top 10 MITRE ATT&amp;CK Techniques</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:list {"ordered":true} --></p>
+<ol>
+<li>Powershell</li>
+<li>Scripting</li>
+<li>Regsvr32</li>
+<li>Connection proxy</li>
+<li>Spearphising</li>
+<li>Masquerading</li>
+<li>Credential Dumping</li>
+<li>Registry run keys</li>
+<li>Rundll32</li>
+<li>Service Execution</li>
+</ol>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+
+<p>We can observe that a bulk of the these techniques are actually native operating system utilities, and that adversaries are leveraging on these preinstalled utilities to carry out their attacks. Things like Powershell, Regsvr32 and Rundll32 are very common things that are executed in benign settings.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The implications of this is that we simply can't just "turn off" these services in an attempt to disrupt their Cyber Kill Chain. What has to be done is proper logging and auditing of these services.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>For example, we need to turn on logging for Powershell command line, or cmd.exe command line parameters to observe what command is being ran. Also, we need to turn on process tracking to identify which process spawns what other processes. If Microsoft Word spawns cmd.exe or Powershell, we know that something is highly suspicious.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>That being said, there needs to be a fine balance to ensure we don't get too much log by enabling everything. Most activities are normally benign, and having too much logging will induced noise, which may invariably hide the malicious activities!</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Top Data Sources for leveraging on MITRE ATT&amp;CK</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:list {"ordered":true} --></p>
+<ol>
+<li>Process Monitoring</li>
+<li>File Monitoring</li>
+<li>Process Command-line Parameters</li>
+<li>API monitoring</li>
+<li>Process use of network</li>
+<li>Windows Registry</li>
+<li>Packet capture</li>
+<li>Authentication Logs</li>
+<li>Netflow</li>
+<li>Windows Event Logs</li>
+<li>Network Protocol Analysis</li>
+<li>Binary file metadata</li>
+<li>DLL monitoring</li>
+<li>Loaded DLL</li>
+<li>System Calls</li>
+</ol>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+
+<p>If that list is too much, or you find that it's too noisy (or your sysadmin policy says you can't enable such logging), then there is a bare minimum data source is required for threat hunting:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+
+<ol>
+<li>Windows Registry</li>
+<li>File Monitoring</li>
+<li>Process Command-line Parameters</li>
+<li>Process Monitoring</li>
+</ol>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+
+<p>These 4 telemetry provides a comprehensive enough picture to perform threat hunting. These 4 data sources will cover most crucial end-point activities. There isn't any network components in this, but that can be incorporated if needed.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3><strong>How do you build up threat hunting plan based on MITRE ATT&amp;CK?</strong></h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p><strong>Know the questions you want to answer, and construct hypotheses around them. Evaluate these hypothesis using various data sources.</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Don't in go blindly. Threat hunting has to be done in a directed manner, and you need to know what you're hunting.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Tools to assist in Threat Hunting</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:list --></p>
+<ul>
+<li>DetectionLab by Chris Long</li>
+<li>ThreatHuting splunk app by Olaf Hartong</li>
+<li>PoSh_ATTCK by ENRW</li>
+<li>ATT&amp;CK Navigator</li>
+<li>Atomic Red Team</li>
+</ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+
+<p>I've not used the DetectionLab, but I've used the rest quite extensively.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The data resource by Olaf Hartong is really comprehensive, as it covers most TTPs. However, most of the queries are Sysmon oriented, so if your environment does not support Sysmon, you have to find way to tweak the Sysmon queries to match your environment.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>PoSh_ATTCK seems to be a Powershell replica of MITRE, and I did not really find much value add in it.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>ATT&amp;CK Navigator is the standard way of browsing the TTPs. Standard, but very useful. They even link the TTPs to suspected APT groups, which can assist in attribution.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Atomic Red Team is a really useful resource in providing atomic tests to execute. This allows you to replay attacks, and get first hand data in your environment. However, it does not cover all the attacks, and there are some TTPs that are still missing in their atomic test list. Still, a very good resource.  </p>
+<!-- /wp:paragraph -->
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/mitre.html">MITRE</a>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>

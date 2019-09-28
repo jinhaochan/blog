@@ -1,0 +1,284 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="jinhaochan" />
+<meta name="description" content="A random forest is an ensemble approach of combining multiple decision trees. Ensembling and Decision Trees, we first need to explain what these two things are Decision Trees Decision Trees try to encode and separate the data into if-else rules. It breaks the data down into smaller and smaller subsets …" />
+<meta name="keywords" content="Decision Tree, Random Forest">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="Random Forests"/>
+<meta property="og:description" content="A random forest is an ensemble approach of combining multiple decision trees. Ensembling and Decision Trees, we first need to explain what these two things are Decision Trees Decision Trees try to encode and separate the data into if-else rules. It breaks the data down into smaller and smaller subsets …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/random-forests.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2019-06-09 20:43:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/jinhaochan.html">
+<meta property="article:section" content="Data Science"/>
+<meta property="article:tag" content="Decision Tree"/>
+<meta property="article:tag" content="Random Forest"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; Random Forests</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+          <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+          <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+          <li><a href="#" target="_blank">You can modify those links in your config file</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-You can add links in your config file" href="#" target="_blank"><i class="fa fa-You can add links in your config file"></i></a></li>
+        <li><a class="sc-Another social link" href="#" target="_blank"><i class="fa fa-Another social link"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="random-forests">Random Forests</h1>
+    <p>
+          Posted on Sun 09 June 2019 in <a href="/category/data-science.html">Data Science</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <!-- wp:paragraph -->
+
+<p>A random forest is an ensemble approach of combining multiple decision trees. Ensembling and Decision Trees, we first need to explain what these two things are</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Decision Trees</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Decision Trees try to encode and separate the data into if-else rules. It breaks the data down into smaller and smaller subsets. Each node poses the question, and each branch represents the decision.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":331,"align":"center"} -->
+
+<div class="wp-block-image">
+
+<figure class="aligncenter">
+![](https://chanjinhao.files.wordpress.com/2019/03/1_jaey3kp7tu2q6hn6lasmrw.png){.wp-image-331}
+</figure>
+
+</div>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>Given the example above, how do we know which question to ask first at the root node? Do we first split by Age, Pizza consumption, or Exercise? This decision is made by calculating the <strong>Entropy Loss</strong>, or <strong>Information Gain</strong>. Information gain is calculated using Entropy loss, so the two variables are closely linked.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Intuitively, we want to reduce entropy of the data, so that we can separate them nicely. A 0 entropy data means that all the samples are the same, and an entropy of 1 means that the samples are split evenly between the classes.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":332,"align":"center"} -->
+
+<div class="wp-block-image">
+
+<figure class="aligncenter">
+![](https://chanjinhao.files.wordpress.com/2019/03/0_klhgarh43lgdoksn.png){.wp-image-332}  
+<figcaption>
+When there are 0 samples of class P, Entropy is 0.  
+When 0.5 of the samples are class P, Entropy is 1.  
+When all the samples are class P, Entropy is 0.
+</figcaption>
+</figure>
+
+</div>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>We want to make splits that <strong>Maximizes Information Gain</strong> (or making the resulting data sets more homogeneous). The following steps are involved:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+
+<ol>
+<li>For each target feature (Age, Pizza consumption, Exercise), calculate the current Entropy value.</li>
+<li>Split the data on each target feature, and calculate the resulting entropy after splitting.</li>
+<li>Choose the feature that results in the largest information gain, or entropy loss.</li>
+<li>Repeat.</li>
+</ol>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+
+<p>That was a gist of a decision tree, now lets look at ensembling and Random Forest</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Ensembling and Random Forest</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Ensembling revolves around the idea of putting together several weak learners to form a strong learner. In Random Forest, the weak learners are Decision Trees</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":333,"align":"center"} -->
+
+<div class="wp-block-image">
+
+<figure class="aligncenter">
+![](https://chanjinhao.files.wordpress.com/2019/03/skitch.jpg){.wp-image-333}  
+<figcaption>
+Blue dots represent the data points.  
+Grey lines represent the weak learners.  
+The red line represents the single strong learner.
+</figcaption>
+</figure>
+
+</div>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>Here's the process of a Random Forest:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+
+<ol>
+<li>From the full data set, create several subsets by random sampling with replacement.</li>
+<li>Using these subsets, we create Decision Trees from them.</li>
+</ol>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+
+<p>Now that we created the Random Forest, when we get a new input to predict, we pass the input to all the Decision Trees in the Random Forest. This gives up multiple outputs, one output for each tree. The final result of the Random Forest would then be an average of the trees (if it's a regression problem), or voting by majority (if it's a classification problem).</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Downside of Random Forest are:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+
+<ul>
+<li>Random Forest that are used for regression cannot predict beyond the range in the training data they are fed with</li>
+<li>Random Forests may overfit noisy data sets</li>
+</ul>
+<!-- /wp:list -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Conclusion</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>This post was a fairly simple and straightforwad one, cover basic, but essential topics.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>We have seen how a Decision Tree works, and the how the Random Forest makes use of multiple Decision Trees.</p>
+<!-- /wp:paragraph -->
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/decision-tree.html">Decision Tree</a>
+      <a href="/tag/random-forest.html">Random Forest</a>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>

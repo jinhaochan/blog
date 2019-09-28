@@ -1,0 +1,290 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="jinhaochan" />
+<meta name="description" content="In machine learning, we often perform what we call parameter estimation, which are the weights that are assigned to each feature of the input data. For example, in a simple linear model, we use the equation y=mx + c , and m and c are your parameters to be estimated. For …" />
+<meta name="keywords" content="">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="What is Maximum Likelihood Estimation?"/>
+<meta property="og:description" content="In machine learning, we often perform what we call parameter estimation, which are the weights that are assigned to each feature of the input data. For example, in a simple linear model, we use the equation y=mx + c , and m and c are your parameters to be estimated. For …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/what-is-maximum-likelihood-estimation.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2019-04-28 09:44:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/jinhaochan.html">
+<meta property="article:section" content="Data Science"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; What is Maximum Likelihood Estimation?</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+          <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+          <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+          <li><a href="#" target="_blank">You can modify those links in your config file</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-You can add links in your config file" href="#" target="_blank"><i class="fa fa-You can add links in your config file"></i></a></li>
+        <li><a class="sc-Another social link" href="#" target="_blank"><i class="fa fa-Another social link"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="what-is-maximum-likelihood-estimation">What is Maximum Likelihood Estimation?</h1>
+    <p>
+          Posted on Sun 28 April 2019 in <a href="/category/data-science.html">Data Science</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <!-- wp:paragraph -->
+
+<p>In machine learning, we often perform what we call <strong>parameter estimation</strong>, which are the weights that are assigned to each feature of the input data.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>For example, in a simple linear model, we use the equation <code>y=mx + c</code> , and <code>m</code> and <code>c</code> are your parameters to be estimated. For different values of the parameters, we build different models that produce different estimations of the data</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":286} -->
+
+<figure class="wp-block-image">
+![](https://chanjinhao.files.wordpress.com/2019/01/parameters.png){.wp-image-286}
+
+<figcaption>
+Given different parameter values, we get different models. In the case of a linear model, each model is a different line on the graph.
+
+</figcaption>
+</figure>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>Maximum likelihood is a technique for parameter value estimation.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>MLE Parameter Estimation</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Whenever we create a model with certain parameters, the outputs of the model (or the prediction) can be plotted as a probability distribution as well.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>What MLE does it to try to make the distribution of the model close to the distribution of the observed data. Intuitively, this makes the model more accurate, as it becomes more representative of the actual data.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>For example, given the following training data distribution points:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":287} -->
+
+<figure class="wp-block-image">
+![](https://chanjinhao.files.wordpress.com/2019/01/1-z3jjgvetojmplfvmwiur3q.png){.wp-image-287}
+
+</figure>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>We want to find out which of the graphs below has the highest probability of plotting those points. Each graph has different parameter values, and so they are plotted in different spaces on the graph.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":288} -->
+
+<figure class="wp-block-image">
+![](https://chanjinhao.files.wordpress.com/2019/01/1-ulkl0nz1vfg6bmfiqpckzq.png){.wp-image-288}
+
+</figure>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>Just by visual inspection, we can see that the blue line is the graph with the correct parameters that produces those data points. But of course in a machine, there is no visual inspection, only <strong>maths</strong>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Calculating the MLE</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>We want to calculate what is the total probability of observing all the generated data, or the joint probability of all the data points.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>For a single data point for an assume Gaussian distribution, we have the following equation</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":289} -->
+
+<figure class="wp-block-image">
+![](https://chanjinhao.files.wordpress.com/2019/01/1-t4zrihvhtlzjzsvcx3jrjg.png){.wp-image-289}
+
+<figcaption>
+Probability for observing 1 point
+
+</figcaption>
+</figure>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>For 3 data points, we have the following joint probability:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":290} -->
+
+<figure class="wp-block-image">
+![](https://chanjinhao.files.wordpress.com/2019/01/1-rfzbq614ir4zewbm3k1v0q.png){.wp-image-290}
+
+<figcaption>
+Joint probability for observing 3 points
+
+</figcaption>
+</figure>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>This can be extended to <code>n</code> number of points</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>To calculate the MLE of the parameters, we need to find the values of the parameters in the equation that gives us the maximum value of the probability. To find the maximum, we get the differential of the equation and set it to 0, and solve for the parameters.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Extending the MLE to the least squares method</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>When the distribution is Gaussian, the process of finding the MLE is similar to the least squared method.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>For least squares estimation we want to find the line that minimizes the total squared distance between the data points and the regression line.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>When the data distribution is assumed to be Gaussian, the maximum probability is found when the data points get closer to the mean value.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Since the Gaussian distribution is symmetric, this is equivalent to minimizing the distance between the data points and the mean value.</p>
+<!-- /wp:paragraph -->
+  </div>
+  <div class="tag-cloud">
+    <p>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>

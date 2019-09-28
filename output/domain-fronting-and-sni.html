@@ -1,0 +1,238 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="jinhaochan" />
+<meta name="description" content="Domain fronting is a malicious act of appearing to request to visit a legitimate site (the front), while in actual fact, the request is going to another website. Domain fronting relies on the SSL technology to work, where the service provider is unable to see the actual malicious hostname the …" />
+<meta name="keywords" content="Domain Fronting, SNI">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="Domain Fronting and SNI"/>
+<meta property="og:description" content="Domain fronting is a malicious act of appearing to request to visit a legitimate site (the front), while in actual fact, the request is going to another website. Domain fronting relies on the SSL technology to work, where the service provider is unable to see the actual malicious hostname the …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/domain-fronting-and-sni.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2019-06-13 10:54:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/jinhaochan.html">
+<meta property="article:section" content="C2, Networking, Security"/>
+<meta property="article:tag" content="Domain Fronting"/>
+<meta property="article:tag" content="SNI"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; Domain Fronting and SNI</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+          <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+          <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+          <li><a href="#" target="_blank">You can modify those links in your config file</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-You can add links in your config file" href="#" target="_blank"><i class="fa fa-You can add links in your config file"></i></a></li>
+        <li><a class="sc-Another social link" href="#" target="_blank"><i class="fa fa-Another social link"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="domain-fronting-and-sni">Domain Fronting and SNI</h1>
+    <p>
+          Posted on Thu 13 June 2019 in <a href="/category/c2-networking-security.html">C2, Networking, Security</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <!-- wp:paragraph -->
+
+<p>Domain fronting is a malicious act of appearing to request to visit a legitimate site (the front), while in actual fact, the request is going to another website.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Domain fronting relies on the SSL technology to work, where the service provider is unable to see the actual malicious hostname the request is going to, but can only see fronted domain the SNI data.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>SNI</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>SNI, which stands for Server Name Indication, helps solves the issue introduced with TLS on HTTP connections.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>A server can be shared by many users to host their own websites. For example: AWS, Google Cloud or Azure all host multiple websites that clients can visit.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>In a non-TLS connection, when the request is made from the client to the server, the hostname is visible in clear text. The server then simply serves the requested hostname to the client.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>In a TLS connection, it gets slightly complicated. A TLS connection requires the certificate of the website to complete the handshake. Each website hosted on the server has their own certificate. However, the hostname is encrypted in the incoming request from the client. Without the hostname, how will the server know which website the client wants to visit, and which certificate to present to the client?</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>A simple solution is presented by SNI, which indicates the hostname in the initial TLS connection (TLS Hello). This way, the server knows which website to get the certificate from to complete the TLS handshake.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>SNI-Hostname Mismatch</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Domain fronting takes advantage of SNI presented to the server. The hostname is the actual destination the packet is going to, and it's encrypted. The only information the servers have is from the SNI, and attackers can simply spoof the SNI value to something legitimate.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>An example scenario:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+
+<ol>
+<li>Hostname : <code>www.badsite.com</code></li>
+<li>SNI spoofed to show: <code>www.goodsite.com</code></li>
+</ol>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+
+<p>Since the hostname is encrypted, no one knows im going to <code>www.badsite.com</code>, and they can only access the SNI data to assume that i'm visiting <code>www.goodsite.com</code></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":452} -->
+
+<figure class="wp-block-image">
+![](https://chanjinhao.files.wordpress.com/2019/06/1.png){.wp-image-452}
+
+</figure>
+
+<!-- /wp:image -->
+
+<!-- wp:image {"id":453} -->
+
+<figure class="wp-block-image">
+![](https://chanjinhao.files.wordpress.com/2019/06/2.png){.wp-image-453}
+
+</figure>
+
+<!-- /wp:image -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Detection</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Domain fronting is used in other malicious scenarios, such as C2 communication and data exfiltration</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Detection of domain fronting obviously can't work just by observing the packet, as the contents are encrypted. Detection can thus only be done through behavioral analysis such as regular beaconing intervals, or suspicious packet sizes.</p>
+<!-- /wp:paragraph -->
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/domain-fronting.html">Domain Fronting</a>
+      <a href="/tag/sni.html">SNI</a>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,301 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="jinhaochan" />
+<meta name="description" content="In this post, we&#39;re going to talk about the draw backs and constrains of a simple Gradient Descent algorithm when applied to Deep Learning models, and also talk about other optimization algorithms that aim to solve those problems. These problems mainly arise due to the complex error surface in Deep …" />
+<meta name="keywords" content="Optimizers">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="Model Optimizers Beyond Gradient Descent in Deep Learning"/>
+<meta property="og:description" content="In this post, we&#39;re going to talk about the draw backs and constrains of a simple Gradient Descent algorithm when applied to Deep Learning models, and also talk about other optimization algorithms that aim to solve those problems. These problems mainly arise due to the complex error surface in Deep …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/model-optimizers-beyond-gradient-descent-in-deep-learning.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2019-02-10 09:52:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/jinhaochan.html">
+<meta property="article:section" content="Data Science"/>
+<meta property="article:tag" content="Optimizers"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; Model Optimizers Beyond Gradient Descent in Deep Learning</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+          <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+          <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+          <li><a href="#" target="_blank">You can modify those links in your config file</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-You can add links in your config file" href="#" target="_blank"><i class="fa fa-You can add links in your config file"></i></a></li>
+        <li><a class="sc-Another social link" href="#" target="_blank"><i class="fa fa-Another social link"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="model-optimizers-beyond-gradient-descent-in-deep-learning">Model Optimizers Beyond Gradient Descent in Deep Learning</h1>
+    <p>
+          Posted on Sun 10 February 2019 in <a href="/category/data-science.html">Data Science</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <!-- wp:paragraph -->
+
+<p>In this post, we're going to talk about the draw backs and constrains of a simple Gradient Descent algorithm when applied to Deep Learning models, and also talk about other optimization algorithms that aim to solve those problems.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>These problems mainly arise due to the complex error surface in Deep Learning models, where Gradient Descent is unable to perform as well.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Challenges with Gradient Descent</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:heading {"level":4} --></p>
+<h4>Too many Local Minimas</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+
+<p>One of the problems that Gradient Descent faces is having a the algorithm converge to a local minima, instead of the true global minima. Even in a simple 2 dimensional problem, we face the issue, which gets even worse when our problem scales up to higher dimensions. But here we'll see that the local minima problem is not a huge issue with Deep Learning models.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The first source that contributes to a local minima is <strong>model identifiability</strong>. An identifiable model is a model that given an output, the weights or the structure of the network can be identified. In other words, there is a one-to-one mapping of parameters to out. If a model is non-identifiable, it means that for a given output, there exists more than one set of parameters that can produce it. <strong>A fully connected feed-forward neural network is non-identifiable</strong>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":181,"width":435,"height":388} -->
+
+<figure class="wp-block-image is-resized">
+![](https://chanjinhao.files.wordpress.com/2018/12/multi-layer_neural_network-vector2.png){.wp-image-181 width="435" height="388"}
+
+<figcaption>
+Different paths and connections in the neural network may give the same output. This give rise to the characteristics of being non-identifiable.
+
+</figcaption>
+</figure>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>Why this is so is because there exists a huge number of different permutations of neuron connections within the model that will produce the same output. A network with <em>n</em> neurons has <em>n!</em> possible parameter combinations.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>So why is model non-identifiability not an issue with Deep Learning models? That is because, even though the models themselves are non-identifiable, they all have the same behaviors. So given a group of non-identifiable models, they will all react the same way to the same inputs. And because of this property, there exists only a single local minima for a given non-identifiable model.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":4} -->
+
+<h4>Spurious Local Minima</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+
+<p>Another problem that a local minima can give us is being spurious. Spurious means giving false information about itself, and a spurious local minima means that the local minima incurring a higher loss function value than the true local minima. In a sense, the local minima is lying to us, and presents itself as the global minima.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>However, there has been many studies that shows that the local minima actually exhibits similar properties to the global minima, and hence, this too isn't a problem.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Wrong Directions in Gradient Descent</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:heading {"level":4} --></p>
+<h4>Non-Uniform and Changing Gradients</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+
+<p>The actual challenge to Gradient Descent as we shall see, is not the problem of local minima, but finding the right path for the algorithm to descend towards.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Intuitively, the gradient is supposed to descend towards the steepest direction, or the direction that brings the gradient value closer to zero. However, just by using this simple heuristic alone can be problematic on complex error surfaces (which is a common property of Deep Learning Models).</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>A complex error surface has the properties of uneven gradients, and hence when we move from point to point, the gradient underneath our path may possibly change. This is opposed to a simple error surface that is circular, where the gradient is constant throughout a single direction. Having this changing gradient may result in our algorithm going towards the wrong direction, because it doesn't account for the changes that happens as we are moving.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Mathematically, we can quantify how much the gradient changes as we are moving by calculating the second derivative. This can be captured by calculating how much the gradient as w2 changes as we change the value of w1, and we store this value in a Hessian Matrix. And a Hessian Matrix that tells us the gradient changes as we move, is called an <strong>ill-conditioned</strong> matrix.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Calculating this Hessian matrix turns out to be extremely expensive if we do it at each step, and so to tackle the problem of changing gradients, we factor in the <strong>momentum</strong> parameter.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Momentum-Based Optimization</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Earlier, we stated that we may go into the wrong direction because we don't account for changing gradients, and also, if we decide to account for changing gradients using second derivatives, calculating a Hessian Matrix is extremely expensive.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The solution to this is instead of calculating the Hessian Matrix at every optimization step, we factor in the value of the previous gradient into the calculation of the current gradient. By taking into account of the previous gradient value to find the current gradient, the fluctuations of gradient value is drastically reduced.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>This approach of remembering previous gradients is called <strong>Momentum</strong>. This technique is analogous to taking a moving average of stock prices the market  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":178} -->
+
+<figure class="wp-block-image">
+![](https://chanjinhao.files.wordpress.com/2018/12/movingaverage.gif){.wp-image-178}
+
+<figcaption>
+Fluctuations in the stock market price are reduced by looking at the averag
+
+</figcaption>
+</figure>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>We can thinking of the wildly fluctuating gradients at each point being represented by the green line, while the average is represented by the yellow line. Momentum based optimizers use the yellow line to calculate the change in gradient.  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Conclusion</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>To conclude this post, we have seen how there are problems applying simple gradient descent to complex error surfaces that are present in Deep Learning models.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Local minimas are not a problem, but changing gradients due to its complex surface are a problem. To try to factor in changing surfaces, we could calculate the Hessian Matrix, but that turns out to be extremely expensive.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>As a solution, we use Momentum based optimizers instead, which factors in previous gradient values to the calculation of the current gradient.  </p>
+<!-- /wp:paragraph -->
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/optimizers.html">Optimizers</a>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>

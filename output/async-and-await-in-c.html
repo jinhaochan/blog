@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="jinhaochan" />
+<meta name="description" content="Async and Await in C async and await are used when we are doing asynchronous programming. Why we would want to do asynchronous programming, is due to performance issues. When we have two unrelated tasks that are in the program, and one task takes a long time to process, it …" />
+<meta name="keywords" content="Async, Await">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="Async and Await in C#"/>
+<meta property="og:description" content="Async and Await in C async and await are used when we are doing asynchronous programming. Why we would want to do asynchronous programming, is due to performance issues. When we have two unrelated tasks that are in the program, and one task takes a long time to process, it …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/async-and-await-in-c.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2018-12-09 22:40:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/jinhaochan.html">
+<meta property="article:section" content="C#"/>
+<meta property="article:tag" content="Async"/>
+<meta property="article:tag" content="Await"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; Async and Await in C#</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+          <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+          <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+          <li><a href="#" target="_blank">You can modify those links in your config file</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-You can add links in your config file" href="#" target="_blank"><i class="fa fa-You can add links in your config file"></i></a></li>
+        <li><a class="sc-Another social link" href="#" target="_blank"><i class="fa fa-Another social link"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="async-and-await-in-c">Async and Await in C#</h1>
+    <p>
+          Posted on Sun 09 December 2018 in <a href="/category/c.html">C#</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <h2>Async and Await in C</h2>
+<p><code>async</code> and <code>await</code> are used when we are doing asynchronous programming. Why we would want to do asynchronous programming, is due to performance issues. When we have two unrelated tasks that are in the program, and one task takes a long time to process, it should not be holding up the other task.</p>
+<p>We use Asynchronous programming to hand over program controls to ensure that no one process is holding up the entire program.</p>
+<p><code>async</code> and <code>await</code> are used together to make a program asynchronous.</p>
+<p>Below is a simple example to make a program asynchronous</p>
+<p>[code lang=text]<br>
+static void Main(string[] args)<br>
+{<br>
+DoSomething();<br>
+Console.WriteLine("Control to Main!");<br>
+Console.ReadLine();<br>
+}</p>
+<p>public static async void DoSomething()<br>
+{<br>
+await Delay();<br>
+Console.WriteLine("Control back to Method!");<br>
+}</p>
+<p>async static Task Delay()<br>
+{<br>
+await Task.Delay(5000);<br>
+}<br>
+[/code]</p>
+<p>The output on the console:</p>
+<p>[code lang=text]<br>
+Control to Main!<br>
+&lt;after a 5 second delay&gt;<br>
+Control back to Method!<br>
+[/code]</p>
+<p>You first have to declare the method asynchronous with <code>async</code></p>
+<p><code>async static Task Delay()</code></p>
+<p>Next, we put the keyword <code>await</code> beside the command that will take a long time.</p>
+<p>What <code>await</code> does is this<br>
+- It awaits for the command to be completed<br>
+- While it is awaiting, it passes control back up to the caller<br>
+- After the command is completed, the control is passed back to the callee</p>
+<p>If we look at the code, the program first calls <code>DoSomething()</code>, which calls <code>await Delay()</code>, which then executes <code>await Task.Delay(5000);</code></p>
+<p>When <code>await Task.Delay(5000);</code> is executed, <code>Delay()</code> passes control back up to the caller, which is <code>DoSomething()</code></p>
+<p>Because <code>DoSomething()</code> is awaiting <code>Delay()</code>, it passes control back up again to <code>Main()</code>, which then executes <code>Console.WriteLine("Control to Main!");</code></p>
+<p>After <code>await Task.Delay(5000);</code> is completed, it returns to <code>DoSomething()</code>, which executes <code>Console.WriteLine("Control back to Method!");</code>, and finally returns to <code>Main()</code></p>
+<p>Another example is given below</p>
+<p>[code lang=text]<br>
+async Task&lt;int&gt; AccessTheWebAsync()<br>
+{<br>
+HttpClient client = new HttpClient();</p>
+<p>Task&lt;string&gt; getStringTask = client.GetStringAsync("http://msdn.microsoft.com");</p>
+<p>// You can do work here that doesn't rely on the string from GetStringAsync.<br>
+DoIndependentWork();</p>
+<p>string urlContents = await getStringTask;<br>
+//The thing is that this returns an int to a method that has a return type of Task&lt;int&gt;<br>
+return urlContents.Length;<br>
+}<br>
+[/code]</p>
+<p>Here, <code>Task getStringTask = client.GetStringAsync("http://msdn.microsoft.com");</code> is called, followed by <code>DoIndependentWork();</code>.</p>
+<p>We next call <code>string urlContents = await getStringTask;</code>, which awaits on <code>getStringTask</code>. There are two possible scenerios here</p>
+<ol>
+<li>After <code>DoIndependentWork()</code> is completed, <code>Task getStringTask = client.GetStringAsync("http://msdn.microsoft.com");</code> is completed as well, and <code>getStringTask</code> is fully initialized. In this case, there is no control being passed back to the caller of <code>AccessTheWebAsync()</code>, and the program just runs through.</li>
+<li>After <code>DoIndependentWork()</code> is completed, <code>Task getStringTask = client.GetStringAsync("http://msdn.microsoft.com");</code> NOT completed, and <code>getStringTask</code> is NOT initialized. In this case, there control is passed back to the caller of <code>AccessTheWebAsync()</code> for execution. Only after <code>getStringTask</code> has been initialized, will the program pass back control to <code>AccessTheWebAsync()</code></li>
+</ol>
+<p>And for obvious reasons, <code>async</code> cannot be a modifier on the <code>Main</code> method, because it is the root caller.</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/async.html">Async</a>
+      <a href="/tag/await.html">Await</a>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>

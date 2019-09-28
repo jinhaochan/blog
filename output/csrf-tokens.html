@@ -1,0 +1,263 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="jinhaochan" />
+<meta name="description" content="If we look at source codes of HTML forms, we typically can spot this field being rendered on the webpage ![](https://chanjinhao.files.wordpress.com/2019/04/token.png){.wp-image-420} Sometimes it doesn&#39;t have the name called CSRF Token, and it just appears as a random gibberish value being loaded …" />
+<meta name="keywords" content="CSRF">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="CSRF Tokens"/>
+<meta property="og:description" content="If we look at source codes of HTML forms, we typically can spot this field being rendered on the webpage ![](https://chanjinhao.files.wordpress.com/2019/04/token.png){.wp-image-420} Sometimes it doesn&#39;t have the name called CSRF Token, and it just appears as a random gibberish value being loaded …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/csrf-tokens.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2019-04-24 16:13:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/jinhaochan.html">
+<meta property="article:section" content="Networking, Security"/>
+<meta property="article:tag" content="CSRF"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; CSRF Tokens</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+          <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+          <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+          <li><a href="#" target="_blank">You can modify those links in your config file</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-You can add links in your config file" href="#" target="_blank"><i class="fa fa-You can add links in your config file"></i></a></li>
+        <li><a class="sc-Another social link" href="#" target="_blank"><i class="fa fa-Another social link"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="csrf-tokens">CSRF Tokens</h1>
+    <p>
+          Posted on Wed 24 April 2019 in <a href="/category/networking-security.html">Networking, Security</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <!-- wp:paragraph -->
+
+<p>If we look at source codes of HTML forms, we typically can spot this field being rendered on the webpage</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":420} -->
+
+<figure class="wp-block-image">
+![](https://chanjinhao.files.wordpress.com/2019/04/token.png){.wp-image-420}
+
+<figcaption>
+
+
+</figcaption>
+</figure>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>Sometimes it doesn't have the name called CSRF Token, and it just appears as a random gibberish value being loaded.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>This post breaks down the purpose of the token, and what happens behind the scenes with the token</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Understanding CSRF</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>CSRF stands for Cross-Site Request Forgery, and understanding how it works is a prerequisite to understanding CSRF tokens. Below shows a picture of what a CSRF attack looks like</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":421} -->
+
+<figure class="wp-block-image">
+![](https://chanjinhao.files.wordpress.com/2019/04/csrf-cross-site-request-forgery.png){.wp-image-421}
+
+</figure>
+
+<!-- /wp:image -->
+
+<!-- wp:list {"ordered":true} -->
+
+<ol>
+<li>The attacker crafts a GET requests that triggers a fund transfer to his account<ul>
+<li><code>GET http://bank.com/transfer.php?account=Attacker&amp;amount=100</code></li>
+</ul>
+</li>
+<li>The attacker embeds this request as a hyperlink<ul>
+<li><code>&lt;a href="http://bank.com transfer.php?account=Attacker&amp;amount=100"&gt; READ MORE... &lt;/a&gt;</code></code></li>
+</ul>
+</li>
+<li>When the user clicks on the link, it triggers the <code>GET</code> request on behalf of the victim</li>
+<li>The <code>GET</code> request is triggered by the victim, and funds are transferred to the Attacker</li>
+</ol>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+
+<p>This attack hinges on the fact that the Victim must be logged in to the service, and is already authenticated with an open session with the service.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>If the Victim is not logged in, when he clicks on the malicious link, instead of triggering the bad <code>GET</code> request, it will redirect him to the login page instead, thus rendering the attack useless.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>CSRF Tokens</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>CSRF token is a simple concept where include one more argument of a token, that is sort of like a secret password.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p><code>http://bank.com/transfer.php?account=User&amp;amount=100&amp;token=32Sa2dsa10gB88vcx9cz08f331j=Da</code></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>This token value is a high-entropy value which is hard to guess by the attacker. If on the server side, it receives a wrong or missing CSRF token value, the <code>GET</code> request is rejected and does not execute</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The CSRF token works this way:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+
+<ol>
+<li>Client requests for a HTML page that contains a form</li>
+<li>Server generates two distinct tokens, and sends one as a cookie to the client, and embeds the other as a hidden field in the form</li>
+<li>When the client submits the form, both CSRF tokens must be sent back to the server. The one embedded in the form, and the one in the cookie.</li>
+<li>If the request does not contain both tokens, it's rejected</li>
+</ol>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+
+<p>The CSRF token value should be regularly invalidated at a time interval, per request, or when the user logs out.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>CSRF Token Vulnerabilities</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>If traffic carrying the token is not encrypted over HTTPS, the Attacker can sniff the traffic and obtain the CSRF token value and the Cookie, and perform a CSRF token replay attack.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The solution to this is obvious: Always use encryption for communication. Aside from that, per-request-tokens can also be implemented.</p>
+<!-- /wp:paragraph -->
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/csrf.html">CSRF</a>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="jinhaochan" />
+<meta name="description" content="While doing the Microsoft Malware Classification challenge, I encountered a way of Feature representation called Count Based Features (CBF). CBF is good to use with very high cardinality features, and it transforms the high number of categories in the data to the number of it&#39;s occurrences. This representation is helpful …" />
+<meta name="keywords" content="Count Feature">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="Counts Based Featurization"/>
+<meta property="og:description" content="While doing the Microsoft Malware Classification challenge, I encountered a way of Feature representation called Count Based Features (CBF). CBF is good to use with very high cardinality features, and it transforms the high number of categories in the data to the number of it&#39;s occurrences. This representation is helpful …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/counts-based-featurization.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2019-03-24 17:48:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/jinhaochan.html">
+<meta property="article:section" content="Data Science"/>
+<meta property="article:tag" content="Count Feature"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; Counts Based Featurization</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+          <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+          <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+          <li><a href="#" target="_blank">You can modify those links in your config file</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-You can add links in your config file" href="#" target="_blank"><i class="fa fa-You can add links in your config file"></i></a></li>
+        <li><a class="sc-Another social link" href="#" target="_blank"><i class="fa fa-Another social link"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="counts-based-featurization">Counts Based Featurization</h1>
+    <p>
+          Posted on Sun 24 March 2019 in <a href="/category/data-science.html">Data Science</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <!-- wp:paragraph -->
+
+<p>While doing the Microsoft Malware Classification challenge, I encountered a way of Feature representation called Count Based Features (CBF).</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>CBF is good to use with very high cardinality features, and it transforms the high number of categories in the data to the number of it's occurrences. This representation is helpful because it extracts out a simple inherent feature of the data: count</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Below shows a simple example of how we get the CBF of a given feature</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:table -->
+
+<hr>
+<p><strong>Label</strong>   <strong>Feature1</strong>
+  0           A
+  0           A
+  1           A
+  0           B
+  1           B
+  1           B
+  1           B</p>
+<hr>
+<!-- /wp:table -->
+
+<!-- wp:paragraph -->
+
+<p>CBF can be done in pandas in a single line</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p><code>Train.groupby([' Feature1 '])[' Feature1 '].transform('count')</code></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The output of this will give you</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:table -->
+
+<p>Label   <strong>Feature1</strong></p>
+<hr>
+<p>0       3
+  0       3
+  1       3
+  0       4
+  1       4
+  1       4
+  1       4</p>
+<!-- /wp:table -->
+
+<!-- wp:paragraph -->
+
+<p>As you can see, the categorical values are all converted their count values!  </p>
+<!-- /wp:paragraph -->
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/count-feature.html">Count Feature</a>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>

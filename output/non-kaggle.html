@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="jinhaochan" />
+<meta name="description" content="Here, you&#39;ll find Data science projects that work on data sets not from Kaggle. Detecting Botnet traffic Dataset: https://mcfp.weebly.com/the-ctu-13-dataset-a-labeled-dataset-with-botnet-normal-and-background-traffic.html Notebook: https://github.com/jinhaochan/BotnetDetection/blob/master/NetFlow-Botnet.ipynb In this data set, we were given traffic of both Botnet and normal traffic. I built …" />
+<meta name="keywords" content="">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="Non-Kaggle"/>
+<meta property="og:description" content="Here, you&#39;ll find Data science projects that work on data sets not from Kaggle. Detecting Botnet traffic Dataset: https://mcfp.weebly.com/the-ctu-13-dataset-a-labeled-dataset-with-botnet-normal-and-background-traffic.html Notebook: https://github.com/jinhaochan/BotnetDetection/blob/master/NetFlow-Botnet.ipynb In this data set, we were given traffic of both Botnet and normal traffic. I built …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/non-kaggle.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2018-10-31 21:43:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/jinhaochan.html">
+<meta property="article:section" content="misc"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; Non-Kaggle</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+          <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+          <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+          <li><a href="#" target="_blank">You can modify those links in your config file</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-You can add links in your config file" href="#" target="_blank"><i class="fa fa-You can add links in your config file"></i></a></li>
+        <li><a class="sc-Another social link" href="#" target="_blank"><i class="fa fa-Another social link"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="non-kaggle">Non-Kaggle</h1>
+    <p>
+          Posted on Wed 31 October 2018 in <a href="/category/misc.html">misc</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <!-- wp:paragraph -->
+
+<p>Here, you'll find Data science projects that work on data sets not from Kaggle.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Detecting Botnet traffic</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Dataset: <a href="https://mcfp.weebly.com/the-ctu-13-dataset-a-labeled-dataset-with-botnet-normal-and-background-traffic.html">https://mcfp.weebly.com/the-ctu-13-dataset-a-labeled-dataset-with-botnet-normal-and-background-traffic.html</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Notebook: <a href="https://github.com/Charmanderander/BotnetDetection/blob/master/NetFlow-Botnet.ipynb">https://github.com/jinhaochan/BotnetDetection/blob/master/NetFlow-Botnet.ipynb</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>In this data set, we were given traffic of both Botnet and normal traffic. I built a classifier to determine if a given traffic is anomalous or not.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>I used the NetFlow data, and their features to build my model. I removed all source and destination information, as I wanted my classifier to learn solely on network behavioral data. And also, in reality, all the source and destination information will be different, so there is no use for my model to learn them.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>In this problem, the data set was hugely unbalanced. I had significantly smaller set of Botnet traffic. To deal with this, I upsampled the amount of Botnet traffic.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Also, I had to find a balance between precision and recall. In detecting Botnet traffic, having a low precision and high recall is more desirable, as the cost of precision is cheap. It is more important for me to catch every single traffic that is a Botnet.</p>
+<!-- /wp:paragraph -->
+  </div>
+  <div class="tag-cloud">
+    <p>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>

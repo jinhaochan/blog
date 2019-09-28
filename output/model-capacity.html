@@ -1,0 +1,222 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="jinhaochan" />
+<meta name="description" content="While studying the book Deep Learning by Ian Goodfellow, I came across this concept of model capacity, and it was really intuitive in helping me understand the models representation of a given problem. This ties to the concept of overfitting and underfitting Capacity Put simply, the capacity of the model …" />
+<meta name="keywords" content="Capacity, VC Dimension">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="Model Capacity"/>
+<meta property="og:description" content="While studying the book Deep Learning by Ian Goodfellow, I came across this concept of model capacity, and it was really intuitive in helping me understand the models representation of a given problem. This ties to the concept of overfitting and underfitting Capacity Put simply, the capacity of the model …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/model-capacity.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2019-03-24 20:19:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/jinhaochan.html">
+<meta property="article:section" content="Data Science"/>
+<meta property="article:tag" content="Capacity"/>
+<meta property="article:tag" content="VC Dimension"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; Model Capacity</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+          <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+          <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+          <li><a href="#" target="_blank">You can modify those links in your config file</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-You can add links in your config file" href="#" target="_blank"><i class="fa fa-You can add links in your config file"></i></a></li>
+        <li><a class="sc-Another social link" href="#" target="_blank"><i class="fa fa-Another social link"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="model-capacity">Model Capacity</h1>
+    <p>
+          Posted on Sun 24 March 2019 in <a href="/category/data-science.html">Data Science</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <!-- wp:paragraph -->
+
+<p>While studying the book Deep Learning by Ian Goodfellow, I came across this concept of model capacity, and it was really intuitive in helping me understand the models representation of a given problem.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>This ties to the concept of overfitting and underfitting</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Capacity</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Put simply, the capacity of the model is the complexity of the model, or the ability to represent complex relationships.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>A model with high capacity can represent very complex relationships, while a model with low capacity can represent not so complex relationships</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>How it ties to Overfitting and Underfitting</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Models perform best when their capacity approximately captures the complexity of the task they need to perform.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>If the task or data set has a very low complexity, but the model has a very high capacity, the model will overfit, as it will memorize and represent all the features in the training set that may not be in the testing set.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Conversely, if the task or data set is highly complex, but the capacity of the model is low, the model will underfit, as it cannot sufficiently represent the complex relationships and features in the training data</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Vapnik–Chervonenkis (<strong>VC</strong>) <strong>dimension</strong></h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>The VC dimension is a measurement of a model's capacity, given that the task at hand is a binary classification problem.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The numerical value of a VC dimension tells us the largest set of data point the model can perfectly classify (or shatter). Thus, the larger the VC dimension, the more data points the model is able to perfectly classify, which also means that the model is inherently more complex.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The usage of a VC dimension usually just tells us how complex an algorithm is. A model with a higher VC dimension requires more data to properly train due to the higher complexity.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Conclusion</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>The take away here is that, overly complicated models are not always better as they can overfit. A simple decision tree or random forest can be perfect for data with low complexity.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>A VC dimension is simply a quantification of how complex a model is. Higher VC = Able to separate more data points = more complex = requires more training data.</p>
+<!-- /wp:paragraph -->
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/capacity.html">Capacity</a>
+      <a href="/tag/vc-dimension.html">VC Dimension</a>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>

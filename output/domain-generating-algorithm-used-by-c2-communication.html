@@ -1,0 +1,233 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="jinhaochan" />
+<meta name="description" content="C2 Communication and Disruption When a machine gets infected by a malware, it can start receiving command from it&#39;s C2 server to perform unwanted activities. Examples of this are a machines infected with botnets or ransomware, where the C2 server will send commands down to the victim machine, and the …" />
+<meta name="keywords" content="Domain Generation Algorithm">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="Domain Generating Algorithm (Used by C2 Communication)"/>
+<meta property="og:description" content="C2 Communication and Disruption When a machine gets infected by a malware, it can start receiving command from it&#39;s C2 server to perform unwanted activities. Examples of this are a machines infected with botnets or ransomware, where the C2 server will send commands down to the victim machine, and the …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/domain-generating-algorithm-used-by-c2-communication.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2019-04-07 16:46:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/jinhaochan.html">
+<meta property="article:section" content="Hacking"/>
+<meta property="article:tag" content="Domain Generation Algorithm"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; Domain Generating Algorithm (Used by C2 Communication)</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+          <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+          <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+          <li><a href="#" target="_blank">You can modify those links in your config file</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-You can add links in your config file" href="#" target="_blank"><i class="fa fa-You can add links in your config file"></i></a></li>
+        <li><a class="sc-Another social link" href="#" target="_blank"><i class="fa fa-Another social link"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="domain-generating-algorithm-used-by-c2-communication">Domain Generating Algorithm (Used by C2 Communication)</h1>
+    <p>
+          Posted on Sun 07 April 2019 in <a href="/category/hacking.html">Hacking</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <!-- wp:heading {"level":3} -->
+
+<h3>C2 Communication and Disruption</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>When a machine gets infected by a malware, it can start receiving command from it's C2 server to perform unwanted activities. Examples of this are a machines infected with botnets or ransomware, where the C2 server will send commands down to the victim machine, and the machines can send replies back.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The easiest way to tackle this problem is to disrupt the communication between the C2 and the victim machine, and one of this is to either take down the C2 server, or block all traffic that is going to that specific IP address.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>How Malwares Overcome Communication Disruption</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Bad actors are well aware of this problem of having a single static IP or server for their C2, and they know that if this single IP is block or the server is taken down, their infected machines have no where to receive commands from.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>How they overcome this is by having their malware communicate with different domains instead of a single static one. This act is called <strong>"Domain Fluxing</strong>", or <strong>"Fast Fluxing"</strong>, where the malware communicates with different C2 servers.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The process of generating multiple domains for their malware to connect to is called <strong>"Domain Generation Algorithm" (DGA)</strong>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>DGA in Action</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>DGAs automatically generate multiple domains that the malware can communicate to. These DGA's have to be random enough, so that defenders cannot predict what list of domains to block. For example, if a malware is dumb enough to change their list of domains to "badserver1", "badserver2" ... Defenders just have to block "badserver*", and that will cover all the list of C2 servers.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Dumb DGAs will also generate jibberish domains, which can be spotted easily by analyst, or smart NLP models. Domains such as "dsawkkl.com" generated randomly is obviously a malicious domain.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Smarter DGAs will pluck and piece together words that make sense, such as "Birds.com", "Elephant.com" or "Tiger.com". But this also has a downside, as its obvious that their seed for generating the names are animals. Really advanced DGAs will use and NLP text generator model, and a random seed generator to produce really legitimate looking domains that can fool both the analyst, and models.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Below is an example code to generate random domains</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+
+<div class="highlight"><pre><span></span><span class="nv">def</span> <span class="nv">generate_domain</span><span class="ss">(</span><span class="nv">year</span>, <span class="nv">month</span>, <span class="nv">day</span><span class="ss">)</span>:
+    <span class="s2">&quot;&quot;&quot;</span><span class="s">Generates a domain name for the given date.</span><span class="s2">&quot;&quot;&quot;</span>
+
+    <span class="nv">domain</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="k">for</span> <span class="nv">i</span> <span class="nv">in</span> <span class="nv">range</span><span class="ss">(</span><span class="mi">16</span><span class="ss">)</span>:
+        <span class="nv">year</span> <span class="o">=</span> <span class="ss">((</span><span class="nv">year</span> <span class="o">^</span> <span class="mi">8</span> <span class="o">*</span> <span class="nv">year</span><span class="ss">)</span> <span class="o">&gt;&gt;</span> <span class="mi">11</span><span class="ss">)</span> <span class="o">^</span> <span class="ss">((</span><span class="nv">year</span> <span class="o">&amp;</span> <span class="mi">0</span><span class="nv">xFFFFFFF0</span><span class="ss">)</span> <span class="o">&lt;&lt;</span> <span class="mi">17</span><span class="ss">)</span>
+        <span class="nv">month</span> <span class="o">=</span> <span class="ss">((</span><span class="nv">month</span> <span class="o">^</span> <span class="mi">4</span> <span class="o">*</span> <span class="nv">month</span><span class="ss">)</span> <span class="o">&gt;&gt;</span> <span class="mi">25</span><span class="ss">)</span> <span class="o">^</span> <span class="mi">16</span> <span class="o">*</span> <span class="ss">(</span><span class="nv">month</span> <span class="o">&amp;</span> <span class="mi">0</span><span class="nv">xFFFFFFF8</span><span class="ss">)</span>
+        <span class="nv">day</span> <span class="o">=</span> <span class="ss">((</span><span class="nv">day</span> <span class="o">^</span> <span class="ss">(</span><span class="nv">day</span> <span class="o">&lt;&lt;</span> <span class="mi">13</span><span class="ss">))</span> <span class="o">&gt;&gt;</span> <span class="mi">19</span><span class="ss">)</span> <span class="o">^</span> <span class="ss">((</span><span class="nv">day</span> <span class="o">&amp;</span> <span class="mi">0</span><span class="nv">xFFFFFFFE</span><span class="ss">)</span> <span class="o">&lt;&lt;</span> <span class="mi">12</span><span class="ss">)</span>
+
+    <span class="nv">domain</span> <span class="o">+=</span> <span class="nv">chr</span><span class="ss">(((</span><span class="nv">year</span> <span class="o">^</span> <span class="nv">month</span> <span class="o">^</span> <span class="nv">day</span><span class="ss">)</span> <span class="o">%</span> <span class="mi">25</span><span class="ss">)</span> <span class="o">+</span> <span class="mi">97</span><span class="ss">)</span>
+</pre></div>
+
+
+<!-- /wp:code -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Conclusion</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Malwares need to communicate with C2's for commands. It's easy to block a single domain, or list of correlated domains.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Malwares therefore need sophisticated DGAs to come up with unpredictable domains for their C2 server.</p>
+<!-- /wp:paragraph -->
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/domain-generation-algorithm.html">Domain Generation Algorithm</a>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>

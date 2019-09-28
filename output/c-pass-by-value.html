@@ -1,0 +1,253 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="jinhaochan" />
+<meta name="description" content="Pass by Value vs Reference Pass by value When we pass call a function, we sometimes pass in some values for the function to use. Typically, it would look like this (parameters) or void swapValues(int x, int y) When we pass a value to the function swapValue(), we are …" />
+<meta name="keywords" content="">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="C# Pass By Value"/>
+<meta property="og:description" content="Pass by Value vs Reference Pass by value When we pass call a function, we sometimes pass in some values for the function to use. Typically, it would look like this (parameters) or void swapValues(int x, int y) When we pass a value to the function swapValue(), we are …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/c-pass-by-value.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2018-11-25 22:37:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/jinhaochan.html">
+<meta property="article:section" content="C#"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; C# Pass By Value</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+          <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+          <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+          <li><a href="#" target="_blank">You can modify those links in your config file</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-You can add links in your config file" href="#" target="_blank"><i class="fa fa-You can add links in your config file"></i></a></li>
+        <li><a class="sc-Another social link" href="#" target="_blank"><i class="fa fa-Another social link"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="c-pass-by-value">C# Pass By Value</h1>
+    <p>
+          Posted on Sun 25 November 2018 in <a href="/category/c.html">C#</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <h2>Pass by Value vs Reference</h2>
+<h3>Pass by value</h3>
+<hr>
+<p>When we pass call a function, we sometimes pass in some values for the function to use. Typically, it would look like this</p>
+<p><code>(parameters)</code></p>
+<p>or</p>
+<p><code>void swapValues(int x, int y)</code></p>
+<p>When we pass a value to the function <code>swapValue()</code>, we are passing it by value.</p>
+<p>What this means is that, a new memory region is allocated from the stack for the new parameters <code>x</code> and <code>y</code>, and the value of that memory region is set to the value that was passed to it.</p>
+<p>I'll write a post on what happens in the memory region when a function is called in the future (dealing with functions stack frame allocation etc). But for now, when we call a function, it is allocated a function stack frame, with all its variables and paramters contained within the frame.</p>
+<p>Let's look at the following code block</p>
+<p>[code lang=text]<br>
+public static void Main()<br>
+{<br>
+int x = 10;<br>
+int y = 20;</p>
+<p>swapValues(10, 20);<br>
+}</p>
+<p>void swapValues(int x, int y)<br>
+{<br>
+int temp;</p>
+<p>temp = x;<br>
+x = y;<br>
+y = temp;<br>
+}<br>
+[/code]</p>
+<p>When <code>Main()</code> calls <code>swapValues()</code>, a new stack frame is allocated just for <code>swapValues()</code> to store all its local variables, and parameters passed into it. The stack frame will be the new memory region for the two paramters <code>x</code> and <code>y</code>, and assigns them to the values that was passed to them, which are <code>10</code> and <code>20</code>.</p>
+<p>Because it's a new memory region, whatever changes that are done in the function <code>swapValues()</code> will only affect the newly allocated memory regions of <code>x</code> and <code>y</code> in the stack frame of <code>swapValues()</code>.</p>
+<p>That is to say, the values of <code>x</code> and <code>y</code> in the <code>Main</code> function stack frame will be left untouched!</p>
+<p>This kind of defeats the purpose of the function...</p>
+<p>So how do we fix it?</p>
+<h3>Pass by Reference</h3>
+<hr>
+<p>Let's tweak the code above slightly to make it pass by reference</p>
+<p>[code lang=text]<br>
+public static void Main()<br>
+{<br>
+int x = 10;<br>
+int y = 20;</p>
+<p>swapValues(10, 20);<br>
+}</p>
+<p>void swapValues(ref int x, ref int y)<br>
+{<br>
+int temp;</p>
+<p>temp = x;<br>
+x = y;<br>
+y = temp;<br>
+}<br>
+[/code]</p>
+<p>The only difference is adding the keyword <code>ref</code> in front of the function parameters, which tell the function to reference to the objects passed in. This means that whatever work that is done in <code>swapValues()</code> will work directly on the values in <code>Main()</code></p>
+<p>The difference between passing by value and passing by reference is shown below</p>
+<ul>
+<li>Passing by value: Allocates memory space on the stack frame and assigns it the value of the object that were passed into the function
+    </p></li>
+<li>Passing by reference: Does not allocate memory space on the stack frame, uses the object that was passed in directly</li>
+</ul>
+<p>In this case, whatever changes done to <code>x</code> and <code>y</code> in the function <code>swapValues()</code> will directly modify the values inside the stack frame of <code>Main()</code>!</p>
+<h3>Reference Objects</h3>
+<hr>
+<h3>Modifying the reference object part 1</h3>
+<p>Now heres the tricky part. Some objects are reference objects, which is to say they are pointers to begin with. An example would be a string in C, or an array object.</p>
+<p>[code lang=text]<br>
+public static void Main()<br>
+{<br>
+int[] myArrayMain = new int[] {1, 2, 3, 4, 5};</p>
+<p>editArray(myArrayMain);<br>
+}</p>
+<p>void editArray(int[] myArrayParam)<br>
+{<br>
+myArrayParam[0] = 7;<br>
+}<br>
+[/code]</p>
+<p>The above code will changes <code>myArrayMain</code> to <code>{0, 2, 3, 4, 5}</code></p>
+<p>When we call the function <code>editArray()</code>, we create a new stack frame for <code>editArray()</code> to hold its local variables and paramters. Because <code>myArrayParam</code> is a reference object, we create a pointer on the stack frame to hold any value that is passed into <code>myArrayParam</code>.</p>
+<p>We are passing in <code>myArrayMain</code>, which is a reference object. That means, the value of <code>myArrayMain</code> is an address, which points to the first element in the array.</p>
+<p>When we pass <code>myArrayMain</code> to <code>myArrayParam</code>, we are assigning <code>myArrayParam</code> to the value of the <code>myArrayMain</code>, which is an address that points to the first element of <code>myArrayMain</code>!</p>
+<p>Memory pointer layout:</p>
+<p><code>myArrayParam</code> --&gt; <code>myArrayMain</code> --&gt; <code>memory of first element in myArrayMain (1)</code></p>
+<p>So any changes made to <code>myArrayParam</code> in <code>editArray()</code> will be propagated to the <code>myArrayMain</code></p>
+<h3>Modifying the reference object part 2</h3>
+<p>Now what happens when we change <code>editArray()</code> to create a new array? Will <code>myArrayMain</code> be overwritten?</p>
+<p>[code lang=text]<br>
+public static void Main()<br>
+{<br>
+int[] myArrayMain = new int[] {1, 2, 3, 4, 5};</p>
+<p>editArray(myArrayMain);<br>
+}</p>
+<p>void editArray(int[] myArrayParam)<br>
+{<br>
+myArrayParam[0] = new int[] {6, 7, 8, 9, 10};<br>
+}<br>
+[/code]</p>
+<p>Nope. <code>myArrayMain</code> will still remain as <code>{1, 2, 3, 4, 5}</code></p>
+<p>When we call <code>myArrayParam[0] = new int[] {6, 7, 8, 9, 10};</code>, we are repointing <code>myArrayParam</code> to something else. This breaks the memory pointer layout above</p>
+<p>[code lang=text]<br>
+myArrayParam --&gt; myArrayMain --&gt; memory of first element in myArrayMain (1)</p>
+<p>becomes</p>
+<p>myArrayParam --&gt; memory of first element in myArrayParam (6)</p>
+<p>myArrayMain --&gt; memory of first element in myArrayMain (1)<br>
+[/code]</p>
+<h3>Modifying the reference object part 3</h3>
+<p>Lets look at the final attempt. This time, we call <code>ref</code> on the array that is passed in</p>
+<p>[code lang=text]<br>
+public static void Main()<br>
+{<br>
+int[] myArrayMain = new int[] {1, 2, 3, 4, 5};</p>
+<p>editArray(myArrayMain);<br>
+}</p>
+<p>void editArray(ref int[] myArrayParam)<br>
+{<br>
+myArrayParam[0] = new int[] {6, 7, 8, 9, 10};<br>
+}<br>
+[/code]</p>
+<p>Remember that when we call <code>ref</code>, in the stack frame of <code>editArray()</code>, no new memory is allocted, and the original <code>myArrayMain</code> is used.</p>
+<p>The memory pointer layout is now</p>
+<p>[code lang=text]<br>
+myArrayParam --&gt; memory of first element in myArrayMain (1)</p>
+<p>myArrayMain --&gt; memory of first element in myArrayMain (1)<br>
+[/code]</p>
+<p>Both <code>myArrayParam</code> and <code>myArrayMain</code> now point to the first element in <code>myArrayMain</code></p>
+<p>So when the code block is ran, <code>myArrayMain</code> will change to <code>{6, 7, 8, 9, 10}</code>!</p>
+<h3>Conclusion</h3>
+<hr>
+<p>Phew! That was a long and confusing read, so here's a TLDR:</p>
+<ul>
+<li>C# passes by value</li>
+<li>When a function is called, a stack frame is allocated for local and parameter variables</li>
+<li>The parameter variables are assigned to the value that was passed in</li>
+<li>No memory in the stack frame is allocated for parameters that are prefixed with <code>ref</code>, but are accessed directly from the caller function</li>
+<li>Arrays are reference objects</li>
+<li>The values they hold are the memory space of the first element in the array</li>
+</ul>
+<p>Thanks for reading!!</p>
+<p>Further reading: http://www.yoda.arachsys.com/csharp/parameters.html Excellent page!!!</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>

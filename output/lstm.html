@@ -1,0 +1,555 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="jinhaochan" />
+<meta name="description" content="In the previous post, we talked about RNN, and how performing Backpropagation through time (BPTT) on an unrolled RNN with many time steps can lead to the problems of vanishing / exploding gradients, and difficulties in learning long term dependencies. In this post, we&#39;re going to look at a the LSTM …" />
+<meta name="keywords" content="Exploding Gradients, LSTM, Vanishing Gradients">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="LSTM"/>
+<meta property="og:description" content="In the previous post, we talked about RNN, and how performing Backpropagation through time (BPTT) on an unrolled RNN with many time steps can lead to the problems of vanishing / exploding gradients, and difficulties in learning long term dependencies. In this post, we&#39;re going to look at a the LSTM …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/lstm.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2019-06-30 15:33:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/jinhaochan.html">
+<meta property="article:section" content="Data Science"/>
+<meta property="article:tag" content="Exploding Gradients"/>
+<meta property="article:tag" content="LSTM"/>
+<meta property="article:tag" content="Vanishing Gradients"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; LSTM</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+          <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+          <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+          <li><a href="#" target="_blank">You can modify those links in your config file</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-You can add links in your config file" href="#" target="_blank"><i class="fa fa-You can add links in your config file"></i></a></li>
+        <li><a class="sc-Another social link" href="#" target="_blank"><i class="fa fa-Another social link"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="lstm">LSTM</h1>
+    <p>
+          Posted on Sun 30 June 2019 in <a href="/category/data-science.html">Data Science</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <!-- wp:paragraph -->
+
+<p>In the previous post, we talked about RNN, and how performing Backpropagation through time (BPTT) on an unrolled RNN with many time steps can lead to the problems of vanishing / exploding gradients, and difficulties in learning long term dependencies.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>In this post, we're going to look at a the LSTM (Long Short Term Memory) model that is a variant of an RNN, but is designed specifically to combat the 2 issues.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>LSTM Structure</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Lets visually inspect the difference between a normal RNN cell and an LSTM cell.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":362} -->
+
+<figure class="wp-block-image">
+![](https://chanjinhao.files.wordpress.com/2019/03/lstm3-simplernn.png){.wp-image-362}
+
+<figcaption>
+An unrolled RNN cell
+
+</figcaption>
+</figure>
+
+<!-- /wp:image -->
+
+<!-- wp:image {"id":356} -->
+
+<figure class="wp-block-image">
+![](https://chanjinhao.files.wordpress.com/2019/03/lstm3-chain.png){.wp-image-356}
+
+<figcaption>
+An unrolled LSTM cell
+
+</figcaption>
+</figure>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>The A on each of the cells represent the Activation in the cell. In the RNN, this can either be a Sigmoid, tanh, ReLU, or other activation functions. In the LSTM however, its a combination of 3 Sigmoids and a tanh function.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The biggest difference, aside from the more complex internal structure of the LSTM, is that it has two connecting data pipelines from cell to cell.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Cell State</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>The top line of an LSTM cell represents the cell state</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":357,"align":"center"} -->
+
+<div class="wp-block-image">
+
+<figure class="aligncenter">
+![](https://chanjinhao.files.wordpress.com/2019/03/lstm3-c-line.png){.wp-image-357}
+</figure>
+
+</div>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>The LSTM has the ability to modify the cell state by removing information (through the multiplicative forget gate), or adding information (through the additive input gate)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>This data flow from cell to cell is modified by two operators: The multiplication operator, and the addition operator denoted by the two pink nodes</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>LSTM Gates</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>The LSTM has 3 gates in the cell:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+
+<ol>
+<li>Forget Gate</li>
+<li>Input gate</li>
+<li>Output Gate</li>
+</ol>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+
+<p>These gates modify the data that is flowing in and out of the LSTM cell</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":4} -->
+
+<h4>The Common Sigmoid Layer</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+
+<p>In all the 3 gates, there exists the common Sigmoid layer. This layer outputs a value from 0 to 1 for each state in the cell state.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":365,"align":"center","width":87,"height":106} -->
+
+<div class="wp-block-image">
+
+<figure class="aligncenter is-resized">
+![](https://chanjinhao.files.wordpress.com/2019/03/lstm3-gate.png){.wp-image-365 width="87" height="106"}  
+<figcaption>
+The common Sigmoid layer in all 3 gates
+</figcaption>
+</figure>
+
+</div>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>The Sigmoid layer outputs a value from 0 to 1. This value corresponds to a value in the cell state, and this would mean different things for different gates.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>In the Forget gate, 0 would mean forget the value in the cell state, and 1 would mean remember the value entirely.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>In the Input gate, 0 would mean do not update this value at all, and 1 would mean update the value entirely.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>In the Output gate, 0 would mean do not output this cell state value, and 1 would mean output this value entirely.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":4} -->
+
+<h4>Forget Gate</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+
+<p>The first gate is the forget gate. This gate decides what information to discard from the cell state.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>This gate has the Sigmoid activation function. It takes in the previous time step's output, and the current time step input.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":359} -->
+
+<figure class="wp-block-image">
+![](https://chanjinhao.files.wordpress.com/2019/03/lstm3-focus-f.png){.wp-image-359}
+
+</figure>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>The two inputs are concatenated, and passed through the Sigmoid layer.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Recall that a Sigmoid activation function outputs a value from 0 to 1. A value of 0 means completely forget this input value, while 1 means to remember the value entirely.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":4} -->
+
+<h4>Input Gate</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+
+<p>The next gate is the input gate, which is a combination of both the Sigmoid and tanh activation function. This gate decides what new information to add to the cell state.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":360} -->
+
+<figure class="wp-block-image">
+![](https://chanjinhao.files.wordpress.com/2019/03/lstm3-focus-i.png){.wp-image-360}
+
+</figure>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>There are two steps in the input gate phase</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>In the first step, the output of the previous time step and the input of the current time step are concatenated together, and passed into a Sigmoid. This layer decides which cell state values to update. (0 means do not update, 1 means update entirely)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The inputs are also passed into a tanh activation function, which tells the model what to update the cells states with.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The multiplicative combination of these two outputs tells us which cell state to update (from the sigmoid layer), and what to update it with (tanh layer)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":4} -->
+
+<h4>Output Gate</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+
+<p>The last gate, output gate, decides what value the cell would output. The output is derived from multiplying the outputs from the Sigmoid layer and tanh layer</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":361} -->
+
+<figure class="wp-block-image">
+![](https://chanjinhao.files.wordpress.com/2019/03/lstm3-focus-o.png){.wp-image-361}
+
+</figure>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>The Sigmoid layer takes in the previous and current time step values, and outputs values 0 to 1 for each value in the cell. A value of 0 means do not output this cell state value at all, and 1 means to output the entire value.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The tanh layer takes in the current cell state, which scales the values to be from -1 to 1. This value is then multiplied by the output of the Sigmoid layer to get the final output value.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Modification of the Cell State</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>The cell states in each LSTM cell are modified either by the forget gate, or the input gate.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":364} -->
+
+<figure class="wp-block-image">
+![](https://chanjinhao.files.wordpress.com/2019/03/lstm3-focus-c-2.png){.wp-image-364}
+
+</figure>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>The forget gate outputs values 0-1, and is multiplied by the cell state. Cell states multiplied by 0 will be completely forgotten, while those multiplied by value &gt; 0 will be remembered by varying degrees.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The input gate then updates each value in the cell state by a candidate amount (from the tanh layer), scaled by a factor (decided from the Sigmoid layer)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Conclusion</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>In each LSTM cell, there contains a cell state.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Forget gate decides what to drop from the cell state</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Input gate creates candidate values to update the cell state</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Output gate decides what values to output from the cell state</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Final Notes</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>I usually end with the conclusion, but all the information above was all the technical aspects of an LSTM. Here are some further questions relating to LSTM.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Q: What are you actually training when you do your Backpropagation through time on an LSTM?</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>A: Recall that the gates have to control what to forget, input and output from each LSTM cell. What exactly to forget, input and output are the variables being trained.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Q: So... how does it combat vanishing/exploding gradients?</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Gradients explode when their values are greater than 1, and vanish when their values are lesser than 1, and are backpropagated for too large a time step.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The key to LSTM preventing the vanexplgrad (I just made that up) is cell state updating step. Below shows the formula for updating the cell</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":369,"align":"center"} -->
+
+<div class="wp-block-image">
+
+<figure class="aligncenter">
+![](https://chanjinhao.files.wordpress.com/2019/03/untitled-1.png){.wp-image-369}  
+<figcaption>
+Calculating the current cell state using values from the previous cell state
+</figcaption>
+</figure>
+
+</div>
+
+<!-- /wp:image -->
+
+<!-- wp:list -->
+
+<ul>
+<li><code>c(t)</code> is the current cell state to compute</li>
+<li><code>i</code> is the input gate that decides which cell state to update, <code>g</code> is the actual value changes to be made to the cell state. These two are multiplied together to get final cell state changes.</li>
+<li><code>f</code> is the forget gate, and <code>c(t-1)</code> is the previous cell state. These two are multiplied to drop values from the previous cell state.</li>
+</ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+
+<p>When performing backpropagation, we find the derivative w.r.t the error. This gives us the formula</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":368,"align":"center"} -->
+
+<div class="wp-block-image">
+
+<figure class="aligncenter">
+![](https://chanjinhao.files.wordpress.com/2019/03/2.png){.wp-image-368}  
+<figcaption>
+Derivative of w.r.t the error
+</figcaption>
+</figure>
+
+</div>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>This formula does not have any multiplicative element in it, and so when BPTT occurs, a <em>linear carousel</em> occurs, thus preventing vanexplgrad.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<!-- /wp:paragraph -->
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/exploding-gradients.html">Exploding Gradients</a>
+      <a href="/tag/lstm.html">LSTM</a>
+      <a href="/tag/vanishing-gradients.html">Vanishing Gradients</a>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,464 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="jinhaochan" />
+<meta name="description" content="The Cyber Kill Chain (CKC) is a sequential set of steps that takes place when an attack happens. There are many variations of the CKC by different companies such as , but the &#34;trusted&#34; and most convincing variant is by Lockheed Martin. ![](https://chanjinhao.files.wordpress.com/2019/05/the-cyber-kill-chain-body.png …" />
+<meta name="keywords" content="Cyber kill chain">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="The Cyber Kill Chain"/>
+<meta property="og:description" content="The Cyber Kill Chain (CKC) is a sequential set of steps that takes place when an attack happens. There are many variations of the CKC by different companies such as , but the &#34;trusted&#34; and most convincing variant is by Lockheed Martin. ![](https://chanjinhao.files.wordpress.com/2019/05/the-cyber-kill-chain-body.png …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/the-cyber-kill-chain.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2019-05-13 16:52:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/jinhaochan.html">
+<meta property="article:section" content="Hacking, Security"/>
+<meta property="article:tag" content="Cyber kill chain"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; The Cyber Kill Chain</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+          <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+          <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+          <li><a href="#" target="_blank">You can modify those links in your config file</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-You can add links in your config file" href="#" target="_blank"><i class="fa fa-You can add links in your config file"></i></a></li>
+        <li><a class="sc-Another social link" href="#" target="_blank"><i class="fa fa-Another social link"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="the-cyber-kill-chain">The Cyber Kill Chain</h1>
+    <p>
+          Posted on Mon 13 May 2019 in <a href="/category/hacking-security.html">Hacking, Security</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <!-- wp:paragraph -->
+
+<p>The Cyber Kill Chain (CKC) is a sequential set of steps that takes place when an attack happens. There are many variations of the CKC by different companies such as , but the "trusted" and most convincing variant is by Lockheed Martin.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":447} -->
+
+<figure class="wp-block-image">
+![](https://chanjinhao.files.wordpress.com/2019/05/the-cyber-kill-chain-body.png.pc-adaptive.1920.medium.png){.wp-image-447}
+
+</figure>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>This CKC is pretty straightforward, and by disrupting any part of the kill chain, you can stop the final attack, which is "Actions On Objectives"</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>At each step, there are examples of what an Adversary could do, and what Defenders can do to detect or disrupt it.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Reconnaissance</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Before carrying out the attack, the adversary will scope out and survey the target. This phase is extremely broad, and can cover technical and non-technical aspects.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>For example, they can find out the working hours of your system administrator to plan the right time to attack, or find out what version of OS and email application the company is using. They can harvest emails or contact information through OSINT channels, or social media. They can find scan for open services in the company network.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Because of such a broad scope of activities, it's almost impossible to be aware that someone is performing reconnaissance on your company. What you can do however lies on the technical side, such as:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+
+<ul>
+<li>Enabling logging for your webservers to detect any sort of scraping or probing.</li>
+<li>Disabling all unneeded services</li>
+<li>Disabling ICMP responses</li>
+<li>Properly configuring your Firewall to log and prevent network traffic</li>
+</ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+
+<p><strong>Detection</strong>:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>-</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p><strong>Prevention</strong>:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The goal here is to prevent information leakage, as well as detecting information probing attempts. Knowing that an attack is going to happen is the first step to protecting yourself.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Weaponization</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>In this stage, the adversary starts to prepare the payload for attack.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Given the information he got from reconnaissance, he can build tools specific for OS versions, application versions or Firewall versions. Since this phase of the attack happens outside the victims circle of control, there is no way of detecting when Weaponization happens.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p><strong>Detection:</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>-</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p><strong>Prevention:</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>One possible way of neutralizing this phase is to do regular security assessments of your infrastructure, and detect if any applications or versions are vulnerable, and perform patching to secure those assets.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>By doing so, you are preventing, or making it very hard for adversaries to perform Weaponization.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Delivery</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>In the delivery stage, the attacker sends the Weaponized tools to the victim, either via software (Email, links, direct to the webserver) or physical means (USB insertion)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>This is the most crucial stage for defenders. Knowing what are all the possible vectors of attacks, and either mitigating it, or eliminating it if possible.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>You must know which are your most important infrastructures that are connected to the most important assets, and make sure that they are well secured with various layers of security.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p><strong>Detection:</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Logging must also be enabled to detect any point of entry, such as email logs, web logs and endpoint logs.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p><strong>Prevention:</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Airgapped machines, web proxies and proper staff security education all limit the vectors of delivery.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Exploitation</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>If you failed to prevent Delivery, the adversaries would be able to enter the machine. Once inside, the next step for them is to perform exploitation to either gain privilege escalation, or to gain unauthorized information. This can either be a software or hardware vulnerability that the adversary leverages on.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Preventing exploitation is a huge monster of a topic on it's own, but basically it revolves around patching your systems, making sure appropriate security controls are in place, and properly educating your staff on security issues like phishing emails and malicious links.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Also, regular security assessments should be done to lock down all possible edge cases.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p><strong>Detection:</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Endpoint security and application logging</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p><strong>Prevention:</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>By hardening your systems and educating your users, you're limiting the amount of damage that can be done if the adversary is within your network.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Installation</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Once the adversary gets into your system and performs exploitation, it is highly likely that he would have escalated privileges, and can install other tools he wants to allow him to perform other actions.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>These tools includes keyloggers, rootkits, backdoors, webshells or scripts.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p><strong>Detection:</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Detection at this phase involves behavioral analysis. HIPS, endpoint detection tools, and log analysis can be used to detect anomalous activities on both the endpoint and network.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p><strong>Prevention:</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>At this phase, since the adversary already has exploited the system and has escalated privilege. There is little you can do to prevention, but only detection and performing remediation.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Command &amp; Control</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>After installing rootkits and backdoors, the malware needs to receive commands remotely from their server. This is done by establishing a C2 connection out from the victim machine to the adversary.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>C2 communication is hard to detect, and it can take place under commonly used ports and services such as HTTP, DNS or SMTP.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p><strong>Detection:</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Network based detection can be used to find anomalous activities on the network. Web proxies to log all traffic for analysis.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p><strong>Prevention:</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Blocking and preventing unauthorized network traffic. Disabling unneeded services that connect out to the internet. Close unused ports. Honey pots to study the C2 traffic.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Actions On Objectives</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>In the CKC, it shows this as the final step after performing all previous actions. Actions On Objects could mean acquiring user credentials, collecting and exfiltrating data or lateral movement. But these actions need not be the final step of the CKC, after establishing a C2 or performing Exploitation.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Depending on the objective the adversary wants to perform, Actions On Objectives could actually happen after the Exploitation phase onward.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>This phase is an accumulation of steps, thus there is no single point of detection or prevention. To disrupt this part of the kill chain, you have to target all preceding parts of the CKC.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p><strong>Detection:</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Logging on network and endpoint to perform anomaly detection.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p><strong>Prevention:</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Preventing Delivery and Exploitation would prevent the adversaries to perform any Actions, thus preventing this final step of the CKC.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Installation cannot be prevented, since it assumes that the adversary has escalated privileges, and a C2 connection may not be required to perform an Action On Objectives.</p>
+<!-- /wp:paragraph -->
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/cyber-kill-chain.html">Cyber kill chain</a>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>

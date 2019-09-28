@@ -1,0 +1,215 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="jinhaochan" />
+<meta name="description" content="During my course of security research work, I came across this concept of web beacons, which is a clever way of knowing who has opened up a document. A Web Beacon is an element inside the document, that is not a saved resource. Rather, the element sends a request out …" />
+<meta name="keywords" content="Web Beacons">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="Web Beacon for Trip wiring documents"/>
+<meta property="og:description" content="During my course of security research work, I came across this concept of web beacons, which is a clever way of knowing who has opened up a document. A Web Beacon is an element inside the document, that is not a saved resource. Rather, the element sends a request out …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/web-beacon-for-trip-wiring-documents.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2019-03-03 14:25:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/jinhaochan.html">
+<meta property="article:section" content="Security"/>
+<meta property="article:tag" content="Web Beacons"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; Web Beacon for Trip wiring documents</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+          <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+          <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+          <li><a href="#" target="_blank">You can modify those links in your config file</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-You can add links in your config file" href="#" target="_blank"><i class="fa fa-You can add links in your config file"></i></a></li>
+        <li><a class="sc-Another social link" href="#" target="_blank"><i class="fa fa-Another social link"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="web-beacon-for-trip-wiring-documents">Web Beacon for Trip wiring documents</h1>
+    <p>
+          Posted on Sun 03 March 2019 in <a href="/category/security.html">Security</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <!-- wp:paragraph -->
+
+<p>During my course of security research work, I came across this concept of web beacons, which is a clever way of knowing who has opened up a document.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>A Web Beacon is an element inside the document, that is not a saved resource. Rather, the element sends a request out to a server to retrieve the resource. An example of this would be an image tag, that requests the image resource from a server.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>For example, writing this piece of code fetches the image resource from www.w3schools.com server:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p><code>img src="https://www.w3schools.com/images/w3schools_green.jpg" alt="W3Schools.com" style="width:104px;height:142px;"</code></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"align":"center"} -->
+
+<div class="wp-block-image">
+
+<figure class="aligncenter">
+![W3Schools.com](https://www.w3schools.com/images/w3schools_green.jpg)  
+<figcaption>
+Image retrieved from w3 schools
+</figcaption>
+</figure>
+
+</div>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>It's a very simple concept, and we can make use of this functionality and twist it to be a defensive tool</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Web Server Request Tracking</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>If we can setup our own server that hosts resources, we can secretly embed invisible images, or elements that makes requests to our servers to retrieve those resources.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>This way, when the document is opened, the tries to render itself by making a request to our server for the resource. It acts as a tripwire that immediately triggers the moment the document is opened. And as the image is is not obvious to the threat actor, he would not be aware of this callback.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Improvements?</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>The obvious drawback to this is that, once the document is taken to an offline premise, the image can no longer make a request to our server. This means that we will not be notified when the tripwire is activated.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The second drawback is: So what?</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>So what if I know if the document has been opened by some unauthorized person, or in another location? What can I do to prevent him from opening it? Some simple solutions that I came up with are:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>If the requesting IP address is not in the whitelist, we return an extremely huge image, hopefully to make the document hang and not be usable.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Another improvement is, aside from image resources, what other resources can be requested, and hopefully such resources can be "executed". Of course, such a solution is considered intrusive, because then it can be used in malicious ways for remote code execution.</p>
+<!-- /wp:paragraph -->
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/web-beacons.html">Web Beacons</a>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>

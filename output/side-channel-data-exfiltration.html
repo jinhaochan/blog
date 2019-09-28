@@ -1,0 +1,258 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="jinhaochan" />
+<meta name="description" content="A typical data exfiltration attack can be quite easy to spot. By monitoring the usage of common protocols such as HTTP, HTTPS, FTP or even DNS, we can deduce if a data exfiltration is taking place. Most modern DLP (Data Leak Prevention) solutions today that incorporate network analysis can perform …" />
+<meta name="keywords" content="data exfiltration">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="Side Channel Data Exfiltration"/>
+<meta property="og:description" content="A typical data exfiltration attack can be quite easy to spot. By monitoring the usage of common protocols such as HTTP, HTTPS, FTP or even DNS, we can deduce if a data exfiltration is taking place. Most modern DLP (Data Leak Prevention) solutions today that incorporate network analysis can perform …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/side-channel-data-exfiltration.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2019-05-10 14:39:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/jinhaochan.html">
+<meta property="article:section" content="Hacking, Networking, Security"/>
+<meta property="article:tag" content="data exfiltration"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; Side Channel Data Exfiltration</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+          <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+          <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+          <li><a href="#" target="_blank">You can modify those links in your config file</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-You can add links in your config file" href="#" target="_blank"><i class="fa fa-You can add links in your config file"></i></a></li>
+        <li><a class="sc-Another social link" href="#" target="_blank"><i class="fa fa-Another social link"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="side-channel-data-exfiltration">Side Channel Data Exfiltration</h1>
+    <p>
+          Posted on Fri 10 May 2019 in <a href="/category/hacking-networking-security.html">Hacking, Networking, Security</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <!-- wp:paragraph -->
+
+<p>A typical data exfiltration attack can be quite easy to spot. By monitoring the usage of common protocols such as HTTP, HTTPS, FTP or even DNS, we can deduce if a data exfiltration is taking place.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Most modern DLP (Data Leak Prevention) solutions today that incorporate network analysis can perform such detection across multiple protocols. In fact, a simple data analysis by SIEMs and a competent analyst can point out anomalies in traffic behavior and protocol usage.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The bad guys are well aware of this, and thus are looking for many innovative ways to exfiltrate data that does not leverage on typical protocols, of even the network at all. I came across a few that I found were extremely interesting:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Data Transfer over Ultrasonic Frequency</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p><a href="https://github.com/jamesonrader/CUE-Ultrasonic-Transmissions-Protocol">https://github.com/jamesonrader/CUE-Ultrasonic-Transmissions-Protocol</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>On the write up, it has <strong><em>"No reliance on a data connection, including Wi-Fi, Bluetooth, or cellular service."</em></strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>As of now, the advertised usage is targeted at various marketing activities during events at a stadium. One example usage was <strong><em>"Triggering commands on the smartphone through a television broadcast, online video, radio commercial, film and movies."</em></strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>If you can send commands, you can send data. If you can send data, it's data exfiltration.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Data Transfer over Screen Interfaces</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p><a href="https://github.com/pentestpartners/PTP-RAT">https://github.com/pentestpartners/PTP-RAT</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p><a href="https://www.pentestpartners.com/security-blog/exfiltration-by-encoding-data-in-pixel-colour-values/">https://www.pentestpartners.com/security-blog/exfiltration-by-encoding-data-in-pixel-colour-values/</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>This package is more straightforward as malicious tool.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>You have a sender (Victim) and a receiver (C2). The victim has his machine compromised, and has established an RDP connection back to the C2. To get the RDP connection in the first place can be done by tunneling through SSH: <a href="https://serverfault.com/questions/200249/how-to-tunnel-windows-remote-desktop-through-ssh-using-a-linux-box">https://serverfault.com/questions/200249/how-to-tunnel-windows-remote-desktop-through-ssh-using-a-linux-box</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Once the RDP connection is established, this tool shows that data exfiltration can be performed by encoding data into pixels, which on the receiver end, can read the screen decode them.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:core-embed/youtube {"url":"https://www.youtube.com/watch?time_continue=1\u0026v=hpw8Lz5Fg9I","type":"rich","providerNameSlug":"","className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"} -->
+
+<figure class="wp-block-embed-youtube wp-block-embed is-type-rich wp-embed-aspect-16-9 wp-has-aspect-ratio">
+<div class="wp-block-embed__wrapper">
+
+https://www.youtube.com/watch?time\_continue=1&v=hpw8Lz5Fg9I
+
+</div>
+
+</figure>
+
+<!-- /wp:core-embed/youtube -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Data Transfer over Hardware Manipulation</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Perhaps the most interesting of all is hijacking and manipulating the physical machine itself. In the event of an air-gapped machine where no network connection is present, getting data out can be very challenging. (Getting into an air-gapped machine is even more challenging, and can involve really complex scenarios such as supply-chain attacks)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>This paper explain how it's possible to control the blinking of LED lights and, using a recording device, capture the blinking sequences to reconstruct data: <a href="https://arxiv.org/abs/1706.01140">https://arxiv.org/abs/1706.01140</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Even more innovative ones take control of the PC fans, and control the RPM to produce sound based data encoding: <a href="https://www.technologyreview.com/s/601816/how-fansmitter-malware-steals-data-from-air-gapped-computers/">https://www.technologyreview.com/s/601816/how-fansmitter-malware-steals-data-from-air-gapped-computers/</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>End Notes</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>The techniques are endless, and as attackers continue to get more innovative, the list will continue to grow. That being said, all these attacks are considerably hard to pull off, and what we as defenders can do is the bare minimum of preventing easy ways of data exfiltration over the network.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Once we raise the difficulty threshold of data exfiltration to a certain level, then should we start worrying about such innovative and out of the box methods. Get the basics right first!</p>
+<!-- /wp:paragraph -->
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/data-exfiltration.html">data exfiltration</a>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>

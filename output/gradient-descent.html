@@ -1,0 +1,284 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="jinhaochan" />
+<meta name="description" content="A machine learning model consists of weights, and those weights, given a set of inputs, are used in the calculation process to produce a prediction. The prediction is then fed into a loss function, to calculate the the total error. Using this error, we feed it into an optimization algorithm …" />
+<meta name="keywords" content="Gradient Descent">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="Gradient Descent"/>
+<meta property="og:description" content="A machine learning model consists of weights, and those weights, given a set of inputs, are used in the calculation process to produce a prediction. The prediction is then fed into a loss function, to calculate the the total error. Using this error, we feed it into an optimization algorithm …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/gradient-descent.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2019-02-03 20:10:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/jinhaochan.html">
+<meta property="article:section" content="Data Science"/>
+<meta property="article:tag" content="Gradient Descent"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; Gradient Descent</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+          <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+          <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+          <li><a href="#" target="_blank">You can modify those links in your config file</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-You can add links in your config file" href="#" target="_blank"><i class="fa fa-You can add links in your config file"></i></a></li>
+        <li><a class="sc-Another social link" href="#" target="_blank"><i class="fa fa-Another social link"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="gradient-descent">Gradient Descent</h1>
+    <p>
+          Posted on Sun 03 February 2019 in <a href="/category/data-science.html">Data Science</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <!-- wp:paragraph -->
+
+<p>A machine learning model consists of weights, and those weights, given a set of inputs, are used in the calculation process to produce a prediction. The prediction is then fed into a loss function, to calculate the the total error. Using this error, we feed it into an optimization algorithm, which goes back to the model and tweaks the weights.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>This tweaking process is the learning, and how we do the tweaking is optimization algorithm.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>There are a few popular ways to perform weight tweaking and model optimization, that is, how do we decide how to tweak the weights. In this post, we're going to be talking about Gradient Descent.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Gradient Descent</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>In our model, assume we have 2 weights, w1 and w2, for optimization.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>We can plot all possible weights w1 and w2 can have, to all possible errors on a graph, and this will produce an bowl shape, where the bottom of the bowl corresponds to the lowest possible error.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":165} -->
+
+<figure class="wp-block-image">
+![](https://chanjinhao.files.wordpress.com/2018/11/gradient_descent_method.png){.wp-image-165}
+
+<figcaption>
+The X and Y axis represents the values of w1 and w2.  
+The Z axis represents the values of the error.
+
+</figcaption>
+</figure>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>What we're tweaking here are the values of  w1 and w2. When we start shifting the values around the X and Y axis, the point on the bowl shape also shifts correspondingly. The goal here is to tweak the values of w1 and w2 such that the point on the bowl rests directly at the bottom, which has the lowest error value.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>So how do we know, at each point of time on the bowl shape, where do we move to? Here's where we calculate the gradient of that point of the bowl. At the bottom of the bowl, the gradient will be 0, because it'll be a horizontal surface. All other points on the bowl will have a non-zero gradient value.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":166} -->
+
+<figure class="wp-block-image">
+![](https://chanjinhao.files.wordpress.com/2018/11/512px-gradient_descent-svg.png){.wp-image-166}
+
+<figcaption>
+Top down view of the bowl. As we shift w1 and w2 around, the point on the bowl shifts as well. We want the point to slowly traverse towards the center, where error is minimized.
+
+</figcaption>
+</figure>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>The heuristic we'll use is to a new point such that the new gradient value on the bowl is getting smaller. This is the idea of descending gradient, until it reaches a minimum.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>One hyper-parameter we can tune in our optimization algorithm is how fast the point moves. That is to say, at each descent step, how far away should the new point be. A big step might get you to the bottom faster, but you might end up overshooting, and be perpetually oscillating around the bottom, never reaching the end. A small step on the other hand will take a much longer time. This distance of each descent step is called the <strong>learning rate</strong>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>In mathematical terms, Gradient Descent is the partial derivative of the error or loss function, with respect to the weights.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Stochastic Gradient Descent</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>The process we described above is the vanilla way of doing Gradient Descent, and it's called <strong>Batch Gradient Descent</strong>. This means that we take all the possible data points in a single batch, and compute the error surface, or the bowl.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>In reality, the error surface isn't always so smooth in the shape of a bowl, but may consist several saddle points. Saddle points are points on the graph that are almost horizontal, but it's not the true minimum of the graph. This can lead to an issue of early stoppage, where our Gradient Descent thinks it has found the lowest point on the error surface.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":167} -->
+
+<figure class="wp-block-image">
+![](https://chanjinhao.files.wordpress.com/2018/11/saddle_point-svg.png){.wp-image-167}
+
+<figcaption>
+The point stops at a saddle point, which has a zero gradient as well. Clearly that is not the lowest point on the graph, and our algorithm has prematurely halted.  
+
+</figcaption>
+</figure>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>One of the solutions to this is <strong>Stochastic Gradient Descent</strong>. In batch, we take all possible data points and plot the error surface. In Stochastic, we only use one single data point, and we estimate the error surface. The result is a dynamic error surface, which decreases the chance of us encountering a saddle point.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The downside to Stochastic Gradient Descent is that we're performing an estimation of the error surface based only on 1 point, which may not be an accurate representation of the error surface.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>And the obvious solution to this is called <strong>Mini-Batch Gradient Descent</strong>, where instead of performing the error surface estimation based on one point, we use a group of points, or mini batches.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Conclusion</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>To recap, in this post we've talked about one of the optimization algorithm, Gradient Descent. This algorithm tells you how to tweak your weights to minimize the loss function of your model.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>There are three models, each improving on the other:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+
+<ol>
+<li>Batch Gradient Descent: Plots the error surface based on all points. This might lead to early convergence on saddle points.</li>
+<li>Stochastic Gradient Descent: Estimates and plots the error surface based on a single point. This leads to a poor estimation of the error surface.</li>
+<li>Mini-batch Gradient Descent: Uses small batches of the data set to perform the error surface estimation.</li>
+</ol>
+<!-- /wp:list -->
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/gradient-descent.html">Gradient Descent</a>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>

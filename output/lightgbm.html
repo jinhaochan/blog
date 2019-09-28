@@ -1,0 +1,266 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="jinhaochan" />
+<meta name="description" content="For some time, XGBoost was considered the Kaggle-Killer, being the winning model for most prediction problems. Recently Microsoft released their own gradient boosting framework called LightGBM, and it is way faster than XGB. In this post, I&#39;m going to touch on the interesting portions of LightGBM. What is LightGBM? Similar …" />
+<meta name="keywords" content="">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="LightGBM"/>
+<meta property="og:description" content="For some time, XGBoost was considered the Kaggle-Killer, being the winning model for most prediction problems. Recently Microsoft released their own gradient boosting framework called LightGBM, and it is way faster than XGB. In this post, I&#39;m going to touch on the interesting portions of LightGBM. What is LightGBM? Similar …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/lightgbm.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2019-03-24 12:33:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/jinhaochan.html">
+<meta property="article:section" content="Data Science"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; LightGBM</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+          <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+          <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+          <li><a href="#" target="_blank">You can modify those links in your config file</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-You can add links in your config file" href="#" target="_blank"><i class="fa fa-You can add links in your config file"></i></a></li>
+        <li><a class="sc-Another social link" href="#" target="_blank"><i class="fa fa-Another social link"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="lightgbm">LightGBM</h1>
+    <p>
+          Posted on Sun 24 March 2019 in <a href="/category/data-science.html">Data Science</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <!-- wp:paragraph -->
+
+<p>For some time, XGBoost was considered the Kaggle-Killer, being the winning model for most prediction problems. Recently Microsoft released their own gradient boosting framework called LightGBM, and it is way faster than XGB. In this post, I'm going to touch on the interesting portions of LightGBM.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>What is LightGBM?</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Similar to XGBoost, LightGBM is a gradient boosted tree based algorithm. Unlike other gradient boosted trees which grows hroizontally, LightGBM grows vertically. LightGBM grows Leaf-wise, while others grow Level-wise.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":227} -->
+
+<figure class="wp-block-image">
+![](https://chanjinhao.files.wordpress.com/2018/12/1-AZsSoXb8lc5N6mnhqX5JCg-1.png){.wp-image-227}
+
+<figcaption>
+LightGBM leaf-wise growth. This allows for deeper vertical growth
+
+</figcaption>
+</figure>
+
+<!-- /wp:image -->
+
+<!-- wp:image {"id":228} -->
+
+<figure class="wp-block-image">
+![](https://chanjinhao.files.wordpress.com/2018/12/1-whSa8rY4sgFQj1rEcWr8Ag-1.png){.wp-image-228}
+
+<figcaption>
+Other gradient boosted algortihms grow level wise, which results in longer horizontal growth
+
+</figcaption>
+</figure>
+
+<!-- /wp:image -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Dealing with Non-Numeric Data</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>The nice thing about LightGBM is that it can take in data as a whole, and it does not require inputs to be converted into numerical format! This means that if your data has a mix of numbers and strings, you can simply throw everything into the model to learn.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The one thing you have to do however, is to specify the string columns as <code>category</code>. Below is a example of how we do it with Pandas Dataframe</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+
+<div class="highlight"><pre><span></span><span class="n">dtypes</span> <span class="o">=</span> <span class="err">{</span>
+        <span class="s1">&#39;MachineIdentifier&#39;</span><span class="p">:</span><span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;ProductName&#39;</span><span class="p">:</span> <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;EngineVersion&#39;</span><span class="p">:</span> <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;AppVersion&#39;</span><span class="p">:</span><span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;AvSigVersion&#39;</span><span class="p">:</span><span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;IsBeta&#39;</span><span class="p">:</span><span class="s1">&#39;int8&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;RtpStateBitfield&#39;</span><span class="p">:</span><span class="s1">&#39;float16&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;IsSxsPassiveMode&#39;</span><span class="p">:</span><span class="s1">&#39;int8&#39;</span>
+<span class="err">}</span>
+
+<span class="n">df_train</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;train.csv&#39;</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">2000000</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtypes</span><span class="p">)</span>
+</pre></div>
+
+
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+
+<p>Or if you're creating new features, you have to recast the datatype of the new column to categories</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+
+<div class="highlight"><pre><span></span><span class="k">for</span> <span class="nv">feature</span> <span class="nv">in</span> <span class="nv">newFeatures</span>:
+    <span class="nv">Train</span>[<span class="nv">feature</span> ] <span class="o">=</span> <span class="nv">Train</span>[<span class="nv">feature</span> ].<span class="nv">astype</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">category</span><span class="s1">&#39;</span><span class="ss">)</span>
+</pre></div>
+
+
+<!-- /wp:code -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Important Parameters to Tune</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>LightGBM has a huge array of parameters to tune, and I wont be listing them here. I will however be highlighting those I think are important, and has helped me increase my model predictions</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+
+<ul>
+<li><code>max_depth</code>: Defines how deep the tree grows</li>
+<li><code>num_leaves</code>: Defines the maximum number of leaves in a node</li>
+<li><code>max_bin</code>: Defines the maximum number of bins your feature will be bucketed in</li>
+</ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+
+<p>For a more comprehensive read, <a href="https://lightgbm.readthedocs.io/en/latest/Parameters-Tuning.html">click here!</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Conclusion</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>In this short post, we've very briefly covered about LightGBM, how it is different from other gradient boosted machines, and how to define categories for training.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>An important thing to know is that LightGBM is very sensitive to overfitting, and should not be used for small data sets &lt;10,000 rows.</p>
+<!-- /wp:paragraph -->
+  </div>
+  <div class="tag-cloud">
+    <p>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>

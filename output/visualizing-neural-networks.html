@@ -1,0 +1,333 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="jinhaochan" />
+<meta name="description" content="Neural Networks have always been sort of a black box when it comes to it&#39;s implementation, and how it produces good results. I came across some material that shows visually, how the neural networks morph the problem space so that they are separable. Simple Data Here&#39;s a sample graph that …" />
+<meta name="keywords" content="">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="Visualizing Neural Networks"/>
+<meta property="og:description" content="Neural Networks have always been sort of a black box when it comes to it&#39;s implementation, and how it produces good results. I came across some material that shows visually, how the neural networks morph the problem space so that they are separable. Simple Data Here&#39;s a sample graph that …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/visualizing-neural-networks.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2019-05-19 09:31:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/jinhaochan.html">
+<meta property="article:section" content="Data Science"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; Visualizing Neural Networks</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+          <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+          <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+          <li><a href="#" target="_blank">You can modify those links in your config file</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-You can add links in your config file" href="#" target="_blank"><i class="fa fa-You can add links in your config file"></i></a></li>
+        <li><a class="sc-Another social link" href="#" target="_blank"><i class="fa fa-Another social link"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="visualizing-neural-networks">Visualizing Neural Networks</h1>
+    <p>
+          Posted on Sun 19 May 2019 in <a href="/category/data-science.html">Data Science</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <!-- wp:paragraph -->
+
+<p>Neural Networks have always been sort of a black box when it comes to it's implementation, and how it produces good results. I came across some material that shows visually, how the neural networks morph the problem space so that they are separable.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Simple Data</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Here's a sample graph that is not linearly separable:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":302,"align":"center","width":284,"height":277} -->
+
+<div class="wp-block-image">
+
+<figure class="aligncenter is-resized">
+![](https://chanjinhao.files.wordpress.com/2019/02/simple2_data.png){.wp-image-302 width="284" height="277"}
+</figure>
+
+</div>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>When we try to use a linear model to discriminate the two data, we get a poorly separated model:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":303,"align":"center","width":278,"height":271} -->
+
+<div class="wp-block-image">
+
+<figure class="aligncenter is-resized">
+![](https://chanjinhao.files.wordpress.com/2019/02/simple2_linear.png){.wp-image-303 width="278" height="271"}
+</figure>
+
+</div>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>Neural Networks, with the interactions of their hidden layers and nodes, are able to learn more complex information about the graph to plot a non-linear separation:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":304,"align":"center","width":270,"height":263} -->
+
+<div class="wp-block-image">
+
+<figure class="aligncenter is-resized">
+![](https://chanjinhao.files.wordpress.com/2019/02/simple2_0.png){.wp-image-304 width="270" height="263"}
+</figure>
+
+</div>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>What a Neural Networks does is that it warps the space of the problem so that it becomes more separable. The hidden layers in the network transforms the problem space by representing it in a different way</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":305,"align":"center","width":281,"height":274} -->
+
+<div class="wp-block-image">
+
+<figure class="aligncenter is-resized">
+![](https://chanjinhao.files.wordpress.com/2019/02/simple2_1.png){.wp-image-305 width="281" height="274"}
+</figure>
+
+</div>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>By warping the problem space with the hidden layers, we see that it's able to linearly separate the two distributions. That's pretty cool! So what the neural network is doing is finding the most optimal way to represent the problem that is discriminative.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>So what happens if the data distribution is too complex, or your neural network model is too simple (too shallow) that it can't properly represent the data?</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Spiral Data</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Given a complex data set that resembles a spiral shape, and a neural network model that is too simple, we can see it struggling to find a representation that is separable. This means that there is not enough hidden layers and hidden nodes to transform the data. We need to go deeper!</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":308,"align":"center","width":364,"height":355} -->
+
+<div class="wp-block-image">
+
+<figure class="aligncenter is-resized">
+![](https://chanjinhao.files.wordpress.com/2019/02/spiral.2.2-2-2-2-2-2-2.gif){.wp-image-308 width="364" height="355"}
+</figure>
+
+</div>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>Here's the same spiral graph, but with enough hidden layers and nodes to transform the spiral data to a separable space. We can see the model separating the data very clearly</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":307,"align":"center","width":344,"height":336} -->
+
+<div class="wp-block-image">
+
+<figure class="aligncenter is-resized">
+![](https://chanjinhao.files.wordpress.com/2019/02/spiral.1-2.2-2-2-2-2-2-1.gif){.wp-image-307 width="344" height="336"}
+</figure>
+
+</div>
+
+<!-- /wp:image -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>More Complex Data</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>In the last example, we see a more complex example, and see how a neural network can separate the data.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":309,"align":"center","width":376,"height":283} -->
+
+<div class="wp-block-image">
+
+<figure class="aligncenter is-resized">
+![](https://chanjinhao.files.wordpress.com/2019/02/topology_base.png){.wp-image-309 width="376" height="283"}
+</figure>
+
+</div>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>Given a circular topology data, a shallow neural network will have difficulties trying to separate the data from the inside and outer ring. We see it trying to pull apart the data like how it did with the spiral data, but it fails to do so</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":310,"align":"center","width":351,"height":343} -->
+
+<div class="wp-block-image">
+
+<figure class="aligncenter is-resized">
+![](https://chanjinhao.files.wordpress.com/2019/02/topology_2d-2d_train.gif){.wp-image-310 width="351" height="343"}
+</figure>
+
+</div>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>By introducing more hidden layers and nodes and going deeper, we see that the data is able to be extracted out into another dimension, making it separable!  </p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":311} -->
+
+<figure class="wp-block-image">
+![](https://chanjinhao.files.wordpress.com/2019/02/topology_3d.png){.wp-image-311}
+
+</figure>
+
+<!-- /wp:image -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Conclusion</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>In this post, I wanted to show how neural networks warp the space of the data make them separable, and how a shallow network might fail to perform well.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>By adding more hidden layers and nodes, we are able to morph and warp the space into different dimensions, representing them differently and making them discriminative</p>
+<!-- /wp:paragraph -->
+  </div>
+  <div class="tag-cloud">
+    <p>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>

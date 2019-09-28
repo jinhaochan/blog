@@ -1,0 +1,246 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="jinhaochan" />
+<meta name="description" content="The ROC curve and it&#39;s AUC is a common metric for evaluation the performance of a model. In this post, we dig deeper to find out how to interpret the results, and what corrective actions to take to improve it. What is it? The ROC curve, or Receiver Operating Characteristic …" />
+<meta name="keywords" content="">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="The Interpretation of ROC and AUC"/>
+<meta property="og:description" content="The ROC curve and it&#39;s AUC is a common metric for evaluation the performance of a model. In this post, we dig deeper to find out how to interpret the results, and what corrective actions to take to improve it. What is it? The ROC curve, or Receiver Operating Characteristic …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/the-interpretation-of-roc-and-auc.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2019-04-14 12:52:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/jinhaochan.html">
+<meta property="article:section" content="Data Science"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; The Interpretation of ROC and AUC</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+          <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+          <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+          <li><a href="#" target="_blank">You can modify those links in your config file</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-You can add links in your config file" href="#" target="_blank"><i class="fa fa-You can add links in your config file"></i></a></li>
+        <li><a class="sc-Another social link" href="#" target="_blank"><i class="fa fa-Another social link"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="the-interpretation-of-roc-and-auc">The Interpretation of ROC and AUC</h1>
+    <p>
+          Posted on Sun 14 April 2019 in <a href="/category/data-science.html">Data Science</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <!-- wp:paragraph -->
+
+<p>The ROC curve and it's AUC is a common metric for evaluation the performance of a model. In this post, we dig deeper to find out how to interpret the results, and what corrective actions to take to improve it.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>What is it?</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>The ROC curve, or Receiver Operating Characteristic curve works on binary classification problems (True or False). It plots the following values against each other:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+
+<ul>
+<li>True Positive Rate (TPR): Of those sample that are true, how many did I predict are true? This is also known as Recall (<code>TP/P</code>, where <code>TP</code> is how many True samples predicted True, and <code>P</code> is the total number of True samples)</li>
+<li>False Positive Rate (FPR): Of those samples that are false, how many did I predict are true? This is also known as False Alarms (<code>FP/N</code>, where <code>FP</code> is how many False samples predicted True, and <code>N</code> is the total number of False samples)</li>
+</ul>
+<!-- /wp:list -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>So... What is it?</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>Now that we got the formal definitions out of the way, lets talk about the intuition behind the ROC and AUC.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The TPR is also called <strong>sensitivity</strong>, which means how many in the <strong>true positives</strong> have I identified to be <strong>True</strong>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>TNR (True Negative Rate) is also called <strong>specificity</strong>, which means how many in the <strong>true negatives</strong> have I identified to be <strong>False</strong>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>FPR is (<code>1 - TNR</code>), which means how many in the <strong>true negatives</strong> have I identified to be <strong>True</strong>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The ROC curve plots TPR against FPR.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":257,"align":"center"} -->
+
+<div class="wp-block-image">
+
+<figure class="aligncenter">
+![](https://chanjinhao.files.wordpress.com/2019/01/roc-curves.png){.wp-image-257}  
+<figcaption>
+Plotting the TPR against the FPR. There are 4 scenarios here
+</figcaption>
+</figure>
+
+</div>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>The top left graph shows the perfect scenario, where the Area Under Curve (AUC) is 1. This means that the model has 100% TPR, regardless of my FPR rate, and correctly classifies all True samples as True.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The bottom right graph shows a random classifier, which is randomly separated.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The question to ask is: what is the lowest possible FPR, that can give me the highest FPR?</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>If we look at the perfect scenario, the highest possible TPR corresponds to an almost 0 FPR. That's perfect! It means the model made no classification errors (Excellent Precision and Recall)</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Looking at the random separation, the highest TPR corresponds to the highest FPR, which is horrible. It means that for my model to get a good Recall, I must predict all my False samples to be True as well.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Conclusion</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>A good model will thus have a lower FPR that will give a reasonable TPR (Reasonable here depends on the scenario and use case).</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>Another way to look at it is, to get a good Recall, what is the amount of Precision I have to sacrifice.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>If the model has to sacrifice a lot of Precision to get a good Recall, then it is a bad model. If the model does not have to sacrifice any Precision (In the case of the perfect scenario), then it is a good model.  </p>
+<!-- /wp:paragraph -->
+  </div>
+  <div class="tag-cloud">
+    <p>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>

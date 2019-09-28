@@ -1,0 +1,287 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="jinhaochan" />
+<meta name="description" content="Earlier this week, I wrote a post on DNS tunneling, and how to pass information over the web through the DNS protocol by stuffing information in the DNS Name Resolution process. In this post, we&#39;re going to look at how to setup and host your own DNS server. And because …" />
+<meta name="keywords" content="DNS">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="Hosting your own DNS (and how to setup DNS tunneling)"/>
+<meta property="og:description" content="Earlier this week, I wrote a post on DNS tunneling, and how to pass information over the web through the DNS protocol by stuffing information in the DNS Name Resolution process. In this post, we&#39;re going to look at how to setup and host your own DNS server. And because …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/hosting-your-own-dns-and-how-to-setup-dns-tunneling.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2019-04-11 11:23:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/jinhaochan.html">
+<meta property="article:section" content="Networking"/>
+<meta property="article:tag" content="DNS"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; Hosting your own DNS (and how to setup DNS tunneling)</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+          <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+          <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+          <li><a href="#" target="_blank">You can modify those links in your config file</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-You can add links in your config file" href="#" target="_blank"><i class="fa fa-You can add links in your config file"></i></a></li>
+        <li><a class="sc-Another social link" href="#" target="_blank"><i class="fa fa-Another social link"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="hosting-your-own-dns-and-how-to-setup-dns-tunneling">Hosting your own DNS (and how to setup DNS tunneling)</h1>
+    <p>
+          Posted on Thu 11 April 2019 in <a href="/category/networking.html">Networking</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <!-- wp:paragraph -->
+
+<p>Earlier this week, I wrote a post on DNS tunneling, and how to pass information over the web through the DNS protocol by stuffing information in the DNS Name Resolution process.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>In this post, we're going to look at how to setup and host your own DNS server. And because you're hosting it, you can essentially choose to reply whatever you want to the subject querying you.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Components</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:list {"ordered":true} --></p>
+<ol>
+<li>VM with a static IP address, and allowed ingress/egress connections for port 53.<ul>
+<li>For this, I spun up a VM on GCP with minimal settings to reduce the cost</li>
+<li>I used a Linux based image because I planned to use bind9 for my DNS (https://wiki.debian.org/Bind9)</li>
+</ul>
+</li>
+<li>A Domain name<ul>
+<li>Head over to <code>my.freenom.com</code> for a free domain name with a <code>.tk</code> TLD</li>
+</ul>
+</li>
+</ol>
+<!-- /wp:list -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Concepts</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:list --></p>
+<ul>
+<li>DNS Resolution<ul>
+<li>When you send a query for a domain name, it queries your DNS for the corresponding IP address tied to the domain name</li>
+<li>Your DNS server then queries the Root Servers, which are DNS servers who hold information about the TLDs such as <code>.com</code> or <code>.tk</code>, and redirects your query to the TLD Server</li>
+<li>The TLD Server stores information about your second level domains. The <code>.com</code> server will store information such as <code>facebook.com</code> or <code>google.com</code>. In our case, we're using the <code>.tk</code> domain, so the <code>.tk</code> server will hold our website information <code>dnsserver.tk</code>. The TLD server defers the query to <code>dnsserver.tk</code></li>
+<li><code>dnsserver.tk</code> is known as the Authoritative Server, which gives the authoritative response of the IP address</li>
+</ul>
+</li>
+<li>DNS Glue Record<ul>
+<li>A DNS glue record is used for preventing circular dependencies</li>
+<li>This is important when your DNS server is a subdomain of your domain name itself. e.g. <code>ns1.dnsserver.tk</code> is a subdomain of <code>dnsserver.tk</code></li>
+<li>The circular dependency happens when we ask for the IP address of <code>dnsserver.tk</code>, and it tells you to ask it's DNS server <code>ns1.dnsserver.tk</code>. But in order to query <code>ns1.dnsserver.tk</code>, you need the IP address of <code>dnsserver.tk</code></li>
+<li>To solve this issue, we "glue" the IP address of <code>ns1.dnsserver.tk</code></li>
+<li>Now, instead of asking you to query <code>ns1.dnsserver.tk</code>, it'll give you the IP address of <code>ns1.dnsserver.tk</code> directly, breaking the circular dependency</li>
+</ul>
+</li>
+</ul>
+<!-- /wp:list -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Execution</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:heading {"level":4} --></p>
+<h4>GCP</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+
+<p>We will need to spin up the VM, get it's static IP, and host a DNS server on it. this VM will be our <code>ns1.dnsserver.tk</code></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>You can follow this guide on how to setup bind9 on your VM https://www.digitalocean.com/community/tutorials/how-to-configure-bind-as-an-authoritative-only-dns-server-on-ubuntu-14-04</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>On your GCP console, you have to do 2 things</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+
+<ul>
+<li>Open ports 53 to allow DNS traffic to flow through</li>
+<li>Set your IP address to static, instead of ephemeral</li>
+</ul>
+<!-- /wp:list -->
+
+<!-- wp:heading {"level":4} -->
+
+<h4>Domain name console</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+
+<p>When you register for a new domain name, you can usually configure it. The free domain name we got from <code>my.freenom.com</code> allows your to specify your own Nameserver and glue records.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>I've attached screen grabs on how to point the Nameservers to your <code>ns1.dnsserver.tk</code>, and how to glue your IP address to <code>ns1.dnsserver.tk</code> for breaking circular dependency</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":405} -->
+
+<figure class="wp-block-image">
+![](https://chanjinhao.files.wordpress.com/2019/04/2.png){.wp-image-405}
+
+</figure>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>When setting up your glue records for the Nameservers, you can use the same IP address for both records. You need 2 records because when you specify new Nameserver, you need to input minimally 2 records</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"id":406} -->
+
+<figure class="wp-block-image">
+![](https://chanjinhao.files.wordpress.com/2019/04/1.png){.wp-image-406}
+
+</figure>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>Instead of letting Freenom Nameservers to be the authoritative Nameserver, point it to your Nameservers your are hosting.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Conclusion</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:paragraph --></p>
+<p>When you set a new Nameserver, you need to wait a few hours for it to propagate the information over to other DNS servers.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>In your DNS server, you can choose to return whatever you want when a DNS request comes to your server. In this way, it can be possible to craft it as a C2 communication server. I won't go into details on how to set that up, but this is one of the steps.</p>
+<!-- /wp:paragraph -->
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/dns.html">DNS</a>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>

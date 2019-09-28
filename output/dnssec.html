@@ -1,0 +1,307 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="jinhaochan" />
+<meta name="description" content="In the previous post, we talked about some of the attack vectors on the DNS. In this post, we&#39;re going to be talking about DNSSEC, which is an attempt to make the DNS more secure. A point to note, DNSSEC does not provide Confidentiality, but only Integrity. Integrity in this …" />
+<meta name="keywords" content="DNSSEC">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="DNSSEC"/>
+<meta property="og:description" content="In the previous post, we talked about some of the attack vectors on the DNS. In this post, we&#39;re going to be talking about DNSSEC, which is an attempt to make the DNS more secure. A point to note, DNSSEC does not provide Confidentiality, but only Integrity. Integrity in this …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/dnssec.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2019-09-23 14:16:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/jinhaochan.html">
+<meta property="article:section" content="Uncategorized"/>
+<meta property="article:tag" content="DNSSEC"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; DNSSEC</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+          <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+          <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+          <li><a href="#" target="_blank">You can modify those links in your config file</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-You can add links in your config file" href="#" target="_blank"><i class="fa fa-You can add links in your config file"></i></a></li>
+        <li><a class="sc-Another social link" href="#" target="_blank"><i class="fa fa-Another social link"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="dnssec">DNSSEC</h1>
+    <p>
+          Posted on Mon 23 September 2019 in <a href="/category/uncategorized.html">Uncategorized</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <!-- wp:paragraph -->
+
+<p>In the previous post, we talked about some of the attack vectors on the DNS. In this post, we're going to be talking about DNSSEC, which is an attempt to make the DNS more secure.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>A point to note, DNSSEC does not provide Confidentiality, but only Integrity. Integrity in this case is ensuring that the reply that you received from the DNS is truly the reply, and not altered by any MITM means. The lack of Confidentiality is due to the fact that it does not encrypt your DNS traffic data, and all your queries are still exposed in plain text. These are several technologies out there now that are branching out into encryption of DNS data, named DNS over HTTPS (DoH). But for DNSSEC, there is no encryption.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>This post assumes you have knowledge of recursive DNS resolving of hostnames.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>DNSSEC introduces several new resources that are used by the DNSSEC verification process.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+
+<ul>
+<li>RRSIG (Resource Record Signature)</li>
+<li>DNSKEY (Public Key for Verification)</li>
+<li>DS (Delegation Signer)</li>
+<li>NSEC (Proof of Nonexistence - No encryption)</li>
+<li>NSEC3 ( Proof of Nonexistence - Encryption)</li>
+</ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+
+<p>We'll go through each one of them, and explain how they are being used in the verification process.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":4} -->
+
+<h4>RRSIG</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+
+<p>With DNSSEC, every reply comes with at least one RRSIG reply. RRSIG acts like a digital certification, to verify that this reply is indeed authentic.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":4} -->
+
+<h4>DNSKEY</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+
+<p>DNSSEC operates on asymmetric encryption, and DNSKEY is the public key. The RRSIG is encrypted with the private key, and verification of the response is done by decrypting it with DNSKEY.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":4} -->
+
+<h4>DS</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+
+<p>During the recursive DNS resolution process, the parent has to verify the authenticity of the child server. This is done by signing the hash of the child. The parent becomes the Delegation Signing (DS) of the child</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":4} -->
+
+<h4>NSEC/NSEC3</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+
+<p>Without DNSSEC, non-existent domains are return with NXDOMAIN. With DNSSEC, non-existent domains are handled by NSEC and NSEC3 records to prove that they really don't exist. NSEC3 is the encrypted version of NSEC. We'll talk about this in a section later below.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Difference in DNS lookup with DNSSEC</h3>
+<!-- /wp:heading -->
+
+<!-- wp:separator -->
+
+<hr>
+<!-- /wp:separator -->
+
+<p></p>
+<!-- wp:image {"id":465,"sizeSlug":"large"} --></p>
+<figure class="wp-block-image size-large">
+![](https://chanjinhao.files.wordpress.com/2019/09/untitled-1.png?w=531){.wp-image-465}
+
+<figcaption>
+DNS resolution with DNSSEC
+
+</figcaption>
+</figure>
+
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+
+<p>Up front, you can see that there is an additional layer called the Validating Resolver, which handles the DNSSEC process.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The recursive DNS resolution to obtain the IP address of isc.org still remains the same (asking <code>.</code>, <code>.org</code> and <code>isc.org</code>). We start the phase above when we finally get the address of the authoritative server for the address of <code>isc.org</code></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+
+<ol>
+<li>Ask the authoritative server for the IP address of <code>isc.org</code></li>
+<li>Reply the IP address of <code>isc.org</code>. Also, send the encrypted RRSIG</li>
+<li>Ask for the public DNSKEY of <code>isc.org</code> to verify the RRSIG obtained in step 2</li>
+<li>Reply with the DNSKEY to decrypt the RRSIG, and verify the reply from <code>isc.org</code><ul>
+<li><code>.org</code> is the parent of <code>isc.org</code>, and thus is the DS of <code>isc.org</code>. As part of the DNSSEC process, <code>isc.org</code> has to the hash of it's DNSKEY to <code>.org</code></li>
+<li>The hash of the child's DNSKEY is signed by the parent's DNSKEY</li>
+<li>i.e. the hash of <code>isc.org</code> DNSKEY is signed by <code>.org</code> DNSKEY</li>
+</ul>
+</li>
+<li>Ask for the hash of <code>isc.org</code> DNSKEY, and ensure that the DNSKEY obtained in step 4 is correct</li>
+<li>Reply with the hash of <code>isc.org</code> DNSKEY, along with the RRSIG of <code>.org</code></li>
+<li>Ask for the public DNSKEY of <code>.org</code> to verify the RRSIG obtained in step 6</li>
+<li>Reply with the DNSKEY to decrypt the RRSIG, and verify the reply from <code>.org</code></li>
+<li><strong>Ask for the hash of <code>.org</code> DNSKEY, and ensure that the DNSKEY obtained in step 8 is correct</strong></li>
+<li><strong>Reply with the hash of <code>.org</code> DNSKEY, along with the RRSIG of the root server</strong></li>
+<li><strong>Ask for the public DNSKEY of the root server to verify the RRSIG obtained in step 10</strong></li>
+<li><strong>Reply with the DNSKEY to decrypt the RRSIG, and verify the reply from the root server</strong></li>
+</ol>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+
+<p>You can see the pattern of these 4 sets of communication repeating. I've bolded steps 9, 10, 11, 12, as they are the same steps being repeated for each recursive step of DNS resolution.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>These Are Not The Records You're Looking For</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+
+<p>The typical response from a DNS server when a non-existent domain is requested is returning an <code>NXDOMAIN</code> response. However, a simple <code>NXDOMAIN</code> will not suffice, as an attacker can simply spoof this reply to deny services to customers.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>With DNSSEC implemented, instead of using an <code>NXDOMAIN</code> to indicate a non-existent record, we use NSEC as a proof of non-existence. NSEC stands for Next-Secure-Record, and a gist of how it works is by providing information above records before and after the requested domain.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>For NSEC to work, the records need to be sorted alphabetically so that by showing the previous and next record, we can determine if the request domain does not exist.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>An example of this in action: We have 3 employees working at a company: Alice, Edward and Susan (already sorted alphabetically). When some one calls and asks for an employee called Bob (which doesn't exist), NSEC will reply the previous and next records (alphabetically), Alice and Edward.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>We can see an obvious problem over here. Probe for many non-existent domains, and NSEC will return to you all of the records in the DNS, something which we don't want. This act is called zone-walking, or zone enumeration.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The solution to zone walking is simply to encrypt the information being sent over, which is what is implemented in NSEC3. NSEC3 hashes the entries before sending the data over to the requesting machine</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+
+<h3>Credits</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+
+<p>This post was a summary of this guide by ISC: <a href="https://downloads.isc.org/isc/dnssec-guide/dnssec-guide.pdf">https://downloads.isc.org/isc/dnssec-guide/dnssec-guide.pdf</a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+
+<p>The above documentation is a lot more comprehensive, and this post is meant to highlight content that is important.</p>
+<!-- /wp:paragraph -->
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/dnssec.html">DNSSEC</a>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>
