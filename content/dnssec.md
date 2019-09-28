@@ -104,21 +104,9 @@ Without DNSSEC, non-existent domains are return with NXDOMAIN. With DNSSEC, non-
 
 ------------------------------------------------------------------------
 
-<!-- /wp:separator -->
 
-</p>
-<!-- wp:image {"id":465,"sizeSlug":"large"} -->
+![DNS resolution with DNSSEC](2019/09/untitled-1.png)  
 
-![](2019/09/untitled-1.png)  
-
-<figcaption>
-DNS resolution with DNSSEC
-
-</figcaption>
-</figure>
-<!-- /wp:image -->
-
-<!-- wp:paragraph -->
 
 Up front, you can see that there is an additional layer called the Validating Resolver, which handles the DNSSEC process.
 
