@@ -6,11 +6,11 @@ Tags: CSRF
 Slug: csrf-tokens
 Status: published
 
-<!-- wp:paragraph -->
+
 
 If we look at source codes of HTML forms, we typically can spot this field being rendered on the webpage
 
-<!-- /wp:paragraph -->
+
 
 <!-- wp:image {"id":420} -->
 
@@ -22,38 +22,38 @@ If we look at source codes of HTML forms, we typically can spot this field being
 
 </figcaption>
 
-<!-- /wp:image -->
 
-<!-- wp:paragraph -->
+
+
 
 Sometimes it doesn't have the name called CSRF Token, and it just appears as a random gibberish value being loaded.
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
+
+
 
 This post breaks down the purpose of the token, and what happens behind the scenes with the token
 
-<!-- /wp:paragraph -->
+
 
 <!-- wp:heading {"level":3} -->
 
 ### Understanding CSRF  
 
-<!-- /wp:heading -->
 
-<!-- wp:separator -->
+
+
 
 ------------------------------------------------------------------------
 
-<!-- /wp:separator -->
+
 
 </p>
-<!-- wp:paragraph -->
+
 
 CSRF stands for Cross-Site Request Forgery, and understanding how it works is a prerequisite to understanding CSRF tokens. Below shows a picture of what a CSRF attack looks like
 
-<!-- /wp:paragraph -->
+
 
 <!-- wp:image {"id":421} -->
 
@@ -61,7 +61,7 @@ CSRF stands for Cross-Site Request Forgery, and understanding how it works is a 
 ![placeholder]({attach}media/2019/04/csrf-cross-site-request-forgery.png){.wp-image-421}
 
 
-<!-- /wp:image -->
+
 
 <!-- wp:list {"ordered":true} -->
 
@@ -72,56 +72,56 @@ CSRF stands for Cross-Site Request Forgery, and understanding how it works is a 
 3.  When the user clicks on the link, it triggers the `GET` request on behalf of the victim
 4.  The `GET` request is triggered by the victim, and funds are transferred to the Attacker
 
-<!-- /wp:list -->
 
-<!-- wp:paragraph -->
+
+
 
 This attack hinges on the fact that the Victim must be logged in to the service, and is already authenticated with an open session with the service.
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
+
+
 
 If the Victim is not logged in, when he clicks on the malicious link, instead of triggering the bad `GET` request, it will redirect him to the login page instead, thus rendering the attack useless.
 
-<!-- /wp:paragraph -->
+
 
 <!-- wp:heading {"level":3} -->
 
 ### CSRF Tokens
 
-<!-- /wp:heading -->
 
-<!-- wp:separator -->
+
+
 
 ------------------------------------------------------------------------
 
-<!-- /wp:separator -->
+
 
 </p>
-<!-- wp:paragraph -->
+
 
 CSRF token is a simple concept where include one more argument of a token, that is sort of like a secret password.
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
+
+
 
 `http://bank.com/transfer.php?account=User&amount=100&token=32Sa2dsa10gB88vcx9cz08f331j=Da`
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
+
+
 
 This token value is a high-entropy value which is hard to guess by the attacker. If on the server side, it receives a wrong or missing CSRF token value, the `GET` request is rejected and does not execute
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
+
+
 
 The CSRF token works this way:
 
-<!-- /wp:paragraph -->
+
 
 <!-- wp:list {"ordered":true} -->
 
@@ -130,35 +130,35 @@ The CSRF token works this way:
 3.  When the client submits the form, both CSRF tokens must be sent back to the server. The one embedded in the form, and the one in the cookie.
 4.  If the request does not contain both tokens, it's rejected
 
-<!-- /wp:list -->
 
-<!-- wp:paragraph -->
+
+
 
 The CSRF token value should be regularly invalidated at a time interval, per request, or when the user logs out.
 
-<!-- /wp:paragraph -->
+
 
 <!-- wp:heading {"level":3} -->
 
 ### CSRF Token Vulnerabilities
 
-<!-- /wp:heading -->
 
-<!-- wp:separator -->
+
+
 
 ------------------------------------------------------------------------
 
-<!-- /wp:separator -->
+
 
 </p>
-<!-- wp:paragraph -->
+
 
 If traffic carrying the token is not encrypted over HTTPS, the Attacker can sniff the traffic and obtain the CSRF token value and the Cookie, and perform a CSRF token replay attack.
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
+
+
 
 The solution to this is obvious: Always use encryption for communication. Aside from that, per-request-tokens can also be implemented.
 
-<!-- /wp:paragraph -->
+

@@ -86,11 +86,7 @@
 
 
   <div>
-    <!-- wp:paragraph -->
-
-<p>The structure of a deep learning model consists mainly of nodes, and connections between them. Most of the time, every single node is connected to every other node in the next layer, which we call a Dense layer.</p>
-<!-- /wp:paragraph -->
-
+    <p>The structure of a deep learning model consists mainly of nodes, and connections between them. Most of the time, every single node is connected to every other node in the next layer, which we call a Dense layer.</p>
 <!-- wp:image {"id":260,"align":"center"} -->
 
 <blockquote></blockquote>
@@ -98,13 +94,7 @@
 <figcaption>
 Nodes in a fully connected neural network
 </figcaption></p>
-<!-- /wp:image -->
-
-<!-- wp:paragraph -->
-
 <p>Within each node is a mathematical equation, decides, based on the input values and their weights, what values to output to the next layer. These mathematical equations are called Activation Functions.</p>
-<!-- /wp:paragraph -->
-
 <!-- wp:image {"id":261,"align":"center"} -->
 
 <blockquote></blockquote>
@@ -112,23 +102,13 @@ Nodes in a fully connected neural network
 <figcaption>
 The activation function is in the middle box, which performs an operation on the inputs, z, based on their weights and bias value.
 </figcaption></p>
-<!-- /wp:image -->
-
 <!-- wp:heading {"level":3} -->
 
 <h3>Different Activation Functions</h3>
-<!-- /wp:heading -->
-
-<!-- wp:separator -->
-
 <hr>
-<!-- /wp:separator -->
+</p>
 
-<p></p>
-<!-- wp:paragraph --></p>
 <p>There are several kinds of Activation Functions, or in other words, different kinds of mathematical operations that a node can take. They are:</p>
-<!-- /wp:paragraph -->
-
 <!-- wp:list {"ordered":true} -->
 
 <ol>
@@ -137,8 +117,6 @@ The activation function is in the middle box, which performs an operation on the
 <li>ReLU Function</li>
 <li>Leaky ReLU Function</li>
 </ol>
-<!-- /wp:list -->
-
 <!-- wp:image {"id":262,"align":"center"} -->
 
 <blockquote></blockquote>
@@ -146,87 +124,38 @@ The activation function is in the middle box, which performs an operation on the
 <figcaption>
 Different Activation Functions and their mathematical equations
 </figcaption></p>
-<!-- /wp:image -->
-
-<!-- wp:paragraph -->
-
 <p>These activation functions take in the inputs <code>z</code> from the previous layer, and feed it into their equations to produce an output <code>a</code>.</p>
-<!-- /wp:paragraph -->
-
 <!-- wp:heading {"level":3} -->
 
 <h3>Sigmoid vs TanH</h3>
-<!-- /wp:heading -->
-
-<!-- wp:separator -->
-
 <hr>
-<!-- /wp:separator -->
+</p>
 
-<p></p>
-<!-- wp:paragraph --></p>
 <p>The TanH function is almost strictly superior to the Sigmoid function, because the TanH function has it's mean centered at <code>0</code>. This feature will result in a higher value of derivative, and a faster learning rate. Also, having a <code>0</code> value mean will avoid having bias in the gradients.</p>
-<!-- /wp:paragraph -->
-
 <!-- wp:heading {"level":3} -->
 
 <h3>ReLU vs (Sigmoid + TanH)</h3>
-<!-- /wp:heading -->
-
-<!-- wp:separator -->
-
 <hr>
-<!-- /wp:separator -->
+</p>
 
-<p></p>
-<!-- wp:paragraph --></p>
 <p>The drawback of both Sigmoid and TanH, given that they have a curved graph, is that if the value of <code>z</code> is either extremely large or small, the gradient on the curve will be extremely small as well. This small gradient will have an adverse effect on the learning rate when performing Gradient Descent.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>The solution to this is ReLU (Rectified Linear Unit), which has a constant gradient regardless of the value of <code>z</code>. But for ReLU, having a negative value of <code>z</code> will result in a <code>0</code> value activation. The solution for that is a Leaky ReLU, which allows for a small value of <code>a</code> for negative values of <code>z</code>.</p>
-<!-- /wp:paragraph -->
-
 <!-- wp:heading {"level":3} -->
 
 <h3>Must they Always be Non-Linear?</h3>
-<!-- /wp:heading -->
-
-<!-- wp:separator -->
-
 <hr>
-<!-- /wp:separator -->
+</p>
 
-<p></p>
-<!-- wp:paragraph --></p>
 <p>Yes, Activation Function must always be non-linear. Having multiple linear activation functions can be condensed together, effectively negating the need for any hidden layers or hidden nodes.</p>
-<!-- /wp:paragraph -->
-
 <!-- wp:heading {"level":3} -->
 
 <h3>Conclusion</h3>
-<!-- /wp:heading -->
-
-<!-- wp:separator -->
-
 <hr>
-<!-- /wp:separator -->
+</p>
 
-<p></p>
-<!-- wp:paragraph --></p>
 <p>In this post, we talked very briefly about the different kinds of Activation Functions, and compared their pro and cons.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>A recommendation for building a neural network model is to have the hidden nodes all be either TanH or ReLU, and never having Sigmoid.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>The only time you can have a Sigmoid is at your output layer, if your problem is a binary classification problem.</p>
-<!-- /wp:paragraph -->
   </div>
   <div class="tag-cloud">
     <p>

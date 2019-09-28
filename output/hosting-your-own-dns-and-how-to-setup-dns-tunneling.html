@@ -86,26 +86,12 @@
 
 
   <div>
-    <!-- wp:paragraph -->
-
-<p>Earlier this week, I wrote a post on DNS tunneling, and how to pass information over the web through the DNS protocol by stuffing information in the DNS Name Resolution process.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
+    <p>Earlier this week, I wrote a post on DNS tunneling, and how to pass information over the web through the DNS protocol by stuffing information in the DNS Name Resolution process.</p>
 <p>In this post, we're going to look at how to setup and host your own DNS server. And because you're hosting it, you can essentially choose to reply whatever you want to the subject querying you.</p>
-<!-- /wp:paragraph -->
-
 <!-- wp:heading {"level":3} -->
 
 <h3>Components</h3>
-<!-- /wp:heading -->
-
-<!-- wp:separator -->
-
 <hr>
-<!-- /wp:separator -->
-
 <p></p>
 <!-- wp:list {"ordered":true} --></p>
 <ol>
@@ -119,20 +105,12 @@
 </ul>
 </li>
 </ol>
-<!-- /wp:list -->
-
 <!-- wp:heading {"level":3} -->
 
 <h3>Concepts</h3>
-<!-- /wp:heading -->
-
-<!-- wp:separator -->
-
 <hr>
-<!-- /wp:separator -->
+</p>
 
-<p></p>
-<!-- wp:list --></p>
 <ul>
 <li>DNS Resolution<ul>
 <li>When you send a query for a domain name, it queries your DNS for the corresponding IP address tied to the domain name</li>
@@ -150,100 +128,41 @@
 </ul>
 </li>
 </ul>
-<!-- /wp:list -->
-
 <!-- wp:heading {"level":3} -->
 
 <h3>Execution</h3>
-<!-- /wp:heading -->
-
-<!-- wp:separator -->
-
 <hr>
-<!-- /wp:separator -->
-
 <p></p>
 <!-- wp:heading {"level":4} --></p>
 <h4>GCP</h4>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-
 <p>We will need to spin up the VM, get it's static IP, and host a DNS server on it. this VM will be our <code>ns1.dnsserver.tk</code></p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>You can follow this guide on how to setup bind9 on your VM https://www.digitalocean.com/community/tutorials/how-to-configure-bind-as-an-authoritative-only-dns-server-on-ubuntu-14-04</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>On your GCP console, you have to do 2 things</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:list -->
-
 <ul>
 <li>Open ports 53 to allow DNS traffic to flow through</li>
 <li>Set your IP address to static, instead of ephemeral</li>
 </ul>
-<!-- /wp:list -->
-
 <!-- wp:heading {"level":4} -->
 
 <h4>Domain name console</h4>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-
 <p>When you register for a new domain name, you can usually configure it. The free domain name we got from <code>my.freenom.com</code> allows your to specify your own Nameserver and glue records.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>I've attached screen grabs on how to point the Nameservers to your <code>ns1.dnsserver.tk</code>, and how to glue your IP address to <code>ns1.dnsserver.tk</code> for breaking circular dependency</p>
-<!-- /wp:paragraph -->
-
 <!-- wp:image {"id":405} -->
 
 <p><img alt="placeholder" class="wp-image-405" src="/media/2019/04/2.png"></p>
-<!-- /wp:image -->
-
-<!-- wp:paragraph -->
-
 <p>When setting up your glue records for the Nameservers, you can use the same IP address for both records. You need 2 records because when you specify new Nameserver, you need to input minimally 2 records</p>
-<!-- /wp:paragraph -->
-
 <!-- wp:image {"id":406} -->
 
 <p><img alt="placeholder" class="wp-image-406" src="/media/2019/04/1.png"></p>
-<!-- /wp:image -->
-
-<!-- wp:paragraph -->
-
 <p>Instead of letting Freenom Nameservers to be the authoritative Nameserver, point it to your Nameservers your are hosting.</p>
-<!-- /wp:paragraph -->
-
 <!-- wp:heading {"level":3} -->
 
 <h3>Conclusion</h3>
-<!-- /wp:heading -->
-
-<!-- wp:separator -->
-
 <hr>
-<!-- /wp:separator -->
+</p>
 
-<p></p>
-<!-- wp:paragraph --></p>
 <p>When you set a new Nameserver, you need to wait a few hours for it to propagate the information over to other DNS servers.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>In your DNS server, you can choose to return whatever you want when a DNS request comes to your server. In this way, it can be possible to craft it as a C2 communication server. I won't go into details on how to set that up, but this is one of the steps.</p>
-<!-- /wp:paragraph -->
   </div>
   <div class="tag-cloud">
     <p>

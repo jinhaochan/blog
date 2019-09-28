@@ -86,67 +86,25 @@
 
 
   <div>
-    <!-- wp:paragraph -->
-
-<p>In this post, we're going to be exploring some typical methods for text processing for machine learning. When we're talking about machine learning with text, there are several areas of interest including </p>
-<!-- /wp:paragraph -->
-
-<!-- wp:list -->
-
+    <p>In this post, we're going to be exploring some typical methods for text processing for machine learning. When we're talking about machine learning with text, there are several areas of interest including </p>
 <ul>
 <li>Sentiment Analysis</li>
 <li>Question Answering</li>
 <li>Information Retrieval</li>
 </ul>
-<!-- /wp:list -->
-
-<!-- wp:paragraph -->
-
 <p>Before we do that, we must first understand that a machine learning model only takes in numerical values, or vectors, and not strings in the text. The problem now is how do we transform the collection of strings into vectors of numbers.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>There are several pre-processing steps, and we'll take a look at them below.</p>
-<!-- /wp:paragraph -->
-
 <!-- wp:heading {"level":3} -->
 
 <h3>Tokenization</h3>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-
 <p>Tokenization is splitting up the sentence into to words or phrases.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>There's Sentence Tokenizing, and Word Tokenizing, both of which are apparent in what they do. We'll mostly be using Word Tokenizing to split up a sentence in its constituent words. The example below uses NLTK's word_tokenize</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p><code>from nltk.tokenize import word_tokenize &gt;&gt;&gt; string = "Hello! I am a sentence!" &gt;&gt;&gt; word_tokenize(string ) ['Hello', '!', 'I', 'am', 'a', 'sentence', '!']</code></p>
-<!-- /wp:paragraph -->
-
 <!-- wp:heading {"level":3} -->
 
 <h3>Normalization</h3>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-
 <p>Once the sentence has been broken up into it's words, we need to normalize it, so as to remove any unwanted meaning attached to features like capitalization. This process transforms the words, and picks out useful features.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>There are several common methods for normalization:</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:list -->
-
 <ul>
 <li>Lemmatization</li>
 <li>Stemming</li>
@@ -154,13 +112,7 @@
 <li>Special Characters</li>
 <li>Stopwords</li>
 </ul>
-<!-- /wp:list -->
-
-<!-- wp:paragraph -->
-
 <p>Lemmatization and Stemming are pretty similar, where they both transform the words into their generalized forms. The difference is in how they change the word.</p>
-<!-- /wp:paragraph -->
-
 <!-- wp:table -->
 
 <hr>
@@ -173,56 +125,20 @@
 <hr>
 <!-- /wp:table -->
 
-<!-- wp:paragraph -->
-
 <p>Stemming removes any suffixes, leaving behind it's inflected word. The outcome is not always desirable as you can see, cutting the -es from Studies. One common stemmer is the Porter stemmer, which reduces the words to its 'root' form.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>Lemmatization on the other hand is smarter, and uses linguistics to reduce the word to it's base meaning. 'Studies' and 'Studying' both have the same base meaning of 'Study'. However, before you can apply lemmatization, you need to have a trained dictionary for that language to discover what is the base meaning. Luckily for us, the English language has many of such dictionaries.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>Capitalization and Special Characters transformation is simply turning all the words into lowercase, and removing non-alphabet characters</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p><code>&gt;&gt;&gt; sentence = sentence.lower() &gt;&gt;&gt; sentence = re.sub('[^a-zA-Z]',' ',sentence)</code></p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>Stopwords removal is a method for removing common stopwords in a text. Stopwords carry little to no meaning to them, and are sentimentally agnostic, hence they should be removed so as not to generate too much noise in our matrix. A list of common stopwords can be found in <a href="https://gist.github.com/sebleier/554280">NLTK's collection</a></p>
-<!-- /wp:paragraph -->
-
 <!-- wp:heading {"level":3} -->
 
 <h3>Transforming Tokens to Vectors</h3>
-<!-- /wp:heading -->
-
 <!-- wp:heading {"level":4} -->
 
 <h4>Bag of Words</h4>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-
 <p>Once we have our collection of pre-processed tokens, we now need to transform them into features, or numeric vectors for us to fit into our model</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>A Bag of Words (BoW) model is one way to quantize the text into numerical information. It is also called Text Vectorization, because we're converting a sentence into a numerical vector.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>BoW captures the counts of the words in a sentence </p>
-<!-- /wp:paragraph -->
-
 <!-- wp:code -->
 
 <div class="highlight"><pre><span></span><span class="n">John</span> <span class="n">likes</span> <span class="k">to</span> <span class="n">watch</span> <span class="n">movies</span><span class="p">.</span> <span class="n">Mary</span> <span class="n">likes</span> <span class="n">movies</span> <span class="n">too</span><span class="p">.</span>
@@ -235,71 +151,23 @@
 
 <!-- /wp:code -->
 
-<!-- wp:paragraph -->
-
 <p>The downside of BoW model is that we lose word order, which is important when it comes to sentiment analysis. The ordering of the words in a sentence can produce very different meanings</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>"not all apples are bad"</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>"all apples are not bad"</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>The former implies that not every single apple is bad, but there can be bad ones. The latter implies that every single apple is not bad, which means there are no bad ones.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>Also, BoW counts are not normalized, which loses another feature of word importance. Words that occur very frequently such as stopwords hold little weight if they appear multiple times, and in every document. We want words that are rare, and occur less frequently. These words will have stronger features.</p>
-<!-- /wp:paragraph -->
-
 <!-- wp:heading {"level":4} -->
 
 <h4>TF-IDF</h4>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-
 <p>After we have the collection of words generated from BoW, we can count the frequency of the word, and the presence of the word in a given document. This  technique is called Term-Frequency - Inverse Document Frequency (TF-IDF) model.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>This is calculated by counting the number of times the word appears in all documents (TF), and the number of documents this word appears in (DF). We take the inverse of DF (IDF), because we don't want words that appear too frequently in all documents. </p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>A word with a high TF-IDF indicates a high term frequency, low document count. This highlights important issues in a document, but that are not shared across the whole corpus</p>
-<!-- /wp:paragraph -->
-
 <!-- wp:heading {"level":4} -->
 
 <h4>N-Grams</h4>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-
 <p>The BoW model grows linearly with each distinct vocabulary. With every new word added, the vector size increases by 1. This leads to an extremely spares and high dimension vector. To attempt to reduce the dimensions, we group words together into what we call N-grams, where N is the number of words in the group.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>N-grams are an improvement because it reduces the dimensionality of the vector, and it also captures context from the surrounding words.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>Below shows a 2-gram representation of a sentence:</p>
-<!-- /wp:paragraph -->
-
 <!-- wp:code -->
 
 <div class="highlight"><pre><span></span><span class="n">John</span> <span class="n">likes</span> <span class="k">to</span> <span class="n">watch</span> <span class="n">movies</span><span class="p">.</span> <span class="n">Mary</span> <span class="n">likes</span> <span class="n">movies</span> <span class="n">too</span><span class="p">.</span>
@@ -317,35 +185,18 @@
 
 <!-- /wp:code -->
 
-<!-- wp:paragraph -->
-
 <p>We should be careful however, in choosing the appropriate value of N. If we generate too much N-grams (N is small), we end up generating too much noise.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>After the N-gram collection is generated, we can future refine the selection with the heuristic:</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:list -->
-
 <ul>
 <li>Remove high and low frequency n-grams</li>
 <li>High Frequency n-grams = Stop words</li>
 <li>Low Frequency n-grams = Rare words</li>
 <li>Keep medium frequency n-grams</li>
 </ul>
-<!-- /wp:list -->
-
 <!-- wp:heading {"level":3} -->
 
 <h3>Training a Model with the Vectors</h3>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-
 <p>Once we have pre-processed the sentences to tokens, and vectorized them into numerical values, we can use those vectors to train our models to answer our questions.</p>
-<!-- /wp:paragraph -->
   </div>
   <div class="tag-cloud">
     <p>

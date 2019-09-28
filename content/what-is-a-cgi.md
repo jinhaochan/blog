@@ -6,23 +6,23 @@ Tags: cgi
 Slug: what-is-a-cgi
 Status: published
 
-<!-- wp:paragraph -->
+
 
 Not Computer Generated Imagery, but `cgi` pages you see when you visit webpages.
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
+
+
 
 CGI stands for Common Gateway Interface, and it acts as the Controller in the MVC framework. To give a complete picture, in a web application, the Model is the database, the View is the front-end HTML/CSS, and the Controller is the logic that processes user interaction
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
+
+
 
 The CGI program takes in input from the user via the webpage, does the processing, and outputs information back to the front-end.
 
-<!-- /wp:paragraph -->
+
 
 <!-- wp:image {"id":392,"align":"center"} -->
 
@@ -34,44 +34,44 @@ The CGI program takes in input from the user via the webpage, does the processin
 
 
 
-<!-- /wp:image -->
 
-<!-- wp:paragraph -->
+
+
 
 CGI is a generic name for any program, or script that runs at the back end to process the user input. This program can be written in languages such as Python, C or C++. An example of a Python CGI is:
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
+
+
 
 `http://www.test.com/cgi-bin/hello.py?key1=value1&key2=value2`
 
-<!-- /wp:paragraph -->
+
 
 <!-- wp:heading {"level":3} -->
 
 ### Programming vs CGI Programming
 
-<!-- /wp:heading -->
 
-<!-- wp:separator -->
+
+
 
 ------------------------------------------------------------------------
 
-<!-- /wp:separator -->
+
 
 </p>
-<!-- wp:paragraph -->
+
 
 Most of us are familiar and have experience with the languages mentioned above, but there is a difference between conventional programming with those languages, and programming to conform to CGI standard.
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
+
+
 
 Below shows a code snippet of CGI programming in Python:
 
-<!-- /wp:paragraph -->
+
 
 <!-- wp:code -->
 
@@ -91,11 +91,11 @@ print '</html>'
 
 <!-- /wp:code -->
 
-<!-- wp:paragraph -->
+
 
 There are two main differences here:
 
-<!-- /wp:paragraph -->
+
 
 <!-- wp:list {"ordered":true} -->
 
@@ -104,32 +104,32 @@ There are two main differences here:
     -   `print "Content-type:text/html\r\n\r\n"`
 2.  The content of the output must be in HTML format, or other formats that the browser is able to display
 
-<!-- /wp:list -->
+
 
 <!-- wp:heading {"level":3} -->
 
 ### CGI Environment Variables  
 
-<!-- /wp:heading -->
 
-<!-- wp:separator -->
+
+
 
 ------------------------------------------------------------------------
 
-<!-- /wp:separator -->
+
 
 </p>
-<!-- wp:paragraph -->
+
 
 When programming a CGI program, there are some environment variables that are standard across all CGI, regardless of languages used.
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
+
+
 
 Some examples of these are:
 
-<!-- /wp:paragraph -->
+
 
 <!-- wp:table -->
 
@@ -142,27 +142,27 @@ Some examples of these are:
 
 <!-- /wp:table -->
 
-<!-- wp:paragraph -->
+
 
 You can see the full list of CGI environment variables by searching it online.
 
-<!-- /wp:paragraph -->
+
 
 <!-- wp:heading {"level":3} -->
 
 ### CGI Vulnerabilities
 
-<!-- /wp:heading -->
 
-<!-- wp:separator -->
+
+
 
 ------------------------------------------------------------------------
 
-<!-- /wp:separator -->
+
 
 </p>
-<!-- wp:paragraph -->
+
 
 Most CGI vulnerabilities lie in the fast that the inputs from the users are not properly checked and parsed. As a result, the user can perform unintended actions on your server such as directory traversal or RCE.
 
-<!-- /wp:paragraph -->
+

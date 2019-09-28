@@ -6,29 +6,29 @@ Tags: DNS
 Slug: hosting-your-own-dns-and-how-to-setup-dns-tunneling
 Status: published
 
-<!-- wp:paragraph -->
+
 
 Earlier this week, I wrote a post on DNS tunneling, and how to pass information over the web through the DNS protocol by stuffing information in the DNS Name Resolution process.
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
+
+
 
 In this post, we're going to look at how to setup and host your own DNS server. And because you're hosting it, you can essentially choose to reply whatever you want to the subject querying you.
 
-<!-- /wp:paragraph -->
+
 
 <!-- wp:heading {"level":3} -->
 
 ### Components
 
-<!-- /wp:heading -->
 
-<!-- wp:separator -->
+
+
 
 ------------------------------------------------------------------------
 
-<!-- /wp:separator -->
+
 
 </p>
 <!-- wp:list {"ordered":true} -->
@@ -39,22 +39,22 @@ In this post, we're going to look at how to setup and host your own DNS server. 
 2.  A Domain name
     -   Head over to `my.freenom.com` for a free domain name with a `.tk` TLD
 
-<!-- /wp:list -->
+
 
 <!-- wp:heading {"level":3} -->
 
 ### Concepts
 
-<!-- /wp:heading -->
 
-<!-- wp:separator -->
+
+
 
 ------------------------------------------------------------------------
 
-<!-- /wp:separator -->
+
 
 </p>
-<!-- wp:list -->
+
 
 -   DNS Resolution
     -   When you send a query for a domain name, it queries your DNS for the corresponding IP address tied to the domain name
@@ -68,69 +68,69 @@ In this post, we're going to look at how to setup and host your own DNS server. 
     -   To solve this issue, we "glue" the IP address of `ns1.dnsserver.tk`
     -   Now, instead of asking you to query `ns1.dnsserver.tk`, it'll give you the IP address of `ns1.dnsserver.tk` directly, breaking the circular dependency
 
-<!-- /wp:list -->
+
 
 <!-- wp:heading {"level":3} -->
 
 ### Execution
 
-<!-- /wp:heading -->
 
-<!-- wp:separator -->
+
+
 
 ------------------------------------------------------------------------
 
-<!-- /wp:separator -->
+
 
 </p>
 <!-- wp:heading {"level":4} -->
 
 #### GCP
 
-<!-- /wp:heading -->
 
-<!-- wp:paragraph -->
+
+
 
 We will need to spin up the VM, get it's static IP, and host a DNS server on it. this VM will be our `ns1.dnsserver.tk`
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
+
+
 
 You can follow this guide on how to setup bind9 on your VM https://www.digitalocean.com/community/tutorials/how-to-configure-bind-as-an-authoritative-only-dns-server-on-ubuntu-14-04
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
+
+
 
 On your GCP console, you have to do 2 things
 
-<!-- /wp:paragraph -->
 
-<!-- wp:list -->
+
+
 
 -   Open ports 53 to allow DNS traffic to flow through
 -   Set your IP address to static, instead of ephemeral
 
-<!-- /wp:list -->
+
 
 <!-- wp:heading {"level":4} -->
 
 #### Domain name console
 
-<!-- /wp:heading -->
 
-<!-- wp:paragraph -->
+
+
 
 When you register for a new domain name, you can usually configure it. The free domain name we got from `my.freenom.com` allows your to specify your own Nameserver and glue records.
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
+
+
 
 I've attached screen grabs on how to point the Nameservers to your `ns1.dnsserver.tk`, and how to glue your IP address to `ns1.dnsserver.tk` for breaking circular dependency
 
-<!-- /wp:paragraph -->
+
 
 <!-- wp:image {"id":405} -->
 
@@ -138,13 +138,13 @@ I've attached screen grabs on how to point the Nameservers to your `ns1.dnsserve
 ![placeholder]({attach}media/2019/04/2.png){.wp-image-405}
 
 
-<!-- /wp:image -->
 
-<!-- wp:paragraph -->
+
+
 
 When setting up your glue records for the Nameservers, you can use the same IP address for both records. You need 2 records because when you specify new Nameserver, you need to input minimally 2 records
 
-<!-- /wp:paragraph -->
+
 
 <!-- wp:image {"id":406} -->
 
@@ -152,35 +152,35 @@ When setting up your glue records for the Nameservers, you can use the same IP a
 ![placeholder]({attach}media/2019/04/1.png){.wp-image-406}
 
 
-<!-- /wp:image -->
 
-<!-- wp:paragraph -->
+
+
 
 Instead of letting Freenom Nameservers to be the authoritative Nameserver, point it to your Nameservers your are hosting.
 
-<!-- /wp:paragraph -->
+
 
 <!-- wp:heading {"level":3} -->
 
 ### Conclusion  
 
-<!-- /wp:heading -->
 
-<!-- wp:separator -->
+
+
 
 ------------------------------------------------------------------------
 
-<!-- /wp:separator -->
+
 
 </p>
-<!-- wp:paragraph -->
+
 
 When you set a new Nameserver, you need to wait a few hours for it to propagate the information over to other DNS servers.
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
+
+
 
 In your DNS server, you can choose to return whatever you want when a DNS request comes to your server. In this way, it can be possible to craft it as a C2 communication server. I won't go into details on how to set that up, but this is one of the steps.
 
-<!-- /wp:paragraph -->
+

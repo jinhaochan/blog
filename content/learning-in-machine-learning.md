@@ -6,87 +6,87 @@ Tags: Machine learning
 Slug: learning-in-machine-learning
 Status: published
 
-<!-- wp:paragraph -->
+
 
 When we talk about machine learning, it's mostly a black box, where everything is nicely wrapped in easy to call library functions.
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
+
+
 
 Scipy, Numpy, Scikit-learn help us abstract all the nitty gritty details underlying machine learning
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
+
+
 
 In this post, we're going to see where exactly the learning takes place, and what happens when you "train" a model.  
 
-<!-- /wp:paragraph -->
+
 
 <!-- wp:heading {"level":3} -->
 
 ### The Steps of Learning  
 
-<!-- /wp:heading -->
 
-<!-- wp:separator -->
+
+
 
 ------------------------------------------------------------------------
 
-<!-- /wp:separator -->
+
 
 </p>
-<!-- wp:paragraph -->
+
 
 In every algorithm, the learning process follows this formula:
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
+
+
 
 Predict -&gt; Evaluate -&gt; Tune -&gt; Repeat
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
+
+
 
 When we first throw in a bunch of features, the model initially makes blind **Predictions** as to what the outcome is. Because it makes shots in the dark, the **Evaluation** of the model is going to be very poor initially. The model then learns of its errors, and **Tunes** its hyper-parameters to minimize the errors. After tuning, it **Repeats** the process of prediction, and the cycle continues until a satisfactory Error value is obtained.  
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
+
+
 
 When training the model, the learning process comes from telling the machine where it went wrong, or the Errors it has committed. The Error is derived from the difference of the model output and the desired outcome.
 
-<!-- /wp:paragraph -->
+
 
 <!-- wp:heading {"level":3} -->
 
 ### The Error/Loss Functions  
 
-<!-- /wp:heading -->
 
-<!-- wp:separator -->
+
+
 
 ------------------------------------------------------------------------
 
-<!-- /wp:separator -->
+
 
 </p>
-<!-- wp:paragraph -->
+
 
 When the model makes a prediction, there is bound to be errors in the the desired outcome, and the actual outcome. The difference between the desired and actual outcome can be represented in various ways called Loss Functions.  
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
+
+
 
 Some way of calculating this Error, or Loss Function, are:
 
-<!-- /wp:paragraph -->
 
-<!-- wp:list -->
+
+
 
 -   Classification Accuracy
 -   Log Loss
@@ -95,121 +95,121 @@ Some way of calculating this Error, or Loss Function, are:
 -   F1 Score
 -   Area Under Curve (AUC)
 
-<!-- /wp:list -->
 
-<!-- wp:paragraph -->
+
+
 
 These Loss functions tell the model how badly it has done in its job of prediction, and to kindly go back and tune the way it performs its predictions.  
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
 
-<!-- /wp:paragraph -->
+
+
+
 
 <!-- wp:heading {"level":3} -->
 
 ### The Optimization Functions  
 
-<!-- /wp:heading -->
 
-<!-- wp:separator -->
+
+
 
 ------------------------------------------------------------------------
 
-<!-- /wp:separator -->
+
 
 </p>
-<!-- wp:paragraph -->
+
 
 To tune the way it performs predictions, the model uses Optimization Functions.  
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
+
+
 
 Using the Error value produced by either one of those loss functions, the model then tunes itself using Optimization Functions, which adjusts its hyper-parameters, to try to minimize those Error values.
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
+
+
 
 There are also several ways for the model to tune it hyper-parameters based on the Error value computed. I'll only be listing them, as going through each of them requires a post on its own:
 
-<!-- /wp:paragraph -->
 
-<!-- wp:list -->
+
+
 
 -   Gradient Descent
 -   Momentum
 -   Adaptive Movement Estimation (Adam)
 -   Adagrad
 
-<!-- /wp:list -->
 
-<!-- wp:paragraph -->
+
+
 
 These Optimization algorithms are optimizing, or minimizing, the Error value calculated previously.
 
-<!-- /wp:paragraph -->
+
 
 <!-- wp:heading {"level":3} -->
 
 ### Repeat
 
-<!-- /wp:heading -->
 
-<!-- wp:separator -->
+
+
 
 ------------------------------------------------------------------------
 
-<!-- /wp:separator -->
+
 
 </p>
-<!-- wp:paragraph -->
+
 
 So you got your Loss function to tell you how badly you did, and the Optimization function for your model to tweak it's parameters. Now all you have to do is to keep repeating these steps, and your model is "Learning". But wait!  
 
-<!-- /wp:paragraph -->
+
 
 <!-- wp:heading {"level":3} -->
 
 ### Over/Under Fitting
 
-<!-- /wp:heading -->
 
-<!-- wp:separator -->
+
+
 
 ------------------------------------------------------------------------
 
-<!-- /wp:separator -->
+
 
 </p>
-<!-- wp:paragraph -->
+
 
 Is there such a thing as learning too much? In the context of machine learning, this scenario is entirely possible, where you model learns too much about the training data, which results in poor performance on unseen data.
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
+
+
 
 This is analogous to a student studying for his final exam, and the way he does it is to memorize every single questions and answers from the past year papers, with little contextual understanding. Obviously when he takes the final exam, the questions will be different, and he will do very poorly.  
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
+
+
 
 In machine learning, overfitting is a problem when we have over-tuned the parameters in the model to a specific data set, resulting in poor performance in other data sets.
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
+
+
 
 Some ways to overcome Overfitting are:
 
-<!-- /wp:paragraph -->
 
-<!-- wp:list -->
+
+
 
 -   Throw in more data (akin to studying more past year papers)  
 -   Cross validation during training
@@ -217,47 +217,47 @@ Some ways to overcome Overfitting are:
 -   Regularization that forces simplicity on your model  
 -   Ensemble to take the average of various models  
 
-<!-- /wp:list -->
 
-<!-- wp:paragraph -->
+
+
 
 Underfitting on the other, is not as common of a problem as overfitting. Underfitting means that your model has not learnt much, and as a result it cant perform well. This is analogous to student studying too little for his final exams.
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
+
+
 
 In Overfitting, your model is too complex. In Underfitting, your model is too simple.
 
-<!-- /wp:paragraph -->
+
 
 <!-- wp:heading {"level":3} -->
 
 ### Conclusion  
 
-<!-- /wp:heading -->
 
-<!-- wp:separator -->
+
+
 
 ------------------------------------------------------------------------
 
-<!-- /wp:separator -->
+
 
 </p>
-<!-- wp:paragraph -->
+
 
 So that's it! You've understood the abstracted underling principles of what happens when a machine "Learns", and the possibility of learning too much or too little.
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
+
+
 
 For each prediction, we get an error value, and using this error value, we use optimization functions to change the way we perform our prediction.  
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
+
+
 
 You've also seen some ways to prevent overfitting, which is a more common problem than underfitting.  
 
-<!-- /wp:paragraph -->
+

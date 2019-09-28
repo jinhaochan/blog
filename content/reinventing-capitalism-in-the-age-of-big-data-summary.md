@@ -6,93 +6,93 @@ Tags: Big Data
 Slug: reinventing-capitalism-in-the-age-of-big-data-summary
 Status: published
 
-<!-- wp:paragraph -->
+
 
 I've finished this book a few months ago, and realized it'll be useful for me to recap the points I've learnt from the book.
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
+
+
 
 This book talks about how data is the new currency in this era, and how the capitalism landscape will change. The book also proposes some steps to manage this change, and how to make it a fairer market for all
 
-<!-- /wp:paragraph -->
+
 
 <!-- wp:heading {"level":3} -->
 
 ### Chapter 1: Reinventing Capitalism
 
-<!-- /wp:heading -->
 
-<!-- wp:separator -->
+
+
 
 ------------------------------------------------------------------------
 
-<!-- /wp:separator -->
+
 
 </p>
-<!-- wp:paragraph -->
+
 
 Key ideas:
 
-<!-- /wp:paragraph -->
 
-<!-- wp:list -->
+
+
 
 -   Difference between conventional markets and data-rich markets is the role of information flowing through them, and how the information gets translated into decisions
 -   In data-rich markets, we no longer have to condense all our preferences to a single dollar sum value, which can be an oversimplification of our preference
 -   There are short-comings in data rich markets, which are over reliance on the data, and lack of diversity of the data and algorithms. This could lead to a data-monopoly, where the company with the most data dominates the industry
 
-<!-- /wp:list -->
+
 
 <!-- wp:heading {"level":3} -->
 
 ### Chapter 2: Communicative Coordination
 
-<!-- /wp:heading -->
 
-<!-- wp:separator -->
+
+
 
 ------------------------------------------------------------------------
 
-<!-- /wp:separator -->
+
 
 </p>
-<!-- wp:paragraph -->
+
 
 Key ideas:
 
-<!-- /wp:paragraph -->
 
-<!-- wp:list -->
+
+
 
 -   Human successes so far is predicated mainly on our ability to communicate and coordinate with each other. Coordination relies on our ability to communicate.
 -   Technology, more specifically volume of information, is increasing our ability to communicate with each other, hence increasing our coordination tremendously.
 -   Markets and firms help humans coordinate more efficiently through economies of scale, where managing the pay and decisions of several workers is easier than managing each individual.
 -   In the Market, decisions are decentralized, producing the "Invisible hand". In the firm, decisions are centralized, and top-down.
 
-<!-- /wp:list -->
+
 
 <!-- wp:heading {"level":3} -->
 
 ### Chapter 3: Markets and Money
 
-<!-- /wp:heading -->
 
-<!-- wp:separator -->
+
+
 
 ------------------------------------------------------------------------
 
-<!-- /wp:separator -->
+
 
 </p>
-<!-- wp:paragraph -->
+
 
 Key Ideas:
 
-<!-- /wp:paragraph -->
 
-<!-- wp:list -->
+
+
 
 -   How the structure of the market is linked to information, and how the information flows and are translated to decisions.
 -   Information, and the cost of transmitting them, is integral to the success of a Market.
@@ -102,28 +102,28 @@ Key Ideas:
 -   Money encapsulates our preferences and priorities into a single unit of information: Price
 -   Priced-based markets have been dominating for many years, but it might not be the best to represent the market in the information age.
 
-<!-- /wp:list -->
+
 
 <!-- wp:heading {"level":3} -->
 
 ### Chapter 4: Data-Rich Markets
 
-<!-- /wp:heading -->
 
-<!-- wp:separator -->
+
+
 
 ------------------------------------------------------------------------
 
-<!-- /wp:separator -->
+
 
 </p>
-<!-- wp:paragraph -->
+
 
 Key Ideas:
 
-<!-- /wp:paragraph -->
 
-<!-- wp:list -->
+
+
 
 -   The solution is to replace or complement price with rich and comprehensive streams of data. Rather than relying solely on price as an information, we have other sources of data to provide information as well.
 -   The difference between conventional Markets and Data-Rich Markets is the volume and variety of data flowing through it.
@@ -138,55 +138,55 @@ Key Ideas:
     -   Advances in preference matching algorithms
     -   Machine Learning to identify preferences from user activity
 
-<!-- /wp:list -->
+
 
 <!-- wp:heading {"level":3} -->
 
 ### Chapter 5: Companies and Control
 
-<!-- /wp:heading -->
 
-<!-- wp:separator -->
+
+
 
 ------------------------------------------------------------------------
 
-<!-- /wp:separator -->
+
 
 </p>
-<!-- wp:paragraph -->
+
 
 Key Ideas:
 
-<!-- /wp:paragraph -->
 
-<!-- wp:list -->
+
+
 
 -   Firms aim to offer human coordination at a lower cost via economies of scale.
 -   Information flow in firms were transform from accounting for the past, to a strategic tool for future planning. Scientific Management is the term for collection and processing multiple sources of information in the firm for planning.
 -   Information and decision making in firms are centralized at the top, with a few instances of delegation.
 
-<!-- /wp:list -->
+
 
 <!-- wp:heading {"level":3} -->
 
 ### Chapter 6: Firm Futures
 
-<!-- /wp:heading -->
 
-<!-- wp:separator -->
+
+
 
 ------------------------------------------------------------------------
 
-<!-- /wp:separator -->
+
 
 </p>
-<!-- wp:paragraph -->
+
 
 Key Ideas:
 
-<!-- /wp:paragraph -->
 
-<!-- wp:list -->
+
+
 
 -   Firms persist when they operate more efficiently at organizing human effort.
 -   A focus on improving efficiency relies on two factors:
@@ -199,28 +199,28 @@ Key Ideas:
     -   A firm that owns most of the resources needed for operations and employs some humans, but is manged and run by machines
     -   A firm that relies on market mechanisms, but sheds away most of their organizational functions
 
-<!-- /wp:list -->
+
 
 <!-- wp:heading {"level":3} -->
 
 ### Chapter 7: Capital Decline
 
-<!-- /wp:heading -->
 
-<!-- wp:separator -->
+
+
 
 ------------------------------------------------------------------------
 
-<!-- /wp:separator -->
+
 
 </p>
-<!-- wp:paragraph -->
+
 
 Key Ideas:
 
-<!-- /wp:paragraph -->
 
-<!-- wp:list -->
+
+
 
 -   In Data-Rich Markets, consumers no longer use price as an indicator of information. Money thus loses one of it's functions, though it won't lose it's usefulness entirely.
 -   As market participants look for and consider richer data, fewer of them will rely on money, and wont be willing to pay as much for it's informational function. This is detrimental to banks.
@@ -232,28 +232,28 @@ Key Ideas:
 -   As capital is abundant, and fewer companies are looking for capital, this means supply of capital outstrips demand, and thus the returns on investments for capital is falling.
 -   Banks thus try to cut cost, and reinvent themselves as information intermediaries
 
-<!-- /wp:list -->
+
 
 <!-- wp:heading {"level":3} -->
 
 ### Chapter 8: Feedback Effects
 
-<!-- /wp:heading -->
 
-<!-- wp:separator -->
+
+
 
 ------------------------------------------------------------------------
 
-<!-- /wp:separator -->
+
 
 </p>
-<!-- wp:paragraph -->
+
 
 Key Ideas:
 
-<!-- /wp:paragraph -->
 
-<!-- wp:list -->
+
+
 
 -   There are three distinct effects at play when markets become concentrated
     -   Scale Effect - Economies of scale
@@ -266,28 +266,28 @@ Key Ideas:
 -   Large companies wont lose anything when they share a small portion of their data. Their products will still improve, but you would help other smaller companies improve their products as well.
 -   Relying solely on one decision making machine learning model is also fatal, as it is a bottleneck for mistakes. There should thus also have competition for decision making systems
 
-<!-- /wp:list -->
+
 
 <!-- wp:heading {"level":3} -->
 
 ### Chapter 9: Unbundling Work
 
-<!-- /wp:heading -->
 
-<!-- wp:separator -->
+
+
 
 ------------------------------------------------------------------------
 
-<!-- /wp:separator -->
+
 
 </p>
-<!-- wp:paragraph -->
+
 
 Key Ideas:
 
-<!-- /wp:paragraph -->
 
-<!-- wp:list -->
+
+
 
 -   Data-Rich Markets and data-driven machine learning systems are changing the way humans work. There is a decrease in the percentage of people participating in the labor force.
 -   Automation will slowly replace humans in the workforce. There are two ways to respond to this shift:
@@ -300,35 +300,35 @@ Key Ideas:
 -   Companies that hold dominance in the market, with strong feedback, and monopoly on data lead to significant market concentration: Google, Facebook, Amazon.
 -   We need to define elements of work, and make them flexible enough to be recombined. UBI provides flexibility in the human choice when choosing work, because some tension in income requirements is alleviated.
 
-<!-- /wp:list -->
+
 
 <!-- wp:heading {"level":3} -->
 
 ### Chapter 10: Human Choice
 
-<!-- /wp:heading -->
 
-<!-- wp:separator -->
+
+
 
 ------------------------------------------------------------------------
 
-<!-- /wp:separator -->
+
 
 </p>
-<!-- wp:paragraph -->
+
 
 Key Ideas:
 
-<!-- /wp:paragraph -->
 
-<!-- wp:list -->
+
+
 
 -   In a world of automation and machine performing decision making, what would humans do?
 -   Task of humans, is not to be efficient, like robots, but to be creative and adventurous and feel alive, unlike robots
 -   By freeing our minds very several mundane and routine decisions, we can focus on things that really matter
 
-<!-- /wp:list -->
 
-<!-- wp:paragraph -->
 
-<!-- /wp:paragraph -->
+
+
+

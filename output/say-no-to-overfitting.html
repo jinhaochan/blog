@@ -86,60 +86,25 @@
 
 
   <div>
-    <!-- wp:paragraph -->
-
-<p>Just some experience I've encountered while working on a very small data set of 1703 training samples, and 1705 testing samples.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
+    <p>Just some experience I've encountered while working on a very small data set of 1703 training samples, and 1705 testing samples.</p>
 <p>One way to combat overfitting is to use cross validation. While doing so, it's important for you not to just look at the final validation score, but also observe the training process itself.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>If we just look at the final CV result, we see an astounding <code>~92%</code> accuracy. This should raise some alarms that shout "Overfitting!". And this is an accurate observation, because when submitted to the Kaggle leader board, it got a measly <code>0.64</code>, which was below the baseline! And more horribly, the difference between CV and LB score is <code>~30%</code></p>
-<!-- /wp:paragraph -->
-
 <!-- wp:image {"id":294} -->
 
 <p><img alt="placeholder" class="wp-image-294" src="/media/2019/01/xgb2.png"></p>
-<!-- /wp:image -->
-
-<!-- wp:paragraph -->
-
 <p>We can also observe the huge disparity between the training error and validation error. A training error of <code>0%</code>? And validation error of <code>~8%</code>? Something is really wrong.</p>
-<!-- /wp:paragraph -->
-
 <!-- wp:heading {"level":3} -->
 
 <h3>Preventing overfitting in XGB</h3>
-<!-- /wp:heading -->
-
-<!-- wp:separator -->
-
 <hr>
-<!-- /wp:separator -->
+</p>
 
-<p></p>
-<!-- wp:paragraph --></p>
 <p>Since I've used XGBoost, there are several techniques available to combat overfitting, such as regularization, maximum depth of tree and bagging fractions. After applying all of those, I get a final CV score of <code>~74%</code>, but if we observe the disparity between the training error and validation error, the difference is only <code>~2%</code>!</p>
-<!-- /wp:paragraph -->
-
 <!-- wp:image {"id":293} -->
 
 <p><img alt="placeholder" class="wp-image-293" src="/media/2019/01/xgb1.png"></p>
-<!-- /wp:image -->
-
-<!-- wp:paragraph -->
-
 <p>After uploading that to the leader board, I see my score rise up to <code>0.69</code>. The difference between my CV score and the LB is drop drastically from <code>~30%</code> to <code>~3%</code>! Classic example of overfitting.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>Aside from feature engineering, a lot of effort should also go into ensuring your model is not too complex for very simple data.</p>
-<!-- /wp:paragraph -->
   </div>
   <div class="tag-cloud">
     <p>

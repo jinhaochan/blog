@@ -229,4 +229,4 @@ Also, don't be afraid to read up on other people's kernels to gain inspiration!
 <img alt></img>
 
 
-<!-- /wp:image -->
+

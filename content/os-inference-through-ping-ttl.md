@@ -9,46 +9,46 @@ Status: published
 
 ### Terminologies
 
-<!-- /wp:heading -->
 
-<!-- wp:separator -->
+
+
 
 ------------------------------------------------------------------------
 
-<!-- /wp:separator -->
+
 
 </p>
-<!-- wp:list -->
+
 
 -   Ping: An command to discover the availability of a target machine. It sends an ICMP Echo Request, and waits for an Echo Reply
 -   TTL: Time-To-Live, which tells the network routers how long the packet should live. For each router that passes the packet on, the TTL reduces by 1. Once TTL reaches 0, the packet is discarded, and an ICMP message is sent to the original sender to resend the packet.
 
-<!-- /wp:list -->
+
 
 <!-- wp:heading {"level":3} -->
 
 ### Infering OSes From TTLs
 
-<!-- /wp:heading -->
 
-<!-- wp:separator -->
+
+
 
 ------------------------------------------------------------------------
 
-<!-- /wp:separator -->
+
 
 </p>
-<!-- wp:paragraph -->
+
 
 Each OS has a different TTL for their Echo Reply packet, and based on that, we can infer what OS is sending us the reply.
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
+
+
 
 Lets look at what happens when we ping `google.com`
 
-<!-- /wp:paragraph -->
+
 
 <!-- wp:image {"id":415} -->
 
@@ -56,13 +56,13 @@ Lets look at what happens when we ping `google.com`
 ![placeholder]({attach}media/2019/04/untitled.png){.wp-image-415}
 
 
-<!-- /wp:image -->
 
-<!-- wp:paragraph -->
+
+
 
 The TTL that is show there is the Echo Reply that Google has sent us, and when it has reached our machine, it was "left" with 42 TTL. So how do we find out how long the Echo Reply travelled? `tracert`!
 
-<!-- /wp:paragraph -->
+
 
 <!-- wp:image {"id":416} -->
 
@@ -70,43 +70,43 @@ The TTL that is show there is the Echo Reply that Google has sent us, and when i
 ![placeholder]({attach}media/2019/04/untitled-1.png){.wp-image-416}
 
 
-<!-- /wp:image -->
 
-<!-- wp:paragraph -->
+
+
 
 How `tracert` works is that it first sends out a packet with TTL 1 and incrementally bumps up that amount so that at each router, it collect the IP address information about it. When a packet reaches a router with TTL=0, it is sent back to the originating machine, along with it's (the router) IP address.
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
+
+
 
 Request time out happens when the network router has specifically blocked ICMP ping request, so when a packet reaches there with TTL=0, nothing is sent back.
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
+
+
 
 We can see that for traffic that travel from `google.com` to our machine takes 23 hops, and when it reached out machine, it was left with 42 TTL. With that, we can conclude that when it was sent out, it had an initial TTL of `23+42=65`.
 
-<!-- /wp:paragraph -->
 
-<!-- wp:paragraph -->
+
+
 
 We can look at the table below to find out that Linux servers using ICMP protocol has a TTL of 64, which has the closest value to ours.  
 
-<!-- /wp:paragraph -->
+
 
 <!-- wp:heading {"level":3} -->
 
 ### Table of TTLs for each OS
 
-<!-- /wp:heading -->
 
-<!-- wp:separator -->
+
+
 
 ------------------------------------------------------------------------
 
-<!-- /wp:separator -->
+
 
 </p>
 <!-- wp:table -->

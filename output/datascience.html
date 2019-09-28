@@ -85,101 +85,29 @@
 
 
   <div>
-    <!-- wp:paragraph -->
-
-<p>I'm branching out my learning into Data Science, mostly from Kaggle.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
+    <p>I'm branching out my learning into Data Science, mostly from Kaggle.</p>
 <p>You'll find my Kaggle kernels here.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading -->
-
 <h2>Predicting Taxi Fare</h2>
-<!-- /wp:heading -->
-
-<!-- wp:separator -->
-
 <hr>
-<!-- /wp:separator -->
+</p>
 
-<p></p>
-<!-- wp:paragraph --></p>
 <p><a href="https://www.kaggle.com/c/new-york-city-taxi-fare-prediction">https://www.kaggle.com/c/new-york-city-taxi-fare-prediction</a></p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>Notebook: <a href="https://github.com/jinhaochan/TaxiFare/blob/master/Taxi%20Fares.ipynb">https://github.com/jinhaochan/TaxiFare/blob/master/Taxi%20Fares.ipynb</a></p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p><strong>RMSE: 3.88522</strong></p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p><strong>Model: XGBoost</strong></p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>In this problem, I was supposed to predict taxi fares in NYC. It can be modeled as a regression problem.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>There was a lot of data cleaning to do, with many odd numbered features such as passenger size, and coordinates on the water.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>Without the airport features, my model has an RMSE of 4.14398. After adding in those features, it drastically dropped to 3.88522. Those are some really strong features!</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading -->
-
 <h2>Movie Sentiment Analysis</h2>
-<!-- /wp:heading -->
-
-<!-- wp:separator -->
-
 <hr>
-<!-- /wp:separator -->
+</p>
 
-<p></p>
-<!-- wp:paragraph --></p>
 <p><a href="https://www.kaggle.com/c/movie-review-sentiment-analysis-kernels-only">https://www.kaggle.com/c/movie-review-sentiment-analysis-kernels-only</a><a href="https://www.kaggle.com/earthshaker/lstm-cnn-glove-bidirectional-gru-aggregation"></a></p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>Notebook: <a href="https://github.com/Charmanderander/SentimentAnalysis/blob/master/sentanalysis.ipynb">https://github.com/jinhaochan/SentimentAnalysis/blob/master/sentanalysis.ipynb</a></p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p><strong>Accuracy: 0.65095</strong></p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p><strong>Model: Ensemble by Voting</strong></p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>In this problem, we were given a collection of phrases, which were broken down from sentences. Instead of predicting the sentiment for each sentence, we had to predict the sentiment for each phrase.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>The pre-processing steps I did were</p>
-<!-- /wp:paragraph -->
-
 <!-- wp:list {"ordered":true} -->
 
 <ol>
@@ -187,13 +115,7 @@
 <li>Removing non alphabets</li>
 <li>Lemmatization</li>
 </ol>
-<!-- /wp:list -->
-
-<!-- wp:paragraph -->
-
 <p>The final output for each phrase was then chosen by voting from all the models.</p>
-<!-- /wp:paragraph -->
-
 <!-- wp:list {"ordered":true} -->
 
 <ol>
@@ -201,72 +123,21 @@
 <li>CNN</li>
 <li>Glove Transfer-Learning with Bidirectional GRU</li>
 </ol>
-<!-- /wp:list -->
-
-<!-- wp:paragraph -->
-
 <p>Interestingly enough, Glove + CNN performs poorer than just CNN. This may be because the word vectors trained in Glove were in a different context (i.e. not Movie Sentiment Analysis)</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading -->
-
 <h2>Predicting Future Sales</h2>
-<!-- /wp:heading -->
-
-<!-- wp:separator -->
-
 <hr>
-<!-- /wp:separator -->
+</p>
 
-<p></p>
-<!-- wp:paragraph --></p>
 <p><a href="https://www.kaggle.com/c/competitive-data-science-predict-future-sales">https://www.kaggle.com/c/competitive-data-science-predict-future-sales</a></p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>Notebook: <a href="https://github.com/Charmanderander/salesforcast/blob/master/saleforecast.ipynb">https://github.com/jinhaochan/salesforcast/blob/master/saleforecast.ipynb</a></p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p><strong>RMSE: 1.16462</strong></p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p><strong>Model: LSTM + GRU</strong></p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>In this competition, we had to predict what the next month's sale was for each item for each shop.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>The data given to us was daily sales for each item, so we had to do some data aggregation to convert it to a monthly sales value.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>We were given 33 months of training data, so I modeled it to a time series problem.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>For training, months 0 - 32 was the training data, and month 33 was the target value.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>For testing, months 1 - 33 was the testing data, and we need to predict the values for month 34.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>The model I used was a 2 layer GRU using a dropout layer of 0.3  </p>
-<!-- /wp:paragraph -->
   </div>
   <div class="tag-cloud">
     <p>

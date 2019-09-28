@@ -86,21 +86,9 @@
 
 
   <div>
-    <!-- wp:paragraph -->
-
-<p>While doing the Microsoft Malware Classification challenge, I encountered a way of Feature representation called Count Based Features (CBF).</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
+    <p>While doing the Microsoft Malware Classification challenge, I encountered a way of Feature representation called Count Based Features (CBF).</p>
 <p>CBF is good to use with very high cardinality features, and it transforms the high number of categories in the data to the number of it's occurrences. This representation is helpful because it extracts out a simple inherent feature of the data: count</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>Below shows a simple example of how we get the CBF of a given feature</p>
-<!-- /wp:paragraph -->
-
 <!-- wp:table -->
 
 <hr>
@@ -115,21 +103,9 @@
 <hr>
 <!-- /wp:table -->
 
-<!-- wp:paragraph -->
-
 <p>CBF can be done in pandas in a single line</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p><code>Train.groupby([' Feature1 '])[' Feature1 '].transform('count')</code></p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>The output of this will give you</p>
-<!-- /wp:paragraph -->
-
 <!-- wp:table -->
 
 <p>Label   <strong>Feature1</strong></p>
@@ -143,10 +119,7 @@
   1       4</p>
 <!-- /wp:table -->
 
-<!-- wp:paragraph -->
-
 <p>As you can see, the categorical values are all converted their count values!  </p>
-<!-- /wp:paragraph -->
   </div>
   <div class="tag-cloud">
     <p>

@@ -86,16 +86,8 @@
 
 
   <div>
-    <!-- wp:paragraph -->
-
-<p>Feature Engineering is one of the neglected portion of machine learning. Most topics revolve around Model Training (parameter tuning, cross validation). While that might be really important, feature engineering is equally important as well, but I can't seem to find good resources that talk about this. I suspect this is because to perform feature engineering, you need expert knowledge of the data, and what it represents.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
+    <p>Feature Engineering is one of the neglected portion of machine learning. Most topics revolve around Model Training (parameter tuning, cross validation). While that might be really important, feature engineering is equally important as well, but I can't seem to find good resources that talk about this. I suspect this is because to perform feature engineering, you need expert knowledge of the data, and what it represents.</p>
 <p>A typical workflow would look something like this</p>
-<!-- /wp:paragraph -->
-
 <!-- wp:list {"ordered":true} -->
 
 <ol>
@@ -106,151 +98,66 @@
 <li>Model Training</li>
 <li>Project Delivery / Insights</li>
 </ol>
-<!-- /wp:list -->
-
 <!-- wp:heading {"level":3} -->
 
 <h3>What is not Feature Engineering</h3>
-<!-- /wp:heading -->
-
-<!-- wp:separator -->
-
 <hr>
-<!-- /wp:separator -->
+</p>
 
-<p></p>
-<!-- wp:list --></p>
 <ul>
 <li>Data cleaning (Outlier detection, Missing values)</li>
 <li>Scaling and Normalization</li>
 <li>Feature Selection</li>
 </ul>
-<!-- /wp:list -->
-
-<!-- wp:paragraph -->
-
 <p>I would classify these as data massaging, as you're just changing the data (except for Feature Selection). Feature Engineering is the creation of new data.  </p>
-<!-- /wp:paragraph -->
-
 <!-- wp:heading {"level":3} -->
 
 <h3>What is Feature Engineering</h3>
-<!-- /wp:heading -->
-
-<!-- wp:separator -->
-
 <hr>
-<!-- /wp:separator -->
+</p>
 
-<p></p>
-<!-- wp:paragraph --></p>
 <p>There are a few ways to create new features from existing ones</p>
-<!-- /wp:paragraph -->
-
 <!-- wp:heading {"level":4} -->
 
 <h4>Indicator Variables</h4>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-
 <p>Indicator variables are new variables that help you isolate data. This new feature is discriminative and can help separate the data.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>Examples:</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:list -->
-
 <ul>
 <li>Threshold: If you're studying data on alcohol consumption, you could create a new binary feature if the person is <code>&gt;=21</code> years old. The expert knowledge in this is knowing where your data came from, and what is the minimum age of drinking in that country/state</li>
 <li>Special Events: If you're studying sales, there could be seasons that have higher sales, such as <code>isChristmas</code>, <code>isSinglesDay</code> or <code>isBlackFriday</code>. Expert knowledge is knowing what special events there are</li>
 <li>Groupings: You can create artificial groups for the data, for example in network traffic, you can group the, according to protocols or source. Expert knowledge is knowing how to interpret the data, and what grouping makes sense</li>
 </ul>
-<!-- /wp:list -->
-
 <!-- wp:heading {"level":4} -->
 
 <h4>Interaction of Features</h4>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-
 <p>Features can interact with each other to create new variables. Interaction here means some mathematical operation between them.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>Examples:</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:list -->
-
 <ul>
 <li>Sum of Features: If you're looking at sales of individual items, a new feature might be <code>overallSales</code>, where you add the sales of each item together</li>
 <li>Product of Features: If you're looking at wages, and you have features like <code>hourlyRate</code>, and <code>workingHours</code>, you can create a new feature called <code>totalPay</code></li>
 </ul>
-<!-- /wp:list -->
-
-<!-- wp:paragraph -->
-
 <p>The expert knowledge in these areas are knowing how the features interact with each other to produce new features. However, from unfortunate experience, I've seen some feature interactions that makes absolutely no sense, but the model seems to think otherwise. An example I saw was a new feature created from the multiplication of <code>screenHorizontalSize</code> and <code>totalRAM</code> which makes absolutely no sense, but it gave a boost in prediction accuracy. Machine Learning really is still a black box.</p>
-<!-- /wp:paragraph -->
-
 <!-- wp:heading {"level":4} -->
 
 <h4>Feature Representation</h4>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-
 <p>For some features, you can better represent them in other formats that give more information.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>Examples:</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:list -->
-
 <ul>
 <li>Date to integer: When give a <code>datetime</code> format string, it almost always makes sense to decompose it to it's integer components such as <code>day</code>, <code>month</code> and <code>year</code>. More than that, you can create features such as <code>isWeekday</code> or <code>isPeakHour</code></li>
 <li>Sparse classes to Other: In a categorical class, if some classes are hugely under-represented, they can be grouped together, and classified as <code>Others</code></li>
 </ul>
-<!-- /wp:list -->
-
 <!-- wp:heading {"level":4} -->
 
 <h4>External Data Augmentation</h4>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-
 <p>Another way to create new features is to bring in new data such as Geolocation information. These external data can be used to add in new features, which in turn can interact, represent or isolate current features.</p>
-<!-- /wp:paragraph -->
-
 <!-- wp:heading {"level":3} -->
 
 <h3>Conclusion</h3>
-<!-- /wp:heading -->
-
-<!-- wp:separator -->
-
 <hr>
-<!-- /wp:separator -->
+</p>
 
-<p></p>
-<!-- wp:paragraph --></p>
 <p>Indicator Features, Feature Interactions, Feature Representation, External Data Augmentation are all several way to engineer new features. This is different from data massaging.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>Feature Engineering is extremely important in your Machine Learning workflow.</p>
-<!-- /wp:paragraph -->
   </div>
   <div class="tag-cloud">
     <p>

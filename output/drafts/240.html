@@ -85,21 +85,9 @@
 
 
   <div>
-    <!-- wp:paragraph -->
-
-<p>This is the write up for my solution for the Microsoft Malware Prediction</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
+    <p>This is the write up for my solution for the Microsoft Malware Prediction</p>
 <p><a href="https://www.kaggle.com/c/microsoft-malware-prediction">https://www.kaggle.com/c/microsoft-malware-prediction</a></p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>I got pretty high up the leader board, but it was nothing that I was proud of, because:</p>
-<!-- /wp:paragraph -->
-
 <!-- wp:list {"ordered":true} -->
 
 <ol>
@@ -107,13 +95,7 @@
 <li>The final result was a blend of another kernel</li>
 <li>All my attempts at feature engineering failed</li>
 </ol>
-<!-- /wp:list -->
-
-<!-- wp:paragraph -->
-
 <p>And I'm now officially ceasing efforts to improve my score, because:</p>
-<!-- /wp:paragraph -->
-
 <!-- wp:list {"ordered":true} -->
 
 <ol>
@@ -121,13 +103,7 @@
 <li>I don't think I've got the basics down yet, and this challenge was way over my head. I feel I should start with something simpler</li>
 <li>And most importantly, I'm no longer having fun</li>
 </ol>
-<!-- /wp:list -->
-
-<!-- wp:paragraph -->
-
 <p>But wait! Doing such a hard competition really taught me many concepts, such as:</p>
-<!-- /wp:paragraph -->
-
 <!-- wp:list {"ordered":true} -->
 
 <ol>
@@ -136,33 +112,11 @@
 <li>The real problem of overfitting, which LightGBM does really fast</li>
 <li>Blending and Ensembling is a powerful method for getting good results</li>
 </ol>
-<!-- /wp:list -->
-
-<!-- wp:paragraph -->
-
 <p>Below shows one of the code variants I've used. They were all mostly the same, with a few hyperparameters being different, and some failed attempts at feature engineering.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>The most important features were Version numbers, and there's probably some way to exploit that.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>My single model (which I believe grossly overfitted, because I set <code>num_leaves=8000</code> got me a score of 0.684. I blended with another blended kernel of 0.688, and my final score was 0.692.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>I think this got me off at the wrong start because I was working and tweaking with those overfitted hyperparameters, when they were wrong in the first place.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-
 <p>Anyway, on to the next competition!  </p>
-<!-- /wp:paragraph -->
-
 <!-- wp:code -->
 
 <div class="highlight"><pre><span></span><span class="c1"># This Python 3 environment comes with many helpful analytics libraries installed</span>
@@ -309,16 +263,8 @@
 
 <!-- /wp:code -->
 
-<!-- wp:heading -->
-
 <h2>Feature Engineering</h2>
-<!-- /wp:heading -->
-
-<!-- wp:separator -->
-
 <hr>
-<!-- /wp:separator -->
-
 <p></p>
 <!-- wp:code --></p>
 <div class="highlight"><pre><span></span><span class="nv">def</span> <span class="nv">add_noise</span><span class="ss">(</span><span class="nv">series</span>, <span class="nv">noise_level</span><span class="ss">)</span>:
@@ -395,16 +341,8 @@
 
 <!-- /wp:code -->
 
-<!-- wp:heading -->
-
 <h2>Training</h2>
-<!-- /wp:heading -->
-
-<!-- wp:separator -->
-
 <hr>
-<!-- /wp:separator -->
-
 <p></p>
 <!-- wp:code --></p>
 <div class="highlight"><pre><span></span><span class="nb">params</span> <span class="o">=</span> {
@@ -549,13 +487,9 @@
 <!-- wp:image {"id":241} -->
 
 <p><img alt="placeholder" class="wp-image-241" src="/media/2019/01/output_9_1.png"></p>
-<!-- /wp:image -->
-
 <!-- wp:image {"id":242} -->
 
 <p><img alt="placeholder" class="wp-image-242" src="/media/2019/01/output_9_3.png"></p>
-<!-- /wp:image -->
-
 <!-- wp:code -->
 
 <div class="highlight"><pre><span></span><span class="n">print</span><span class="p">(</span><span class="ss">&quot;Start Predicting&quot;</span><span class="p">)</span>
