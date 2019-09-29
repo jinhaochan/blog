@@ -1,6 +1,6 @@
 Title: Three pins to two holes
 Date: 2015-05-11 17:19
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Ramblings
 Slug: three-pins-to-two-holes
 Status: published

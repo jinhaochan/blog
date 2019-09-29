@@ -1,6 +1,6 @@
 Title: Why I work
 Date: 2016-04-18 15:48
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Ramblings
 Slug: why-i-work
 Status: published

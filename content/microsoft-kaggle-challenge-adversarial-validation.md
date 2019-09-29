@@ -1,6 +1,6 @@
 Title: Microsoft Kaggle Challenge: Adversarial Validation
 Date: 2019-03-10 19:45
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Data Science
 Tags: Adversarial Validation
 Slug: microsoft-kaggle-challenge-adversarial-validation

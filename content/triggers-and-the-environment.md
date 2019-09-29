@@ -1,6 +1,6 @@
 Title: Triggers and the Environment
 Date: 2017-04-12 10:05
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Ramblings
 Slug: triggers-and-the-environment
 Status: published

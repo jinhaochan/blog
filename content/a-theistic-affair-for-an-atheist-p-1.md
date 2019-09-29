@@ -1,6 +1,6 @@
 Title: A Theistic affair for an Atheist P.1
 Date: 2014-01-20 13:26
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Ramblings
 Tags: Atheist, Christianity, Chruch
 Slug: a-theistic-affair-for-an-atheist-p-1

@@ -1,6 +1,6 @@
 Title: C# Pass By Value
 Date: 2018-11-25 22:37
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Software Engineering
 Slug: c-pass-by-value
 Status: published

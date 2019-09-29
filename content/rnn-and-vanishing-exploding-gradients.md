@@ -1,6 +1,6 @@
 Title: RNN and Vanishing/Exploding Gradients
 Date: 2019-06-23 16:23
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Data Science
 Tags: RNN, Vanishing Gradients
 Slug: rnn-and-vanishing-exploding-gradients

@@ -1,6 +1,6 @@
 Title: What is UPnP? (And how it can be malicious)
 Date: 2019-04-29 20:09
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Security
 Tags: UPnP
 Slug: what-is-upnp-and-how-it-can-be-malicious

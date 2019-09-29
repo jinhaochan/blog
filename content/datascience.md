@@ -1,6 +1,6 @@
 Title: Kaggle Data Science
 Date: 2018-10-31 22:11
-Author: jinhaochan
+Author: Chan Jin Hao
 Slug: datascience
 Status: published
 
@@ -38,7 +38,7 @@ Predicting Taxi Fare
 
 
 
-Notebook: <https://github.com/jinhaochan/TaxiFare/blob/master/Taxi%20Fares.ipynb>
+Notebook: <https://github.com/Chan Jin Hao/TaxiFare/blob/master/Taxi%20Fares.ipynb>
 
 
 
@@ -94,7 +94,7 @@ Movie Sentiment Analysis
 
 
 
-Notebook: [https://github.com/jinhaochan/SentimentAnalysis/blob/master/sentanalysis.ipynb](https://github.com/Charmanderander/SentimentAnalysis/blob/master/sentanalysis.ipynb)
+Notebook: [https://github.com/Chan Jin Hao/SentimentAnalysis/blob/master/sentanalysis.ipynb](https://github.com/Charmanderander/SentimentAnalysis/blob/master/sentanalysis.ipynb)
 
 
 
@@ -172,7 +172,7 @@ Predicting Future Sales
 
 
 
-Notebook: [https://github.com/jinhaochan/salesforcast/blob/master/saleforecast.ipynb](https://github.com/Charmanderander/salesforcast/blob/master/saleforecast.ipynb)
+Notebook: [https://github.com/Chan Jin Hao/salesforcast/blob/master/saleforecast.ipynb](https://github.com/Charmanderander/salesforcast/blob/master/saleforecast.ipynb)
 
 
 

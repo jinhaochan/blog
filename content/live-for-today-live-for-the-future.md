@@ -1,6 +1,6 @@
 Title: Live for today, live for the future
 Date: 2016-10-20 13:27
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Ramblings
 Slug: live-for-today-live-for-the-future
 Status: published

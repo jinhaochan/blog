@@ -1,6 +1,6 @@
 Title: Activation Functions
 Date: 2019-04-14 18:07
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Data Science
 Tags: Activation Functions
 Slug: activation-functions

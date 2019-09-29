@@ -1,6 +1,6 @@
 Title: Long term goals and Short term decision dichotomy
 Date: 2015-09-06 05:43
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Ramblings
 Slug: long-term-goals-and-short-term-decision-dichotomy
 Status: published

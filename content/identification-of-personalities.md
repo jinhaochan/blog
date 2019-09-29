@@ -1,6 +1,6 @@
 Title: Identification of Personalities
 Date: 2016-01-26 14:13
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Ramblings
 Slug: identification-of-personalities
 Status: published

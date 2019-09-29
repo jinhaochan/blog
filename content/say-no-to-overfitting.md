@@ -1,6 +1,6 @@
 Title: Say NO to Overfitting!
 Date: 2019-05-05 13:58
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Data Science
 Tags: Overfitting
 Slug: say-no-to-overfitting

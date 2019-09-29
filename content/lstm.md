@@ -1,6 +1,6 @@
 Title: LSTM
 Date: 2019-06-30 15:33
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Data Science
 Tags: Exploding Gradients, LSTM, Vanishing Gradients
 Slug: lstm

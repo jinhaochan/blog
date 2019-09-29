@@ -1,6 +1,6 @@
 Title: MITRE on Threat Detection
 Date: 2019-04-25 17:37
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Security
 Tags: MITRE
 Slug: mitre-on-threat-detection

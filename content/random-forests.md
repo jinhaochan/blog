@@ -1,6 +1,6 @@
 Title: Random Forests
 Date: 2019-06-09 20:43
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Data Science
 Tags: Decision Tree, Random Forest
 Slug: random-forests

@@ -1,6 +1,6 @@
 Title: Domain Generating Algorithm (Used by C2 Communication)
 Date: 2019-04-07 16:46
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Security
 Tags: Domain Generation Algorithm
 Slug: domain-generating-algorithm-used-by-c2-communication

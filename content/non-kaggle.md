@@ -1,6 +1,6 @@
 Title: Non-Kaggle
 Date: 2018-10-31 21:43
-Author: jinhaochan
+Author: Chan Jin Hao
 Slug: non-kaggle
 Status: published
 
@@ -31,7 +31,7 @@ Dataset: <https://mcfp.weebly.com/the-ctu-13-dataset-a-labeled-dataset-with-botn
 
 
 
-Notebook: [https://github.com/jinhaochan/BotnetDetection/blob/master/NetFlow-Botnet.ipynb](https://github.com/Charmanderander/BotnetDetection/blob/master/NetFlow-Botnet.ipynb)
+Notebook: [https://github.com/Chan Jin Hao/BotnetDetection/blob/master/NetFlow-Botnet.ipynb](https://github.com/Charmanderander/BotnetDetection/blob/master/NetFlow-Botnet.ipynb)
 
 
 

@@ -1,6 +1,6 @@
 Title: Receiving and Giving
 Date: 2017-10-16 01:26
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Ramblings
 Slug: receiving-and-giving
 Status: published

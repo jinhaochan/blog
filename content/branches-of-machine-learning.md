@@ -1,6 +1,6 @@
 Title: Branches of Machine Learning
 Date: 2019-06-02 15:30
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Review
 Slug: branches-of-machine-learning
 Status: published

@@ -1,6 +1,6 @@
 Title: The Anomaly
 Date: 2018-02-25 16:27
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Ramblings
 Slug: the-anomaly
 Status: published

@@ -1,6 +1,6 @@
 Title: Our life is a stage.
 Date: 2015-02-15 16:27
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Ramblings
 Tags: Life, people, self, society
 Slug: our-life-is-a-stage

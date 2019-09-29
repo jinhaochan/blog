@@ -1,6 +1,6 @@
 Title: K-Means Clustering
 Date: 2019-06-16 21:18
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Data Science
 Tags: K means clustering
 Slug: k-means-clustering

@@ -1,6 +1,6 @@
 Title: A Conversation with my Professor
 Date: 2014-01-26 06:54
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Ramblings
 Tags: non-realism, philosophy, realism, religion
 Slug: a-conversation-with-my-professor

@@ -1,6 +1,6 @@
 Title: Hypervigilance and Mindfulness
 Date: 2017-12-26 13:35
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Ramblings
 Slug: hypervigilance-and-mindfulness
 Status: published

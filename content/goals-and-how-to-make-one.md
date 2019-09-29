@@ -1,6 +1,6 @@
 Title: Goals, and how to make one
 Date: 2016-10-21 01:14
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Ramblings
 Slug: goals-and-how-to-make-one
 Status: published

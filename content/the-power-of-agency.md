@@ -1,6 +1,6 @@
 Title: The Power of Agency
 Date: 2019-05-14 21:19
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Review
 Slug: the-power-of-agency
 Status: published

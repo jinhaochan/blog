@@ -1,6 +1,6 @@
 Title: Religious again? 
 Date: 2016-12-11 10:16
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Ramblings
 Slug: religious-again
 Status: published

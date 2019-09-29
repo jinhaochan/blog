@@ -1,6 +1,6 @@
 Title: Microsoft Kaggle Competition
 Date: 2019-03-31 09:38
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Data Science
 Tags: Kaggle
 Slug: microsoft-kaggle-competition

@@ -1,6 +1,6 @@
 Title: CSRF Tokens
 Date: 2019-04-24 16:13
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Security
 Tags: CSRF
 Slug: csrf-tokens

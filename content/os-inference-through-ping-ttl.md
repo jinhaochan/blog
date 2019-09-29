@@ -1,6 +1,6 @@
 Title: OS Inference through Ping TTL
 Date: 2019-04-18 14:00
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Security
 Slug: os-inference-through-ping-ttl
 Status: published

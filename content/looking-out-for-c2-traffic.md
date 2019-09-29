@@ -1,6 +1,6 @@
 Title: Looking out for C2 Traffic
 Date: 2019-05-02 16:14
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Security
 Tags: C2, Command and Control
 Slug: looking-out-for-c2-traffic
@@ -115,7 +115,7 @@ Machine learning techniques can be employed to detect C2 traffic. In an extremel
 
 
 
-I did a small sample project which can be seen here:<https://github.com/jinhaochan/BotnetDetection>
+I did a small sample project which can be seen here:<https://github.com/Chan Jin Hao/BotnetDetection>
 
 
 

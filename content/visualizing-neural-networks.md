@@ -1,6 +1,6 @@
 Title: Visualizing Neural Networks
 Date: 2019-05-19 09:31
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Data Science
 Slug: visualizing-neural-networks
 Status: published

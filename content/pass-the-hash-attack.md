@@ -1,6 +1,6 @@
 Title: Pass The Hash Attack
 Date: 2019-01-06 10:45
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Security
 Tags: Pass the hash, Windows
 Slug: pass-the-hash-attack

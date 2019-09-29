@@ -1,6 +1,6 @@
 Title: The Subjectivity of Suffering.
 Date: 2016-10-10 14:04
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Ramblings
 Slug: the-subjectivity-of-suffering
 Status: published

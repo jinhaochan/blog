@@ -1,6 +1,6 @@
 Title: The Culture Code
 Date: 2018-12-02 22:38
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Review
 Tags: Readings, The Culture Code
 Slug: the-culture-code

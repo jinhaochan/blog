@@ -1,6 +1,6 @@
 Title: Counts Based Featurization
 Date: 2019-03-24 17:48
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Data Science
 Tags: Count Feature
 Slug: counts-based-featurization

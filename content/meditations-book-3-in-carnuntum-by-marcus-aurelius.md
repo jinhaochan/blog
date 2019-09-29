@@ -1,6 +1,6 @@
 Title: MEDITATIONS; Book 3; IN CARNUNTUM by Marcus Aurelius
 Date: 2017-07-24 13:34
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Ramblings
 Slug: meditations-book-3-in-carnuntum-by-marcus-aurelius
 Status: published

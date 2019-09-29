@@ -1,6 +1,6 @@
 Title: Kaggle Boiler Plate
 Date: 2018-12-16 21:33
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Data Science
 Slug: kaggle-boiler-plate
 Status: published

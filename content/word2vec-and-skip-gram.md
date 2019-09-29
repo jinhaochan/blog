@@ -1,6 +1,6 @@
 Title: Word2Vec
 Date: 2019-01-20 14:24
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Data Science
 Tags: Text processing
 Slug: word2vec-and-skip-gram

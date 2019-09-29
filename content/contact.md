@@ -1,6 +1,6 @@
 Title: Contact
 Date: 2018-07-10 09:52
-Author: jinhaochan
+Author: Chan Jin Hao
 Slug: contact
 Status: published
 

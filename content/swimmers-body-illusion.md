@@ -1,6 +1,6 @@
 Title: Swimmers Body Illusion.
 Date: 2014-05-14 14:13
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Ramblings
 Tags: Life, Rolf Dobelli, Swimmers body Illusion
 Slug: swimmers-body-illusion

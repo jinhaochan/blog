@@ -1,6 +1,6 @@
 Title: Digging into happiness
 Date: 2016-04-06 14:05
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Ramblings
 Slug: digging-into-happiness
 Status: published

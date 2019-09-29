@@ -1,6 +1,6 @@
 Title: Side Channel Data Exfiltration
 Date: 2019-05-10 14:39
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Security
 Tags: data exfiltration
 Slug: side-channel-data-exfiltration

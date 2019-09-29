@@ -1,6 +1,6 @@
 Title: Process Injection
 Date: 2019-04-05 14:44
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Security
 Tags: Process Injection
 Slug: process-injection

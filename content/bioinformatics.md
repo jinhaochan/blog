@@ -1,6 +1,6 @@
 Title: Bioinformatics
 Date: 2018-07-18 16:03
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Ramblings
 Tags: Bioinformatics, Coursera
 Slug: bioinformatics

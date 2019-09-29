@@ -1,6 +1,6 @@
 Title: About
 Date: 2014-01-18 08:01
-Author: jinhaochan
+Author: Chan Jin Hao
 Slug: about
 Status: published
 

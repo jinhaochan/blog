@@ -1,6 +1,6 @@
 Title: Web Beacon for Trip wiring documents
 Date: 2019-03-03 14:25
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Security
 Tags: Web Beacons
 Slug: web-beacon-for-trip-wiring-documents

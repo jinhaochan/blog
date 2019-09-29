@@ -1,6 +1,6 @@
 Title: Shadow Goodness and Badness
 Date: 2016-12-23 14:06
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Ramblings
 Slug: shadow-goodness-and-badness
 Status: published

@@ -1,6 +1,6 @@
 Title: The I in Me
 Date: 2015-12-20 13:59
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Ramblings
 Slug: the-i-in-i
 Status: published

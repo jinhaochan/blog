@@ -1,6 +1,6 @@
 Title: What is Maximum Likelihood Estimation?
 Date: 2019-04-28 09:44
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Data Science
 Slug: what-is-maximum-likelihood-estimation
 Status: published

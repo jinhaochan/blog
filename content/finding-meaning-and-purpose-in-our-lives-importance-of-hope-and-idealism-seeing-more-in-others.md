@@ -1,6 +1,6 @@
 Title: "Finding meaning and purpose in our lives -- importance of hope and idealism" Seeing more in others
 Date: 2015-05-11 04:35
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Ramblings
 Slug: finding-meaning-and-purpose-in-our-lives-importance-of-hope-and-idealism-seeing-more-in-others
 Status: published

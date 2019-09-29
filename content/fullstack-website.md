@@ -1,6 +1,6 @@
 Title: Side Projects
 Date: 2018-10-30 22:38
-Author: jinhaochan
+Author: Chan Jin Hao
 Slug: fullstack-website
 Status: published
 

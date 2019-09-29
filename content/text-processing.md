@@ -1,6 +1,6 @@
 Title: Text Processing
 Date: 2019-01-13 18:41
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Data Science
 Tags: Text processing
 Slug: text-processing

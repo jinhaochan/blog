@@ -1,6 +1,6 @@
 Title: On Governance
 Date: 2015-01-27 14:26
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Ramblings
 Tags: governance, government, society
 Slug: on-governance

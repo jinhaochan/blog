@@ -1,6 +1,6 @@
 Title: What is a CGI?
 Date: 2019-04-08 17:11
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Security
 Tags: cgi
 Slug: what-is-a-cgi

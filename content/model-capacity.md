@@ -1,6 +1,6 @@
 Title: Model Capacity
 Date: 2019-03-24 20:19
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Data Science
 Tags: Capacity, VC Dimension
 Slug: model-capacity

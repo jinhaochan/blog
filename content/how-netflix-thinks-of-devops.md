@@ -1,6 +1,6 @@
 Title: How Netflix Thinks of DevOps
 Date: 2018-07-13 07:02
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Software Engineering
 Slug: how-netflix-thinks-of-devops
 Status: published

@@ -1,6 +1,6 @@
 Title: Regularization
 Date: 2019-04-07 09:49
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Data Science
 Tags: drop out, regularization
 Slug: regularization

@@ -1,6 +1,6 @@
 Title: Hemorrhoidectomy
 Date: 2016-04-18 15:20
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Ramblings
 Slug: hemorrhoidectomy
 Status: published

@@ -1,6 +1,6 @@
 Title: Five actions for happiness (To others and yourself)
 Date: 2016-04-19 11:16
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Ramblings
 Slug: five-actions-for-happiness-to-others-and-yourself
 Status: published

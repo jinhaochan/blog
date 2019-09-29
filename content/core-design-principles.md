@@ -1,6 +1,6 @@
 Title: Core Design Principles
 Date: 2018-07-12 09:08
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Software Engineering
 Slug: core-design-principles
 Status: published

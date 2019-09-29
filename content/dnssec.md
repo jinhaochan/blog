@@ -1,6 +1,6 @@
 Title: DNSSEC
 Date: 2019-09-23 14:16
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Security
 Tags: DNSSEC
 Slug: dnssec

@@ -1,6 +1,6 @@
 Title: The Gusto for life
 Date: 2016-02-09 10:31
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Ramblings
 Slug: the-gusto-for-life
 Status: published

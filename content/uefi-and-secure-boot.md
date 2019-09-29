@@ -1,6 +1,6 @@
 Title: UEFI and Secure Boot
 Date: 2019-04-09 16:12
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Security
 Tags: Secure Boot, UEFI
 Slug: uefi-and-secure-boot

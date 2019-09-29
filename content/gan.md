@@ -1,6 +1,6 @@
 Title: GAN?
 Date: 2019-05-26 13:13
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Data Science
 Slug: gan
 Status: published

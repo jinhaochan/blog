@@ -1,6 +1,6 @@
 Title: LightGBM
 Date: 2019-03-24 12:33
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Data Science
 Slug: lightgbm
 Status: published

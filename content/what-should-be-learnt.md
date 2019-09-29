@@ -1,6 +1,6 @@
 Title: What should be learnt
 Date: 2016-10-09 14:55
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Ramblings
 Slug: what-should-be-learnt
 Status: published

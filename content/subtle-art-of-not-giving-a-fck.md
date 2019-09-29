@@ -1,6 +1,6 @@
 Title: Subtle Art Of Not Giving a F*CK
 Date: 2018-09-01 16:24
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Ramblings
 Slug: subtle-art-of-not-giving-a-fck
 Status: published

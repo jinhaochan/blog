@@ -1,6 +1,6 @@
 Title: Gradient Descent
 Date: 2019-02-03 20:10
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Data Science
 Tags: Gradient Descent
 Slug: gradient-descent

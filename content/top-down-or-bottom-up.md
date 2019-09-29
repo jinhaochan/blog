@@ -1,6 +1,6 @@
 Title: Top-down or Bottom-up
 Date: 2016-12-02 00:19
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Ramblings
 Slug: top-down-or-bottom-up
 Status: published

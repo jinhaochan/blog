@@ -1,6 +1,6 @@
 Title: How HTTPS Works
 Date: 2018-11-18 22:36
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Security
 Tags: HTTPS
 Slug: how-https-works

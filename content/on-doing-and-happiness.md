@@ -1,6 +1,6 @@
 Title: On Doing and Happiness
 Date: 2018-01-14 10:11
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Ramblings
 Slug: on-doing-and-happiness
 Status: published

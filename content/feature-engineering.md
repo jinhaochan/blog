@@ -1,6 +1,6 @@
 Title: Feature Engineering
 Date: 2019-03-17 09:41
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Data Science
 Tags: Feature Engineering
 Slug: feature-engineering

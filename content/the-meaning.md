@@ -1,6 +1,6 @@
 Title: The Meaning
 Date: 2017-09-02 06:09
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Ramblings
 Slug: the-meaning
 Status: published

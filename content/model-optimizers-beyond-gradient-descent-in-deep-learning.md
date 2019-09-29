@@ -1,6 +1,6 @@
 Title: Model Optimizers Beyond Gradient Descent in Deep Learning
 Date: 2019-02-10 09:52
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Data Science
 Tags: Optimizers
 Slug: model-optimizers-beyond-gradient-descent-in-deep-learning

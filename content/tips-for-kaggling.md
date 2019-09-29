@@ -1,6 +1,6 @@
 Title: Tips for Kaggling
 Date: 2019-05-12 11:31
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Data Science
 Tags: Kaggle
 Slug: tips-for-kaggling

@@ -1,6 +1,6 @@
 Title: The Cyber Kill Chain
 Date: 2019-05-13 16:52
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Security
 Tags: Cyber kill chain
 Slug: the-cyber-kill-chain

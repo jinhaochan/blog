@@ -1,6 +1,6 @@
 Title: Like Water, Like Life
 Date: 2016-11-01 13:05
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Ramblings
 Slug: like-water-like-life
 Status: published

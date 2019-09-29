@@ -1,6 +1,6 @@
 Title: The Interpretation of ROC and AUC
 Date: 2019-04-14 12:52
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Data Science
 Slug: the-interpretation-of-roc-and-auc
 Status: published

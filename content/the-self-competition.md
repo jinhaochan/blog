@@ -1,6 +1,6 @@
 Title: The Self-Competition
 Date: 2015-04-09 15:46
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Ramblings
 Tags: competition, improvement, self
 Slug: the-self-competition

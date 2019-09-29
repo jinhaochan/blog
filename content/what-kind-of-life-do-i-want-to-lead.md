@@ -1,6 +1,6 @@
 Title: What Kind Of Life Do I Want To Lead?
 Date: 2017-07-22 15:11
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Ramblings
 Slug: what-kind-of-life-do-i-want-to-lead
 Status: published

@@ -1,6 +1,6 @@
 Title: Convolutional Neural Networks
 Date: 2019-02-17 16:11
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Data Science
 Slug: convolutional-neural-networks
 Status: published

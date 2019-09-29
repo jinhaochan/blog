@@ -1,6 +1,6 @@
 Title: Hit Refresh
 Date: 2019-05-05 12:51
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Book Review
 Slug: hit-refresh
 Status: published

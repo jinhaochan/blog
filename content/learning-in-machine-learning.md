@@ -1,6 +1,6 @@
 Title: Learning in Machine Learning
 Date: 2019-01-27 17:14
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Data Science
 Tags: Machine learning
 Slug: learning-in-machine-learning

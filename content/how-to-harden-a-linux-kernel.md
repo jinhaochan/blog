@@ -1,6 +1,6 @@
 Title: How to harden a Linux Kernel
 Date: 2019-04-17 11:21
-Author: jinhaochan
+Author: Chan Jin Hao
 Category: Security
 Tags: ASLR, SMAP, SMEP
 Slug: how-to-harden-a-linux-kernel
