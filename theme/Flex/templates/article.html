@@ -86,6 +86,13 @@
     </script>
   {% endif %}
 
+  {% if STATIC_COMMENTS %}
+  <section id="comments" class="body">
+	  <h2>Comments:</h2>
+	  {{article.metadata.static_comments}}
+  </section>
+  {% endif  %}
+
   {% include "partial/disqus.html" %}
 </article>
 {% endblock %}

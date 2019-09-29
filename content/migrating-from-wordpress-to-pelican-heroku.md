@@ -3,7 +3,7 @@ Date: 2019-09-28 17:54
 Author: Chan Jin Hao
 Category: Software Engineering
 Tags: Heroku
-Slug:
+Slug: migrating-from-word-press
 Status: published
 
 I used to write my blog posts on Wordpress, and it was doing a good job. I had a few blogs on WP, one was my technical blog, and another was just me rambling about life. But I realized that Wordpress was not very friendly to `coding blog posts`. Sure, they had a code block segment, but the horrible switching from blockmode to classic mode was a pain

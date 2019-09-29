@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="Chan Jin Hao" />
+<meta name="description" content="I used to write my blog posts on Wordpress, and it was doing a good job. I had a few blogs on WP, one was my technical blog, and another was just me rambling about life. But I realized that Wordpress was not very friendly to coding blog posts. Sure …" />
+<meta name="keywords" content="Heroku">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="Migrating from Wordpress to Pelican + Heroku"/>
+<meta property="og:description" content="I used to write my blog posts on Wordpress, and it was doing a good job. I had a few blogs on WP, one was my technical blog, and another was just me rambling about life. But I realized that Wordpress was not very friendly to coding blog posts. Sure …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/migrating-from-word-press.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2019-09-28 17:54:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/chan-jin-hao.html">
+<meta property="article:section" content="Software Engineering"/>
+<meta property="article:tag" content="Heroku"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; Migrating from Wordpress to Pelican + Heroku</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="/">All</a></li>
+          <li><a href="/category/data-science.html">Data Science</a></li>
+          <li><a href="/category/security.html">Cyber Security</a></li>
+          <li><a href="/category/software-engineering.html">Software Engineering</a></li>
+          <li><a href="/category/review.html">Book Reviews</a></li>
+          <li><a href="/category/ramblings.html">Ramblings</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-linkedin" href="https://www.linkedin.com/in/jinhao-hao-chan-162630120/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-github" href="https://www.github.com/jinhaochan" target="_blank"><i class="fa fa-github"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="migrating-from-word-press">Migrating from Wordpress to Pelican + Heroku</h1>
+    <p>
+          Posted on Sat 28 September 2019 in <a href="/category/software-engineering.html">Software Engineering</a>
+
+
+        &#8226; 3 min read
+    </p>
+  </header>
+
+
+  <div>
+    <p>I used to write my blog posts on Wordpress, and it was doing a good job. I had a few blogs on WP, one was my technical blog, and another was just me rambling about life. But I realized that Wordpress was not very friendly to <code>coding blog posts</code>. Sure, they had a code block segment, but the horrible switching from blockmode to classic mode was a pain</p>
+<p>Also, I found out that I really wanted control of the things that I am building. Building my own site (Well... with the help of Pelican) gave me the granularity of control I want. While I'm not building everything from ground up, at least I have the power to control the things around my blog. </p>
+<p>And writing in markdown is fun!</p>
+<p>In this post, I'm going to run through the thing I did to make this happen. It took literally one day for me to migrate all my posts over to Pelican.</p>
+<hr>
+<h3>Exporting Your Wordpress Posts</h3>
+<hr>
+<p>This part is fairly simple. Thankfully, the things you create on Wordpress are yours to keep. That was one of my biggest initial fear at first, where my content was not kept by me. And if the unlikely case of Wordpress going under, all my posts are lost.</p>
+<p>In this step, you simply go to your Wordpress site, hit on Tools, and export both your posts and your media (images, videos etc)</p>
+<p><img alt="export your image" src="/media/images/export.png"></p>
+<h3>Setting up Pelican</h3>
+<hr>
+<p>Once you got your back up ready, we're now going to setup Pelican on your local machine, before pushing it up to Heroku</p>
+<p>Its pretty straight forward, and you can follow the guide here: <a href="http://doc.getpelican.com/en/latest/quickstart.html">Pelican Quickstart</a></p>
+<p>Basically you</p>
+<ol>
+<li>Install Pelican</li>
+<li>Start a placeholder project</li>
+<li>Move on to the next step</li>
+</ol>
+<h3>Setting up Heroku</h3>
+<hr>
+<p>Of course, if everything was so simple, why the hell would I want to write this post? It's always the system integration where the troubles pop up.</p>
+<p>Assuming that you already have a Heroku account and downloaded Heroku toolbelt on your local machine, then getting the contents of <code>requirements.txt</code> and <code>Procfile</code> are the trickiest</p>
+<ul>
+<li><code>requirements.txt</code></li>
+</ul>
+<div class="highlight"><pre><span></span><span class="n">pelican</span>
+<span class="n">Markdown</span>
+<span class="n">typogrify</span>
+<span class="n">gunicorn</span>
+<span class="k">static</span>
+</pre></div>
+
+
+<ul>
+<li><code>Procfile</code></li>
+</ul>
+<p><code>web: pelican content --listen --port $PORT</code></p>
+<p>The reason for doing <code>$PORT</code> is that you can't choose which port Heroku listens on, so you set it to pull from the Heroku environment with <code>$PORT</code></p>
+<h3>Importing your Wordpress contents over</h3>
+<hr>
+<p>With that done, you can start to import your Wordpress content over.</p>
+<p>Your Wordpress files downloaded earlier would be in XML format, and thankfully, Pelican has a module that does all the heavy lifting for you.</p>
+<p><code>pelican-import --wpfile &lt;filename&gt; -m markdown</code></p>
+<p>If you don't specify <code>-m markdown</code>, it will default to <code>.rst</code>, which causes a whole lot of rendering problems</p>
+<p>But wait! You're not done yet.</p>
+<p>All the pictures and media within your posts are linked to the Wordpress format, which would look something like this</p>
+<p><code>![](chanjinhao.files.wordpress.com/2019/01/img.png)</code></p>
+<p>This would not work, as proper rendering would look something like this</p>
+<p><code>![placeholder]({attach}media/img.png)</code></p>
+<p>To make your life easier, here's a command to replace all strings, in all files</p>
+<p><code>find . -name '*.md' -exec sed -i -e 's/&lt;old&gt;/&lt;new&gt;/g' {} \;</code></p>
+<p>What this does is to find all files ending with <code>.md</code>, and execute a <code>sed</code> replacement call. In this case, our command would look like this:</p>
+<p><code>find . -name '*.md' -exec sed -i -e 's/chanjinhao.files.wordpress.com\{attach\}media//g' {} \;</code></p>
+<p>We also need to remove all the wordpress, and html stuff. I'll leave you to figure out how to do it given the command above.</p>
+<h3>GOGOGO</h3>
+<hr>
+<p>Once you're done with that, run the command </p>
+<p><code>pelican</code></p>
+<p>to see if there's any issues with your build. Once you fixed all the errors, you can proceed to </p>
+<div class="highlight"><pre><span></span><span class="n">git</span> <span class="k">add</span> <span class="p">.</span>
+<span class="n">git</span> <span class="k">commit</span> <span class="o">-</span><span class="n">m</span> <span class="ss">&quot;first push to heroku&quot;</span>
+<span class="n">git</span> <span class="n">push</span> <span class="n">heroku</span> <span class="n">master</span>
+</pre></div>
+
+
+<p>And your new website should be live!</p>
+<p>I've aliased those 3 commands to <code>GOGOGO</code> (since they all start with G, and it saves a lot of keystrokes)</p>
+<h3>Others</h3>
+<hr>
+<p>If you wanna play around with the whole setup, you can look at things like Pelican themes, and Pelican plugins</p>
+<p><a href="https://github.com/getpelican/pelican-themes">Themes</a>
+<a href="https://github.com/getpelican/pelican-plugins">Plugins</a></p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/heroku.html">Heroku</a>
+    </p>
+  </div>
+
+
+
+
+
+  <section id="comments" class="body">
+	  <h2>Comments:</h2>
+	  
+  </section>
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>

@@ -36,7 +36,10 @@ DEFAULT_PAGINATION = 10
 THEME = "theme/Flex"
 
 PLUGIN_PATHS = ['plugins']
-PLUGINS = ['deadlinks', 'readtime', 'post_stats']
+PLUGINS = ['deadlinks', 'readtime', 'post_stats', 'static_comments']
+
+STATIC_COMMENTS = True
+STATIC_COMMENTS_DIR = 'comments'
 
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True

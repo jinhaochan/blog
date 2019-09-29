@@ -3,7 +3,7 @@ Date: 2019-09-29 15:53
 Author: Chan Jin Hao
 Category: Review
 Tags: Readings, Strengths Finder
-Slug: 
+Slug: strengths-finder 
 Status: published
 
 First off, before I begin, I just want to say that I picked this book up for a steal of $5, where the original cost was somewhere around $30. I think I might visit book fairs more often, but the downside being that they don't usually carry very good quality books, both in terms of content and physical outlook. This book was just a gem amongst a whole lot of crappy (sorry!) books.
