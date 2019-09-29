@@ -1,5 +1,5 @@
 Title: Strengths Finder; And mine
-Date: 2019-09-19 15:53
+Date: 2019-09-29 15:53
 Author: Chan Jin Hao
 Category: Review
 Tags: Readings, Strengths Finder
