@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="Chan Jin Hao" />
+<meta name="description" content="We all have faced an issue at one point in our engineering adventures that we need to create a form of watchdog. We have to watch for a certain activity on a certain file or folder, before we perform a set of actions. Thankfully in Linux, there is a function …" />
+<meta name="keywords" content="">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="inotify on Shared Servers"/>
+<meta property="og:description" content="We all have faced an issue at one point in our engineering adventures that we need to create a form of watchdog. We have to watch for a certain activity on a certain file or folder, before we perform a set of actions. Thankfully in Linux, there is a function …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/inotify-shared-server.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2019-10-04 16:51:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/chan-jin-hao.html">
+<meta property="article:section" content="Software Engineering"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; inotify on Shared Servers</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="/">All</a></li>
+          <li><a href="/category/data-science.html">Data Science</a></li>
+          <li><a href="/category/security.html">Cyber Security</a></li>
+          <li><a href="/category/software-engineering.html">Software Engineering</a></li>
+          <li><a href="/category/review.html">Book Reviews</a></li>
+          <li><a href="/category/ramblings.html">Ramblings</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-linkedin" href="https://www.linkedin.com/in/jinhao-hao-chan-162630120/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-github" href="https://www.github.com/jinhaochan" target="_blank"><i class="fa fa-github"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="inotify-shared-server">inotify on Shared Servers</h1>
+    <p>
+          Posted on Fri 04 October 2019 in <a href="/category/software-engineering.html">Software Engineering</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>We all have faced an issue at one point in our engineering adventures that we need to create a form of watchdog. We have to watch for a certain activity on a certain file or folder, before we perform a set of actions.</p>
+<p>Thankfully in Linux, there is a function called <code>inotify</code>, which allows you to monitor the Linux filesystem for any specific events.</p>
+<p>There's also a python package for it, but please DON'T USE <code>PYINOTIFY</code>. USE THE VANILLA <code>INOTIFY</code>. <code>PYINOTIFY</code> is defunct, inefficient, and is no longer supported.</p>
+<p><code>pip install inotify</code> will do.</p>
+<h3>inotify</h3>
+<hr>
+<p><code>inotify</code> is an system call in the Linux kernel that allows processes to register themselves to be notified when events have occured to a specified filesystem.</p>
+<p>This is opposed to a user land implementation, which typically, and very inefficiently does a <code>while True</code> to check for any changes. A typical setup would be to run a process that writes a flag file to the folder when it has completed, and start a <code>while</code> loop to see if a flag file is present in that folder.</p>
+<p><code>inotify</code> can watch for several events such as: <code>open</code>, <code>close</code>, <code>read</code>, <code>write</code>, <code>delete</code>, <code>move</code>, or any other action that can be taken on a filesystem.</p>
+<p>More importantly, it can know when a file finishes writing by looking out for the event <code>IN_CLOSE_WRITE</code>. I would think this scenario is pretty common, as we would need to wait until a file is fully written before performing any action. If we do the naive approach of just looking if the file exists, we could process the file before it has finished writing, causing major errors.</p>
+<p>I won't go through the entire details of how <code>inotify</code> is implemented, you can read it here: <a href="https://www.linuxjournal.com/article/8478">inotify implementation</a></p>
+<p>But basically, instead of constantly polling for changes which induces huge CPU cycles, inotify does a block and waits for notification events. Cool!</p>
+<h3>Implementing inotify on shared servers</h3>
+<hr>
+<p>Say now you have 2 virtual machines, Machine A does the file processing, and Machine B queries the internet for enrichment information. What we want is for Machine A to pass the file over to Machine B, Machine B to do the enrichment, and pass the enriched file back to Machine A.</p>
+<p>Because inotify is a kernel function, it needs the file pointer of the folder it's watching.</p>
+<p>The image below shows the setup that can make it work.</p>
+<p><img alt="placeholder" src="/media/images/inotify.png"></p>
+<p>Machine A mounts the folder called Unenriched, that is physically on Machine B.</p>
+<p>Machine B mounts the folder called Enriched, that is physically on Machine A.</p>
+<p>Machine B runs <code>inotify</code> to monitor the Unenriched folder, and takes in any unenriched files that is passed over from Machine A.</p>
+<p>Machine A runs <code>inotify</code> to monitor the Enriched folder, and takes in any enriched files that is passed from Machine B.</p>
+<p>And because <code>inotify</code> is done in a block-wait manner, the program flow on Machine A simply pauses and waits for the <code>IN_CLOSE_WRITE</code> event on the Enriched folder.</p>
+<p>This is a simple post to show you how you can implement a watchdog with <code>inotify</code>, and how to set it up on shared folders. Hope it helps!</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+    </p>
+  </div>
+
+
+
+
+
+  <section id="comments" class="body">
+	  <h2>Comments:</h2>
+	  Contact me for any comments, and I'll paste them here! Why not Disqus or other comment services? That's because I want to have control of my site, comments included!
+
+	  PS: I won't put your real name and email if you don't want me to.
+	  
+  </section>
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>

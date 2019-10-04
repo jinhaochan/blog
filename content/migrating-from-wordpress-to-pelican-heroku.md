@@ -117,5 +117,6 @@ I've aliased those 3 commands to `GOGOGO` (since they all start with G, and it s
 If you wanna play around with the whole setup, you can look at things like Pelican themes, and Pelican plugins
 
 [Themes](https://github.com/getpelican/pelican-themes)
+
 [Plugins](https://github.com/getpelican/pelican-plugins)
 
