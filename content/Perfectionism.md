@@ -1,7 +1,7 @@
 Title: Perfectionism
 Date: 2019-11-09 13:11
 Author: Chan Jin Hao
-Category: Book Review
+Category: Review
 Slug: perfectionism
 Status: published
 

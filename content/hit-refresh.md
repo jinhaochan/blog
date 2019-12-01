@@ -1,7 +1,7 @@
 Title: Hit Refresh
 Date: 2019-05-05 12:51
 Author: Chan Jin Hao
-Category: Book Review
+Category: Review
 Slug: hit-refresh
 Status: published
 
