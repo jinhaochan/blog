@@ -114,17 +114,17 @@
 <p>Below is an example code to generate random domains</p>
 <!-- wp:code -->
 
-<div class="highlight"><pre><span></span><span class="nv">def</span> <span class="nv">generate_domain</span><span class="ss">(</span><span class="nv">year</span>, <span class="nv">month</span>, <span class="nv">day</span><span class="ss">)</span>:
-    <span class="s2">&quot;&quot;&quot;</span><span class="s">Generates a domain name for the given date.</span><span class="s2">&quot;&quot;&quot;</span>
+<div class="highlight"><pre><span></span>def generate_domain(year, month, day):
+    &quot;&quot;&quot;Generates a domain name for the given date.&quot;&quot;&quot;
 
-    <span class="nv">domain</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    domain = &quot;&quot;
 
-    <span class="k">for</span> <span class="nv">i</span> <span class="nv">in</span> <span class="nv">range</span><span class="ss">(</span><span class="mi">16</span><span class="ss">)</span>:
-        <span class="nv">year</span> <span class="o">=</span> <span class="ss">((</span><span class="nv">year</span> <span class="o">^</span> <span class="mi">8</span> <span class="o">*</span> <span class="nv">year</span><span class="ss">)</span> <span class="o">&gt;&gt;</span> <span class="mi">11</span><span class="ss">)</span> <span class="o">^</span> <span class="ss">((</span><span class="nv">year</span> <span class="o">&amp;</span> <span class="mi">0</span><span class="nv">xFFFFFFF0</span><span class="ss">)</span> <span class="o">&lt;&lt;</span> <span class="mi">17</span><span class="ss">)</span>
-        <span class="nv">month</span> <span class="o">=</span> <span class="ss">((</span><span class="nv">month</span> <span class="o">^</span> <span class="mi">4</span> <span class="o">*</span> <span class="nv">month</span><span class="ss">)</span> <span class="o">&gt;&gt;</span> <span class="mi">25</span><span class="ss">)</span> <span class="o">^</span> <span class="mi">16</span> <span class="o">*</span> <span class="ss">(</span><span class="nv">month</span> <span class="o">&amp;</span> <span class="mi">0</span><span class="nv">xFFFFFFF8</span><span class="ss">)</span>
-        <span class="nv">day</span> <span class="o">=</span> <span class="ss">((</span><span class="nv">day</span> <span class="o">^</span> <span class="ss">(</span><span class="nv">day</span> <span class="o">&lt;&lt;</span> <span class="mi">13</span><span class="ss">))</span> <span class="o">&gt;&gt;</span> <span class="mi">19</span><span class="ss">)</span> <span class="o">^</span> <span class="ss">((</span><span class="nv">day</span> <span class="o">&amp;</span> <span class="mi">0</span><span class="nv">xFFFFFFFE</span><span class="ss">)</span> <span class="o">&lt;&lt;</span> <span class="mi">12</span><span class="ss">)</span>
+    for i in range(16):
+        year = ((year ^ 8 * year) &gt;&gt; 11) ^ ((year &amp; 0xFFFFFFF0) &lt;&lt; 17)
+        month = ((month ^ 4 * month) &gt;&gt; 25) ^ 16 * (month &amp; 0xFFFFFFF8)
+        day = ((day ^ (day &lt;&lt; 13)) &gt;&gt; 19) ^ ((day &amp; 0xFFFFFFFE) &lt;&lt; 12)
 
-    <span class="nv">domain</span> <span class="o">+=</span> <span class="nv">chr</span><span class="ss">(((</span><span class="nv">year</span> <span class="o">^</span> <span class="nv">month</span> <span class="o">^</span> <span class="nv">day</span><span class="ss">)</span> <span class="o">%</span> <span class="mi">25</span><span class="ss">)</span> <span class="o">+</span> <span class="mi">97</span><span class="ss">)</span>
+    domain += chr(((year ^ month ^ day) % 25) + 97)
 </pre></div>
 
 

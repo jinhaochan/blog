@@ -101,8 +101,8 @@
 <p>For each given list, I would need to figure out how many set of subsets there are. In this case, the total number of subsets for a given list is <code>2^n</code>, where <code>n</code> is the total number of items in the list.</p>
 <p>The reason it is <code>2^n</code> is because: For each item in the list, you have 2 possible choices to take; Append an item to it, or don't. And since you have <code>n</code> items, you have a total of <code>2^n</code> choices.</p>
 <p>After figuring out how many total subsets there are, that can be the terminating condition in a recursive solution, something like</p>
-<div class="highlight"><pre><span></span><span class="k">if</span> <span class="nv">len</span><span class="ss">(</span><span class="nv">answer</span><span class="ss">)</span> <span class="o">==</span> <span class="nv">int</span><span class="ss">(</span><span class="nv">math</span>.<span class="nv">pow</span><span class="ss">(</span><span class="mi">2</span>,<span class="nv">len</span><span class="ss">(</span><span class="nv">myList</span><span class="ss">)))</span>:
-        <span class="k">return</span> <span class="nv">answer</span>
+<div class="highlight"><pre><span></span>if len(answer) == int(math.pow(2,len(myList))):
+        return answer
 </pre></div>
 
 
@@ -129,26 +129,26 @@ Resulting set that does not add: {}, {1}</p>
 4. Take the union of the original set and the modified set<br>
 5. Go back to step 1</p>
 <p>Translated to python3,</p>
-<div class="highlight"><pre><span></span><span class="nv">def</span> <span class="nv">printPattern</span><span class="ss">(</span><span class="nv">givenList</span>, <span class="nb">result</span>, <span class="nv">totalSubsets</span><span class="ss">)</span>:
-        <span class="k">if</span> <span class="nv">len</span><span class="ss">(</span><span class="nb">result</span><span class="ss">)</span> <span class="o">==</span> <span class="nv">totalSubsets</span>:
-                <span class="k">return</span> <span class="nb">result</span>
+<div class="highlight"><pre><span></span>def printPattern(givenList, result, totalSubsets):
+        if len(result) == totalSubsets:
+                return result
 
-        # <span class="nv">models</span> <span class="nv">not</span> <span class="nv">adding</span>
-        <span class="nv">clonedResult</span> <span class="o">=</span> <span class="nv">copy</span>.<span class="nv">deepcopy</span><span class="ss">(</span><span class="nb">result</span><span class="ss">)</span>
+        # models not adding
+        clonedResult = copy.deepcopy(result)
 
-        <span class="nv">itemToAdd</span> <span class="o">=</span> <span class="nv">givenList</span>[<span class="mi">0</span>]
+        itemToAdd = givenList[0]
 
-        # <span class="nv">omititng</span> <span class="nv">the</span> <span class="nv">item</span> <span class="nv">we</span> <span class="nv">just</span> <span class="nv">added</span> <span class="nv">in</span> <span class="nv">the</span> <span class="k">next</span> <span class="nv">recursion</span>
-        <span class="nv">newList</span> <span class="o">=</span> <span class="nv">givenList</span>[<span class="mi">1</span>:]
+        # omititng the item we just added in the next recursion
+        newList = givenList[1:]
 
-        # <span class="nv">adding</span> <span class="nv">an</span> <span class="nv">item</span> <span class="nv">to</span> <span class="nv">each</span> <span class="nv">item</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">list</span>
-        <span class="k">for</span> <span class="nv">item</span> <span class="nv">in</span> <span class="nb">result</span>:
-                <span class="nv">item</span>.<span class="nv">append</span><span class="ss">(</span><span class="nv">itemToAdd</span><span class="ss">)</span>
+        # adding an item to each item in the list
+        for item in result:
+                item.append(itemToAdd)
 
-        # <span class="nv">taking</span> <span class="nv">the</span> <span class="nv">union</span> <span class="nv">of</span> <span class="nv">both</span> <span class="nv">the</span> <span class="nv">results</span>
-        <span class="nb">result</span> <span class="o">+=</span> <span class="nv">clonedResult</span>
+        # taking the union of both the results
+        result += clonedResult
 
-        <span class="k">return</span> <span class="nv">printPattern</span><span class="ss">(</span><span class="nv">newList</span>, <span class="nb">result</span>, <span class="nv">totalSubsets</span><span class="ss">)</span>
+        return printPattern(newList, result, totalSubsets)
 </pre></div>
 
 

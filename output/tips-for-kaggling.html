@@ -113,58 +113,58 @@
 <p>Here's a snippet of my comments I used to keep track of my CV/LB climb:</p>
 <!-- wp:code -->
 
-<div class="highlight"><pre><span></span><span class="nv">xgb_params</span> <span class="o">=</span> {
-    <span class="s1">&#39;</span><span class="s">max_depth</span><span class="s1">&#39;</span>: <span class="mi">4</span>,  # <span class="nv">the</span> <span class="nv">maximum</span> <span class="nv">depth</span> <span class="nv">of</span> <span class="nv">each</span> <span class="nv">tree</span>
-    <span class="s1">&#39;</span><span class="s">eta</span><span class="s1">&#39;</span>: <span class="mi">0</span>.<span class="mi">01</span>,  # <span class="nv">the</span> <span class="nv">training</span> <span class="nv">step</span> <span class="k">for</span> <span class="nv">each</span> <span class="nv">iteration</span>
-    <span class="s1">&#39;</span><span class="s">silent</span><span class="s1">&#39;</span>: <span class="mi">1</span>,  # <span class="nv">logging</span> <span class="nv">mode</span> <span class="o">-</span> <span class="nv">quiet</span>
-    <span class="s1">&#39;</span><span class="s">objective</span><span class="s1">&#39;</span>: <span class="s1">&#39;</span><span class="s">multi:softprob</span><span class="s1">&#39;</span>,  # <span class="nv">error</span> <span class="nv">evaluation</span> <span class="k">for</span> <span class="nv">multiclass</span> <span class="nv">training</span>
-    <span class="s1">&#39;</span><span class="s">gamma</span><span class="s1">&#39;</span>: <span class="mi">0</span>.<span class="mi">9</span>,
-    <span class="s1">&#39;</span><span class="s">alpha</span><span class="s1">&#39;</span>: <span class="mi">0</span>.<span class="mi">3</span>,
-    <span class="s1">&#39;</span><span class="s">colsample_bytree</span><span class="s1">&#39;</span> : <span class="mi">0</span>.<span class="mi">09</span>,
-    <span class="s1">&#39;</span><span class="s">subsample</span><span class="s1">&#39;</span> : <span class="mi">0</span>.<span class="mi">09</span>,
-    <span class="s1">&#39;</span><span class="s">num_class</span><span class="s1">&#39;</span>: <span class="mi">9</span>}  # <span class="nv">the</span> <span class="nv">number</span> <span class="nv">of</span> <span class="nv">classes</span> <span class="nv">that</span> <span class="nv">exist</span> <span class="nv">in</span> <span class="nv">this</span> <span class="nv">datset</span>
+<div class="highlight"><pre><span></span>xgb_params = {
+    &#39;max_depth&#39;: 4,  # the maximum depth of each tree
+    &#39;eta&#39;: 0.01,  # the training step for each iteration
+    &#39;silent&#39;: 1,  # logging mode - quiet
+    &#39;objective&#39;: &#39;multi:softprob&#39;,  # error evaluation for multiclass training
+    &#39;gamma&#39;: 0.9,
+    &#39;alpha&#39;: 0.3,
+    &#39;colsample_bytree&#39; : 0.09,
+    &#39;subsample&#39; : 0.09,
+    &#39;num_class&#39;: 9}  # the number of classes that exist in this datset
 
-## <span class="nv">Original</span>
-<span class="nv">nfolds</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="nv">CV</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">7299</span>
-<span class="nv">std</span>: <span class="mi">0</span>.<span class="mi">0112</span>
-<span class="nv">LB</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">67291</span>
+## Original
+nfolds = 5
+CV = 0.7299
+std: 0.0112
+LB = 0.67291
 
-<span class="nv">Difference</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">05699</span>
+Difference = 0.05699
 
-## <span class="nv">changed</span> <span class="nv">rolling</span> <span class="nv">window</span> <span class="nv">size</span>
-<span class="nv">nfolds</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="nv">CV</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">7458</span>
-<span class="nv">std</span>: <span class="mi">0</span>.<span class="mi">0207</span>
-<span class="nv">LB</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">67995</span>
+## changed rolling window size
+nfolds = 5
+CV = 0.7458
+std: 0.0207
+LB = 0.67995
 
-<span class="nv">Difference</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">06585</span>
+Difference = 0.06585
 
-## <span class="nv">added</span> <span class="nv">quantile</span> <span class="nv">features</span>
-<span class="nv">nfolds</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="nv">CV</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">7564</span>
-<span class="nv">std</span>: <span class="mi">0</span>.<span class="mi">0167</span>
-<span class="nv">LB</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">68347</span>
+## added quantile features
+nfolds = 5
+CV = 0.7564
+std: 0.0167
+LB = 0.68347
 
-<span class="nv">Difference</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">07293</span>
+Difference = 0.07293
 
-## <span class="nv">dropping</span> <span class="nv">mean</span>
-<span class="nv">using</span> <span class="nv">smaller</span> <span class="nv">feature</span> <span class="nv">set</span> <span class="ss">(</span><span class="mi">50</span><span class="ss">)</span>
-<span class="nv">nfolds</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="nv">CV</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">7670</span>
-<span class="nv">std</span>: <span class="mi">0</span>.<span class="mi">0243</span>
-<span class="nv">LB</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">69284</span>
+## dropping mean
+using smaller feature set (50)
+nfolds = 5
+CV = 0.7670
+std: 0.0243
+LB = 0.69284
 
-<span class="nv">Difference</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">07416</span>
+Difference = 0.07416
 
-## <span class="nv">adding</span> <span class="nv">iqr</span> <span class="nv">and</span> <span class="nv">trimming</span> <span class="nv">mean</span>
-<span class="nv">using</span> <span class="nv">smaller</span> <span class="nv">feature</span> <span class="nv">set</span> <span class="ss">(</span><span class="mi">70</span><span class="ss">)</span>
-<span class="nv">nfolds</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="nv">CV</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">7740</span>
-<span class="nv">std</span>: <span class="mi">0</span>.<span class="mi">0257</span>
-<span class="nv">LB</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">69988</span>
+## adding iqr and trimming mean
+using smaller feature set (70)
+nfolds = 5
+CV = 0.7740
+std: 0.0257
+LB = 0.69988
 
-<span class="nv">Difference</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">07412</span>
+Difference = 0.07412
 </pre></div>
 
 

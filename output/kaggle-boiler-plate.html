@@ -133,10 +133,10 @@
 <h3>Continuous Data Feature Engineering</h3>
 <p>For continuous data, we can bin the data into intervals.</p>
 <p>An example would be age group, where individual ages might be too scattered, but by grouping them in multiples of 5s or 10s, you might get a better representation.</p>
-<div class="highlight"><pre><span></span><span class="p">[</span><span class="n">code</span> <span class="n">lang</span><span class="o">=</span><span class="ss">&quot;text&quot;</span><span class="p">]</span> <span class="mi">51</span><span class="o">-</span><span class="mi">55</span> <span class="o">=</span> <span class="k">Group</span> <span class="mi">1</span> 
-<span class="mi">56</span><span class="o">-</span><span class="mi">60</span> <span class="o">=</span> <span class="k">Group</span> <span class="mi">2</span> 
-<span class="mi">61</span><span class="o">-</span><span class="mi">65</span> <span class="o">=</span> <span class="k">Group</span> <span class="mi">3</span> 
-<span class="p">[</span><span class="mi">53</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">62</span><span class="p">,</span> <span class="mi">64</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="p">[</span><span class="o">/</span><span class="n">code</span><span class="p">]</span>
+<div class="highlight"><pre><span></span>[code lang=&quot;text&quot;] 51-55 = Group 1 
+56-60 = Group 2 
+61-65 = Group 3 
+[53, 55, 56, 59, 60, 61, 62, 64] = [1, 1, 2, 2, 2, 3, 3, 3] [/code]
 </pre></div>
 
 
@@ -180,11 +180,11 @@
 <p>If you're using Windows, these are the steps I followed: <a href="https://www.ibm.com/developerworks/community/blogs/jfp/entry/Installing_XGBoost_For_Anaconda_on_Windows?lang=en">https://www.ibm.com/developerworks/community/blogs/jfp/entry/Installing_XGBoost_For_Anaconda_on_Windows?lang=en</a></p>
 <p>And the Linux version:</p>
 <div class="highlight"><pre><span></span><span class="k">[code lang=&quot;text&quot;]</span>
-<span class="na">$ pip install xgboost</span>
-<span class="na">$ git clone https://github.com/dmlc/xgboost# cd xgboost-master</span>
-<span class="na">$ make</span>
-<span class="na">$ cd python-package/</span>
-<span class="na">$ python setup.py install</span>
+<span class="err">$</span> <span class="err">pip</span> <span class="err">install</span> <span class="err">xgboost</span>
+<span class="err">$</span> <span class="err">git</span> <span class="err">clone</span> <span class="err">https://github.com/dmlc/xgboost</span><span class="c1"># cd xgboost-master</span>
+<span class="err">$</span> <span class="err">make</span>
+<span class="err">$</span> <span class="err">cd</span> <span class="err">python-package/</span>
+<span class="err">$</span> <span class="err">python</span> <span class="err">setup.py</span> <span class="err">install</span>
 <span class="k">[/code]</span>
 </pre></div>
 

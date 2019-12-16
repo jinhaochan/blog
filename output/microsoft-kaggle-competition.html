@@ -248,7 +248,7 @@
 
 <!-- wp:code -->
 
-<div class="highlight"><pre><span></span><span class="n">Reading</span> <span class="k">Data</span>
+<div class="highlight"><pre><span></span>Reading Data
 </pre></div>
 
 
@@ -256,14 +256,14 @@
 
 <!-- wp:code -->
 
-<div class="highlight"><pre><span></span><span class="nv">len</span><span class="ss">(</span><span class="nv">df_train</span><span class="ss">)</span>
+<div class="highlight"><pre><span></span>len(df_train)
 
-<span class="nv">features</span> <span class="o">=</span> [<span class="nv">f</span> <span class="k">for</span> <span class="nv">f</span> <span class="nv">in</span> <span class="nv">df_train</span>.<span class="nv">columns</span> <span class="k">if</span> <span class="nv">f</span> <span class="o">!=</span> <span class="s1">&#39;</span><span class="s">HasDetections</span><span class="s1">&#39;</span>]
+features = [f for f in df_train.columns if f != &#39;HasDetections&#39;]
 
-#<span class="nv">assign</span> <span class="nv">target</span> <span class="nv">variable</span> <span class="nv">to</span> <span class="nv">y_train</span>
-<span class="nv">y</span> <span class="o">=</span> <span class="nv">df_train</span>[<span class="s1">&#39;</span><span class="s">HasDetections</span><span class="s1">&#39;</span>]
-<span class="nv">Train</span> <span class="o">=</span> <span class="nv">df_train</span>[<span class="nv">features</span>]
-<span class="nv">Test</span> <span class="o">=</span> <span class="nv">df_test</span>[<span class="nv">features</span>]
+#assign target variable to y_train
+y = df_train[&#39;HasDetections&#39;]
+Train = df_train[features]
+Test = df_test[features]
 </pre></div>
 
 
@@ -273,52 +273,52 @@
 <hr>
 <!-- wp:code -->
 
-<div class="highlight"><pre><span></span><span class="nv">def</span> <span class="nv">add_noise</span><span class="ss">(</span><span class="nv">series</span>, <span class="nv">noise_level</span><span class="ss">)</span>:
-    <span class="k">return</span> <span class="nv">series</span> <span class="o">*</span> <span class="ss">(</span><span class="mi">1</span> <span class="o">+</span> <span class="nv">noise_level</span> <span class="o">*</span> <span class="nv">np</span>.<span class="k">random</span>.<span class="nv">randn</span><span class="ss">(</span><span class="nv">len</span><span class="ss">(</span><span class="nv">series</span><span class="ss">)))</span>
+<div class="highlight"><pre><span></span>def add_noise(series, noise_level):
+    return series * (1 + noise_level * np.random.randn(len(series)))
 
-<span class="nv">def</span> <span class="nv">target_encode</span><span class="ss">(</span><span class="nv">trn_series</span><span class="o">=</span><span class="nv">None</span>, 
-                  <span class="nv">tst_series</span><span class="o">=</span><span class="nv">None</span>, 
-                  <span class="nv">target</span><span class="o">=</span><span class="nv">None</span>, 
-                  <span class="nv">min_samples_leaf</span><span class="o">=</span><span class="mi">1</span>, 
-                  <span class="nv">smoothing</span><span class="o">=</span><span class="mi">1</span>,
-                  <span class="nv">noise_level</span><span class="o">=</span><span class="mi">0</span><span class="ss">)</span>:
-    <span class="s2">&quot;&quot;&quot;</span>
-    <span class="nv">Smoothing</span> <span class="nv">is</span> <span class="nv">computed</span> <span class="nv">like</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">following</span> <span class="nv">paper</span> <span class="nv">by</span> <span class="nv">Daniele</span> <span class="nv">Micci</span><span class="o">-</span><span class="nv">Barreca</span>
-    <span class="nv">https</span>:<span class="o">//</span><span class="nv">kaggle2</span>.<span class="nv">blob</span>.<span class="nv">core</span>.<span class="nv">windows</span>.<span class="nv">net</span><span class="o">/</span><span class="nv">forum</span><span class="o">-</span><span class="nv">message</span><span class="o">-</span><span class="nv">attachments</span><span class="o">/</span><span class="mi">225952</span><span class="o">/</span><span class="mi">7441</span><span class="o">/</span><span class="nv">high</span><span class="o">%</span><span class="mi">20</span><span class="nv">cardinality</span><span class="o">%</span><span class="mi">20</span><span class="nv">categoricals</span>.<span class="nv">pdf</span>
-    <span class="nv">trn_series</span> : <span class="nv">training</span> <span class="nv">categorical</span> <span class="nv">feature</span> <span class="nv">as</span> <span class="nv">a</span> <span class="nv">pd</span>.<span class="nv">Series</span>
-    <span class="nv">tst_series</span> : <span class="nv">test</span> <span class="nv">categorical</span> <span class="nv">feature</span> <span class="nv">as</span> <span class="nv">a</span> <span class="nv">pd</span>.<span class="nv">Series</span>
-    <span class="nv">target</span> : <span class="nv">target</span> <span class="nv">data</span> <span class="nv">as</span> <span class="nv">a</span> <span class="nv">pd</span>.<span class="nv">Series</span>
-    <span class="nv">min_samples_leaf</span> <span class="ss">(</span><span class="nv">int</span><span class="ss">)</span> : <span class="nv">minimum</span> <span class="nv">samples</span> <span class="nv">to</span> <span class="nv">take</span> <span class="nv">category</span> <span class="nv">average</span> <span class="nv">into</span> <span class="nv">account</span>
-    <span class="nv">smoothing</span> <span class="ss">(</span><span class="nv">int</span><span class="ss">)</span> : <span class="nv">smoothing</span> <span class="nv">effect</span> <span class="nv">to</span> <span class="nv">balance</span> <span class="nv">categorical</span> <span class="nv">average</span> <span class="nv">vs</span> <span class="nv">prior</span>  
-    <span class="s2">&quot;&quot;&quot;</span><span class="s"> </span>
-    <span class="nv">assert</span> <span class="nv">len</span><span class="ss">(</span><span class="nv">trn_series</span><span class="ss">)</span> <span class="o">==</span> <span class="nv">len</span><span class="ss">(</span><span class="nv">target</span><span class="ss">)</span>
-    <span class="nv">assert</span> <span class="nv">trn_series</span>.<span class="nv">name</span> <span class="o">==</span> <span class="nv">tst_series</span>.<span class="nv">name</span>
-    <span class="nv">temp</span> <span class="o">=</span> <span class="nv">pd</span>.<span class="nv">concat</span><span class="ss">(</span>[<span class="nv">trn_series</span>, <span class="nv">target</span>], <span class="nv">axis</span><span class="o">=</span><span class="mi">1</span><span class="ss">)</span>
-    # <span class="nv">Compute</span> <span class="nv">target</span> <span class="nv">mean</span> 
-    <span class="nv">averages</span> <span class="o">=</span> <span class="nv">temp</span>.<span class="nv">groupby</span><span class="ss">(</span><span class="nv">by</span><span class="o">=</span><span class="nv">trn_series</span>.<span class="nv">name</span><span class="ss">)</span>[<span class="nv">target</span>.<span class="nv">name</span>].<span class="nv">agg</span><span class="ss">(</span>[<span class="s2">&quot;</span><span class="s">mean</span><span class="s2">&quot;</span>, <span class="s2">&quot;</span><span class="s">count</span><span class="s2">&quot;</span>]<span class="ss">)</span>
-    # <span class="nv">Compute</span> <span class="nv">smoothing</span>
-    <span class="nv">smoothing</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="ss">(</span><span class="mi">1</span> <span class="o">+</span> <span class="nv">np</span>.<span class="nv">exp</span><span class="ss">(</span><span class="o">-</span><span class="ss">(</span><span class="nv">averages</span>[<span class="s2">&quot;</span><span class="s">count</span><span class="s2">&quot;</span>] <span class="o">-</span> <span class="nv">min_samples_leaf</span><span class="ss">)</span> <span class="o">/</span> <span class="nv">smoothing</span><span class="ss">))</span>
-    # <span class="nv">Apply</span> <span class="nv">average</span> <span class="nv">function</span> <span class="nv">to</span> <span class="nv">all</span> <span class="nv">target</span> <span class="nv">data</span>
-    <span class="nv">prior</span> <span class="o">=</span> <span class="nv">target</span>.<span class="nv">mean</span><span class="ss">()</span>
-    # <span class="nv">The</span> <span class="nv">bigger</span> <span class="nv">the</span> <span class="nv">count</span> <span class="nv">the</span> <span class="nv">less</span> <span class="nv">full_avg</span> <span class="nv">is</span> <span class="nv">taken</span> <span class="nv">into</span> <span class="nv">account</span>
-    <span class="nv">averages</span>[<span class="nv">target</span>.<span class="nv">name</span>] <span class="o">=</span> <span class="nv">prior</span> <span class="o">*</span> <span class="ss">(</span><span class="mi">1</span> <span class="o">-</span> <span class="nv">smoothing</span><span class="ss">)</span> <span class="o">+</span> <span class="nv">averages</span>[<span class="s2">&quot;</span><span class="s">mean</span><span class="s2">&quot;</span>] <span class="o">*</span> <span class="nv">smoothing</span>
-    <span class="nv">averages</span>.<span class="nv">drop</span><span class="ss">(</span>[<span class="s2">&quot;</span><span class="s">mean</span><span class="s2">&quot;</span>, <span class="s2">&quot;</span><span class="s">count</span><span class="s2">&quot;</span>], <span class="nv">axis</span><span class="o">=</span><span class="mi">1</span>, <span class="nv">inplace</span><span class="o">=</span><span class="nv">True</span><span class="ss">)</span>
-    # <span class="nv">Apply</span> <span class="nv">averages</span> <span class="nv">to</span> <span class="nv">trn</span> <span class="nv">and</span> <span class="nv">tst</span> <span class="nv">series</span>
-    <span class="nv">ft_trn_series</span> <span class="o">=</span> <span class="nv">pd</span>.<span class="nv">merge</span><span class="ss">(</span>
-        <span class="nv">trn_series</span>.<span class="nv">to_frame</span><span class="ss">(</span><span class="nv">trn_series</span>.<span class="nv">name</span><span class="ss">)</span>,
-        <span class="nv">averages</span>.<span class="nv">reset_index</span><span class="ss">()</span>.<span class="nv">rename</span><span class="ss">(</span><span class="nv">columns</span><span class="o">=</span>{<span class="s1">&#39;</span><span class="s">index</span><span class="s1">&#39;</span>: <span class="nv">target</span>.<span class="nv">name</span>, <span class="nv">target</span>.<span class="nv">name</span>: <span class="s1">&#39;</span><span class="s">average</span><span class="s1">&#39;</span>}<span class="ss">)</span>,
-        <span class="nv">on</span><span class="o">=</span><span class="nv">trn_series</span>.<span class="nv">name</span>,
-        <span class="nv">how</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">left</span><span class="s1">&#39;</span><span class="ss">)</span>[<span class="s1">&#39;</span><span class="s">average</span><span class="s1">&#39;</span>].<span class="nv">rename</span><span class="ss">(</span><span class="nv">trn_series</span>.<span class="nv">name</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="s">_mean</span><span class="s1">&#39;</span><span class="ss">)</span>.<span class="nv">fillna</span><span class="ss">(</span><span class="nv">prior</span><span class="ss">)</span>
-    # <span class="nv">pd</span>.<span class="nv">merge</span> <span class="nv">does</span> <span class="nv">not</span> <span class="nv">keep</span> <span class="nv">the</span> <span class="nv">index</span> <span class="nv">so</span> <span class="nv">restore</span> <span class="nv">it</span>
-    <span class="nv">ft_trn_series</span>.<span class="nv">index</span> <span class="o">=</span> <span class="nv">trn_series</span>.<span class="nv">index</span> 
-    <span class="nv">ft_tst_series</span> <span class="o">=</span> <span class="nv">pd</span>.<span class="nv">merge</span><span class="ss">(</span>
-        <span class="nv">tst_series</span>.<span class="nv">to_frame</span><span class="ss">(</span><span class="nv">tst_series</span>.<span class="nv">name</span><span class="ss">)</span>,
-        <span class="nv">averages</span>.<span class="nv">reset_index</span><span class="ss">()</span>.<span class="nv">rename</span><span class="ss">(</span><span class="nv">columns</span><span class="o">=</span>{<span class="s1">&#39;</span><span class="s">index</span><span class="s1">&#39;</span>: <span class="nv">target</span>.<span class="nv">name</span>, <span class="nv">target</span>.<span class="nv">name</span>: <span class="s1">&#39;</span><span class="s">average</span><span class="s1">&#39;</span>}<span class="ss">)</span>,
-        <span class="nv">on</span><span class="o">=</span><span class="nv">tst_series</span>.<span class="nv">name</span>,
-        <span class="nv">how</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">left</span><span class="s1">&#39;</span><span class="ss">)</span>[<span class="s1">&#39;</span><span class="s">average</span><span class="s1">&#39;</span>].<span class="nv">rename</span><span class="ss">(</span><span class="nv">trn_series</span>.<span class="nv">name</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="s">_mean</span><span class="s1">&#39;</span><span class="ss">)</span>.<span class="nv">fillna</span><span class="ss">(</span><span class="nv">prior</span><span class="ss">)</span>
-    # <span class="nv">pd</span>.<span class="nv">merge</span> <span class="nv">does</span> <span class="nv">not</span> <span class="nv">keep</span> <span class="nv">the</span> <span class="nv">index</span> <span class="nv">so</span> <span class="nv">restore</span> <span class="nv">it</span>
-    <span class="nv">ft_tst_series</span>.<span class="nv">index</span> <span class="o">=</span> <span class="nv">tst_series</span>.<span class="nv">index</span>
-    <span class="k">return</span> <span class="nv">add_noise</span><span class="ss">(</span><span class="nv">ft_trn_series</span>, <span class="nv">noise_level</span><span class="ss">)</span>, <span class="nv">add_noise</span><span class="ss">(</span><span class="nv">ft_tst_series</span>, <span class="nv">noise_level</span><span class="ss">)</span>
+def target_encode(trn_series=None, 
+                  tst_series=None, 
+                  target=None, 
+                  min_samples_leaf=1, 
+                  smoothing=1,
+                  noise_level=0):
+    &quot;&quot;&quot;
+    Smoothing is computed like in the following paper by Daniele Micci-Barreca
+    https://kaggle2.blob.core.windows.net/forum-message-attachments/225952/7441/high%20cardinality%20categoricals.pdf
+    trn_series : training categorical feature as a pd.Series
+    tst_series : test categorical feature as a pd.Series
+    target : target data as a pd.Series
+    min_samples_leaf (int) : minimum samples to take category average into account
+    smoothing (int) : smoothing effect to balance categorical average vs prior  
+    &quot;&quot;&quot; 
+    assert len(trn_series) == len(target)
+    assert trn_series.name == tst_series.name
+    temp = pd.concat([trn_series, target], axis=1)
+    # Compute target mean 
+    averages = temp.groupby(by=trn_series.name)[target.name].agg([&quot;mean&quot;, &quot;count&quot;])
+    # Compute smoothing
+    smoothing = 1 / (1 + np.exp(-(averages[&quot;count&quot;] - min_samples_leaf) / smoothing))
+    # Apply average function to all target data
+    prior = target.mean()
+    # The bigger the count the less full_avg is taken into account
+    averages[target.name] = prior * (1 - smoothing) + averages[&quot;mean&quot;] * smoothing
+    averages.drop([&quot;mean&quot;, &quot;count&quot;], axis=1, inplace=True)
+    # Apply averages to trn and tst series
+    ft_trn_series = pd.merge(
+        trn_series.to_frame(trn_series.name),
+        averages.reset_index().rename(columns={&#39;index&#39;: target.name, target.name: &#39;average&#39;}),
+        on=trn_series.name,
+        how=&#39;left&#39;)[&#39;average&#39;].rename(trn_series.name + &#39;_mean&#39;).fillna(prior)
+    # pd.merge does not keep the index so restore it
+    ft_trn_series.index = trn_series.index 
+    ft_tst_series = pd.merge(
+        tst_series.to_frame(tst_series.name),
+        averages.reset_index().rename(columns={&#39;index&#39;: target.name, target.name: &#39;average&#39;}),
+        on=tst_series.name,
+        how=&#39;left&#39;)[&#39;average&#39;].rename(trn_series.name + &#39;_mean&#39;).fillna(prior)
+    # pd.merge does not keep the index so restore it
+    ft_tst_series.index = tst_series.index
+    return add_noise(ft_trn_series, noise_level), add_noise(ft_tst_series, noise_level)
 </pre></div>
 
 
@@ -326,22 +326,22 @@
 
 <!-- wp:code -->
 
-<div class="highlight"><pre><span></span># <span class="nv">combine</span> <span class="nv">dtrain</span> <span class="nv">and</span> <span class="nv">dtest</span> <span class="k">for</span> <span class="nv">preprocessing</span>
-<span class="nv">alldata</span> <span class="o">=</span> <span class="nv">pd</span>.<span class="nv">concat</span><span class="ss">(</span>[<span class="nv">Train</span>,<span class="nv">Test</span>], <span class="nv">axis</span><span class="o">=</span><span class="mi">0</span><span class="ss">)</span>
+<div class="highlight"><pre><span></span># combine dtrain and dtest for preprocessing
+alldata = pd.concat([Train,Test], axis=0)
 
-<span class="nv">trainlen</span> <span class="o">=</span> <span class="nv">len</span><span class="ss">(</span><span class="nv">Train</span><span class="ss">)</span>
+trainlen = len(Train)
 
-# <span class="nv">convert</span> <span class="nv">character</span> <span class="nv">columns</span> <span class="nv">to</span> <span class="nv">integer</span>
-<span class="nv">print</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">Label Encoding</span><span class="s2">&quot;</span><span class="ss">)</span>
-<span class="nv">numeric</span> <span class="o">=</span> <span class="nv">Train</span>.<span class="nv">select_dtypes</span><span class="ss">(</span><span class="k">include</span><span class="o">=</span><span class="nv">np</span>.<span class="nv">number</span><span class="ss">)</span>.<span class="nv">columns</span>.<span class="nv">tolist</span><span class="ss">()</span>
-<span class="nv">categorical</span> <span class="o">=</span> [<span class="nv">f</span> <span class="k">for</span> <span class="nv">f</span> <span class="nv">in</span> <span class="nv">Train</span>.<span class="nv">columns</span>.<span class="nv">tolist</span><span class="ss">()</span> <span class="k">if</span> <span class="nv">f</span> <span class="nv">not</span> <span class="nv">in</span> <span class="nv">numeric</span>]
-<span class="nv">categorical</span>
-<span class="k">for</span> <span class="nv">cat</span> <span class="nv">in</span> <span class="nv">categorical</span>:
-    <span class="nv">alldata</span>[<span class="nv">cat</span>] <span class="o">=</span> <span class="nv">le</span>.<span class="nv">fit_transform</span><span class="ss">(</span><span class="nv">alldata</span>[<span class="nv">cat</span>].<span class="nv">fillna</span><span class="ss">(</span><span class="nv">alldata</span>[<span class="nv">cat</span>].<span class="nv">mode</span><span class="ss">()</span>.<span class="nv">iloc</span>[<span class="mi">0</span>]<span class="ss">))</span>
+# convert character columns to integer
+print(&quot;Label Encoding&quot;)
+numeric = Train.select_dtypes(include=np.number).columns.tolist()
+categorical = [f for f in Train.columns.tolist() if f not in numeric]
+categorical
+for cat in categorical:
+    alldata[cat] = le.fit_transform(alldata[cat].fillna(alldata[cat].mode().iloc[0]))
 
-# <span class="nv">split</span> <span class="nv">back</span> <span class="nv">into</span> <span class="nv">dtrain</span> <span class="nv">and</span> <span class="nv">dtest</span>
-<span class="nv">Train</span> <span class="o">=</span> <span class="nv">alldata</span>[:<span class="nv">trainlen</span>]
-<span class="nv">Test</span> <span class="o">=</span> <span class="nv">alldata</span>[<span class="nv">trainlen</span>:]
+# split back into dtrain and dtest
+Train = alldata[:trainlen]
+Test = alldata[trainlen:]
 </pre></div>
 
 
@@ -351,109 +351,109 @@
 <hr>
 <!-- wp:code -->
 
-<div class="highlight"><pre><span></span><span class="nb">params</span> <span class="o">=</span> {
-    <span class="s1">&#39;</span><span class="s">boosting_type</span><span class="s1">&#39;</span> : <span class="s1">&#39;</span><span class="s">gbdt</span><span class="s1">&#39;</span>, 
-    <span class="s1">&#39;</span><span class="s">objective</span><span class="s1">&#39;</span> : <span class="s1">&#39;</span><span class="s">binary</span><span class="s1">&#39;</span>,
-    <span class="s1">&#39;</span><span class="s">metric</span><span class="s1">&#39;</span> : <span class="s1">&#39;</span><span class="s">binary_logloss</span><span class="s1">&#39;</span>, 
-    <span class="s1">&#39;</span><span class="s">nthread</span><span class="s1">&#39;</span> : <span class="mi">16</span>, 
-    <span class="s1">&#39;</span><span class="s">learning_rate</span><span class="s1">&#39;</span> : <span class="mi">0</span>.<span class="mi">02</span>,
-    <span class="s1">&#39;</span><span class="s">max_depth</span><span class="s1">&#39;</span> : <span class="mi">12</span>,
-    <span class="s1">&#39;</span><span class="s">num_leaves</span><span class="s1">&#39;</span> : <span class="mi">100</span>,
-    <span class="s1">&#39;</span><span class="s">sub_feature</span><span class="s1">&#39;</span> : <span class="mi">0</span>.<span class="mi">7</span>, 
-    <span class="s1">&#39;</span><span class="s">sub_row</span><span class="s1">&#39;</span> : <span class="mi">0</span>.<span class="mi">7</span>, 
-    <span class="s1">&#39;</span><span class="s">bagging_freq</span><span class="s1">&#39;</span> : <span class="mi">1</span>,
-    <span class="s1">&#39;</span><span class="s">bagging_fraction</span><span class="s1">&#39;</span> : <span class="mi">0</span>.<span class="mi">8</span>,
-    <span class="s1">&#39;</span><span class="s">lambda_l1</span><span class="s1">&#39;</span>: <span class="mi">0</span>.<span class="mi">1</span>, 
-    <span class="s1">&#39;</span><span class="s">lambda_l2</span><span class="s1">&#39;</span> : <span class="mi">0</span>.<span class="mi">2</span>
+<div class="highlight"><pre><span></span>params = {
+    &#39;boosting_type&#39; : &#39;gbdt&#39;, 
+    &#39;objective&#39; : &#39;binary&#39;,
+    &#39;metric&#39; : &#39;binary_logloss&#39;, 
+    &#39;nthread&#39; : 16, 
+    &#39;learning_rate&#39; : 0.02,
+    &#39;max_depth&#39; : 12,
+    &#39;num_leaves&#39; : 100,
+    &#39;sub_feature&#39; : 0.7, 
+    &#39;sub_row&#39; : 0.7, 
+    &#39;bagging_freq&#39; : 1,
+    &#39;bagging_fraction&#39; : 0.8,
+    &#39;lambda_l1&#39;: 0.1, 
+    &#39;lambda_l2&#39; : 0.2
 }
 
-<span class="nv">def</span> <span class="nv">modeling_cross_validation</span><span class="ss">(</span><span class="nb">params</span>, <span class="nv">X</span>, <span class="nv">y</span>, <span class="nv">folds</span><span class="ss">)</span>:
-    <span class="nv">clfs</span> <span class="o">=</span> []
-    <span class="nv">allPreds</span> <span class="o">=</span> <span class="nv">np</span>.<span class="nv">zeros</span><span class="ss">(</span><span class="nv">X</span>.<span class="nv">shape</span>[<span class="mi">0</span>]<span class="ss">)</span>
+def modeling_cross_validation(params, X, y, folds):
+    clfs = []
+    allPreds = np.zeros(X.shape[0])
 
-    <span class="nv">evals_result</span> <span class="o">=</span> {}
+    evals_result = {}
 
-    <span class="nv">X_len</span> <span class="o">=</span> <span class="nv">int</span><span class="ss">(</span><span class="nv">len</span><span class="ss">(</span><span class="nv">X</span><span class="ss">)</span><span class="o">/</span><span class="mi">3</span><span class="ss">)</span>
+    X_len = int(len(X)/3)
 
-    <span class="nv">X_train</span> <span class="o">=</span> <span class="nv">X</span>[<span class="nv">X_len</span>:]
-    <span class="nv">X_valid</span> <span class="o">=</span> <span class="nv">X</span>[:<span class="nv">X_len</span>]
-    <span class="nv">y_train</span> <span class="o">=</span> <span class="nv">y</span>[<span class="nv">X_len</span>:]
-    <span class="nv">y_valid</span> <span class="o">=</span> <span class="nv">y</span>[:<span class="nv">X_len</span>] 
+    X_train = X[X_len:]
+    X_valid = X[:X_len]
+    y_train = y[X_len:]
+    y_valid = y[:X_len] 
 
-    <span class="nv">lgb_train</span> <span class="o">=</span> <span class="nv">lgb</span>.<span class="nv">Dataset</span><span class="ss">(</span><span class="nv">X_train</span>, <span class="nv">y_train</span><span class="ss">)</span>
-    <span class="nv">lgb_valid</span> <span class="o">=</span> <span class="nv">lgb</span>.<span class="nv">Dataset</span><span class="ss">(</span><span class="nv">X_valid</span>, <span class="nv">y_valid</span>, <span class="nv">reference</span><span class="o">=</span><span class="nv">lgb_train</span><span class="ss">)</span>
+    lgb_train = lgb.Dataset(X_train, y_train)
+    lgb_valid = lgb.Dataset(X_valid, y_valid, reference=lgb_train)
 
-    <span class="nv">model</span> <span class="o">=</span> <span class="nv">lgb</span>.<span class="nv">train</span><span class="ss">(</span><span class="nb">params</span>,
-                <span class="nv">lgb_train</span>,
-                <span class="nv">num_boost_round</span><span class="o">=</span><span class="mi">200</span>,
-                <span class="nv">valid_sets</span><span class="o">=</span>[<span class="nv">lgb_train</span>, <span class="nv">lgb_valid</span>],
-                <span class="nv">evals_result</span><span class="o">=</span><span class="nv">evals_result</span>,
-                <span class="nv">verbose_eval</span><span class="o">=</span><span class="mi">100</span>,
-                <span class="nv">early_stopping_rounds</span><span class="o">=</span><span class="mi">50</span><span class="ss">)</span>
+    model = lgb.train(params,
+                lgb_train,
+                num_boost_round=200,
+                valid_sets=[lgb_train, lgb_valid],
+                evals_result=evals_result,
+                verbose_eval=100,
+                early_stopping_rounds=50)
 
-    <span class="nv">print</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">Plot metrics during training...</span><span class="s1">&#39;</span><span class="ss">)</span>
-    <span class="nv">ax</span> <span class="o">=</span> <span class="nv">lgb</span>.<span class="nv">plot_metric</span><span class="ss">(</span><span class="nv">evals_result</span>, <span class="nv">metric</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">binary_logloss</span><span class="s1">&#39;</span><span class="ss">)</span>
-    <span class="nv">plt</span>.<span class="k">show</span><span class="ss">()</span>
+    print(&#39;Plot metrics during training...&#39;)
+    ax = lgb.plot_metric(evals_result, metric=&#39;binary_logloss&#39;)
+    plt.show()
 
-    <span class="nv">print</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">Plot feature importances...</span><span class="s1">&#39;</span><span class="ss">)</span>
-    <span class="nv">ax</span> <span class="o">=</span> <span class="nv">lgb</span>.<span class="nv">plot_importance</span><span class="ss">(</span><span class="nv">model</span>, <span class="nv">max_num_features</span><span class="o">=</span><span class="mi">10</span><span class="ss">)</span>
-    <span class="nv">plt</span>.<span class="k">show</span><span class="ss">()</span>
+    print(&#39;Plot feature importances...&#39;)
+    ax = lgb.plot_importance(model, max_num_features=10)
+    plt.show()
 
-    <span class="s1">&#39;&#39;&#39;</span>
+    &#39;&#39;&#39;
 
-    <span class="nv">allPreds</span> <span class="o">=</span> <span class="nv">model</span>.<span class="nv">predict</span><span class="ss">(</span><span class="nv">X_test</span><span class="ss">)</span>
+    allPreds = model.predict(X_test)
 
-    <span class="nv">score</span> <span class="o">=</span> <span class="nv">roc_auc_score</span><span class="ss">(</span><span class="nv">y_test</span>, <span class="nv">allPreds</span><span class="ss">)</span>
-    <span class="nv">print</span><span class="ss">(</span><span class="nv">score</span><span class="ss">)</span>
-    <span class="s1">&#39;&#39;&#39;</span>
+    score = roc_auc_score(y_test, allPreds)
+    print(score)
+    &#39;&#39;&#39;
 
-    <span class="nv">clfs</span>.<span class="nv">append</span><span class="ss">(</span><span class="nv">model</span><span class="ss">)</span>
-    <span class="k">return</span> <span class="nv">clfs</span>
+    clfs.append(model)
+    return clfs
 
 
-<span class="nv">def</span> <span class="nv">predict_cross_validation</span><span class="ss">(</span><span class="nv">test</span>, <span class="nv">clfs</span><span class="ss">)</span>:
+def predict_cross_validation(test, clfs):
 
-    <span class="nv">sub_preds</span> <span class="o">=</span> <span class="nv">np</span>.<span class="nv">zeros</span><span class="ss">(</span><span class="nv">test</span>.<span class="nv">shape</span>[<span class="mi">0</span>]<span class="ss">)</span>
+    sub_preds = np.zeros(test.shape[0])
 
-    <span class="k">for</span> <span class="nv">i</span>, <span class="nv">model</span> <span class="nv">in</span> <span class="nv">enumerate</span><span class="ss">(</span><span class="nv">clfs</span>, <span class="mi">1</span><span class="ss">)</span>:    
-        <span class="nv">test_preds</span> <span class="o">=</span> <span class="nv">model</span>.<span class="nv">predict_proba</span><span class="ss">(</span><span class="nv">test</span><span class="ss">)</span>
-        <span class="nv">sub_preds</span> <span class="o">+=</span> <span class="nv">test_preds</span>[:,<span class="mi">1</span>]
+    for i, model in enumerate(clfs, 1):    
+        test_preds = model.predict_proba(test)
+        sub_preds += test_preds[:,1]
 
-    # <span class="nv">Averaging</span> <span class="nv">across</span> <span class="nv">all</span> <span class="nv">models</span>
-    <span class="nv">sub_preds</span> <span class="o">=</span> <span class="nv">sub_preds</span> <span class="o">/</span> <span class="nv">len</span><span class="ss">(</span><span class="nv">clfs</span><span class="ss">)</span>
+    # Averaging across all models
+    sub_preds = sub_preds / len(clfs)
 
-    # <span class="nv">Creating</span> <span class="nv">a</span> <span class="nv">series</span> <span class="nv">from</span> <span class="nv">the</span> <span class="nv">predictions</span>
-    <span class="nv">ret</span> <span class="o">=</span> <span class="nv">pd</span>.<span class="nv">Series</span><span class="ss">(</span><span class="nv">sub_preds</span>, <span class="nv">index</span><span class="o">=</span><span class="nv">test</span>.<span class="nv">index</span><span class="ss">)</span>
-    <span class="nv">ret</span>.<span class="nv">index</span>.<span class="nv">name</span> <span class="o">=</span> <span class="nv">test</span>.<span class="nv">index</span>.<span class="nv">name</span> 
+    # Creating a series from the predictions
+    ret = pd.Series(sub_preds, index=test.index)
+    ret.index.name = test.index.name 
 
-    <span class="k">return</span> <span class="nv">ret</span>
+    return ret
 
-<span class="nv">def</span> <span class="nv">predict_test_chunk</span><span class="ss">(</span><span class="nv">clfs</span>, <span class="nv">Test</span>, <span class="nv">filename</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">tmp.csv</span><span class="s1">&#39;</span>, <span class="nv">chunks</span><span class="o">=</span><span class="mi">100000</span><span class="ss">)</span>:
+def predict_test_chunk(clfs, Test, filename=&#39;tmp.csv&#39;, chunks=100000):
 
-    <span class="nv">preds_sub</span> <span class="o">=</span> <span class="nv">pd</span>.<span class="nv">DataFrame</span><span class="ss">()</span>
+    preds_sub = pd.DataFrame()
 
-    <span class="nv">num</span> <span class="o">=</span> <span class="nv">int</span><span class="ss">(</span><span class="mi">7853253</span><span class="o">/</span><span class="mi">100000</span><span class="ss">)</span>
+    num = int(7853253/100000)
 
-    <span class="nv">groups</span> <span class="o">=</span> <span class="nv">Test</span>.<span class="nv">groupby</span><span class="ss">(</span><span class="nv">np</span>.<span class="nv">arange</span><span class="ss">(</span><span class="nv">len</span><span class="ss">(</span><span class="nv">Test</span><span class="ss">))</span><span class="o">//</span><span class="nv">chunks</span><span class="ss">)</span>
+    groups = Test.groupby(np.arange(len(Test))//chunks)
 
-    <span class="nv">count</span> <span class="o">=</span> <span class="mi">0</span>
+    count = 0
 
-    <span class="k">for</span> <span class="nv">idx</span>, <span class="nv">df</span> <span class="nv">in</span> <span class="nv">groups</span>:
+    for idx, df in groups:
 
-        <span class="k">if</span> <span class="nv">count</span> <span class="o">==</span> <span class="mi">10</span>:
-            <span class="nv">print</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">Running on idx {} of {}</span><span class="s2">&quot;</span>.<span class="nv">format</span><span class="ss">(</span><span class="nv">idx</span>, <span class="nv">num</span><span class="ss">))</span>
-            <span class="nv">count</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="nv">count</span> <span class="o">+=</span> <span class="mi">1</span>
+        if count == 10:
+            print(&quot;Running on idx {} of {}&quot;.format(idx, num))
+            count = 0
+        count += 1
 
-        <span class="nv">preds_df</span> <span class="o">=</span> <span class="nv">predict_cross_validation</span><span class="ss">(</span><span class="nv">df</span>, <span class="nv">clfs</span><span class="ss">)</span>
-        <span class="nv">preds_df</span> <span class="o">=</span> <span class="nv">preds_df</span>.<span class="nv">to_frame</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">HasDetections</span><span class="s1">&#39;</span><span class="ss">)</span>
+        preds_df = predict_cross_validation(df, clfs)
+        preds_df = preds_df.to_frame(&#39;HasDetections&#39;)
 
-        <span class="nv">preds_sub</span> <span class="o">=</span> <span class="nv">pd</span>.<span class="nv">concat</span><span class="ss">(</span>[<span class="nv">preds_sub</span>, <span class="nv">preds_df</span>], <span class="nv">axis</span><span class="o">=</span><span class="mi">0</span><span class="ss">)</span>
+        preds_sub = pd.concat([preds_sub, preds_df], axis=0)
 
-        <span class="nv">del</span> <span class="nv">preds_df</span>
-        <span class="nv">gc</span>.<span class="nv">collect</span><span class="ss">()</span>
+        del preds_df
+        gc.collect()
 
-    <span class="k">return</span> <span class="nv">preds_sub</span>
+    return preds_sub
 </pre></div>
 
 
@@ -461,8 +461,8 @@
 
 <!-- wp:code -->
 
-<div class="highlight"><pre><span></span><span class="n">print</span><span class="p">(</span><span class="ss">&quot;Start Training&quot;</span><span class="p">)</span>
-<span class="n">clfs</span> <span class="o">=</span> <span class="n">modeling_cross_validation</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">Train</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<div class="highlight"><pre><span></span>print(&quot;Start Training&quot;)
+clfs = modeling_cross_validation(params, Train, y, 3)
 </pre></div>
 
 
@@ -470,13 +470,13 @@
 
 <!-- wp:code -->
 
-<div class="highlight"><pre><span></span><span class="nv">Start</span> <span class="nv">Training</span>
-<span class="nv">Training</span> <span class="k">until</span> <span class="nv">validation</span> <span class="nv">scores</span> <span class="nv">don</span><span class="s1">&#39;</span><span class="s">t improve for 50 rounds.</span>
-[<span class="mi">100</span>]    <span class="nv">training</span><span class="s1">&#39;</span><span class="s">s binary_logloss: 0.626603 valid_1</span><span class="s1">&#39;</span><span class="nv">s</span> <span class="nv">binary_logloss</span>: <span class="mi">0</span>.<span class="mi">632894</span>
-[<span class="mi">200</span>]    <span class="nv">training</span><span class="s1">&#39;</span><span class="s">s binary_logloss: 0.614641 valid_1</span><span class="s1">&#39;</span><span class="nv">s</span> <span class="nv">binary_logloss</span>: <span class="mi">0</span>.<span class="mi">624013</span>
-<span class="nv">Did</span> <span class="nv">not</span> <span class="nv">meet</span> <span class="nv">early</span> <span class="nv">stopping</span>. <span class="nv">Best</span> <span class="nv">iteration</span> <span class="nv">is</span>:
-[<span class="mi">200</span>]    <span class="nv">training</span><span class="s1">&#39;</span><span class="s">s binary_logloss: 0.614641 valid_1</span><span class="s1">&#39;</span><span class="nv">s</span> <span class="nv">binary_logloss</span>: <span class="mi">0</span>.<span class="mi">624013</span>
-<span class="nv">Plot</span> <span class="nv">metrics</span> <span class="nv">during</span> <span class="nv">training</span>...
+<div class="highlight"><pre><span></span>Start Training
+Training until validation scores don&#39;t improve for 50 rounds.
+[100]    training&#39;s binary_logloss: 0.626603 valid_1&#39;s binary_logloss: 0.632894
+[200]    training&#39;s binary_logloss: 0.614641 valid_1&#39;s binary_logloss: 0.624013
+Did not meet early stopping. Best iteration is:
+[200]    training&#39;s binary_logloss: 0.614641 valid_1&#39;s binary_logloss: 0.624013
+Plot metrics during training...
 </pre></div>
 
 
@@ -484,7 +484,7 @@
 
 <!-- wp:code -->
 
-<div class="highlight"><pre><span></span><span class="n">Plot</span> <span class="n">feature</span> <span class="n">importances</span><span class="p">...</span>
+<div class="highlight"><pre><span></span>Plot feature importances...
 </pre></div>
 
 
@@ -498,15 +498,15 @@
 <p><img alt="placeholder" class="wp-image-242" src="/media/2019/01/output_9_3.png"></p>
 <!-- wp:code -->
 
-<div class="highlight"><pre><span></span><span class="n">print</span><span class="p">(</span><span class="ss">&quot;Start Predicting&quot;</span><span class="p">)</span>
-<span class="n">preds</span> <span class="o">=</span> <span class="n">predict_test_chunk</span><span class="p">(</span><span class="n">clfs</span><span class="p">,</span> <span class="n">Test</span><span class="p">,</span> <span class="n">chunks</span><span class="o">=</span><span class="mi">100000</span><span class="p">)</span>
+<div class="highlight"><pre><span></span>print(&quot;Start Predicting&quot;)
+preds = predict_test_chunk(clfs, Test, chunks=100000)
 
-<span class="n">print</span><span class="p">(</span><span class="ss">&quot;Start Submission&quot;</span><span class="p">)</span>
-<span class="n">df_sub</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;sample_submission.csv&#39;</span><span class="p">)</span>
-<span class="n">df_sub</span><span class="p">[</span><span class="s1">&#39;HasDetections&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">preds</span><span class="p">[</span><span class="s1">&#39;HasDetections&#39;</span><span class="p">].</span><span class="k">values</span>
-<span class="n">df_sub</span><span class="p">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;mySubmission.csv&#39;</span><span class="p">,</span> <span class="k">index</span><span class="o">=</span><span class="k">False</span><span class="p">)</span>
+print(&quot;Start Submission&quot;)
+df_sub = pd.read_csv(&#39;sample_submission.csv&#39;)
+df_sub[&#39;HasDetections&#39;] = preds[&#39;HasDetections&#39;].values
+df_sub.to_csv(&#39;mySubmission.csv&#39;, index=False)
 
-<span class="n">print</span><span class="p">(</span><span class="ss">&quot;Done!&quot;</span><span class="p">)</span>
+print(&quot;Done!&quot;)
 </pre></div>
 
 
