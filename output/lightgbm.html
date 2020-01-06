@@ -120,18 +120,18 @@ Other gradient boosted algortihms grow level wise, which results in longer horiz
 <p>The one thing you have to do however, is to specify the string columns as <code>category</code>. Below is a example of how we do it with Pandas Dataframe</p>
 <!-- wp:code -->
 
-<div class="highlight"><pre><span></span>dtypes = {
-        &#39;MachineIdentifier&#39;:&#39;category&#39;,
-        &#39;ProductName&#39;: &#39;category&#39;,
-        &#39;EngineVersion&#39;: &#39;category&#39;,
-        &#39;AppVersion&#39;:&#39;category&#39;,
-        &#39;AvSigVersion&#39;:&#39;category&#39;,
-        &#39;IsBeta&#39;:&#39;int8&#39;,
-        &#39;RtpStateBitfield&#39;:&#39;float16&#39;,
-        &#39;IsSxsPassiveMode&#39;:&#39;int8&#39;
-}
+<div class="highlight"><pre><span></span><span class="n">dtypes</span> <span class="o">=</span> <span class="err">{</span>
+        <span class="s1">&#39;MachineIdentifier&#39;</span><span class="p">:</span><span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;ProductName&#39;</span><span class="p">:</span> <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;EngineVersion&#39;</span><span class="p">:</span> <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;AppVersion&#39;</span><span class="p">:</span><span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;AvSigVersion&#39;</span><span class="p">:</span><span class="s1">&#39;category&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;IsBeta&#39;</span><span class="p">:</span><span class="s1">&#39;int8&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;RtpStateBitfield&#39;</span><span class="p">:</span><span class="s1">&#39;float16&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;IsSxsPassiveMode&#39;</span><span class="p">:</span><span class="s1">&#39;int8&#39;</span>
+<span class="err">}</span>
 
-df_train = pd.read_csv(&#39;train.csv&#39;, nrows=2000000, dtype=dtypes)
+<span class="n">df_train</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;train.csv&#39;</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">2000000</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtypes</span><span class="p">)</span>
 </pre></div>
 
 
@@ -140,8 +140,8 @@ df_train = pd.read_csv(&#39;train.csv&#39;, nrows=2000000, dtype=dtypes)
 <p>Or if you're creating new features, you have to recast the datatype of the new column to categories</p>
 <!-- wp:code -->
 
-<div class="highlight"><pre><span></span>for feature in newFeatures:
-    Train[feature ] = Train[feature ].astype(&#39;category&#39;)
+<div class="highlight"><pre><span></span><span class="k">for</span> <span class="nv">feature</span> <span class="nv">in</span> <span class="nv">newFeatures</span>:
+    <span class="nv">Train</span>[<span class="nv">feature</span> ] <span class="o">=</span> <span class="nv">Train</span>[<span class="nv">feature</span> ].<span class="nv">astype</span><span class="ss">(</span><span class="s1">&#39;</span><span class="s">category</span><span class="s1">&#39;</span><span class="ss">)</span>
 </pre></div>
 
 
