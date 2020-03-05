@@ -113,59 +113,59 @@
 <p>Here's a snippet of my comments I used to keep track of my CV/LB climb:</p>
 <!-- wp:code -->
 
-<div class="highlight"><pre><span></span><span class="nv">xgb_params</span> <span class="o">=</span> {
-    <span class="s1">&#39;</span><span class="s">max_depth</span><span class="s1">&#39;</span>: <span class="mi">4</span>,  # <span class="nv">the</span> <span class="nv">maximum</span> <span class="nv">depth</span> <span class="nv">of</span> <span class="nv">each</span> <span class="nv">tree</span>
-    <span class="s1">&#39;</span><span class="s">eta</span><span class="s1">&#39;</span>: <span class="mi">0</span>.<span class="mi">01</span>,  # <span class="nv">the</span> <span class="nv">training</span> <span class="nv">step</span> <span class="k">for</span> <span class="nv">each</span> <span class="nv">iteration</span>
-    <span class="s1">&#39;</span><span class="s">silent</span><span class="s1">&#39;</span>: <span class="mi">1</span>,  # <span class="nv">logging</span> <span class="nv">mode</span> <span class="o">-</span> <span class="nv">quiet</span>
-    <span class="s1">&#39;</span><span class="s">objective</span><span class="s1">&#39;</span>: <span class="s1">&#39;</span><span class="s">multi:softprob</span><span class="s1">&#39;</span>,  # <span class="nv">error</span> <span class="nv">evaluation</span> <span class="k">for</span> <span class="nv">multiclass</span> <span class="nv">training</span>
-    <span class="s1">&#39;</span><span class="s">gamma</span><span class="s1">&#39;</span>: <span class="mi">0</span>.<span class="mi">9</span>,
-    <span class="s1">&#39;</span><span class="s">alpha</span><span class="s1">&#39;</span>: <span class="mi">0</span>.<span class="mi">3</span>,
-    <span class="s1">&#39;</span><span class="s">colsample_bytree</span><span class="s1">&#39;</span> : <span class="mi">0</span>.<span class="mi">09</span>,
-    <span class="s1">&#39;</span><span class="s">subsample</span><span class="s1">&#39;</span> : <span class="mi">0</span>.<span class="mi">09</span>,
-    <span class="s1">&#39;</span><span class="s">num_class</span><span class="s1">&#39;</span>: <span class="mi">9</span>}  # <span class="nv">the</span> <span class="nv">number</span> <span class="nv">of</span> <span class="nv">classes</span> <span class="nv">that</span> <span class="nv">exist</span> <span class="nv">in</span> <span class="nv">this</span> <span class="nv">datset</span>
+<div class="highlight"><pre><span></span><code><span class="n">xgb_params</span> <span class="o">=</span> <span class="err">{</span>
+    <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>  <span class="o">#</span> <span class="n">the</span> <span class="n">maximum</span> <span class="n">depth</span> <span class="k">of</span> <span class="k">each</span> <span class="n">tree</span>
+    <span class="s1">&#39;eta&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">.</span><span class="mi">01</span><span class="p">,</span>  <span class="o">#</span> <span class="n">the</span> <span class="n">training</span> <span class="n">step</span> <span class="k">for</span> <span class="k">each</span> <span class="n">iteration</span>
+    <span class="s1">&#39;silent&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>  <span class="o">#</span> <span class="n">logging</span> <span class="k">mode</span> <span class="o">-</span> <span class="n">quiet</span>
+    <span class="s1">&#39;objective&#39;</span><span class="p">:</span> <span class="s1">&#39;multi:softprob&#39;</span><span class="p">,</span>  <span class="o">#</span> <span class="n">error</span> <span class="n">evaluation</span> <span class="k">for</span> <span class="n">multiclass</span> <span class="n">training</span>
+    <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">.</span><span class="mi">9</span><span class="p">,</span>
+    <span class="s1">&#39;alpha&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">.</span><span class="mi">3</span><span class="p">,</span>
+    <span class="s1">&#39;colsample_bytree&#39;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">.</span><span class="mi">09</span><span class="p">,</span>
+    <span class="s1">&#39;subsample&#39;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">.</span><span class="mi">09</span><span class="p">,</span>
+    <span class="s1">&#39;num_class&#39;</span><span class="p">:</span> <span class="mi">9</span><span class="err">}</span>  <span class="o">#</span> <span class="n">the</span> <span class="nb">number</span> <span class="k">of</span> <span class="n">classes</span> <span class="n">that</span> <span class="n">exist</span> <span class="k">in</span> <span class="n">this</span> <span class="n">datset</span>
 
-## <span class="nv">Original</span>
-<span class="nv">nfolds</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="nv">CV</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">7299</span>
-<span class="nv">std</span>: <span class="mi">0</span>.<span class="mi">0112</span>
-<span class="nv">LB</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">67291</span>
+<span class="o">##</span> <span class="n">Original</span>
+<span class="n">nfolds</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">CV</span> <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mi">7299</span>
+<span class="n">std</span><span class="p">:</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0112</span>
+<span class="n">LB</span> <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mi">67291</span>
 
-<span class="nv">Difference</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">05699</span>
+<span class="n">Difference</span> <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mi">05699</span>
 
-## <span class="nv">changed</span> <span class="nv">rolling</span> <span class="nv">window</span> <span class="nv">size</span>
-<span class="nv">nfolds</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="nv">CV</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">7458</span>
-<span class="nv">std</span>: <span class="mi">0</span>.<span class="mi">0207</span>
-<span class="nv">LB</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">67995</span>
+<span class="o">##</span> <span class="n">changed</span> <span class="n">rolling</span> <span class="n">window</span> <span class="k">size</span>
+<span class="n">nfolds</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">CV</span> <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mi">7458</span>
+<span class="n">std</span><span class="p">:</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0207</span>
+<span class="n">LB</span> <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mi">67995</span>
 
-<span class="nv">Difference</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">06585</span>
+<span class="n">Difference</span> <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mi">06585</span>
 
-## <span class="nv">added</span> <span class="nv">quantile</span> <span class="nv">features</span>
-<span class="nv">nfolds</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="nv">CV</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">7564</span>
-<span class="nv">std</span>: <span class="mi">0</span>.<span class="mi">0167</span>
-<span class="nv">LB</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">68347</span>
+<span class="o">##</span> <span class="n">added</span> <span class="n">quantile</span> <span class="n">features</span>
+<span class="n">nfolds</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">CV</span> <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mi">7564</span>
+<span class="n">std</span><span class="p">:</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0167</span>
+<span class="n">LB</span> <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mi">68347</span>
 
-<span class="nv">Difference</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">07293</span>
+<span class="n">Difference</span> <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mi">07293</span>
 
-## <span class="nv">dropping</span> <span class="nv">mean</span>
-<span class="nv">using</span> <span class="nv">smaller</span> <span class="nv">feature</span> <span class="nv">set</span> <span class="ss">(</span><span class="mi">50</span><span class="ss">)</span>
-<span class="nv">nfolds</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="nv">CV</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">7670</span>
-<span class="nv">std</span>: <span class="mi">0</span>.<span class="mi">0243</span>
-<span class="nv">LB</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">69284</span>
+<span class="o">##</span> <span class="n">dropping</span> <span class="n">mean</span>
+<span class="k">using</span> <span class="n">smaller</span> <span class="n">feature</span> <span class="k">set</span> <span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">nfolds</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">CV</span> <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mi">7670</span>
+<span class="n">std</span><span class="p">:</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0243</span>
+<span class="n">LB</span> <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mi">69284</span>
 
-<span class="nv">Difference</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">07416</span>
+<span class="n">Difference</span> <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mi">07416</span>
 
-## <span class="nv">adding</span> <span class="nv">iqr</span> <span class="nv">and</span> <span class="nv">trimming</span> <span class="nv">mean</span>
-<span class="nv">using</span> <span class="nv">smaller</span> <span class="nv">feature</span> <span class="nv">set</span> <span class="ss">(</span><span class="mi">70</span><span class="ss">)</span>
-<span class="nv">nfolds</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="nv">CV</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">7740</span>
-<span class="nv">std</span>: <span class="mi">0</span>.<span class="mi">0257</span>
-<span class="nv">LB</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">69988</span>
+<span class="o">##</span> <span class="n">adding</span> <span class="n">iqr</span> <span class="k">and</span> <span class="n">trimming</span> <span class="n">mean</span>
+<span class="k">using</span> <span class="n">smaller</span> <span class="n">feature</span> <span class="k">set</span> <span class="p">(</span><span class="mi">70</span><span class="p">)</span>
+<span class="n">nfolds</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">CV</span> <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mi">7740</span>
+<span class="n">std</span><span class="p">:</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0257</span>
+<span class="n">LB</span> <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mi">69988</span>
 
-<span class="nv">Difference</span> <span class="o">=</span> <span class="mi">0</span>.<span class="mi">07412</span>
-</pre></div>
+<span class="n">Difference</span> <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mi">07412</span>
+</code></pre></div>
 
 
 <!-- /wp:code -->

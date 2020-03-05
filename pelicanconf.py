@@ -36,7 +36,7 @@ DEFAULT_PAGINATION = 10
 THEME = "theme/Flex"
 
 PLUGIN_PATHS = ['plugins']
-PLUGINS = ['readtime', 'static_comments']
+PLUGINS = ['readtime', 'static_comments' ]
 
 STATIC_COMMENTS = True
 STATIC_COMMENTS_DIR = 'comments'

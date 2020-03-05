@@ -101,9 +101,9 @@
 <p>For each given list, I would need to figure out how many set of subsets there are. In this case, the total number of subsets for a given list is <code>2^n</code>, where <code>n</code> is the total number of items in the list.</p>
 <p>The reason it is <code>2^n</code> is because: For each item in the list, you have 2 possible choices to take; Append an item to it, or don't. And since you have <code>n</code> items, you have a total of <code>2^n</code> choices.</p>
 <p>After figuring out how many total subsets there are, that can be the terminating condition in a recursive solution, something like</p>
-<div class="highlight"><pre><span></span><span class="k">if</span> <span class="nv">len</span><span class="ss">(</span><span class="nv">answer</span><span class="ss">)</span> <span class="o">==</span> <span class="nv">int</span><span class="ss">(</span><span class="nv">math</span>.<span class="nv">pow</span><span class="ss">(</span><span class="mi">2</span>,<span class="nv">len</span><span class="ss">(</span><span class="nv">myList</span><span class="ss">)))</span>:
-        <span class="k">return</span> <span class="nv">answer</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">if len(answer) == int(math.pow(2,len(myList))):</span>
+<span class="err">        return answer</span>
+</code></pre></div>
 
 
 <p>In each step of the code, we need to clone the list into two to model them as the two potential choices; adding an item, or not adding an item. We add an item to each element in one list (adding an item), and preserve the original list (not adding an item), and join the two results together</p>
@@ -129,27 +129,27 @@ Resulting set that does not add: {}, {1}</p>
 4. Take the union of the original set and the modified set<br>
 5. Go back to step 1</p>
 <p>Translated to python3,</p>
-<div class="highlight"><pre><span></span><span class="nv">def</span> <span class="nv">printPattern</span><span class="ss">(</span><span class="nv">givenList</span>, <span class="nb">result</span>, <span class="nv">totalSubsets</span><span class="ss">)</span>:
-        <span class="k">if</span> <span class="nv">len</span><span class="ss">(</span><span class="nb">result</span><span class="ss">)</span> <span class="o">==</span> <span class="nv">totalSubsets</span>:
-                <span class="k">return</span> <span class="nb">result</span>
+<div class="highlight"><pre><span></span><code><span class="n">def</span> <span class="n">printPattern</span><span class="p">(</span><span class="n">givenList</span><span class="p">,</span> <span class="k">result</span><span class="p">,</span> <span class="n">totalSubsets</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">len</span><span class="p">(</span><span class="k">result</span><span class="p">)</span> <span class="o">==</span> <span class="n">totalSubsets</span><span class="p">:</span>
+                <span class="k">return</span> <span class="k">result</span>
 
-        # <span class="nv">models</span> <span class="nv">not</span> <span class="nv">adding</span>
-        <span class="nv">clonedResult</span> <span class="o">=</span> <span class="nv">copy</span>.<span class="nv">deepcopy</span><span class="ss">(</span><span class="nb">result</span><span class="ss">)</span>
+        <span class="o">#</span> <span class="n">models</span> <span class="k">not</span> <span class="n">adding</span>
+        <span class="n">clonedResult</span> <span class="o">=</span> <span class="k">copy</span><span class="p">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="k">result</span><span class="p">)</span>
 
-        <span class="nv">itemToAdd</span> <span class="o">=</span> <span class="nv">givenList</span>[<span class="mi">0</span>]
+        <span class="n">itemToAdd</span> <span class="o">=</span> <span class="n">givenList</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
-        # <span class="nv">omititng</span> <span class="nv">the</span> <span class="nv">item</span> <span class="nv">we</span> <span class="nv">just</span> <span class="nv">added</span> <span class="nv">in</span> <span class="nv">the</span> <span class="k">next</span> <span class="nv">recursion</span>
-        <span class="nv">newList</span> <span class="o">=</span> <span class="nv">givenList</span>[<span class="mi">1</span>:]
+        <span class="o">#</span> <span class="n">omititng</span> <span class="n">the</span> <span class="n">item</span> <span class="n">we</span> <span class="n">just</span> <span class="n">added</span> <span class="k">in</span> <span class="n">the</span> <span class="k">next</span> <span class="n">recursion</span>
+        <span class="n">newList</span> <span class="o">=</span> <span class="n">givenList</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
 
-        # <span class="nv">adding</span> <span class="nv">an</span> <span class="nv">item</span> <span class="nv">to</span> <span class="nv">each</span> <span class="nv">item</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">list</span>
-        <span class="k">for</span> <span class="nv">item</span> <span class="nv">in</span> <span class="nb">result</span>:
-                <span class="nv">item</span>.<span class="nv">append</span><span class="ss">(</span><span class="nv">itemToAdd</span><span class="ss">)</span>
+        <span class="o">#</span> <span class="n">adding</span> <span class="n">an</span> <span class="n">item</span> <span class="k">to</span> <span class="k">each</span> <span class="n">item</span> <span class="k">in</span> <span class="n">the</span> <span class="n">list</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="k">in</span> <span class="k">result</span><span class="p">:</span>
+                <span class="n">item</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">itemToAdd</span><span class="p">)</span>
 
-        # <span class="nv">taking</span> <span class="nv">the</span> <span class="nv">union</span> <span class="nv">of</span> <span class="nv">both</span> <span class="nv">the</span> <span class="nv">results</span>
-        <span class="nb">result</span> <span class="o">+=</span> <span class="nv">clonedResult</span>
+        <span class="o">#</span> <span class="n">taking</span> <span class="n">the</span> <span class="k">union</span> <span class="k">of</span> <span class="k">both</span> <span class="n">the</span> <span class="n">results</span>
+        <span class="k">result</span> <span class="o">+=</span> <span class="n">clonedResult</span>
 
-        <span class="k">return</span> <span class="nv">printPattern</span><span class="ss">(</span><span class="nv">newList</span>, <span class="nb">result</span>, <span class="nv">totalSubsets</span><span class="ss">)</span>
-</pre></div>
+        <span class="k">return</span> <span class="n">printPattern</span><span class="p">(</span><span class="n">newList</span><span class="p">,</span> <span class="k">result</span><span class="p">,</span> <span class="n">totalSubsets</span><span class="p">)</span>
+</code></pre></div>
 
 
 <p>Read here to understand why I used deepcopy: <a href="https://stackoverflow.com/questions/2612802/how-to-clone-or-copy-a-list">How to clone or copy a list?</a></p>

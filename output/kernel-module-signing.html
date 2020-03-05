@@ -150,9 +150,9 @@
 </ol>
 <p>Over the years, different signing mechanism have came (and gone)</p>
 <h4>First version</h4>
-<div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">Signature</span> <span class="k">is</span> <span class="n">stored</span> <span class="k">in</span> <span class="n">an</span> <span class="n">ELF</span> <span class="n">section</span> <span class="n">named</span> <span class="o">`</span><span class="err">“</span><span class="n">module_sig</span><span class="err">”</span><span class="o">`</span>
-<span class="o">-</span> <span class="k">Only</span> <span class="n">the</span> <span class="n">contents</span> <span class="k">of</span> <span class="n">sections</span> <span class="n">whose</span> <span class="k">names</span> <span class="n">contain</span> <span class="n">the</span> <span class="n">string</span> <span class="err">“</span><span class="nb">text</span><span class="err">”</span> <span class="k">or</span> <span class="err">“</span><span class="k">data</span><span class="err">”</span> <span class="p">(</span><span class="n">but</span> <span class="k">not</span> <span class="err">“</span><span class="p">.</span><span class="n">rel</span><span class="p">.</span><span class="err">”</span><span class="p">)</span> <span class="k">are</span> <span class="n">hashed</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">- Signature is stored in an ELF section named `“module_sig”`</span>
+<span class="err">- Only the contents of sections whose names contain the string “text” or “data” (but not “.rel.”) are hashed</span>
+</code></pre></div>
 
 
 <p>[code lang=text]<br>
@@ -172,16 +172,16 @@
 14 }<br>
 [/code]</p>
 <h4>Second version</h4>
-<div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">Performs</span> <span class="n">a</span> <span class="k">large</span> <span class="k">set</span> <span class="k">of</span> <span class="n">ELF</span> <span class="n">metadata</span> <span class="n">sanity</span> <span class="n">checks</span> <span class="k">before</span> <span class="n">validating</span> <span class="n">the</span> <span class="n">signature</span>
-<span class="o">-</span> <span class="n">Signature</span> <span class="n">itself</span> <span class="k">is</span> <span class="n">stored</span> <span class="k">in</span> <span class="n">a</span> <span class="err">“</span><span class="p">.</span><span class="n">module_sig</span><span class="err">”</span> <span class="n">section</span> <span class="n">just</span> <span class="k">like</span> <span class="k">in</span> <span class="k">first</span> <span class="k">version</span>
-<span class="o">-</span> <span class="n">Code</span><span class="p">,</span> <span class="k">data</span> <span class="n">section</span> <span class="n">contents</span> <span class="k">are</span> <span class="n">hashed</span><span class="p">.</span> <span class="n">Corresponding</span> <span class="n">section</span> <span class="n">headers</span> <span class="k">are</span> <span class="n">hashed</span><span class="p">.</span> <span class="n">Relocation</span> <span class="n">section</span> <span class="n">headers</span> <span class="k">and</span> <span class="n">entries</span> <span class="n">along</span> <span class="k">with</span> <span class="k">any</span> <span class="n">symbols</span> <span class="n">they</span> <span class="n">reference</span> <span class="k">get</span> <span class="n">hashed</span><span class="p">.</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">- Performs a large set of ELF metadata sanity checks before validating the signature</span>
+<span class="err">- Signature itself is stored in a “.module_sig” section just like in first version</span>
+<span class="err">- Code, data section contents are hashed. Corresponding section headers are hashed. Relocation section headers and entries along with any symbols they reference get hashed.</span>
+</code></pre></div>
 
 
 <h4>Third Version</h4>
-<div class="highlight"><pre><span></span><span class="o">-</span> <span class="nv">Module</span> <span class="nv">signature</span> <span class="nv">is</span> <span class="nv">wrapped</span> <span class="nv">around</span> <span class="nv">the</span> <span class="nv">notes</span> <span class="nv">section</span> `<span class="nv">SHT_NOTE</span>`, <span class="nv">and</span> <span class="nv">named</span> `.<span class="nv">module</span>.<span class="nv">sig</span>`
-<span class="o">-</span> <span class="nv">Everything</span> <span class="nv">in</span> <span class="nv">Second</span> <span class="nv">version</span> <span class="o">+</span> <span class="nv">empty</span> <span class="nv">and</span> <span class="nv">allocatable</span> <span class="nv">sections</span> <span class="ss">(</span><span class="nv">Second</span> <span class="nv">and</span> <span class="nv">first</span> <span class="nv">version</span> <span class="k">do</span> <span class="nv">not</span> <span class="nv">hash</span> <span class="nv">empty</span> <span class="nv">and</span> <span class="nv">allocatable</span> <span class="nv">sections</span><span class="ss">)</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="o">-</span> <span class="n">Module</span> <span class="n">signature</span> <span class="k">is</span> <span class="n">wrapped</span> <span class="n">around</span> <span class="n">the</span> <span class="n">notes</span> <span class="n">section</span> <span class="ss">`SHT_NOTE`</span><span class="p">,</span> <span class="k">and</span> <span class="n">named</span> <span class="ss">`.module.sig`</span>
+<span class="o">-</span> <span class="n">Everything</span> <span class="k">in</span> <span class="n">Second</span> <span class="n">version</span> <span class="o">+</span> <span class="n">empty</span> <span class="k">and</span> <span class="n">allocatable</span> <span class="nf">sections</span> <span class="p">(</span><span class="n">Second</span> <span class="k">and</span> <span class="n">first</span> <span class="n">version</span> <span class="n">do</span> <span class="k">not</span> <span class="n">hash</span> <span class="n">empty</span> <span class="k">and</span> <span class="n">allocatable</span> <span class="n">sections</span><span class="p">)</span>
+</code></pre></div>
 
 
 <h4>Fourth version and beyond</h4>
