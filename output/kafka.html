@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="Chan Jin Hao" />
+<meta name="description" content="Since we&#39;re facing a lockdown (or circuit breaker, as how we define it) that is being extended all the way till end of May, I thought it would be good to use this time to really dive into various Software Engineering topics each day. Everyday, from 1st May to 31st …" />
+<meta name="keywords" content="kafka">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="SWE Day 1: Under the hood of Kafka"/>
+<meta property="og:description" content="Since we&#39;re facing a lockdown (or circuit breaker, as how we define it) that is being extended all the way till end of May, I thought it would be good to use this time to really dive into various Software Engineering topics each day. Everyday, from 1st May to 31st …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/kafka.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2020-05-01 11:12:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/chan-jin-hao.html">
+<meta property="article:section" content="Software Engineering"/>
+<meta property="article:tag" content="kafka"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; SWE Day 1: Under the hood of Kafka</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="/">All</a></li>
+          <li><a href="/category/data-science.html">Data Science</a></li>
+          <li><a href="/category/security.html">Cyber Security</a></li>
+          <li><a href="/category/software-engineering.html">Software Engineering</a></li>
+          <li><a href="/category/review.html">Book Reviews</a></li>
+          <li><a href="/category/ramblings.html">Ramblings</a></li>
+        </ul>
+      </nav>
+
+		<p>What the osfork? Just like the pythonic way of spawning off different processes by invoking <p style="font-family:courier;">os.fork</p> this website is meant to have different processes of content.</p>
+		<p>From technical stuff, to books I've read, and ramblings about life, all my thought processes are here.</p>
+      <br/>
+      <br/>
+      <ul class="social">
+        <li><a class="sc-linkedin" href="https://www.linkedin.com/in/jin-hao-chan-162630120/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-github" href="https://www.github.com/jinhaochan" target="_blank"><i class="fa fa-github"></i></a></li>
+      </ul>
+
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="kafka">SWE Day 1: Under the hood of Kafka</h1>
+    <p>
+          Posted on Fri 01 May 2020 in <a href="/category/software-engineering.html">Software Engineering</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>Since we're facing a lockdown (or circuit breaker, as how we define it) that is being extended all the way till end of May, I thought it would be good to use this time to really dive into various Software Engineering topics each day.</p>
+<p>Everyday, from 1st May to 31st May, I would read up on a topic that is entirely new to me, and try to take a deep dive to how it works, and really exercise my brain to try to understand the concepts. I think deep reading and understanding is a good way to prime the brain to be more absorbant, and to keep going down the rabbit hole.</p>
+<p>For the most parts, I will not be writing long articles, but rather a summary of what I have learnt, and links to all the resources. Reason being, since most of my learning is obtained from other articles, I find it unneccesary to rewrite it again, and also to give credit where its due. </p>
+<p>On the first day, I'm going to look at Kafka, since it's something that I have touched on at my work place recently.</p>
+<h2>What is Kafka</h2>
+<hr>
+<p>Before going into Kafka, lets do a brief overview of what it is, and what it's most commonly used for.</p>
+<p>Kafka is a messaging system, where it takes it large amount of data from various sources (Producers), and allows various services to read the data off it (Consumers). Central to the architecture is something called a Kafka Broker, which handles the messages coming in and out (just like a broker does).</p>
+<p>Kafka was created by former LinkedIn data engineers, and the whole reason for that was to facilitate quick and scalable passing of messages.</p>
+<h2>Under The Hoods of Kafka</h2>
+<hr>
+<p>As mentioned above, the central piece is something called a Kafka broker, and within the broker are 2 more important components:</p>
+<ol>
+<li>Topics</li>
+<li>Partitions</li>
+</ol>
+<p>How these gel together are: Kafka has a set of Topics, which are distinct logical grouping of messages. One topic could contain messages pertaining to the weather, while the other topics could have messags about the traffic.</p>
+<p>Each Topic is then partitioned into... Partitions. This allows parallel access to the various messages in a Topic. To track where the reading of the Partitions have happened until, the Partitions are further broken down into Segments. Each Segment stores a certain amount of messages, before a new Segment is formed.</p>
+<p>A single Kafka cluster can have multiple brokers for redundancy. Each Parition is replicated across the various brokers. There is then a concept of a Partition leader and followers, where one of the replicas handle the read/write requests (thereby changing the index and data appended), while the rest of the replicas copy the changes made to the leader.</p>
+<h3>Partition Reading and Zero Copy</h3>
+<p>Tracking of the read data is handled by the consumer. The consumer is responsible for tracking the offset position of the log, which is where it was last read until. After reading the messages, the consumer has a choice of how to move the offset, be it linearly downwards, or resetting to the top to reread all the messages.</p>
+<p>These Partitions are read only, and append only. And because we have an index keeping track of where the last message was read, message retrival is exactly O(1). Another reason for Kafka's speed of data transfer is due its adoption of Zero-Copy, which is a kernel level transferof data, instead of going through the User Land, and Kernel Space. <a href="https://cloudnweb.dev/2019/05/heres-what-makes-apache-kafka-so-fast-kafka-series-part-3/">Zero-Copy</a></p>
+<h3>Partition Writing</h3>
+<p>Within each topic, writing to a partition is done in a round robin manner. And as mentioned, writing to a partition is append only. This means that a producer wanting to write also operates at O(1)</p>
+<p>The producer can also specify which partition to write to by attaching a key to the message. All records with the same key will go to the same partition.</p>
+<p>Before a producer write to Kafka, it has to request for metadata, which tells it who is the leader to write to. One common error is setting the key to null or the same, and all the messages end up in the same partition, which defeats scalability.</p>
+<h3>Consumers and Consumer Groups</h3>
+<p>Low-Level Consumer is a single consumer, while a High-Level Consumer is a group of consumers, called a Consumer Group.</p>
+<p>The broker dictates which consumer should read from which partition. 1 partition can only be read by 1 consumer, while 1 consumer can read from many partitions (Many-to-One). Because of this, when your number of consumers = number of partitions, optimization makes it One-to-One relationship. Adding more consumers are useless, as each partition is already occupied by a single consumer.</p>
+<p>Messages are never pushed down to the consumers, but are always pulled.</p>
+<h3>Resource</h3>
+<p><a href="https://www.cloudkarafka.com/blog/2016-11-30-part1-kafka-for-beginners-what-is-apache-kafka.html">cloudkarafka. Amazing write up</a></p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/kafka.html">kafka</a>
+    </p>
+  </div>
+
+
+
+
+
+  <section id="comments" class="body">
+	  <h2>Comments:</h2>
+	  Contact me for any comments, and I'll paste them here! Why not Disqus or other comment services? That's because I want to have control of my site, comments included!
+
+	  PS: I won't put your real name and email if you don't want me to.
+	  
+  </section>
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>
