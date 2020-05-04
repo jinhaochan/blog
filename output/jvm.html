@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="Chan Jin Hao" />
+<meta name="description" content="When you run any Java applications, they are first translated into Java byte codes, before being run on a JVM, or Java Virtual Machines. A JVM is a program that executes Java Byte Code, and the JVM program can be run on any platform, be it Unix, Windows or Mac …" />
+<meta name="keywords" content="jvm">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="SWE Day 3: JVM"/>
+<meta property="og:description" content="When you run any Java applications, they are first translated into Java byte codes, before being run on a JVM, or Java Virtual Machines. A JVM is a program that executes Java Byte Code, and the JVM program can be run on any platform, be it Unix, Windows or Mac …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/jvm.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2020-05-03 16:32:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/chan-jin-hao.html">
+<meta property="article:section" content="Software Engineering"/>
+<meta property="article:tag" content="jvm"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; SWE Day 3: JVM</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="/">All</a></li>
+          <li><a href="/category/data-science.html">Data Science</a></li>
+          <li><a href="/category/security.html">Cyber Security</a></li>
+          <li><a href="/category/software-engineering.html">Software Engineering</a></li>
+          <li><a href="/category/review.html">Book Reviews</a></li>
+          <li><a href="/category/ramblings.html">Ramblings</a></li>
+        </ul>
+      </nav>
+
+		<p>What the osfork? Just like the pythonic way of spawning off different processes by invoking <p style="font-family:courier;">os.fork</p> this website is meant to have different processes of content.</p>
+		<p>From technical stuff, to books I've read, and ramblings about life, all my thought processes are here.</p>
+      <br/>
+      <br/>
+      <ul class="social">
+        <li><a class="sc-linkedin" href="https://www.linkedin.com/in/jin-hao-chan-162630120/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-github" href="https://www.github.com/jinhaochan" target="_blank"><i class="fa fa-github"></i></a></li>
+      </ul>
+
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="jvm">SWE Day 3: JVM</h1>
+    <p>
+          Posted on Sun 03 May 2020 in <a href="/category/software-engineering.html">Software Engineering</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>When you run any Java applications, they are first translated into Java byte codes, before being run on a JVM, or Java Virtual Machines.</p>
+<p>A JVM is a program that executes Java Byte Code, and the JVM program can be run on any platform, be it Unix, Windows or Mac. With this setup, Java programs are able to run on any platform, as long as there is a JVM program installed on it.</p>
+<p>And not just Java programs, but any program that can be compiled into Java byte codes can be run on the JVM. For example, the programming language Clojure is transformed into Java byte codes and executed on the JVM.</p>
+<h2>JVM as an Environment</h2>
+<hr>
+<p>The JVM provides an environment for other programs to run on it. The JVM as an environment has its own memory mangement, and garbage collect, all distinct from the underlying host OS.</p>
+<h2>Types of JVM</h2>
+<hr>
+<p>Not all JVMs are created the same, and there are different implementations of JVMs, just like there are different Operating Systems available.</p>
+<p>The most common JVM is implemented from OpenJDK, HotSpot JVM. OpenJDK is usually gotten together when you install a Java Runtime Environment (JRE)</p>
+<p>Most licensed JVMs are forks from the HotSpot JVM, including the liscensed version of Oracles JVM.</p>
+<h2>Running Java Bytecodes in the JVM</h2>
+<hr>
+<p>The JVM has an instruction set, just like an Assembly Language. The Java bytecode is a very low level instruction set, and many higher level languages are compiled down to it first before running in the JVM.</p>
+<p>There are two strategies to executing the Java bytecode:
+1. Interpretation
+2. Just In Time (JIT) compilation</p>
+<p>Intepretation takes each Java bytecode one by one, and converts it to the corresponding instruction set on the host OS. This has a quick startup time, but slow processing time.</p>
+<p>JIT compilation translates a whole chunk of bytecode at once into the instruction set. This has a slow startup time (to complie the bytecodes), but a quick processing time.</p>
+<p>The strategy is thus a combination of both, where the interpretor runs first, while the JIT runs in the background compiling the code. Once the JIT finishes compiling, the JVM the switches from the interpreter to the compiled code.</p>
+<h2>Resource</h2>
+<p><a href="https://www.javaworld.com/article/3272244/what-is-the-jvm-introducing-the-java-virtual-machine.html">General Introduction to JVM</a></p>
+<p><a href="https://www.quora.com/How-is-Java-bytecode-executed">How Java bytecode is executed</a></p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/jvm.html">jvm</a>
+    </p>
+  </div>
+
+
+
+
+
+  <section id="comments" class="body">
+	  <h2>Comments:</h2>
+	  Contact me for any comments, and I'll paste them here! Why not Disqus or other comment services? That's because I want to have control of my site, comments included!
+
+	  PS: I won't put your real name and email if you don't want me to.
+	  
+  </section>
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>
