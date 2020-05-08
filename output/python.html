@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="Chan Jin Hao" />
+<meta name="description" content="This post is not about how to code in Python, differences between Python 2 or 3, or its stylistic guidelines (PEP8). Rather, it&#39;s about what happens in the background when you execute Python code. When you write you code in Python, it ends with a suffix .py, and after you …" />
+<meta name="keywords" content="python">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="SWE Day 6: What happens when you run Python?"/>
+<meta property="og:description" content="This post is not about how to code in Python, differences between Python 2 or 3, or its stylistic guidelines (PEP8). Rather, it&#39;s about what happens in the background when you execute Python code. When you write you code in Python, it ends with a suffix .py, and after you …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/python.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2020-05-06 11:41:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/chan-jin-hao.html">
+<meta property="article:section" content="Software Engineering"/>
+<meta property="article:tag" content="python"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; SWE Day 6: What happens when you run Python?</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="/">All</a></li>
+          <li><a href="/category/data-science.html">Data Science</a></li>
+          <li><a href="/category/security.html">Cyber Security</a></li>
+          <li><a href="/category/software-engineering.html">Software Engineering</a></li>
+          <li><a href="/category/review.html">Book Reviews</a></li>
+          <li><a href="/category/ramblings.html">Ramblings</a></li>
+        </ul>
+      </nav>
+
+		<p>What the osfork? Just like the pythonic way of spawning off different processes by invoking <p style="font-family:courier;">os.fork</p> this website is meant to have different processes of content.</p>
+		<p>From technical stuff, to books I've read, and ramblings about life, all my thought processes are here.</p>
+      <br/>
+      <br/>
+      <ul class="social">
+        <li><a class="sc-linkedin" href="https://www.linkedin.com/in/jin-hao-chan-162630120/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-github" href="https://www.github.com/jinhaochan" target="_blank"><i class="fa fa-github"></i></a></li>
+      </ul>
+
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="python">SWE Day 6: What happens when you run Python?</h1>
+    <p>
+          Posted on Wed 06 May 2020 in <a href="/category/software-engineering.html">Software Engineering</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>This post is not about how to code in Python, differences between Python 2 or 3, or its stylistic guidelines (PEP8). Rather, it's about what happens in the background when you execute Python code.</p>
+<p>When you write you code in Python, it ends with a suffix <code>.py</code>, and after you execute it with some command, for example <code>python3 count.py</code>, you will see that athere is a folder generated called <code>__pycache__</code>. Inside this cache folder, there will be files named after the file you ran, but now it's suffix is <code>pyc</code>, or <code>count.pyc</code>.</p>
+<h2><code>.pyc</code> and the Virtual Machine</h2>
+<p>When you execute a Python file, the Python interpreter, which is written in C, reads the file's content, parses it to ensure syntax correctness, and compiles down to Python bytecode, which is stored inside the <code>.pyc</code> file.</p>
+<p>The Python bytecode is then executed in the Python Virtual Machine. Sounds familiar? This sounds like compiling Java program down to Java bytecode, before executing it on the Java Virtual Machine (JVM).</p>
+<p>The Python Virtual Machine is also written in C, and it takes in the bytecodes for execution. Although, the bytecode can be read in by other programs, as we will discuss below.</p>
+<p>The presence of the <code>.pyc</code> files also mean that you can change the code of the orignal Python file while it is running, and the flow execution will not be affected. This is because the original program has already been compiled, and it is the bytecodes that are running, not the original program file itself.</p>
+<h2>Python is an Interpreted Language!</h2>
+<p>But based on what you read above, Python is compiled to bytecode first before being executed on the Python Virtual Machine! So what's what?</p>
+<p>Interpreted language is when the translation from code to machine code happens in real time, as the program is being run. Compiled language is when the translation happens before hand, and the entire program is translated to machine code before execution.</p>
+<p>In fact, Python is actually compiled first to Python bytecode, and its how the bytecode is being executed by different programs that can either be interpreted, or compiled. The official CPython interprets the bytecode, while others like PyPy does JIT compilation, and IronPython compiles the bytecode into other bytecodes.</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/python.html">python</a>
+    </p>
+  </div>
+
+
+
+
+
+  <section id="comments" class="body">
+	  <h2>Comments:</h2>
+	  Contact me for any comments, and I'll paste them here! Why not Disqus or other comment services? That's because I want to have control of my site, comments included!
+
+	  PS: I won't put your real name and email if you don't want me to.
+	  
+  </section>
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>
