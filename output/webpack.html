@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="Chan Jin Hao" />
+<meta name="description" content="Webpack is a program used in web development to optimize how websites are being built. It&#39;s another topic for me to rant about just how bloated web development has become, and hence the development of Webpack. Modules and Bundles Modules are groups of code, such as CSS, Javascript or images …" />
+<meta name="keywords" content="webpack, web development">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="SWE Day 7: What is Webpack?"/>
+<meta property="og:description" content="Webpack is a program used in web development to optimize how websites are being built. It&#39;s another topic for me to rant about just how bloated web development has become, and hence the development of Webpack. Modules and Bundles Modules are groups of code, such as CSS, Javascript or images …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/webpack.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2020-05-07 10:13:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/chan-jin-hao.html">
+<meta property="article:section" content="Software Engineering"/>
+<meta property="article:tag" content="webpack"/>
+<meta property="article:tag" content="web development"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; SWE Day 7: What is Webpack?</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="/">All</a></li>
+          <li><a href="/category/data-science.html">Data Science</a></li>
+          <li><a href="/category/security.html">Cyber Security</a></li>
+          <li><a href="/category/software-engineering.html">Software Engineering</a></li>
+          <li><a href="/category/review.html">Book Reviews</a></li>
+          <li><a href="/category/ramblings.html">Ramblings</a></li>
+        </ul>
+      </nav>
+
+		<p>What the osfork? Just like the pythonic way of spawning off different processes by invoking <p style="font-family:courier;">os.fork</p> this website is meant to have different processes of content.</p>
+		<p>From technical stuff, to books I've read, and ramblings about life, all my thought processes are here.</p>
+      <br/>
+      <br/>
+      <ul class="social">
+        <li><a class="sc-linkedin" href="https://www.linkedin.com/in/jin-hao-chan-162630120/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-github" href="https://www.github.com/jinhaochan" target="_blank"><i class="fa fa-github"></i></a></li>
+      </ul>
+
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="webpack">SWE Day 7: What is Webpack?</h1>
+    <p>
+          Posted on Thu 07 May 2020 in <a href="/category/software-engineering.html">Software Engineering</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>Webpack is a program used in web development to optimize how websites are being built. It's another topic for me to rant about just how bloated web development has become, and hence the development of Webpack.</p>
+<h2>Modules and Bundles</h2>
+<p>Modules are groups of code, such as CSS, Javascript or images that can be packaged together. Webpack breaks your code down into these separate modules based on how it is used in the application.</p>
+<p>These Modules can form a dependency graph, and Webpack creates Bundles from this group of dependency Modules. Bundles are a collection of Modules that has been complied and optimized for execution.</p>
+<h2>Building a Bundle</h2>
+<p>The key to building a Bundle of dependent Modules is the Entry Point. Webpack starts at the entry point of the application, and builds a dependency graph by analyzing what files it imports, and files the imports import. It then takes all these files that are dependent on each other, and compiles them into a Bundle.</p>
+<p>A web application may have multiple Entry Points, which may be the case of a multi-page application. For example, you may have a user, admin, and developer homepage, each showing different items. You therefore need to define these 3 entry points, so that Webpack is able to traverse through them and build their own dependency graph, and their Bundles.</p>
+<h2>Motivation for Webpack</h2>
+<p>Because web development has become so bloated, and most applications now lean towards a concept of single-page-applications, the underlying JavaScript code can get very huge.</p>
+<p>Therefore, instead of pulling the entire JavaScript code at once to the client end, Webpack cuts up the code into the different Modules, and forms bundles based on depended Modules. On the client end, the imports are therefore smaller, because you are only pulling and executing the Bundles you need, and not the entire codebase.</p>
+<p>Also, by pre-grouping the Modules dependencies into Bundles before hand, it speeds things up at the client end, as the client does not have to wait for all the dependencies to trickle down one by one. With Webpack, all the dependencies are compiled into a single file, and so only a single file needs to be downloaded.</p>
+<h2>Resources</h2>
+<p><a href="https://webpack.js.org/concepts/">Original Webpack documentation explains everything pretty clearly</a></p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/webpack.html">webpack</a>
+      <a href="/tag/web-development.html">web development</a>
+    </p>
+  </div>
+
+
+
+
+
+  <section id="comments" class="body">
+	  <h2>Comments:</h2>
+	  Contact me for any comments, and I'll paste them here! Why not Disqus or other comment services? That's because I want to have control of my site, comments included!
+
+	  PS: I won't put your real name and email if you don't want me to.
+	  
+  </section>
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>
