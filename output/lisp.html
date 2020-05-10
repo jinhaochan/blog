@@ -108,7 +108,7 @@
 <p>TLDR: <code>if (resulting_ AST == source_code) : is_homoiconic = True</code></p>
 <p>This means your output of an Eval phase can be an input to another Eval phase, and there will be no errors.</p>
 <h2>So why is Homoiconic and powerful?</h2>
-<p>Because the Lisp syntax allows you code out an AST directly, this allows your program to modify itself at run time, something called Meta-Programming, or Code Hot Swapping. The program can examine information and state about itself, and make modifications to them at run time, which means you can make decisions in run time.</p>
+<p>Because the Lisp syntax allows you to code out an AST directly, this allows your program to modify itself at run time, something called Meta-Programming, or Code Hot Swapping. The program can examine information and state about itself, and make modifications to them at run time, which means you can make decisions in run time.</p>
 <p>One way to do metaprogramming is via Macros, which are programs that write more programs</p>
 <p>The S-Expression syntax, or sexpr, which is what Lisp languages use, allows you to write code in the form of an AST. Note that the sexpr is not DIRECTLY the AST, but a very close approximation, or even identical to the resultant AST.</p>
 <h2>Pivoting to Clojure</h2>

@@ -35,7 +35,7 @@ This means your output of an Eval phase can be an input to another Eval phase, a
 
 ## So why is Homoiconic and powerful?
 
-Because the Lisp syntax allows you code out an AST directly, this allows your program to modify itself at run time, something called Meta-Programming, or Code Hot Swapping. The program can examine information and state about itself, and make modifications to them at run time, which means you can make decisions in run time.
+Because the Lisp syntax allows you to code out an AST directly, this allows your program to modify itself at run time, something called Meta-Programming, or Code Hot Swapping. The program can examine information and state about itself, and make modifications to them at run time, which means you can make decisions in run time.
 
 One way to do metaprogramming is via Macros, which are programs that write more programs
 
