@@ -2,8 +2,8 @@ Title: SWE Day 10: Clojure Syntax and Control Flows
 Date: 2020-05-10 19:36
 Author: Chan Jin Hao
 Category: Software Engineering
-Tags: clojure
-Slug: clojure
+Tags: clojure-syntax
+Slug: clojure-syntax
 Status: published
 
 
