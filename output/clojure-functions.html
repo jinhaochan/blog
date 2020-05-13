@@ -1,0 +1,260 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="Chan Jin Hao" />
+<meta name="description" content="Functions defined in Clojure also take the same sexpr form, surrounded in brackets The main parts are: 1. Function name 2. Description of the function 3. Parameters 4. Function body (defn my-function-name &lt;--1 &#34;Doc string to define the function&#34; &lt;-- 2 [param1 param2 param3] &lt;-- 3 (str param1 param2 param3) &lt;-- 4 ) To …" />
+<meta name="keywords" content="clojure">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="SWE Day 11: Function Definitions"/>
+<meta property="og:description" content="Functions defined in Clojure also take the same sexpr form, surrounded in brackets The main parts are: 1. Function name 2. Description of the function 3. Parameters 4. Function body (defn my-function-name &lt;--1 &#34;Doc string to define the function&#34; &lt;-- 2 [param1 param2 param3] &lt;-- 3 (str param1 param2 param3) &lt;-- 4 ) To …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/clojure-functions.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2020-05-11 20:59:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/chan-jin-hao.html">
+<meta property="article:section" content="Software Engineering"/>
+<meta property="article:tag" content="clojure"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; SWE Day 11: Function Definitions</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="/">All</a></li>
+          <li><a href="/category/data-science.html">Data Science</a></li>
+          <li><a href="/category/security.html">Cyber Security</a></li>
+          <li><a href="/category/software-engineering.html">Software Engineering</a></li>
+          <li><a href="/category/review.html">Book Reviews</a></li>
+          <li><a href="/category/ramblings.html">Ramblings</a></li>
+        </ul>
+      </nav>
+
+		<p>What the osfork? Just like the pythonic way of spawning off different processes by invoking <p style="font-family:courier;">os.fork</p> this website is meant to have different processes of content.</p>
+		<p>From technical stuff, to books I've read, and ramblings about life, all my thought processes are here.</p>
+      <br/>
+      <br/>
+      <ul class="social">
+        <li><a class="sc-linkedin" href="https://www.linkedin.com/in/jin-hao-chan-162630120/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-github" href="https://www.github.com/jinhaochan" target="_blank"><i class="fa fa-github"></i></a></li>
+      </ul>
+
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="clojure-functions">SWE Day 11: Function Definitions</h1>
+    <p>
+          Posted on Mon 11 May 2020 in <a href="/category/software-engineering.html">Software Engineering</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>Functions defined in Clojure also take the same sexpr form, surrounded in brackets</p>
+<p>The main parts are:
+1. Function name
+2. Description of the function
+3. Parameters
+4. Function body</p>
+<div class="highlight"><pre><span></span><code><span class="nv">(defn</span> <span class="nv">my-function-name</span>  <span class="nv">&lt;--1</span>
+  <span class="s">&quot;Doc string to define the function&quot;</span>  <span class="nv">&lt;--</span> <span class="mi">2</span>
+  <span class="p">[</span><span class="nv">param1</span> <span class="nv">param2</span> <span class="nv">param3</span><span class="p">]</span>  <span class="nv">&lt;--</span> <span class="mi">3</span>
+  <span class="nv">(str</span> <span class="nv">param1</span> <span class="nv">param2</span> <span class="nv">param3)</span>  <span class="nv">&lt;--</span> <span class="mi">4</span>
+<span class="nv">)</span>
+</code></pre></div>
+
+
+<p>To call the function, you call it like any other operation</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">my</span><span class="o">-</span><span class="k">function</span><span class="o">-</span><span class="n">name</span> <span class="ss">&quot;hello &quot;</span> <span class="ss">&quot;world &quot;</span> <span class="ss">&quot;!&quot;</span><span class="p">)</span>
+
+<span class="o">=&gt;</span> <span class="ss">&quot;hello world !&quot;</span>
+</code></pre></div>
+
+
+<p>To read the docstring from a function, we invoke the <code>doc</code> operator. The docstring is also used to generate documentation easily</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">doc</span> <span class="n">my</span><span class="o">-</span><span class="k">function</span><span class="o">-</span><span class="n">name</span><span class="p">)</span>
+
+<span class="o">=&gt;</span> <span class="ss">&quot;Doc string to define the function&quot;</span>
+</code></pre></div>
+
+
+<h2>Overloading function parameters</h2>
+<p>We can overload the function parameters by defining multiple possible parameters.</p>
+<p>The number of parameters are called <code>arity</code>, so a 2 parameter function will be called a 2-arity</p>
+<div class="highlight"><pre><span></span><code><span class="nv">(defn</span> <span class="nv">multi-arity</span>
+  <span class="c1">;; 3-arity arguments and body</span>
+  <span class="nv">(</span><span class="p">[</span><span class="nv">first-arg</span> <span class="nv">second-arg</span> <span class="nv">third-arg</span><span class="p">]</span>
+     <span class="nv">(str</span> <span class="nv">first-arg</span> <span class="nv">second-arg</span> <span class="nv">third-arg))</span>
+  <span class="c1">;; 2-arity arguments and body</span>
+  <span class="nv">(</span><span class="p">[</span><span class="nv">first-arg</span> <span class="nv">second-arg</span><span class="p">]</span>
+     <span class="nv">(str</span> <span class="nv">first-arg</span> <span class="nv">second-arg))</span>
+  <span class="c1">;; 1-arity arguments and body</span>
+  <span class="nv">(</span><span class="p">[</span><span class="nv">first-arg</span><span class="p">]</span>
+     <span class="nv">(str</span> <span class="nv">first-arg)))</span>
+</code></pre></div>
+
+
+<p>By defining multi-arity functions, you can do things such as a constructor, or default values when left empty.</p>
+<div class="highlight"><pre><span></span><code><span class="nv">(defn</span> <span class="nv">multi-arity</span>
+  <span class="s">&quot;Constructor creates the default name&quot;</span>
+  <span class="nv">(</span><span class="p">[</span><span class="nv">name</span> <span class="nv">age</span><span class="p">]</span>
+     <span class="nv">(str</span> <span class="s">&quot;I am &quot;</span> <span class="nv">name</span> <span class="s">&quot;, and I am &quot;</span> <span class="nv">age))</span>
+  <span class="nv">(</span><span class="p">[</span><span class="nv">age</span><span class="p">]</span>
+     <span class="nv">(multi-arity</span> <span class="s">&quot;James&quot;</span> <span class="nv">age)))</span>
+</code></pre></div>
+
+
+<p>If you only key in your age, the 1-arity body will trigger, with the default name of "James"</p>
+<p>If you key in both your name and age, the 2-arity body with trigger.</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">multi</span><span class="o">-</span><span class="n">arity</span> <span class="mi">20</span><span class="p">)</span>
+
+<span class="o">=&gt;</span> <span class="ss">&quot;I am John, and I am 20&quot;</span>
+
+<span class="p">(</span><span class="n">multi</span><span class="o">-</span><span class="n">arity</span> <span class="ss">&quot;Jessie&quot;</span> <span class="mi">30</span><span class="p">)</span>
+
+<span class="o">=&gt;</span> <span class="ss">&quot;I am Jessie, and I am 30&quot;</span>
+</code></pre></div>
+
+
+<p>Its recommended to write your different n-arity bodies so that they are related. What this means is that they all run the same logic, just with different parameters. You dont want your different n-arity bodies doing completely different things.</p>
+<h3>Dynamic Parameters in a Function</h3>
+<p>In the examples above, we had fixed numbers of parameters, but Clojure also allows you to make a function have variable number of parameters called a <code>rest parameter</code>, or putting the rest of the stuff in it.</p>
+<div class="highlight"><pre><span></span><code><span class="nv">(defn</span> <span class="nv">basic-function</span>
+  <span class="p">[</span><span class="nv">name</span><span class="p">]</span>
+  <span class="nv">(str</span> <span class="s">&quot;My name is: &quot;</span> <span class="nv">name))</span>
+
+<span class="nv">(defn</span> <span class="nv">mapper-function</span>
+   <span class="p">[</span><span class="o">&amp;</span> <span class="nv">various-parameters</span><span class="p">]</span>
+  <span class="nv">(map</span> <span class="nv">basic-function</span> <span class="nv">various-parameters))</span>
+
+<span class="nv">(mapper-function</span> <span class="s">&quot;Billy&quot;</span> <span class="s">&quot;John&quot;</span> <span class="s">&quot;Jessie&quot;</span><span class="nv">)</span>
+<span class="nv">=&gt;</span> <span class="nv">(</span><span class="s">&quot;My name is Billy&quot;</span>
+      <span class="s">&quot;My name is John&quot;</span>
+      <span class="s">&quot;My name is Jessie&quot;</span><span class="nv">)</span>
+</code></pre></div>
+
+
+<p>If we look at <code>mapper-function</code>, we introduce a new operator called <code>map</code> here, which broadcasts all the variables to function <code>basic-function</code>.</p>
+<p><code>mapper-function</code> will take in as many variables, and they will be placed in <code>various-parameters</code>, which will then be broadcasted to <code>basic-function</code></p>
+<h3>Destructuring Parameters to a function</h3>
+<p>Clojure allows you destructure parameters passed to a function. What this means is that, when the function recieves an input with some form of structure like a list, it is able to break it down and process each element. It does this by binding each element in the structure to the number of variables defined.</p>
+<div class="highlight"><pre><span></span><code><span class="nv">(defn</span> <span class="nb">list</span><span class="nv">-destructuror</span>
+  <span class="p">[[</span><span class="nv">first-element</span> <span class="nv">second-element</span> <span class="o">&amp;</span> <span class="nv">other-elements</span><span class="p">]]</span>
+  <span class="nv">(println</span> <span class="nv">(str</span> <span class="s">&quot;First Element: &quot;</span> <span class="nv">first-element))</span>
+  <span class="nv">(println</span> <span class="nv">(str</span> <span class="s">&quot;Second Element: &quot;</span> <span class="nv">second-element))</span>
+  <span class="nv">(println</span> <span class="nv">(str</span> <span class="s">&quot;The rest of the Elements: &quot;</span>
+                <span class="nv">(clojure.string/join</span> <span class="s">&quot;, &quot;</span> <span class="nv">other-elements))))</span>
+
+<span class="nv">(list-destructor</span> <span class="p">[</span><span class="s">&quot;Apple&quot;</span>, <span class="s">&quot;Orange&quot;</span>, <span class="s">&quot;Vegetables&quot;</span>, <span class="s">&quot;Cake&quot;</span><span class="p">]</span><span class="nv">)</span>
+<span class="nv">=&gt;</span> <span class="nv">First</span> <span class="nv">Element:</span> <span class="nv">Apple</span>
+<span class="nv">=&gt;</span> <span class="nv">Second</span> <span class="nv">Element:</span> <span class="nv">Orange</span>
+<span class="nv">=&gt;</span> <span class="nv">The</span> <span class="k">rest </span><span class="nv">of</span> <span class="nv">the</span> <span class="nv">Elements:</span> <span class="nv">Vegetables,</span> <span class="nv">Cake</span>
+</code></pre></div>
+
+
+<p>In this example, we're passing in a list structure, thats why in the function parameter, we define a list <code>[[...]]</code>. We can pass in other structure like a vector as well, and this case, we need to define a vector <code>[{...}]</code></p>
+<div class="highlight"><pre><span></span><code><span class="nv">(defn</span> <span class="nv">vector-deconstructor</span>
+   <span class="p">[{</span><span class="nv">key1</span> <span class="ss">:va1</span> <span class="nv">key2</span> <span class="ss">:val2</span><span class="p">}]</span>
+  <span class="nv">(println</span> <span class="nv">(str</span> <span class="s">&quot;First value: &quot;</span> <span class="nv">va1))</span>
+  <span class="nv">(println</span> <span class="nv">(str</span> <span class="s">&quot;Second value: &quot;</span> <span class="nv">val2)))</span>
+
+<span class="nv">(vector-deconstructor</span> <span class="p">{</span><span class="ss">:key1</span> <span class="mi">10</span> <span class="ss">:key2</span> <span class="mi">20</span><span class="p">}</span><span class="nv">)</span>
+<span class="nv">=&gt;</span> <span class="nv">First</span> <span class="nv">value:</span> <span class="mi">10</span>
+<span class="nv">=&gt;</span> <span class="nv">Second</span> <span class="nv">value:</span> <span class="mi">20</span>
+</code></pre></div>
+
+
+<p>We can compress the above vector deconstrutor above to get the exact same result, but with a different definition style. The keyword <code>:as</code> keeps the original uncompressed structure together.</p>
+<div class="highlight"><pre><span></span><code><span class="nv">(defn</span> <span class="nv">vector-deconstructor</span>
+   <span class="p">[{</span><span class="ss">:keys</span> <span class="p">[</span><span class="nv">val1</span> <span class="nv">val2</span><span class="p">]}</span> <span class="ss">:as</span> <span class="nv">original-map</span><span class="p">]</span>
+  <span class="nv">(println</span> <span class="nv">(str</span> <span class="s">&quot;First value: &quot;</span> <span class="nv">va1))</span>
+  <span class="nv">(println</span> <span class="nv">(str</span> <span class="s">&quot;Second value: &quot;</span> <span class="nv">val2)))</span>
+</code></pre></div>
+
+
+<h3>Next Lesson</h3>
+<p>Today, we learnt about how to define functions. In the next lesson, we'll be looking at how to construct the function body</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/clojure.html">clojure</a>
+    </p>
+  </div>
+
+
+
+
+
+  <section id="comments" class="body">
+	  <h2>Comments:</h2>
+	  Contact me for any comments, and I'll paste them here! Why not Disqus or other comment services? That's because I want to have control of my site, comments included!
+
+	  PS: I won't put your real name and email if you don't want me to.
+	  
+  </section>
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>
