@@ -75,6 +75,40 @@
 
 <article>
   <header>
+    <h2><a href="/clojure-function-body.html#clojure-function-body">SWE Day 12: Function Body</a></h2>
+    <p>
+          Posted on Tue 12 May 2020 in <a href="/category/software-engineering.html">Software Engineering</a>
+
+
+          &#8226;     Tagged with
+
+              <a href="/tag/clojure.html">clojure</a>
+    </p>
+  </header>
+  <div>
+      <h3>Function Return Values</h3>
+<p>The return value of the function body is always the last form evluated</p>
+<div class="highlight"><pre><span></span><code><span class="nv">(defn</span> <span class="nv">illustrative-function</span>
+  <span class="p">[]</span>
+  <span class="nv">(+</span> <span class="mi">1</span> <span class="mi">304</span><span class="nv">)</span>
+  <span class="mi">30</span>
+  <span class="s">&quot;joe&quot;</span><span class="nv">)</span>
+
+<span class="nv">(illustrative-function)</span>
+<span class="nv">=&gt;</span> <span class="s">&quot;joe&quot;</span>
+</code></pre></div>
+
+
+<h3>Anonymous Functions</h3>
+<p>You can define anonymous functions with the <code>fn</code> keyword. In this case, you don't have to put in a function name or docstring, but …</p>
+      <br>
+      <a class="btn" href="/clojure-function-body.html#clojure-function-body">    Continue reading
+</a>
+  </div>
+  <hr />
+</article>
+<article>
+  <header>
     <h2><a href="/clojure-functions.html#clojure-functions">SWE Day 11: Function Definitions</a></h2>
     <p>
           Posted on Mon 11 May 2020 in <a href="/category/software-engineering.html">Software Engineering</a>
