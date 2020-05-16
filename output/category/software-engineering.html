@@ -75,6 +75,37 @@
 
 <article>
   <header>
+    <h2><a href="/clojure-data-types2.html#clojure-data-types2">SWE Day 14: Clojure Data Types 2</a></h2>
+    <p>
+          Posted on Thu 14 May 2020 in <a href="/category/software-engineering.html">Software Engineering</a>
+
+
+          &#8226;     Tagged with
+
+              <a href="/tag/clojure.html">clojure</a>
+    </p>
+  </header>
+  <div>
+      <h2>Vectors</h2>
+<p>Vectors are defined with a square bracket</p>
+<p><code>[1 2 3]</code></p>
+<p>You can get an element inside the a vector via it's index also with the <code>get</code> function. Vectors are 0 indexed</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="k">get</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">]</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="o">=&gt;</span> <span class="mi">1</span>
+</code></pre></div>
+
+
+<p>Creating a vector is done with the <code>vector</code> keyword</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">vector</span> <span class="mi">1</span> <span class="mi">2 …</span></code></pre></div>
+      <br>
+      <a class="btn" href="/clojure-data-types2.html#clojure-data-types2">    Continue reading
+</a>
+  </div>
+  <hr />
+</article>
+<article>
+  <header>
     <h2><a href="/clojure-data-types1.html#clojure-data-types1">SWE Day 13: Clojure Data Types 1</a></h2>
     <p>
           Posted on Wed 13 May 2020 in <a href="/category/software-engineering.html">Software Engineering</a>
@@ -297,27 +328,6 @@
       <p>This time, we're going to be moving away from technical topics, and have glimpse at some of the project management stuff that surround technical projects. It's actually very important to have an understanding of these management styles, because how the project is management determines what kind of tools you'll use …</p>
       <br>
       <a class="btn" href="/agile.html#agile">    Continue reading
-</a>
-  </div>
-  <hr />
-</article>
-<article>
-  <header>
-    <h2><a href="/sharding.html#sharding">SWE Day 4: Sharding</a></h2>
-    <p>
-          Posted on Mon 04 May 2020 in <a href="/category/software-engineering.html">Software Engineering</a>
-
-
-          &#8226;     Tagged with
-
-              <a href="/tag/sharding.html">sharding</a>
-    </p>
-  </header>
-  <div>
-      <p>Today we're going to be looking at one database optimization technique called Sharding. Before we talk about partitioning, it has to be said that the table first has to have some sort of ordering, so search can be optimized with that key.</p>
-<p>Sharding involves splitting the table into partitions, which …</p>
-      <br>
-      <a class="btn" href="/sharding.html#sharding">    Continue reading
 </a>
   </div>
 </article>

@@ -1,0 +1,219 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="Chan Jin Hao" />
+<meta name="description" content="Vectors Vectors are defined with a square bracket [1 2 3] You can get an element inside the a vector via it&#39;s index also with the get function. Vectors are 0 indexed (get [1 2 3] 0) =&gt; 1 Creating a vector is done with the vector keyword (vector 1 2 …" />
+<meta name="keywords" content="clojure">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="SWE Day 14: Clojure Data Types 2"/>
+<meta property="og:description" content="Vectors Vectors are defined with a square bracket [1 2 3] You can get an element inside the a vector via it&#39;s index also with the get function. Vectors are 0 indexed (get [1 2 3] 0) =&gt; 1 Creating a vector is done with the vector keyword (vector 1 2 …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/clojure-data-types2.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2020-05-14 10:11:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/chan-jin-hao.html">
+<meta property="article:section" content="Software Engineering"/>
+<meta property="article:tag" content="clojure"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; SWE Day 14: Clojure Data Types 2</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="/">All</a></li>
+          <li><a href="/category/data-science.html">Data Science</a></li>
+          <li><a href="/category/security.html">Cyber Security</a></li>
+          <li><a href="/category/software-engineering.html">Software Engineering</a></li>
+          <li><a href="/category/review.html">Book Reviews</a></li>
+          <li><a href="/category/ramblings.html">Ramblings</a></li>
+        </ul>
+      </nav>
+
+		<p>What the osfork? Just like the pythonic way of spawning off different processes by invoking <p style="font-family:courier;">os.fork</p> this website is meant to have different processes of content.</p>
+		<p>From technical stuff, to books I've read, and ramblings about life, all my thought processes are here.</p>
+      <br/>
+      <br/>
+      <ul class="social">
+        <li><a class="sc-linkedin" href="https://www.linkedin.com/in/jin-hao-chan-162630120/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-github" href="https://www.github.com/jinhaochan" target="_blank"><i class="fa fa-github"></i></a></li>
+      </ul>
+
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="clojure-data-types2">SWE Day 14: Clojure Data Types 2</h1>
+    <p>
+          Posted on Thu 14 May 2020 in <a href="/category/software-engineering.html">Software Engineering</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <h2>Vectors</h2>
+<p>Vectors are defined with a square bracket</p>
+<p><code>[1 2 3]</code></p>
+<p>You can get an element inside the a vector via it's index also with the <code>get</code> function. Vectors are 0 indexed</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="k">get</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">]</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="o">=&gt;</span> <span class="mi">1</span>
+</code></pre></div>
+
+
+<p>Creating a vector is done with the <code>vector</code> keyword</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">vector</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="o">=&gt;</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">]</span>
+</code></pre></div>
+
+
+<p>And you can add elements to the end of the vector with <code>conj</code>. You ONLY add elements to the end</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">conj</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">]</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="o">=&gt;</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">]</span>
+</code></pre></div>
+
+
+<h2>Lists</h2>
+<p>You define a list by adding a single quote and a bracket at the front</p>
+<div class="highlight"><pre><span></span><code><span class="err">&#39;</span><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="o">=&gt;</span> <span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>You can access the elements in the list with the <code>nth</code> function</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">nth</span> <span class="err">&#39;</span><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="o">=&gt;</span> <span class="mi">1</span>
+</code></pre></div>
+
+
+<p>You can also create a list with the <code>list</code> keyword</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">list</span> <span class="mi">1</span> <span class="ss">&quot;string&quot;</span> <span class="mi">3</span><span class="p">.</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="o">=&gt;</span> <span class="p">(</span><span class="mi">1</span> <span class="ss">&quot;string&quot;</span> <span class="mi">3</span><span class="p">.</span><span class="mi">4</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>And like vectors, you can add elements to the list with <code>conj</code>. For lists, elements are added at the START of the list</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">conj</span> <span class="err">&#39;</span><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="o">=&gt;</span> <span class="p">(</span><span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>Choosing between a list or vector depends on your use case, and if your operations need to insert values to the front or the back of the group of elements.</p>
+<h3>Sets</h3>
+<p>Sets are a collections of unique values. Hashsets are defined with a <code>#</code> in front a curly braces</p>
+<p><code>#{1 2 3}</code></p>
+<p>or you can use the <code>hash-set</code> keyword to instantiate a hashset</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">hash</span><span class="o">-</span><span class="k">set</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="o">=&gt;</span> <span class="o">#</span><span class="err">{</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="err">}</span>
+</code></pre></div>
+
+
+<p>You can convert a vector into a set with the <code>set</code> keyword</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="k">set</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">])</span>
+
+<span class="o">=&gt;</span> <span class="o">#</span><span class="err">{</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="err">}</span>
+</code></pre></div>
+
+
+<p>Membership checking can either be done with <code>get</code>, or <code>contains?</code>. <code>get</code> returns the value, or <code>nil</code>, while <code>contains</code> returns a <code>true</code> or <code>false</code> depending if the element exists in the set.</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="k">contains</span> <span class="o">#</span><span class="err">{</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="err">}</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="o">=&gt;</span> <span class="k">true</span>
+
+<span class="p">(</span><span class="k">contains</span> <span class="o">#</span><span class="err">{</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="err">}</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="o">=&gt;</span> <span class="k">false</span>
+</code></pre></div>
+
+
+<p>You might want to prefer using <code>contains?</code> for membership checking, as when <code>get</code> returns a nil value, you might not know if the value was truly <code>nil</code>, or did not exist.</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/clojure.html">clojure</a>
+    </p>
+  </div>
+
+
+
+
+
+  <section id="comments" class="body">
+	  <h2>Comments:</h2>
+	  Contact me for any comments, and I'll paste them here! Why not Disqus or other comment services? That's because I want to have control of my site, comments included!
+
+	  PS: I won't put your real name and email if you don't want me to.
+	  
+  </section>
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>
