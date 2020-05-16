@@ -1,0 +1,218 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="Chan Jin Hao" />
+<meta name="description" content="Value assignment to a variable In Clojure, we use the keyword def to assign or bind a value to a variable name (def var1 &#34;my value&#34;) =&gt; var1 =&gt; &#34;my value&#34; In Clojure, there is rarely any need for re-assigning a variable another value, hence the more prferred word is Binding, where …" />
+<meta name="keywords" content="clojure">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="SWE Day 13: Clojure Data Types 1"/>
+<meta property="og:description" content="Value assignment to a variable In Clojure, we use the keyword def to assign or bind a value to a variable name (def var1 &#34;my value&#34;) =&gt; var1 =&gt; &#34;my value&#34; In Clojure, there is rarely any need for re-assigning a variable another value, hence the more prferred word is Binding, where …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/clojure-data-types1.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2020-05-13 10:11:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/chan-jin-hao.html">
+<meta property="article:section" content="Software Engineering"/>
+<meta property="article:tag" content="clojure"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; SWE Day 13: Clojure Data Types 1</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="/">All</a></li>
+          <li><a href="/category/data-science.html">Data Science</a></li>
+          <li><a href="/category/security.html">Cyber Security</a></li>
+          <li><a href="/category/software-engineering.html">Software Engineering</a></li>
+          <li><a href="/category/review.html">Book Reviews</a></li>
+          <li><a href="/category/ramblings.html">Ramblings</a></li>
+        </ul>
+      </nav>
+
+		<p>What the osfork? Just like the pythonic way of spawning off different processes by invoking <p style="font-family:courier;">os.fork</p> this website is meant to have different processes of content.</p>
+		<p>From technical stuff, to books I've read, and ramblings about life, all my thought processes are here.</p>
+      <br/>
+      <br/>
+      <ul class="social">
+        <li><a class="sc-linkedin" href="https://www.linkedin.com/in/jin-hao-chan-162630120/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-github" href="https://www.github.com/jinhaochan" target="_blank"><i class="fa fa-github"></i></a></li>
+      </ul>
+
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="clojure-data-types1">SWE Day 13: Clojure Data Types 1</h1>
+    <p>
+          Posted on Wed 13 May 2020 in <a href="/category/software-engineering.html">Software Engineering</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <h2>Value assignment to a variable</h2>
+<p>In Clojure, we use the keyword <code>def</code> to assign or bind a value to a variable name</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">def</span> <span class="n">var1</span> <span class="ss">&quot;my value&quot;</span><span class="p">)</span>
+
+<span class="o">=&gt;</span> <span class="n">var1</span>
+
+<span class="o">=&gt;</span> <span class="ss">&quot;my value&quot;</span>
+</code></pre></div>
+
+
+<p>In Clojure, there is rarely any need for re-assigning a variable another value, hence the more prferred word is Binding, where once the variable gets a value, it will stick it with throughout the lifetime of the program.</p>
+<h2>Data Structures and Immutability</h2>
+<p>All of Clojure's data structure are immutable. That means, once assigned with a value, it cannot be changed on the spot. (hence the earlier explanation of Bind over Assign)</p>
+<h2>Numbers types in Clojure</h2>
+<p>An interesting thing about Clojure is that it can work with ratios directly, instead of giving you a weird floating point number</p>
+<div class="highlight"><pre><span></span><code><span class="mi">93</span>
+
+<span class="mi">1</span><span class="p">.</span><span class="mi">2</span>
+
+<span class="mi">1</span><span class="o">/</span><span class="mi">5</span>
+</code></pre></div>
+
+
+<p>Also, BigInts and Floating point types are 'contagious', in that whenever there is an operation that involves such a data type, the result will always be of that type.</p>
+<h2>Strings</h2>
+<p>In Clojure, you are only allowed to use Double Quote to define a string, and never a Single Quote</p>
+<div class="highlight"><pre><span></span><code><span class="ss">&quot;Hello World!&quot;</span>
+
+<span class="ss">&quot;And he said \&quot;</span> <span class="n">Hello</span> <span class="n">World</span><span class="o">!</span><span class="err">\</span><span class="ss">&quot;&quot;</span>
+</code></pre></div>
+
+
+<p>String in Clojure also do not support interpolation, which is inserting string into an already existing string. The only operation that is supported is concatenation via the <code>str</code> function</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">str</span> <span class="ss">&quot;\&quot;</span><span class="n">Hello</span> <span class="ss">&quot; &quot;</span><span class="n">World</span><span class="o">!</span><span class="err">\</span><span class="ss">&quot;&quot;</span><span class="p">)</span>
+
+<span class="o">=&gt;</span> <span class="ss">&quot;Hello World!&quot;</span>
+</code></pre></div>
+
+
+<h2>Maps and Dictionaries</h2>
+<p>Maps and Dictionaries have a <code>Key : Value</code> combination, and it's represented as such</p>
+<p><code>{:key value}</code></p>
+<p>You can also Map a value to another object. Here, we can map the string <code>"add-func"</code> to the addition function in Clojure</p>
+<p><code>{"add-func" +}</code></p>
+<p>The map values can be of any type: Strings, Functions, Maps, Vectors etc</p>
+<p>You can also use the function <code>hash-map</code> to create a map</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">hash</span><span class="o">-</span><span class="k">map</span> <span class="p">:</span><span class="n">a</span> <span class="mi">1</span> <span class="p">:</span><span class="n">b</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="o">=&gt;</span> <span class="err">{</span><span class="p">:</span><span class="n">a</span> <span class="mi">1</span> <span class="p">:</span><span class="n">b</span> <span class="mi">2</span><span class="err">}</span>
+</code></pre></div>
+
+
+<p>And you can access a values by looking up a map with a key, using the <code>get</code> function. If the key does not exist, a <code>nil</code> is returned, else, you can define your own default value to return</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="k">get</span> <span class="err">{</span><span class="p">:</span><span class="n">a</span> <span class="mi">0</span> <span class="p">:</span><span class="n">b</span> <span class="mi">1</span><span class="err">}</span> <span class="p">:</span><span class="n">b</span><span class="p">)</span>
+
+<span class="o">=&gt;</span> <span class="mi">1</span>
+
+<span class="p">(</span><span class="k">get</span> <span class="err">{</span><span class="p">:</span><span class="n">a</span> <span class="mi">0</span> <span class="p">:</span><span class="n">b</span> <span class="mi">1</span><span class="err">}</span> <span class="p">:</span><span class="n">d</span> <span class="ss">&quot;default return value&quot;</span><span class="p">)</span>
+
+<span class="o">=&gt;</span> <span class="ss">&quot;default return value&quot;</span>
+</code></pre></div>
+
+
+<p>To look into a nest map, we can use the keyword <code>get-in</code></p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="k">get</span><span class="o">-</span><span class="k">in</span> <span class="err">{</span><span class="p">:</span><span class="n">a</span> <span class="mi">0</span> <span class="p">:</span><span class="n">b</span> <span class="err">{</span><span class="p">:</span><span class="k">c</span> <span class="ss">&quot;nested map&quot;</span><span class="err">}}</span> <span class="p">[:</span><span class="n">b</span> <span class="p">:</span><span class="k">c</span><span class="p">])</span>
+
+<span class="o">=&gt;</span> <span class="ss">&quot;nested map&quot;</span>
+</code></pre></div>
+
+
+<p>You can define certain variables as keyword by putting a <code>:</code> infront of it. This allows it to function like a key in a key-value pair</p>
+<div class="highlight"><pre><span></span><code><span class="p">(:</span><span class="n">a</span> <span class="err">{</span><span class="p">:</span><span class="n">a</span> <span class="mi">1</span> <span class="p">:</span><span class="n">b</span> <span class="mi">2</span><span class="err">}</span><span class="p">)</span>
+
+<span class="o">=&gt;</span> <span class="mi">1</span>
+
+<span class="p">(:</span><span class="n">d</span> <span class="err">{</span><span class="p">:</span><span class="n">a</span> <span class="mi">1</span> <span class="p">:</span><span class="n">b</span> <span class="mi">2</span><span class="err">}</span> <span class="ss">&quot;default return value&quot;</span><span class="p">)</span>
+
+<span class="o">=&gt;</span> <span class="ss">&quot;default return value&quot;</span>
+</code></pre></div>
+
+
+<p>This works exactly the same way as the <code>get</code> function with a default value</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/clojure.html">clojure</a>
+    </p>
+  </div>
+
+
+
+
+
+  <section id="comments" class="body">
+	  <h2>Comments:</h2>
+	  Contact me for any comments, and I'll paste them here! Why not Disqus or other comment services? That's because I want to have control of my site, comments included!
+
+	  PS: I won't put your real name and email if you don't want me to.
+	  
+  </section>
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>
