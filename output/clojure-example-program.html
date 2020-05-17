@@ -1,0 +1,266 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="Chan Jin Hao" />
+<meta name="description" content="We&#39;re going to be looking at an example program from the website, and do a deep analysis of what it does. Hopefully, we&#39;re also going to be proficient enough to tinker with some of the programs logic, to prove our understanding of the concepts. You can find the description of …" />
+<meta name="keywords" content="clojure">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="SWE Day 15: Example Program"/>
+<meta property="og:description" content="We&#39;re going to be looking at an example program from the website, and do a deep analysis of what it does. Hopefully, we&#39;re also going to be proficient enough to tinker with some of the programs logic, to prove our understanding of the concepts. You can find the description of …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/clojure-example-program.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2020-05-15 16:37:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/chan-jin-hao.html">
+<meta property="article:section" content="Software Engineering"/>
+<meta property="article:tag" content="clojure"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; SWE Day 15: Example Program</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="/">All</a></li>
+          <li><a href="/category/data-science.html">Data Science</a></li>
+          <li><a href="/category/security.html">Cyber Security</a></li>
+          <li><a href="/category/software-engineering.html">Software Engineering</a></li>
+          <li><a href="/category/review.html">Book Reviews</a></li>
+          <li><a href="/category/ramblings.html">Ramblings</a></li>
+        </ul>
+      </nav>
+
+		<p>What the osfork? Just like the pythonic way of spawning off different processes by invoking <p style="font-family:courier;">os.fork</p> this website is meant to have different processes of content.</p>
+		<p>From technical stuff, to books I've read, and ramblings about life, all my thought processes are here.</p>
+      <br/>
+      <br/>
+      <ul class="social">
+        <li><a class="sc-linkedin" href="https://www.linkedin.com/in/jin-hao-chan-162630120/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-github" href="https://www.github.com/jinhaochan" target="_blank"><i class="fa fa-github"></i></a></li>
+      </ul>
+
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="clojure-example-program">SWE Day 15: Example Program</h1>
+    <p>
+          Posted on Fri 15 May 2020 in <a href="/category/software-engineering.html">Software Engineering</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>We're going to be looking at an example program from the website, and do a deep analysis of what it does. Hopefully, we're also going to be proficient enough to tinker with some of the programs logic, to prove our understanding of the concepts. You can find the description of the exercise <a href="https://www.braveclojure.com/do-things/#Pulling_It_All_Together">here</a></p>
+<h2>Inputs</h2>
+<p>The input to the program is <code>asym-hobbit-body-parts</code>, which binds the a vector of maps. Each map has 2 keys, <code>name</code> and <code>size</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="err">(def asym-hobbit-body-parts [{:name &quot;head&quot; :size 3}</span>
+<span class="err">                             {:name &quot;left-eye&quot; :size 1}</span>
+<span class="err">                             {:name &quot;left-ear&quot; :size 1}</span>
+<span class="err">                             {:name &quot;mouth&quot; :size 1}</span>
+<span class="err">                             {:name &quot;nose&quot; :size 1}</span>
+<span class="err">                             {:name &quot;neck&quot; :size 2}</span>
+<span class="err">                             {:name &quot;left-shoulder&quot; :size 3}</span>
+<span class="err">                             {:name &quot;left-upper-arm&quot; :size 3}</span>
+<span class="err">                             {:name &quot;chest&quot; :size 10}</span>
+<span class="err">                             {:name &quot;back&quot; :size 10}</span>
+<span class="err">                             {:name &quot;left-forearm&quot; :size 3}</span>
+<span class="err">                             {:name &quot;abdomen&quot; :size 6}</span>
+<span class="err">                             {:name &quot;left-kidney&quot; :size 1}</span>
+<span class="err">                             {:name &quot;left-hand&quot; :size 2}</span>
+<span class="err">                             {:name &quot;left-knee&quot; :size 2}</span>
+<span class="err">                             {:name &quot;left-thigh&quot; :size 4}</span>
+<span class="err">                             {:name &quot;left-lower-leg&quot; :size 3}</span>
+<span class="err">                             {:name &quot;left-achilles&quot; :size 1}</span>
+<span class="err">                             {:name &quot;left-foot&quot; :size 2}])</span>
+</code></pre></div>
+
+
+<h2>Goal of the Program</h2>
+<p>As you can see in the vector above, it only consists of the left side of the hobbit. The goal is to add in new maps into the vector to complete the right sidedness of the hobbit</p>
+<h2>Overview of the Program</h2>
+<p>This is the solution program given to us</p>
+<div class="highlight"><pre><span></span><code><span class="mi">01</span> <span class="nv">-</span> <span class="nv">(defn</span> <span class="nv">matching-part</span>
+<span class="mi">02</span> <span class="nv">-</span>   <span class="p">[</span><span class="nv">part</span><span class="p">]</span>
+<span class="mi">03</span> <span class="nv">-</span>   <span class="p">{</span><span class="ss">:name</span> <span class="nv">(clojure.string/replace</span> <span class="nv">(:name</span> <span class="nv">part)</span> <span class="o">#</span><span class="s">&quot;^left-&quot;</span> <span class="s">&quot;right-&quot;</span><span class="nv">)</span>
+<span class="mi">04</span> <span class="nv">-</span>    <span class="ss">:size</span> <span class="nv">(:size</span> <span class="nv">part)</span><span class="p">}</span><span class="nv">)</span>
+<span class="mi">05</span> <span class="nv">-</span>
+<span class="mi">06</span> <span class="nv">-</span> <span class="nv">(defn</span> <span class="nv">symmetrize-body-parts</span>
+<span class="mi">07</span> <span class="nv">-</span>   <span class="s">&quot;Expects a seq of maps that have a :name and :size&quot;</span>
+<span class="mi">08</span> <span class="nv">-</span>   <span class="p">[</span><span class="nv">asym-body-parts</span><span class="p">]</span>
+<span class="mi">09</span> <span class="nv">-</span>   <span class="nv">(loop</span> <span class="p">[</span><span class="nv">remaining-asym-parts</span> <span class="nv">asym-body-parts</span>
+<span class="mi">10</span> <span class="nv">-</span>          <span class="nv">final-body-parts</span> <span class="p">[]]</span>
+<span class="mi">11</span> <span class="nv">-</span>     <span class="nv">(if</span> <span class="nv">(empty?</span> <span class="nv">remaining-asym-parts)</span>
+<span class="mi">12</span> <span class="nv">-</span>      <span class="nv">final-body-parts</span>
+<span class="mi">13</span> <span class="nv">-</span>       <span class="nv">(let</span> <span class="p">[[</span><span class="nv">part</span> <span class="o">&amp;</span> <span class="nv">remaining</span><span class="p">]</span> <span class="nv">remaining-asym-parts</span><span class="p">]</span>
+<span class="mi">14</span> <span class="nv">-</span>         <span class="nv">(recur</span> <span class="nv">remaining</span>
+<span class="mi">15</span> <span class="nv">-</span>                <span class="nv">(into</span> <span class="nv">final-body-parts</span>
+<span class="mi">16</span> <span class="nv">-</span>                      <span class="nv">(set</span> <span class="p">[</span><span class="nv">part</span> <span class="nv">(matching-part</span> <span class="nv">part)</span><span class="p">]</span><span class="nv">)))))))</span>
+</code></pre></div>
+
+
+<p>It consists of 2 functions, <code>matching-part</code> and <code>symmetrize-body-parts</code></p>
+<p><code>symmetrize-body-parts</code> loops through the given input about, and calls <code>matching-part</code>.</p>
+<p><code>matching-part</code> returns a map of the right-side, with the same size</p>
+<h2>Examining <code>symmetrize-body-parts</code></h2>
+<h4>Lines 6, 7, 8: Function Definition</h4>
+<div class="highlight"><pre><span></span><code><span class="mi">06</span> <span class="nv">-</span> <span class="nv">(defn</span> <span class="nv">symmetrize-body-parts</span>
+<span class="mi">07</span> <span class="nv">-</span>   <span class="s">&quot;Expects a seq of maps that have a :name and :size&quot;</span>
+<span class="mi">08</span> <span class="nv">-</span>   <span class="p">[</span><span class="nv">asym-body-parts</span><span class="p">]</span>
+</code></pre></div>
+
+
+<p>We first define the function, which takes in parameters <code>[asym-body-parts]</code>, and give a brief docstring about what inputs the function expects</p>
+<h4>Lines 9, 10: Looping</h4>
+<div class="highlight"><pre><span></span><code><span class="err">09 -   (loop [remaining-asym-parts asym-body-parts</span>
+<span class="err">10 -          final-body-parts []]</span>
+</code></pre></div>
+
+
+<p>Here we're introduced to a new function called <code>loop</code>, which provides a way to do recursion in Clojure</p>
+<p>In lines 9 and 10, loop binds values with variables. In this case, we're binding <code>asym-body-parts</code> to <code>remaining-asym-parts</code>, and binding an empty vector to <code>final-body-parts</code>.</p>
+<p>The <code>loop</code> function always contains a <code>recur</code> somewhere in the body, which performs a certain action, before return to the top of the loop.When it returns to the top of the loop, it passes new values to bind to the initial variables defined at the top.</p>
+<p>For the sake of explanation, if we jump to lines 14, 15 and 16, <code>recur</code> passes back the values of <code>remaining</code>, and the results of <code>(into final-body-parts (set [part (matching-part part)]))</code> back to the top of the loop, which binds them to the variables <code>remaining-asym-parts</code> and <code>final-body-parts</code></p>
+<p>Essentially, you are doing something like this</p>
+<div class="highlight"><pre><span></span><code><span class="n">remaining</span><span class="o">-</span><span class="n">asym</span><span class="o">-</span><span class="n">parts</span> <span class="o">=</span> <span class="n">remaining</span>
+
+<span class="k">final</span><span class="o">-</span><span class="n">body</span><span class="o">-</span><span class="n">parts</span> <span class="o">=</span> <span class="p">(</span><span class="k">into</span> <span class="k">final</span><span class="o">-</span><span class="n">body</span><span class="o">-</span><span class="n">parts</span> <span class="p">(</span><span class="k">set</span> <span class="p">[</span><span class="n">part</span> <span class="p">(</span><span class="n">matching</span><span class="o">-</span><span class="n">part</span> <span class="n">part</span><span class="p">)]))</span>
+</code></pre></div>
+
+
+<h4>Lines 11, 12: If True</h4>
+<div class="highlight"><pre><span></span><code><span class="err">11 -     (if (empty? remaining-asym-parts)</span>
+<span class="err">12 -      final-body-parts</span>
+</code></pre></div>
+
+
+<p>The loop terminates when there is no <code>recur</code> being called. Here, the control flow is defined with the <code>if</code> statement, which checks if <code>remaining-asym-parts is empty</code>. If that is true, we return <code>final-body-part</code>. If that evaluates to false, there are still elements in <code>remaining-asym-parts</code>, and we evaluate the else body</p>
+<h4>Lines 13, 14, 15, 16: Else, Let</h4>
+<div class="highlight"><pre><span></span><code><span class="err">13 -       (let [[part &amp; remaining] remaining-asym-parts]</span>
+<span class="err">14 -         (recur remaining</span>
+<span class="err">15 -                (into final-body-parts</span>
+<span class="err">16 -                      (set [part (matching-part part)])))))))</span>
+</code></pre></div>
+
+
+<p>If <code>remaining-asym-parts</code> is not empty, we evaluate the else body.</p>
+<p>The else body is surrounded by a <code>let</code> function</p>
+<p><code>let</code> binds names to values, before returning something</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">let</span> <span class="p">[</span><span class="n">name</span> <span class="ss">&quot;value&quot;</span><span class="p">]</span> <span class="n">name</span><span class="p">)</span>
+
+<span class="o">=&gt;</span> <span class="ss">&quot;value&quot;</span>
+</code></pre></div>
+
+
+<p>Here, we're binding <code>"value"</code> to <code>name</code>, and returning <code>name</code>, which prints <code>"value"</code></p>
+<p><code>let</code> also allows you to perform destructuring, which deconstructs an existing data structure to another one. When we call <code>(let [[part &amp; remaining] remaining-asym-parts ...</code>, we are deconstructing <code>remaining-asym-parts</code> into the new structure <code>[part &amp; remaining]</code></p>
+<p>What <code>[part &amp; remaining] remaining-asym-parts</code> does is it assigns the first value of <code>remaining-asym-parts</code> to <code>part</code>, and the rest of the values into <code>remaining</code> with the keyword <code>&amp;</code>. So you now have a resultant vector that looks like this <code>[val1 (val2 val3 val4 ...)]</code>, where <code>val1</code> is <code>part</code> and <code>(val2 val3 val4 ...)</code> is <code>remaining</code></p>
+<p>In the return portion of the <code>let</code> function, it then calls the <code>recur</code> function as described above, which throws back some variables for rebinding, and goes back up to the loop. Here, we're throwing <code>remaining</code>, which consists of the orignal <code>remaining-asym-parts</code> less the first element, and we're also throwing up <code>(into final-body-parts (set [part (matching-part part)]))</code></p>
+<p>Let's take a look at what <code>(into final-body-parts (set [part (matching-part part)]))</code> does</p>
+<h4>Lines 15, 16: Into, and Function Calling</h4>
+<div class="highlight"><pre><span></span><code><span class="err">15 -                (into final-body-parts</span>
+<span class="err">16 -                      (set [part (matching-part part)])))))))</span>
+</code></pre></div>
+
+
+<p><code>into</code> is a function to add the a new element into the existing element <code>final-body-parts</code>. The new element is created with by calling <code>(set [part (matching-part part)])</code>. </p>
+<p>When both the data type of the <code>into</code> functions are sets, the are merged together. Read more about <code>into</code>  <a href="https://clojuredocs.org/clojure.core/into">here</a></p>
+<p>We want to place the <code>set</code> of <code>[part (matching-part part)]</code>, incase part does not have symmetry, such as nose or abdomen. In that case, <code>matching-part</code> will return the same value as part.</p>
+<h4>Line 1, 2, 3, 4: <code>matching-part</code> Function</h4>
+<div class="highlight"><pre><span></span><code><span class="mi">01</span> <span class="nv">-</span> <span class="nv">(defn</span> <span class="nv">matching-part</span>
+<span class="mi">02</span> <span class="nv">-</span>   <span class="p">[</span><span class="nv">part</span><span class="p">]</span>
+<span class="mi">03</span> <span class="nv">-</span>   <span class="p">{</span><span class="ss">:name</span> <span class="nv">(clojure.string/replace</span> <span class="nv">(:name</span> <span class="nv">part)</span> <span class="o">#</span><span class="s">&quot;^left-&quot;</span> <span class="s">&quot;right-&quot;</span><span class="nv">)</span>
+<span class="mi">04</span> <span class="nv">-</span>    <span class="ss">:size</span> <span class="nv">(:size</span> <span class="nv">part)</span><span class="p">}</span><span class="nv">)</span>
+</code></pre></div>
+
+
+<p>The <code>matching-part</code> function is pretty straight forward. It takes in a single argument <code>part</code>, which is a map containing <code>{:name "val" :size val</code>, and returns a set with keys <code>:name</code> and <code>size</code>. <code>:name</code> has a value that takes the original string, and replaces the <code>"left"</code> with <code>"right"</code>, while <code>:size</code> returns the original size defined in <code>part</code></p>
+<h4>Putting It All Together</h4>
+<p>From the top, we loop through the <code>remaining-asym-parts</code>, and places updated right-sidedness into <code>final-body-parts</code>.</p>
+<p>If <code>remaining-asym-parts</code> is empty, we are done, and we return <code>final-body-parts</code>, which contans all the left and right parts of the hobbit.</p>
+<p>If <code>remaining-asym-parts</code> is not empty, we destructure <code>remaining-asym-parts</code> by taking out the first element, and passing it to <code>matching-part</code> function, which returns the right-sidedness of things.</p>
+<p>If the body part is not symmetrical such as nose or abdomen, we remove the duplicate by calling <code>set</code></p>
+<p>We return the values <code>remaining</code> and <code>final-body-parts</code> back up to the loop, and keep going until <code>remaining-asym-parts</code> is empty</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/clojure.html">clojure</a>
+    </p>
+  </div>
+
+
+
+
+
+  <section id="comments" class="body">
+	  <h2>Comments:</h2>
+	  Contact me for any comments, and I'll paste them here! Why not Disqus or other comment services? That's because I want to have control of my site, comments included!
+
+	  PS: I won't put your real name and email if you don't want me to.
+	  
+  </section>
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>
