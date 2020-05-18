@@ -22,23 +22,23 @@
 
 
 <meta name="author" content="Chan Jin Hao" />
-<meta name="description" content="Today we&#39;re going to be refactoring our hobbit code we saw in day 15 with the introduction of a new function called reduce Refactoring the Hobbit code 01 - (defn matching-part 02 - [part] 03 - {:name (clojure.string/replace (:name part) #&#34;^left-&#34; &#34;right-&#34;) 04 - :size (:size part)}) 05 - 06 - (defn symmetrize-body-parts 07 …" />
+<meta name="description" content="We&#39;re going to attempt question 5 from the exercise page here Question 5 Create a function that’s similar to symmetrize-body-parts except that it has to work with weird space aliens with radial symmetry. Instead of two eyes, arms, legs, and so on, they have five. To tackle this question …" />
 <meta name="keywords" content="clojure">
 
 <meta property="og:site_name" content="glob"/>
-<meta property="og:title" content="SWE Day 17: Refactoring Hobbit Code"/>
-<meta property="og:description" content="Today we&#39;re going to be refactoring our hobbit code we saw in day 15 with the introduction of a new function called reduce Refactoring the Hobbit code 01 - (defn matching-part 02 - [part] 03 - {:name (clojure.string/replace (:name part) #&#34;^left-&#34; &#34;right-&#34;) 04 - :size (:size part)}) 05 - 06 - (defn symmetrize-body-parts 07 …"/>
+<meta property="og:title" content="SWE Day 18: Exercises-2"/>
+<meta property="og:description" content="We&#39;re going to attempt question 5 from the exercise page here Question 5 Create a function that’s similar to symmetrize-body-parts except that it has to work with weird space aliens with radial symmetry. Instead of two eyes, arms, legs, and so on, they have five. To tackle this question …"/>
 <meta property="og:locale" content="en_US"/>
 <meta property="og:url" content="/clojure-exercises2.html"/>
 <meta property="og:type" content="article"/>
-<meta property="article:published_time" content="2020-05-17 10:24:00+08:00"/>
+<meta property="article:published_time" content="2020-05-18 21:03:00+08:00"/>
 <meta property="article:modified_time" content=""/>
 <meta property="article:author" content="/author/chan-jin-hao.html">
 <meta property="article:section" content="Software Engineering"/>
 <meta property="article:tag" content="clojure"/>
 <meta property="og:image" content="">
 
-  <title>glob &ndash; SWE Day 17: Refactoring Hobbit Code</title>
+  <title>glob &ndash; SWE Day 18: Exercises-2</title>
 
 </head>
 <body>
@@ -81,9 +81,9 @@
 <article class="single">
   <header>
       
-    <h1 id="clojure-exercises2">SWE Day 17: Refactoring Hobbit Code</h1>
+    <h1 id="clojure-exercises2">SWE Day 18: Exercises-2</h1>
     <p>
-          Posted on Sun 17 May 2020 in <a href="/category/software-engineering.html">Software Engineering</a>
+          Posted on Mon 18 May 2020 in <a href="/category/software-engineering.html">Software Engineering</a>
 
 
     </p>
@@ -91,89 +91,62 @@
 
 
   <div>
-    <p>Today we're going to be refactoring our hobbit code we saw in <a href="https://www.osfork.com/clojure-example-program.html#clojure-example-program">day 15</a> with the introduction of a new function called <code>reduce</code></p>
-<h2>Refactoring the Hobbit code</h2>
-<div class="highlight"><pre><span></span><code><span class="mi">01</span> <span class="nv">-</span> <span class="nv">(defn</span> <span class="nv">matching-part</span>
-<span class="mi">02</span> <span class="nv">-</span>   <span class="p">[</span><span class="nv">part</span><span class="p">]</span>
-<span class="mi">03</span> <span class="nv">-</span>   <span class="p">{</span><span class="ss">:name</span> <span class="nv">(clojure.string/replace</span> <span class="nv">(:name</span> <span class="nv">part)</span> <span class="o">#</span><span class="s">&quot;^left-&quot;</span> <span class="s">&quot;right-&quot;</span><span class="nv">)</span>
-<span class="mi">04</span> <span class="nv">-</span>    <span class="ss">:size</span> <span class="nv">(:size</span> <span class="nv">part)</span><span class="p">}</span><span class="nv">)</span>
-<span class="mi">05</span> <span class="nv">-</span>
-<span class="mi">06</span> <span class="nv">-</span> <span class="nv">(defn</span> <span class="nv">symmetrize-body-parts</span>
-<span class="mi">07</span> <span class="nv">-</span>   <span class="s">&quot;Expects a seq of maps that have a :name and :size&quot;</span>
-<span class="mi">08</span> <span class="nv">-</span>   <span class="p">[</span><span class="nv">asym-body-parts</span><span class="p">]</span>
-<span class="mi">09</span> <span class="nv">-</span>   <span class="nv">(loop</span> <span class="p">[</span><span class="nv">remaining-asym-parts</span> <span class="nv">asym-body-parts</span>
-<span class="mi">10</span> <span class="nv">-</span>          <span class="nv">final-body-parts</span> <span class="p">[]]</span>
-<span class="mi">11</span> <span class="nv">-</span>     <span class="nv">(if</span> <span class="nv">(empty?</span> <span class="nv">remaining-asym-parts)</span>
-<span class="mi">12</span> <span class="nv">-</span>      <span class="nv">final-body-parts</span>
-<span class="mi">13</span> <span class="nv">-</span>       <span class="nv">(let</span> <span class="p">[[</span><span class="nv">part</span> <span class="o">&amp;</span> <span class="nv">remaining</span><span class="p">]</span> <span class="nv">remaining-asym-parts</span><span class="p">]</span>
-<span class="mi">14</span> <span class="nv">-</span>         <span class="nv">(recur</span> <span class="nv">remaining</span>
-<span class="mi">15</span> <span class="nv">-</span>                <span class="nv">(into</span> <span class="nv">final-body-parts</span>
-<span class="mi">16</span> <span class="nv">-</span>                      <span class="nv">(set</span> <span class="p">[</span><span class="nv">part</span> <span class="nv">(matching-part</span> <span class="nv">part)</span><span class="p">]</span><span class="nv">)))))))</span>
+    <p>We're going to attempt question 5 from the exercise page <a href="https://www.braveclojure.com/do-things/#Exercises">here</a></p>
+<h2>Question 5</h2>
+<p>Create a function that’s similar to <code>symmetrize-body-parts</code> except that it has to work with weird space aliens with radial symmetry. Instead of two eyes, arms, legs, and so on, they have five.</p>
+<p>To tackle this question, we need to understand what is radial symmertry, which is a form of symmetry where there are regular parts around a central axis. If we take a starfish for example, it has a radial symmetry of 5.</p>
+<p>Therefore, for each body part, the checks are going to be for 2 lefts, 2 rights, and a central piece</p>
+<p>The inputs for the program will be the same as the hobbit</p>
+<div class="highlight"><pre><span></span><code><span class="err">(def asym-hobbit-body-parts [{:name &quot;head&quot; :size 3}</span>
+<span class="err">                             {:name &quot;left-eye&quot; :size 1}</span>
+<span class="err">                             {:name &quot;left-ear&quot; :size 1}</span>
+<span class="err">                             {:name &quot;mouth&quot; :size 1}</span>
+<span class="err">                             {:name &quot;nose&quot; :size 1}</span>
+<span class="err">                             {:name &quot;neck&quot; :size 2}</span>
+<span class="err">                             {:name &quot;left-shoulder&quot; :size 3}</span>
+<span class="err">                             {:name &quot;left-upper-arm&quot; :size 3}</span>
+<span class="err">                             {:name &quot;chest&quot; :size 10}</span>
+<span class="err">                             {:name &quot;back&quot; :size 10}</span>
+<span class="err">                             {:name &quot;left-forearm&quot; :size 3}</span>
+<span class="err">                             {:name &quot;abdomen&quot; :size 6}</span>
+<span class="err">                             {:name &quot;left-kidney&quot; :size 1}</span>
+<span class="err">                             {:name &quot;left-hand&quot; :size 2}</span>
+<span class="err">                             {:name &quot;left-knee&quot; :size 2}</span>
+<span class="err">                             {:name &quot;left-thigh&quot; :size 4}</span>
+<span class="err">                             {:name &quot;left-lower-leg&quot; :size 3}</span>
+<span class="err">                             {:name &quot;left-achilles&quot; :size 1}</span>
+<span class="err">                             {:name &quot;left-foot&quot; :size 2}])</span>
 </code></pre></div>
 
 
-<p>To refactor the code, we're going to introduce one new function called <code>reduce</code>. At a more abstract level, <code>reduce</code> takes in a collection, an operator, and returns a single result, after applying (map) and aggregating (reduce) the operator on the collection.</p>
-<p>In Clojure, <code>reduce</code> works like this </p>
-<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">reduce</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">])</span>
+<p>And now we modify the original solution</p>
+<div class="highlight"><pre><span></span><code><span class="nv">(defn</span> <span class="nv">radial-parts</span>
+  <span class="s">&quot;takes in a map, and returns a vector of 2 lefts, 2 rights, and a central piece&quot;</span>
+  <span class="p">[</span><span class="nv">part</span><span class="p">]</span>
+  <span class="p">[</span>
+    <span class="p">{</span><span class="ss">:name</span> <span class="nv">(clojure.string/replace</span> <span class="nv">(:name</span> <span class="nv">part)</span> <span class="o">#</span><span class="s">&quot;^left-&quot;</span> <span class="s">&quot;left1-&quot;</span><span class="nv">)</span>
+     <span class="ss">:size</span> <span class="nv">(:size</span> <span class="nv">part)</span><span class="p">}</span>
+    <span class="p">{</span><span class="ss">:name</span> <span class="nv">(clojure.string/replace</span> <span class="nv">(:name</span> <span class="nv">part)</span> <span class="o">#</span><span class="s">&quot;^left-&quot;</span> <span class="s">&quot;left2-&quot;</span><span class="nv">)</span>
+     <span class="ss">:size</span> <span class="nv">(:size</span> <span class="nv">part)</span><span class="p">}</span>
+    <span class="p">{</span><span class="ss">:name</span> <span class="nv">(clojure.string/replace</span> <span class="nv">(:name</span> <span class="nv">part)</span> <span class="o">#</span><span class="s">&quot;^left-&quot;</span> <span class="s">&quot;right1-&quot;</span><span class="nv">)</span>
+     <span class="ss">:size</span> <span class="nv">(:size</span> <span class="nv">part)</span><span class="p">}</span>
+    <span class="p">{</span><span class="ss">:name</span> <span class="nv">(clojure.string/replace</span> <span class="nv">(:name</span> <span class="nv">part)</span> <span class="o">#</span><span class="s">&quot;^left-&quot;</span> <span class="s">&quot;right2-&quot;</span><span class="nv">)</span>
+     <span class="ss">:size</span> <span class="nv">(:size</span> <span class="nv">part)</span><span class="p">}</span>
+    <span class="p">{</span><span class="ss">:name</span> <span class="nv">(clojure.string/replace</span> <span class="nv">(:name</span> <span class="nv">part)</span> <span class="o">#</span><span class="s">&quot;^left-&quot;</span> <span class="s">&quot;central-&quot;</span><span class="nv">)</span>
+     <span class="ss">:size</span> <span class="nv">(:size</span> <span class="nv">part)</span><span class="p">}</span>
+  <span class="p">]</span><span class="nv">)</span>
 
-<span class="o">=&gt;</span> <span class="mi">10</span>
+<span class="nv">(defn</span> <span class="nv">radial-symmetry</span>
+  <span class="s">&quot;Takes in a vector map of body parts, and makes it radially symmetric&quot;</span>
+  <span class="p">[</span><span class="nv">asym-body-parts</span><span class="p">]</span>
+  <span class="nv">(reduce</span> 
+    <span class="nv">(fn</span> <span class="p">[</span><span class="nv">final-body-parts</span> <span class="nv">part</span><span class="p">]</span> <span class="nv">(into</span> <span class="nv">final-body-parts</span> <span class="nv">(set</span> <span class="nv">(radial-parts</span> <span class="nv">part))))</span>
+    <span class="p">[]</span> 
+    <span class="nv">asym-body-parts))</span>
 </code></pre></div>
 
 
-<p>What this is doing is taking an operator <code>+</code> and applying it to a collection <code>[1 2 3 4]</code>, before aggregating the result. Its telling Clojure to do this</p>
-<p><code>(+ (+ (+ 1 2) 3) 4)</code></p>
-<p>Which adds the first two numbers, take the results, and adds in the next number and so on, until there are no more numbers left.</p>
-<p>If we add an initial value to the <code>reduce</code> function, it works exactly the same way, just that the operator will work on the initial value and the first value in the list</p>
-<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">reduce</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">[</span><span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">])</span>
-
-<span class="o">=&gt;</span> <span class="mi">10</span>
-</code></pre></div>
-
-
-<p>The basic layout of the function will thus looking something like this</p>
-<p><code>(reduce operator &lt;optional-initial-value&gt; collection)</code></p>
-<h2>Really Refactoring the code now</h2>
-<p>By looking at how <code>reduce</code> is defined, we can modify our loop in the program to compress it into a single reduce function</p>
-<div class="highlight"><pre><span></span><code><span class="mi">01</span> <span class="nv">-</span> <span class="nv">(defn</span> <span class="nv">better-symmetrize-body-parts</span>
-<span class="mi">02</span> <span class="nv">-</span>  <span class="s">&quot;Expects a seq of maps that have a :name and :size&quot;</span>
-<span class="mi">03</span> <span class="nv">-</span>   <span class="p">[</span><span class="nv">asym-body-parts</span><span class="p">]</span>
-<span class="mi">04</span> <span class="nv">-</span>   <span class="nv">(reduce</span> <span class="nv">(fn</span> <span class="p">[</span><span class="nv">final-body-parts</span> <span class="nv">part</span><span class="p">]</span>
-<span class="mi">05</span> <span class="nv">-</span>             <span class="nv">(into</span> <span class="nv">final-body-parts</span> <span class="nv">(set</span> <span class="p">[</span><span class="nv">part</span> <span class="nv">(matching-part</span> <span class="nv">part)</span><span class="p">]</span><span class="nv">)))</span>
-<span class="mi">06</span> <span class="nv">-</span>           <span class="p">[]</span>
-<span class="mi">07</span> <span class="nv">-</span>           <span class="nv">asym-body-parts))</span>
-</code></pre></div>
-
-
-<p>If we look lines 4, 5, 6 and 7, we see that we have replaced the entire body of the original function with a single reduce call. The inputs to the reduce function are, and i'll break it down for easier analysis:</p>
-<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">reduce</span>
-  <span class="k">Operator</span>
-  <span class="n">Initial</span><span class="o">-</span><span class="n">Value</span>
-  <span class="n">Collection</span>
-<span class="p">)</span>
-
-<span class="p">(</span><span class="n">reduce</span>
-  <span class="p">(</span><span class="n">fn</span>     <span class="o">&lt;</span><span class="c1">-- Anonymous Function</span>
-   <span class="p">[</span><span class="k">final</span><span class="o">-</span><span class="n">body</span><span class="o">-</span><span class="n">parts</span> <span class="n">part</span><span class="p">]</span>        <span class="o">&lt;</span><span class="c1">-- Arguments</span>
-   <span class="p">(</span><span class="k">into</span> <span class="k">final</span><span class="o">-</span><span class="n">body</span><span class="o">-</span><span class="n">parts</span> <span class="p">(</span><span class="k">set</span> <span class="p">[</span><span class="n">part</span> <span class="p">(</span><span class="n">matching</span><span class="o">-</span><span class="n">part</span> <span class="n">part</span><span class="p">)])))</span>     <span class="o">&lt;</span><span class="c1">-- Operator Body</span>
-  <span class="p">[]</span>      <span class="o">&lt;</span><span class="c1">-- Initial Value</span>
-  <span class="n">asym</span><span class="o">-</span><span class="n">body</span><span class="o">-</span><span class="n">parts</span>        <span class="o">&lt;</span><span class="c1">-- Collection to work on</span>
-<span class="p">)</span>
-</code></pre></div>
-
-
-<p>The operator is defined as an anonymous function, which takes in <code>final-body-parts</code> and <code>part</code>.</p>
-<p>Based on the initial value of an empty vector, the first operation of reduce passes in an empty vector, and the first value of <code>asym-body-parts</code>. The empty vector is assigned to <code>final-body-parts</code>, and the first value is assigned to <code>part</code>.</p>
-<p>We then call the operator body, which does the matching parts generation and places it into <code>final-body-parts</code>.</p>
-<p>In the next operation of reduce, the return value of the first operation is passed in as the initial value, and that is <code>final-body-parts</code> containing the matching parts of the first <code>part</code>.</p>
-<p>In essence, it's doing something like this:</p>
-<p><code>(create-matching (create-matching (create-matching "left ear") "right hand") "left eye")</code></p>
-<h2>When to use Reduce</h2>
-<p>We saw how the <code>reduce</code> function was able to compress the <code>loop</code> operator into a single line, but should we always do this?</p>
-<p>When given a <code>reduce</code> function, the reader of the code will always know that the input is a collection, and the output is a aggregated result. Whereas if they see a <code>loop</code> function, they might not know what it is doing until the read all the lines in it.</p>
-<p>You would want to use <code>reduce</code> when you have a collection you want to walk through, and apply a function to it and aggregate the results.</p>
-<p>You might want to use <code>loop/recur</code> when your operations are more complex than applying a function, or your return result is not an aggregation.</p>
-<p>In terms of time-complexity, we see that <code>reduce</code> is actullay SLOWER than <code>loop</code> in some cases. <a href="https://hackernoon.com/faster-clojure-reduce-57a104448ea4">An example here</a></p>
-<p>I think this example is only meant to show case that there are different ways of solving the same problem with the different functions Clojure has, and it's not to say which is the most optimal or elegant solution.</p>
+<p>What <code>radial-parts</code> does is take in a left-sided part, and returns the 5 parts of it. In <code>radial-symmetry</code>, its mostly the same except in the reducer, where we don't have to pass in the original part, since it will be replaced.</p>
   </div>
   <div class="tag-cloud">
     <p>

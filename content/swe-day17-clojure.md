@@ -3,7 +3,7 @@ Date: 2020-05-17 10:24
 Author: Chan Jin Hao
 Category: Software Engineering
 Tags: clojure
-Slug: clojure-exercises2
+Slug: clojure-refactor-hobbit
 Status: published
 
 
