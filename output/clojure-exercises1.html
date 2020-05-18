@@ -1,0 +1,236 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="Chan Jin Hao" />
+<meta name="description" content="Today we&#39;re gonna be doing the given exercises of this Chapter. You can find the exercises here. For each of these exercises, i&#39;m going to be doing them on the lein repl Use the str, vector, list, hash-map, and hash-set functions. Write a function that takes a number and adds …" />
+<meta name="keywords" content="clojure">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="SWE Day 16: Exercises-1"/>
+<meta property="og:description" content="Today we&#39;re gonna be doing the given exercises of this Chapter. You can find the exercises here. For each of these exercises, i&#39;m going to be doing them on the lein repl Use the str, vector, list, hash-map, and hash-set functions. Write a function that takes a number and adds …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/clojure-exercises1.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2020-05-15 16:37:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/chan-jin-hao.html">
+<meta property="article:section" content="Software Engineering"/>
+<meta property="article:tag" content="clojure"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; SWE Day 16: Exercises-1</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="/">All</a></li>
+          <li><a href="/category/data-science.html">Data Science</a></li>
+          <li><a href="/category/security.html">Cyber Security</a></li>
+          <li><a href="/category/software-engineering.html">Software Engineering</a></li>
+          <li><a href="/category/review.html">Book Reviews</a></li>
+          <li><a href="/category/ramblings.html">Ramblings</a></li>
+        </ul>
+      </nav>
+
+		<p>What the osfork? Just like the pythonic way of spawning off different processes by invoking <p style="font-family:courier;">os.fork</p> this website is meant to have different processes of content.</p>
+		<p>From technical stuff, to books I've read, and ramblings about life, all my thought processes are here.</p>
+      <br/>
+      <br/>
+      <ul class="social">
+        <li><a class="sc-linkedin" href="https://www.linkedin.com/in/jin-hao-chan-162630120/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-github" href="https://www.github.com/jinhaochan" target="_blank"><i class="fa fa-github"></i></a></li>
+      </ul>
+
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="clojure-exercises1">SWE Day 16: Exercises-1</h1>
+    <p>
+          Posted on Fri 15 May 2020 in <a href="/category/software-engineering.html">Software Engineering</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>Today we're gonna be doing the given exercises of this Chapter. You can find the exercises <a href="https://www.braveclojure.com/do-things/#Exercises">here</a>. For each of these exercises, i'm going to be doing them on the <code>lein repl</code></p>
+<ol>
+<li>
+<p>Use the str, vector, list, hash-map, and hash-set functions.</p>
+</li>
+<li>
+<p>Write a function that takes a number and adds 100 to it.</p>
+</li>
+<li>
+<p>Write a function, <code>dec-maker</code>, that works exactly like the function <code>inc-maker</code> except with subtraction:</p>
+</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="err">(def dec9 (dec-maker 9))</span>
+<span class="err">(dec9 10)</span>
+<span class="err">=&gt; 1</span>
+</code></pre></div>
+
+
+<ol>
+<li>Write a function, <code>mapset</code>, that works like map except the return value is a set:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="err">(mapset inc [1 1 2 2])</span>
+<span class="err">=&gt; #{2 3}</span>
+</code></pre></div>
+
+
+<ol>
+<li>
+<p>Create a function that’s similar to symmetrize-body-parts except that it has to work with weird space aliens with radial symmetry. Instead of two eyes, arms, legs, and so on, they have five.</p>
+</li>
+<li>
+<p>Create a function that generalizes symmetrize-body-parts and the function you created in Exercise 5. The new function should take a collection of body parts and the number of matching body parts to add. If you’re completely new to Lisp languages and functional programming, it probably won’t be obvious how to do this. If you get stuck, just move on to the next chapter and revisit the problem later.</p>
+</li>
+</ol>
+<h2>Question 1</h2>
+<p>Use the str, vector, list, hash-map, and hash-set functions.</p>
+<div class="highlight"><pre><span></span><code><span class="k">user</span><span class="o">=&gt;</span> <span class="p">(</span><span class="n">str</span> <span class="ss">&quot;Hello &quot;</span> <span class="ss">&quot;World!&quot;</span><span class="p">)</span>
+
+<span class="ss">&quot;Hello World!&quot;</span>
+
+<span class="k">user</span><span class="o">=&gt;</span> <span class="p">(</span><span class="n">vector</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">]</span>
+
+<span class="k">user</span><span class="o">=&gt;</span> <span class="p">(</span><span class="n">hash</span><span class="o">-</span><span class="k">map</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="err">{</span><span class="mi">1</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span> <span class="mi">4</span><span class="err">}</span> <span class="o">&lt;</span><span class="c1">-- the 1 and 3 becomes the key, and the 2 and 4 becomes the value</span>
+
+<span class="k">user</span><span class="o">=&gt;</span> <span class="p">(</span><span class="n">hash</span><span class="o">-</span><span class="k">set</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="o">#</span><span class="err">{</span><span class="mi">1</span> <span class="mi">3</span> <span class="mi">2</span><span class="err">}</span> <span class="o">&lt;</span><span class="c1">-- the duplicate 1 is removed</span>
+</code></pre></div>
+
+
+<h2>Question 2</h2>
+<p>Write a function that takes a number and adds 100 to it.</p>
+<div class="highlight"><pre><span></span><code><span class="nv">(defn</span> <span class="nv">adder</span>
+ <span class="s">&quot;Adds 100 to the given number&quot;</span>
+ <span class="p">[</span><span class="nv">input_val</span><span class="p">]</span>
+ <span class="nv">(+</span> <span class="nv">input_val</span> <span class="mi">100</span><span class="nv">))</span>
+
+<span class="nv">user=&gt;</span> <span class="nv">(adder</span> <span class="mi">20</span><span class="nv">)</span>
+<span class="mi">120</span>
+</code></pre></div>
+
+
+<h2>Question 3</h2>
+<p>Write a function, <code>dec-maker</code>, that works exactly like the function <code>inc-maker</code> except with subtraction:</p>
+<div class="highlight"><pre><span></span><code><span class="err">(def dec9 (dec-maker 9))</span>
+<span class="err">(dec9 10)</span>
+<span class="err">=&gt; 1</span>
+</code></pre></div>
+
+
+<div class="highlight"><pre><span></span><code><span class="nv">(defn</span> <span class="nv">dec-maker</span>
+ <span class="s">&quot;Subtracts n from the given number&quot;</span>
+ <span class="p">[</span><span class="nv">n</span><span class="p">]</span>
+ <span class="o">#</span><span class="nv">(-</span> <span class="nv">%</span> <span class="nv">n))</span> <span class="nv">&lt;--</span> <span class="nv">n</span> <span class="nv">belongs</span> <span class="nv">to</span> <span class="nv">the</span> <span class="mi">9</span>, <span class="k">while</span> <span class="nv">%</span> <span class="nv">belongs</span> <span class="nv">to</span> <span class="nv">whatever</span> <span class="nv">what</span> <span class="nv">was</span> <span class="nv">passed</span> <span class="nv">in</span>
+
+<span class="nv">user=&gt;</span> <span class="nv">(def</span> <span class="nv">dec9</span> <span class="nv">(dec-maker</span> <span class="mi">9</span><span class="nv">))</span>
+<span class="nv">user=&gt;</span> <span class="nv">(dec9</span> <span class="mi">10</span><span class="nv">)</span>
+<span class="mi">1</span>
+</code></pre></div>
+
+
+<h2>Question 4</h2>
+<p>Write a function, <code>mapset</code>, that works like <code>map</code> except the return value is a set:</p>
+<div class="highlight"><pre><span></span><code><span class="err">(mapset inc [1 1 2 2])</span>
+<span class="err">=&gt; #{2 3}</span>
+</code></pre></div>
+
+
+<div class="highlight"><pre><span></span><code><span class="nv">(defn</span> <span class="nv">mapset</span>
+ <span class="s">&quot;Returns a set of the map operator&quot;</span>
+ <span class="p">[</span><span class="nv">operator</span> <span class="p">[</span><span class="o">&amp;</span> <span class="nv">mapval</span><span class="p">]]</span>
+ <span class="nv">(set</span> <span class="nv">(map</span> <span class="nv">operator</span> <span class="nv">mapval)))</span>
+
+<span class="nv">=&gt;</span> <span class="nv">(mapset</span> <span class="nb">inc </span><span class="p">[</span><span class="mi">1</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">2</span><span class="p">]</span><span class="nv">)</span>
+<span class="o">#</span><span class="p">{</span><span class="mi">3</span> <span class="mi">2</span><span class="p">}</span>
+</code></pre></div>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/clojure.html">clojure</a>
+    </p>
+  </div>
+
+
+
+
+
+  <section id="comments" class="body">
+	  <h2>Comments:</h2>
+	  Contact me for any comments, and I'll paste them here! Why not Disqus or other comment services? That's because I want to have control of my site, comments included!
+
+	  PS: I won't put your real name and email if you don't want me to.
+	  
+  </section>
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>
