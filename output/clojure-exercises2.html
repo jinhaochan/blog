@@ -147,6 +147,48 @@
 
 
 <p>What <code>radial-parts</code> does is take in a left-sided part, and returns the 5 parts of it. In <code>radial-symmetry</code>, its mostly the same except in the reducer, where we don't have to pass in the original part, since it will be replaced.</p>
+<h2>Alternative Solution</h2>
+<p>Here's an alternative solution by someone who is way senior than me</p>
+<div class="highlight"><pre><span></span><code><span class="nv">(ns</span> <span class="nv">tmp.core</span>
+  <span class="nv">(:require</span> <span class="p">[</span><span class="nv">clojure.string</span> <span class="ss">:as</span> <span class="nv">s</span><span class="p">]</span><span class="nv">))</span>
+
+<span class="nv">(def</span> <span class="nv">asym-hobbit-body-parts</span>
+  <span class="p">[{</span><span class="ss">:name</span> <span class="s">&quot;head&quot;</span> <span class="ss">:size</span> <span class="mi">3</span><span class="p">}</span>
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;left-eye&quot;</span> <span class="ss">:size</span> <span class="mi">1</span><span class="p">}</span>
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;left-ear&quot;</span> <span class="ss">:size</span> <span class="mi">1</span><span class="p">}</span>
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;mouth&quot;</span> <span class="ss">:size</span> <span class="mi">1</span><span class="p">}</span>
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;nose&quot;</span> <span class="ss">:size</span> <span class="mi">1</span><span class="p">}</span>
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;neck&quot;</span> <span class="ss">:size</span> <span class="mi">2</span><span class="p">}</span>
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;left-shoulder&quot;</span> <span class="ss">:size</span> <span class="mi">3</span><span class="p">}</span>
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;left-upper-arm&quot;</span> <span class="ss">:size</span> <span class="mi">3</span><span class="p">}</span>
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;chest&quot;</span> <span class="ss">:size</span> <span class="mi">10</span><span class="p">}</span>
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;back&quot;</span> <span class="ss">:size</span> <span class="mi">10</span><span class="p">}</span>
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;left-forearm&quot;</span> <span class="ss">:size</span> <span class="mi">3</span><span class="p">}</span>
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;abdomen&quot;</span> <span class="ss">:size</span> <span class="mi">6</span><span class="p">}</span>
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;left-kidney&quot;</span> <span class="ss">:size</span> <span class="mi">1</span><span class="p">}</span>
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;left-hand&quot;</span> <span class="ss">:size</span> <span class="mi">2</span><span class="p">}</span>
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;left-knee&quot;</span> <span class="ss">:size</span> <span class="mi">2</span><span class="p">}</span>
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;left-thigh&quot;</span> <span class="ss">:size</span> <span class="mi">4</span><span class="p">}</span>
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;left-lower-leg&quot;</span> <span class="ss">:size</span> <span class="mi">3</span><span class="p">}</span>
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;left-achilles&quot;</span> <span class="ss">:size</span> <span class="mi">1</span><span class="p">}</span>
+   <span class="p">{</span><span class="ss">:name</span> <span class="s">&quot;left-foot&quot;</span> <span class="ss">:size</span> <span class="mi">2</span><span class="p">}]</span><span class="nv">)</span>
+
+<span class="nv">(defn</span> <span class="nv">parts</span> <span class="p">[</span><span class="nv">part</span><span class="p">]</span>
+  <span class="nv">(map</span> <span class="nv">(fn</span> <span class="p">[</span><span class="nv">part</span> <span class="nv">d</span><span class="p">]</span> <span class="nv">(update</span> <span class="nv">part</span> <span class="ss">:name</span> <span class="nv">s/replace</span> <span class="o">#</span><span class="s">&quot;left-&quot;</span> <span class="nv">d))</span>
+       <span class="nv">(repeat</span> <span class="nv">part)</span>
+       <span class="p">[</span><span class="s">&quot;left-1-&quot;</span> <span class="s">&quot;left-2-&quot;</span> <span class="s">&quot;right-1-&quot;</span> <span class="s">&quot;right-2-&quot;</span> <span class="s">&quot;central-&quot;</span><span class="p">]</span><span class="nv">))</span>
+
+<span class="nv">(defn</span> <span class="nv">symmetrize-part</span>
+  <span class="p">[{</span><span class="ss">:keys</span> <span class="p">[</span><span class="nv">name</span><span class="p">]</span> <span class="ss">:as</span> <span class="nv">part</span><span class="p">}]</span>
+  <span class="nv">(if</span> <span class="nv">(s/starts-with?</span> <span class="nv">name</span> <span class="s">&quot;left-&quot;</span><span class="nv">)</span>
+    <span class="nv">(parts</span> <span class="nv">part)</span>
+    <span class="p">[</span><span class="nv">part</span><span class="p">]</span><span class="nv">))</span>
+
+<span class="nv">(defn</span> <span class="nv">symmetrize</span> <span class="p">[</span><span class="nv">parts</span><span class="p">]</span>
+  <span class="nv">(mapcat</span> <span class="nv">symmetrize-part</span> <span class="nv">parts))</span>
+
+<span class="nv">(symmetrize</span> <span class="nv">asym-hobbit-body-parts)</span>
+</code></pre></div>
   </div>
   <div class="tag-cloud">
     <p>
