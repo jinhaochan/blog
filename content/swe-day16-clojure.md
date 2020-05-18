@@ -1,5 +1,5 @@
 Title: SWE Day 16: Exercises-1
-Date: 2020-05-15 16:37
+Date: 2020-05-16 16:37
 Author: Chan Jin Hao
 Category: Software Engineering
 Tags: clojure
