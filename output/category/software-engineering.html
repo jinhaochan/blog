@@ -75,7 +75,7 @@
 
 <article>
   <header>
-    <h2><a href="/clojure-exercises2.html#clojure-exercises2">SWE Day 17: Exercises-2</a></h2>
+    <h2><a href="/clojure-exercises2.html#clojure-exercises2">SWE Day 17: Refactoring Hobbit Code</a></h2>
     <p>
           Posted on Sun 17 May 2020 in <a href="/category/software-engineering.html">Software Engineering</a>
 
@@ -86,8 +86,15 @@
     </p>
   </header>
   <div>
-      <p>Today we're gonna be doing the given exercises of this Chapter. You can find the exercises <a href="https://www.braveclojure.com/do-things/#Exercises">here</a>. For each of these exercises, i'm going to be doing them on the <code>lein repl</code></p>
-<p>We'll be tackling the last 2 questions, which are ostensibly harder, plus, refactoring our hobbit code we saw …</p>
+      <p>Today we're going to be refactoring our hobbit code we saw in <a href="https://www.osfork.com/clojure-example-program.html#clojure-example-program">day 15</a> with the introduction of a new function called <code>reduce</code></p>
+<h2>Refactoring the Hobbit code</h2>
+<div class="highlight"><pre><span></span><code><span class="mi">01</span> <span class="nv">-</span> <span class="nv">(defn</span> <span class="nv">matching-part</span>
+<span class="mi">02</span> <span class="nv">-</span>   <span class="p">[</span><span class="nv">part</span><span class="p">]</span>
+<span class="mi">03</span> <span class="nv">-</span>   <span class="p">{</span><span class="ss">:name</span> <span class="nv">(clojure.string/replace</span> <span class="nv">(:name</span> <span class="nv">part)</span> <span class="o">#</span><span class="s">&quot;^left-&quot;</span> <span class="s">&quot;right-&quot;</span><span class="nv">)</span>
+<span class="mi">04</span> <span class="nv">-</span>    <span class="ss">:size</span> <span class="nv">(:size</span> <span class="nv">part)</span><span class="p">}</span><span class="nv">)</span>
+<span class="mi">05</span> <span class="nv">-</span>
+<span class="mi">06</span> <span class="nv">-</span> <span class="nv">(defn</span> <span class="nv">symmetrize-body-parts</span>
+<span class="mi">07 …</span></code></pre></div>
       <br>
       <a class="btn" href="/clojure-exercises2.html#clojure-exercises2">    Continue reading
 </a>
