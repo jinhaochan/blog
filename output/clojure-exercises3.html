@@ -1,0 +1,202 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="Chan Jin Hao" />
+<meta name="description" content="We&#39;re going to attempt question 6 from the exercise page here Question 6 Create a function that generalizes symmetrize-body-parts and the function you created in Exercise 5. The new function should take a collection of body parts and the number of matching body parts to add. If you’re completely …" />
+<meta name="keywords" content="clojure">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="SWE Day 19: Exercises-3"/>
+<meta property="og:description" content="We&#39;re going to attempt question 6 from the exercise page here Question 6 Create a function that generalizes symmetrize-body-parts and the function you created in Exercise 5. The new function should take a collection of body parts and the number of matching body parts to add. If you’re completely …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/clojure-exercises3.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2020-05-19 09:12:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/chan-jin-hao.html">
+<meta property="article:section" content="Software Engineering"/>
+<meta property="article:tag" content="clojure"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; SWE Day 19: Exercises-3</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="/">All</a></li>
+          <li><a href="/category/data-science.html">Data Science</a></li>
+          <li><a href="/category/security.html">Cyber Security</a></li>
+          <li><a href="/category/software-engineering.html">Software Engineering</a></li>
+          <li><a href="/category/review.html">Book Reviews</a></li>
+          <li><a href="/category/ramblings.html">Ramblings</a></li>
+        </ul>
+      </nav>
+
+		<p>What the osfork? Just like the pythonic way of spawning off different processes by invoking <p style="font-family:courier;">os.fork</p> this website is meant to have different processes of content.</p>
+		<p>From technical stuff, to books I've read, and ramblings about life, all my thought processes are here.</p>
+      <br/>
+      <br/>
+      <ul class="social">
+        <li><a class="sc-linkedin" href="https://www.linkedin.com/in/jin-hao-chan-162630120/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-github" href="https://www.github.com/jinhaochan" target="_blank"><i class="fa fa-github"></i></a></li>
+      </ul>
+
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="clojure-exercises3">SWE Day 19: Exercises-3</h1>
+    <p>
+          Posted on Tue 19 May 2020 in <a href="/category/software-engineering.html">Software Engineering</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>We're going to attempt question 6 from the exercise page <a href="https://www.braveclojure.com/do-things/#Exercises">here</a></p>
+<h2>Question 6</h2>
+<p>Create a function that generalizes <code>symmetrize-body-parts</code> and the function you created in Exercise 5. The new function should take a collection of body parts and the number of matching body parts to add. If you’re completely new to Lisp languages and functional programming, it probably won’t be obvious how to do this. If you get stuck, just move on to the next chapter and revisit the problem later.</p>
+<p>As a generalization of the problem, instead of returning a fixed number of body parts in the function <code>radial-parts</code>, we need to accept another paramater that tells us how many parts to return. Also, if the number of parts are odd, we need to return a central unit, else, we return equal number of left and rights.</p>
+<p>The inputs for the program will be the same as the hobbit</p>
+<div class="highlight"><pre><span></span><code><span class="err">(def asym-hobbit-body-parts [{:name &quot;head&quot; :size 3}</span>
+<span class="err">                             {:name &quot;left-eye&quot; :size 1}</span>
+<span class="err">                             {:name &quot;left-ear&quot; :size 1}</span>
+<span class="err">                             {:name &quot;mouth&quot; :size 1}</span>
+<span class="err">                             {:name &quot;nose&quot; :size 1}</span>
+<span class="err">                             {:name &quot;neck&quot; :size 2}</span>
+<span class="err">                             {:name &quot;left-shoulder&quot; :size 3}</span>
+<span class="err">                             {:name &quot;left-upper-arm&quot; :size 3}</span>
+<span class="err">                             {:name &quot;chest&quot; :size 10}</span>
+<span class="err">                             {:name &quot;back&quot; :size 10}</span>
+<span class="err">                             {:name &quot;left-forearm&quot; :size 3}</span>
+<span class="err">                             {:name &quot;abdomen&quot; :size 6}</span>
+<span class="err">                             {:name &quot;left-kidney&quot; :size 1}</span>
+<span class="err">                             {:name &quot;left-hand&quot; :size 2}</span>
+<span class="err">                             {:name &quot;left-knee&quot; :size 2}</span>
+<span class="err">                             {:name &quot;left-thigh&quot; :size 4}</span>
+<span class="err">                             {:name &quot;left-lower-leg&quot; :size 3}</span>
+<span class="err">                             {:name &quot;left-achilles&quot; :size 1}</span>
+<span class="err">                             {:name &quot;left-foot&quot; :size 2}])</span>
+</code></pre></div>
+
+
+<p>And now we modify the original solution</p>
+<div class="highlight"><pre><span></span><code><span class="nv">(defn</span> <span class="nv">part-factory</span>
+  <span class="s">&quot;takes in a part, sideness, and number of parts to generate&quot;</span>
+   <span class="p">[</span><span class="nv">part</span> <span class="nv">number-of-parts</span> <span class="nv">side</span><span class="p">]</span>
+   <span class="nv">(loop</span> <span class="p">[</span><span class="nv">part-col</span> <span class="p">[]]</span>
+         <span class="nv">(if</span> <span class="nv">(=</span> <span class="nv">(count</span> <span class="nv">part-col)</span> <span class="nv">number-of-parts)</span>
+           <span class="nv">part-col</span>
+           <span class="nv">(recur</span> <span class="nv">(conj</span> <span class="nv">part-col</span> <span class="p">{</span><span class="ss">:name</span> <span class="nv">(clojure.string/replace</span> <span class="nv">(:name</span> <span class="nv">part)</span> <span class="o">#</span><span class="s">&quot;^left-&quot;</span> <span class="nv">(str</span> <span class="nv">side</span> <span class="nv">(inc</span> <span class="nv">(count</span> <span class="nv">part-col))</span> <span class="s">&quot;-&quot;</span><span class="nv">))</span>
+             <span class="ss">:size</span> <span class="nv">(:size</span> <span class="nv">part)</span><span class="p">}</span> <span class="nv">))))</span>
+<span class="nv">)</span>
+
+<span class="nv">(defn</span> <span class="nv">matching-parts</span>
+  <span class="s">&quot;takes in a map and number of parts to return. If the number of parts is odd, we return a central piece, else we return equal number of lefts and rights.&quot;</span>
+  <span class="p">[</span><span class="nv">part</span> <span class="nv">number-of-parts</span><span class="p">]</span>
+  <span class="nv">(if</span> <span class="nv">(even?</span> <span class="nv">number-of-parts)</span>
+    <span class="nv">(into</span> <span class="p">[]</span>
+    <span class="nv">(concat</span>
+       <span class="nv">(part-factory</span> <span class="nv">part</span> <span class="nv">(/</span> <span class="nv">number-of-parts</span> <span class="mi">2</span><span class="nv">)</span> <span class="s">&quot;left&quot;</span><span class="nv">)</span>
+       <span class="nv">(part-factory</span> <span class="nv">part</span> <span class="nv">(/</span> <span class="nv">number-of-parts</span> <span class="mi">2</span><span class="nv">)</span> <span class="s">&quot;right&quot;</span><span class="nv">)</span>
+    <span class="nv">))</span>
+    <span class="nv">(into</span> <span class="p">[]</span>
+    <span class="nv">(concat</span>
+       <span class="nv">(part-factory</span> <span class="nv">part</span> <span class="nv">(int</span> <span class="nv">(/</span> <span class="nv">number-of-parts</span> <span class="mi">2</span><span class="nv">))</span> <span class="s">&quot;left&quot;</span><span class="nv">)</span>
+       <span class="nv">(part-factory</span> <span class="nv">part</span> <span class="nv">(int</span> <span class="nv">(/</span> <span class="nv">number-of-parts</span> <span class="mi">2</span><span class="nv">))</span> <span class="s">&quot;right&quot;</span><span class="nv">)</span>
+       <span class="nv">(part-factory</span> <span class="nv">part</span> <span class="mi">1</span> <span class="s">&quot;central&quot;</span><span class="nv">)</span>
+    <span class="nv">))</span>
+<span class="nv">))</span>
+
+<span class="nv">(defn</span> <span class="nv">general-symmetry</span>
+  <span class="s">&quot;Takes in a vector map of body parts, and makes it symmetric, radially or not&quot;</span>
+  <span class="p">[</span><span class="nv">asym-body-parts</span> <span class="nv">number-of-parts</span><span class="p">]</span>
+  <span class="nv">(reduce</span> 
+    <span class="nv">(fn</span> <span class="p">[</span><span class="nv">final-body-parts</span> <span class="nv">part</span><span class="p">]</span> <span class="nv">(into</span> <span class="nv">final-body-parts</span> <span class="nv">(set</span> <span class="nv">(matching-parts</span> <span class="nv">part</span> <span class="nv">number-of-parts))))</span>
+    <span class="p">[]</span> 
+    <span class="nv">asym-body-parts))</span>
+</code></pre></div>
+
+
+<p>In <code>matching-parts</code>, I refactored the parts generator to another function <code>part-factory</code>, which does the actual making of body parts. We check if the number of parts passed in are even or odd. If it's odd, we do one more extra step of generating the central part.</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/clojure.html">clojure</a>
+    </p>
+  </div>
+
+
+
+
+
+  <section id="comments" class="body">
+	  <h2>Comments:</h2>
+	  Contact me for any comments, and I'll paste them here! Why not Disqus or other comment services? That's because I want to have control of my site, comments included!
+
+	  PS: I won't put your real name and email if you don't want me to.
+	  
+  </section>
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>
