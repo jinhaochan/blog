@@ -1,0 +1,284 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="Chan Jin Hao" />
+<meta name="description" content="In Clojure, operations do not care about the actual data structure of the object it is operating on, as long as it can perform sequence operations on the object. For example, you can call the same function map on a list, set, vector, or a hash, even though they all …" />
+<meta name="keywords" content="clojure">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="SWE Day 20: Clojure Functions In Depth"/>
+<meta property="og:description" content="In Clojure, operations do not care about the actual data structure of the object it is operating on, as long as it can perform sequence operations on the object. For example, you can call the same function map on a list, set, vector, or a hash, even though they all …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/clojure-functions2.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2020-05-20 10:25:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/chan-jin-hao.html">
+<meta property="article:section" content="Software Engineering"/>
+<meta property="article:tag" content="clojure"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; SWE Day 20: Clojure Functions In Depth</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="/">All</a></li>
+          <li><a href="/category/data-science.html">Data Science</a></li>
+          <li><a href="/category/security.html">Cyber Security</a></li>
+          <li><a href="/category/software-engineering.html">Software Engineering</a></li>
+          <li><a href="/category/review.html">Book Reviews</a></li>
+          <li><a href="/category/ramblings.html">Ramblings</a></li>
+        </ul>
+      </nav>
+
+		<p>What the osfork? Just like the pythonic way of spawning off different processes by invoking <p style="font-family:courier;">os.fork</p> this website is meant to have different processes of content.</p>
+		<p>From technical stuff, to books I've read, and ramblings about life, all my thought processes are here.</p>
+      <br/>
+      <br/>
+      <ul class="social">
+        <li><a class="sc-linkedin" href="https://www.linkedin.com/in/jin-hao-chan-162630120/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-github" href="https://www.github.com/jinhaochan" target="_blank"><i class="fa fa-github"></i></a></li>
+      </ul>
+
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="clojure-functions2">SWE Day 20: Clojure Functions In Depth</h1>
+    <p>
+          Posted on Wed 20 May 2020 in <a href="/category/software-engineering.html">Software Engineering</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>In Clojure, operations do not care about the actual data structure of the object it is operating on, as long as it can perform sequence operations on the object. For example, you can call the same function <code>map</code> on a list, set, vector, or a hash, even though they all have different data structures.</p>
+<h2>Sequences</h2>
+<p>Sequences are data structures that have some sort of linear order to it, that you can iterate on in sequential way. The elements inside a sequence are called sequence elements</p>
+<p>Core sequence, or seq, functions are <code>first</code>, <code>rest</code>, and <code>cons</code>, and if they are able to work on the data structure, then you can say that the data structure implements the sequence abstraction.</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="k">map</span> <span class="n">inc</span> <span class="err">&#39;</span><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">))</span>
+<span class="o">=&gt;</span><span class="p">(</span><span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="p">(</span><span class="k">map</span> <span class="n">inc</span> <span class="o">#</span><span class="err">{</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="err">}</span><span class="p">)</span>
+<span class="o">=&gt;</span><span class="p">(</span><span class="mi">2</span> <span class="mi">4</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="p">(</span><span class="k">map</span> <span class="n">inc</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">])</span>
+<span class="o">=&gt;</span><span class="p">(</span><span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">)</span>
+</code></pre></div>
+
+
+<h2>Core Seq Functions</h2>
+<p><code>first</code> returns the value of the requested node</p>
+<p><code>rest</code> returns all remaining values after the requested node</p>
+<p><code>cons</code> adds a new node to the beginning of the sequence</p>
+<p>By chaining these 3 core functions together, you can implement any sequence functions such as <code>map</code>, <code>reduce</code> and <code>filter</code></p>
+<p>Likewise, <code>map</code>, <code>reduce</code> and <code>filter</code> can work with any data structure as long as they implement these 3 core seq functions.</p>
+<h2>Indirection and Polymorphism</h2>
+<p>Underlying of the 3 core seq functions are concepts of Indirection and Polymorphism, which means that they are able to perform different actions based on the different inputs. Polymorphic functions dispatch different function bodies based on the arguments given.</p>
+<p><code>first</code>, <code>rest</code> and <code>cons</code> are all polymorphic, and hence the abstracted functions like <code>map</code>, <code>reduce</code> and <code>filter</code> are able to work on different data structures.</p>
+<p>Whenever you call <code>map</code>, it first calls <code>seq</code>, which produces a data strucutre that <code>first</code>, <code>rest</code> and <code>cons</code> can operate on. In this case, it always produces a list. In the case of <code>seq</code> on a <code>map</code>, it returns a list of vectors of those elements.</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">seq</span> <span class="err">&#39;</span><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">))</span>
+<span class="o">=&gt;</span> <span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="p">(</span><span class="n">seq</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">])</span>
+<span class="o">=&gt;</span> <span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="p">(</span><span class="n">seq</span> <span class="o">#</span><span class="err">{</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="err">}</span><span class="p">)</span>
+<span class="o">=&gt;</span> <span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="p">(</span><span class="n">seq</span> <span class="err">{</span><span class="p">:</span><span class="n">key1</span> <span class="n">va1</span> <span class="p">:</span><span class="n">key2</span> <span class="n">val2</span><span class="err">}</span><span class="p">)</span>
+<span class="o">=&gt;</span> <span class="p">([:</span><span class="n">key1</span> <span class="n">val1</span><span class="p">]</span> <span class="p">[:</span><span class="n">key2</span> <span class="n">val2</span><span class="p">])</span>
+</code></pre></div>
+
+
+<h2>More Maps</h2>
+<p>When you pass in two collections to a <code>map</code> function, it will operate between the first element of each collection, second element of each collection, and so on. If the collections are of different sizes, it stops at the smallest collection</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="k">map</span> <span class="n">str</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">]</span> <span class="p">[</span><span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span><span class="p">])</span>
+<span class="o">=&gt;</span><span class="p">(</span><span class="ss">&quot;14&quot;</span> <span class="ss">&quot;25&quot;</span> <span class="ss">&quot;36&quot;</span><span class="p">)</span>
+
+<span class="p">(</span><span class="k">map</span> <span class="n">str</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">]</span> <span class="p">[</span><span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span><span class="p">])</span>
+<span class="o">=&gt;</span><span class="p">(</span><span class="ss">&quot;14&quot;</span> <span class="ss">&quot;25&quot;</span> <span class="ss">&quot;36&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>Mapping a key on a map data structure returns all the values of the key</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">def</span> <span class="n">identities</span>
+  <span class="p">[</span><span class="err">{</span><span class="p">:</span><span class="k">alias</span> <span class="ss">&quot;Batman&quot;</span> <span class="p">:</span><span class="nb">real</span> <span class="ss">&quot;Bruce Wayne&quot;</span><span class="err">}</span>
+   <span class="err">{</span><span class="p">:</span><span class="k">alias</span> <span class="ss">&quot;Spider-Man&quot;</span> <span class="p">:</span><span class="nb">real</span> <span class="ss">&quot;Peter Parker&quot;</span><span class="err">}</span>
+   <span class="err">{</span><span class="p">:</span><span class="k">alias</span> <span class="ss">&quot;Santa&quot;</span> <span class="p">:</span><span class="nb">real</span> <span class="ss">&quot;Your mom&quot;</span><span class="err">}</span>
+   <span class="err">{</span><span class="p">:</span><span class="k">alias</span> <span class="ss">&quot;Easter Bunny&quot;</span> <span class="p">:</span><span class="nb">real</span> <span class="ss">&quot;Your dad&quot;</span><span class="err">}</span><span class="p">])</span>
+
+<span class="p">(</span><span class="k">map</span> <span class="p">:</span><span class="nb">real</span> <span class="n">identities</span><span class="p">)</span>
+<span class="o">=&gt;</span> <span class="p">(</span><span class="ss">&quot;Bruce Wayne&quot;</span> <span class="ss">&quot;Peter Parker&quot;</span> <span class="ss">&quot;Your mom&quot;</span> <span class="ss">&quot;Your dad&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+
+<h2>More Reduce</h2>
+<p>Reduce takes in 3 arguments</p>
+<div class="highlight"><pre><span></span><code><span class="err">(reduce</span>
+<span class="err">  &lt;function&gt;</span>
+<span class="err">  &lt;initial value&gt;</span>
+<span class="err">  &lt;collection&gt;)</span>
+</code></pre></div>
+
+
+<p>The function takes in the initial value and collection as its inputs, and performs whatever operations it has on them.</p>
+<h2>take, drop, take-while, drop-while</h2>
+<p><code>take</code> and <code>drop</code> takes in a number and a sequence. It then returns the n element of the sequences, or returns the elements of the seuqence after dropping the first n elements.</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">take</span> <span class="mi">3</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">10</span><span class="p">])</span>
+<span class="o">=&gt;</span> <span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="p">(</span><span class="k">drop</span> <span class="mi">3</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">10</span><span class="p">])</span>
+<span class="o">=&gt;</span> <span class="p">(</span><span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">10</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p><code>take-while</code> and <code>drop-while</code> does that same thing, but instead of a number, it takes in a predicate, which stops taking or dropping only when the predicate evaluates to false.</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">def</span> <span class="n">food</span><span class="o">-</span><span class="n">journal</span>
+  <span class="p">[</span><span class="err">{</span><span class="p">:</span><span class="k">month</span> <span class="mi">1</span> <span class="p">:</span><span class="k">day</span> <span class="mi">1</span> <span class="p">:</span><span class="n">human</span> <span class="mi">5</span><span class="p">.</span><span class="mi">3</span> <span class="p">:</span><span class="n">critter</span> <span class="mi">2</span><span class="p">.</span><span class="mi">3</span><span class="err">}</span>
+   <span class="err">{</span><span class="p">:</span><span class="k">month</span> <span class="mi">1</span> <span class="p">:</span><span class="k">day</span> <span class="mi">2</span> <span class="p">:</span><span class="n">human</span> <span class="mi">5</span><span class="p">.</span><span class="mi">1</span> <span class="p">:</span><span class="n">critter</span> <span class="mi">2</span><span class="p">.</span><span class="mi">0</span><span class="err">}</span>
+   <span class="err">{</span><span class="p">:</span><span class="k">month</span> <span class="mi">2</span> <span class="p">:</span><span class="k">day</span> <span class="mi">1</span> <span class="p">:</span><span class="n">human</span> <span class="mi">4</span><span class="p">.</span><span class="mi">9</span> <span class="p">:</span><span class="n">critter</span> <span class="mi">2</span><span class="p">.</span><span class="mi">1</span><span class="err">}</span>
+   <span class="err">{</span><span class="p">:</span><span class="k">month</span> <span class="mi">2</span> <span class="p">:</span><span class="k">day</span> <span class="mi">2</span> <span class="p">:</span><span class="n">human</span> <span class="mi">5</span><span class="p">.</span><span class="mi">0</span> <span class="p">:</span><span class="n">critter</span> <span class="mi">2</span><span class="p">.</span><span class="mi">5</span><span class="err">}</span>
+   <span class="err">{</span><span class="p">:</span><span class="k">month</span> <span class="mi">3</span> <span class="p">:</span><span class="k">day</span> <span class="mi">1</span> <span class="p">:</span><span class="n">human</span> <span class="mi">4</span><span class="p">.</span><span class="mi">2</span> <span class="p">:</span><span class="n">critter</span> <span class="mi">3</span><span class="p">.</span><span class="mi">3</span><span class="err">}</span>
+   <span class="err">{</span><span class="p">:</span><span class="k">month</span> <span class="mi">3</span> <span class="p">:</span><span class="k">day</span> <span class="mi">2</span> <span class="p">:</span><span class="n">human</span> <span class="mi">4</span><span class="p">.</span><span class="mi">0</span> <span class="p">:</span><span class="n">critter</span> <span class="mi">3</span><span class="p">.</span><span class="mi">8</span><span class="err">}</span>
+   <span class="err">{</span><span class="p">:</span><span class="k">month</span> <span class="mi">4</span> <span class="p">:</span><span class="k">day</span> <span class="mi">1</span> <span class="p">:</span><span class="n">human</span> <span class="mi">3</span><span class="p">.</span><span class="mi">7</span> <span class="p">:</span><span class="n">critter</span> <span class="mi">3</span><span class="p">.</span><span class="mi">9</span><span class="err">}</span>
+   <span class="err">{</span><span class="p">:</span><span class="k">month</span> <span class="mi">4</span> <span class="p">:</span><span class="k">day</span> <span class="mi">2</span> <span class="p">:</span><span class="n">human</span> <span class="mi">3</span><span class="p">.</span><span class="mi">7</span> <span class="p">:</span><span class="n">critter</span> <span class="mi">3</span><span class="p">.</span><span class="mi">6</span><span class="err">}</span><span class="p">])</span>
+
+<span class="p">(</span><span class="n">take</span><span class="o">-</span><span class="n">while</span> <span class="o">#</span><span class="p">(</span><span class="o">&lt;</span> <span class="p">(:</span><span class="k">month</span> <span class="o">%</span><span class="p">)</span> <span class="mi">3</span><span class="p">)</span> <span class="n">food</span><span class="o">-</span><span class="n">journal</span><span class="p">)</span>
+<span class="o">=&gt;</span> <span class="p">(</span><span class="err">{</span><span class="p">:</span><span class="k">month</span> <span class="mi">1</span> <span class="p">:</span><span class="k">day</span> <span class="mi">1</span> <span class="p">:</span><span class="n">human</span> <span class="mi">5</span><span class="p">.</span><span class="mi">3</span> <span class="p">:</span><span class="n">critter</span> <span class="mi">2</span><span class="p">.</span><span class="mi">3</span><span class="err">}</span>
+      <span class="err">{</span><span class="p">:</span><span class="k">month</span> <span class="mi">1</span> <span class="p">:</span><span class="k">day</span> <span class="mi">2</span> <span class="p">:</span><span class="n">human</span> <span class="mi">5</span><span class="p">.</span><span class="mi">1</span> <span class="p">:</span><span class="n">critter</span> <span class="mi">2</span><span class="p">.</span><span class="mi">0</span><span class="err">}</span>
+      <span class="err">{</span><span class="p">:</span><span class="k">month</span> <span class="mi">2</span> <span class="p">:</span><span class="k">day</span> <span class="mi">1</span> <span class="p">:</span><span class="n">human</span> <span class="mi">4</span><span class="p">.</span><span class="mi">9</span> <span class="p">:</span><span class="n">critter</span> <span class="mi">2</span><span class="p">.</span><span class="mi">1</span><span class="err">}</span>
+      <span class="err">{</span><span class="p">:</span><span class="k">month</span> <span class="mi">2</span> <span class="p">:</span><span class="k">day</span> <span class="mi">2</span> <span class="p">:</span><span class="n">human</span> <span class="mi">5</span><span class="p">.</span><span class="mi">0</span> <span class="p">:</span><span class="n">critter</span> <span class="mi">2</span><span class="p">.</span><span class="mi">5</span><span class="err">}</span><span class="p">)</span>
+
+<span class="p">(</span><span class="k">drop</span><span class="o">-</span><span class="n">while</span> <span class="o">#</span><span class="p">(</span><span class="o">&lt;</span> <span class="p">(:</span><span class="k">month</span> <span class="o">%</span><span class="p">)</span> <span class="mi">3</span><span class="p">)</span> <span class="n">food</span><span class="o">-</span><span class="n">journal</span><span class="p">)</span>
+<span class="o">=&gt;</span> <span class="p">(</span><span class="err">{</span><span class="p">:</span><span class="k">month</span> <span class="mi">3</span> <span class="p">:</span><span class="k">day</span> <span class="mi">1</span> <span class="p">:</span><span class="n">human</span> <span class="mi">4</span><span class="p">.</span><span class="mi">2</span> <span class="p">:</span><span class="n">critter</span> <span class="mi">3</span><span class="p">.</span><span class="mi">3</span><span class="err">}</span>
+      <span class="err">{</span><span class="p">:</span><span class="k">month</span> <span class="mi">3</span> <span class="p">:</span><span class="k">day</span> <span class="mi">2</span> <span class="p">:</span><span class="n">human</span> <span class="mi">4</span><span class="p">.</span><span class="mi">0</span> <span class="p">:</span><span class="n">critter</span> <span class="mi">3</span><span class="p">.</span><span class="mi">8</span><span class="err">}</span>
+      <span class="err">{</span><span class="p">:</span><span class="k">month</span> <span class="mi">4</span> <span class="p">:</span><span class="k">day</span> <span class="mi">1</span> <span class="p">:</span><span class="n">human</span> <span class="mi">3</span><span class="p">.</span><span class="mi">7</span> <span class="p">:</span><span class="n">critter</span> <span class="mi">3</span><span class="p">.</span><span class="mi">9</span><span class="err">}</span>
+      <span class="err">{</span><span class="p">:</span><span class="k">month</span> <span class="mi">4</span> <span class="p">:</span><span class="k">day</span> <span class="mi">2</span> <span class="p">:</span><span class="n">human</span> <span class="mi">3</span><span class="p">.</span><span class="mi">7</span> <span class="p">:</span><span class="n">critter</span> <span class="mi">3</span><span class="p">.</span><span class="mi">6</span><span class="err">}</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>In this example, <code>take-while</code> gets a predicate <code>#(&lt; (:month %) 3)</code>, which checks if the month value is less than 3, and only takes those map values.</p>
+<p><code>drop-while</code> does the same thing, except it drops values until the predicate is false. i.e. all months that are less than 3 are dropped.</p>
+<h2>filter and some</h2>
+<p><code>filter</code> works in the same way as <code>take-while</code> and <code>drop-while</code>, which basically filters away values that evaluate the predicate to false.</p>
+<div class="highlight"><pre><span></span><code><span class="err">(filter #(&lt; (:human %) 5) food-journal)</span>
+<span class="err">; =&gt; ({:month 2 :day 1 :human 4.9 :critter 2.1}</span>
+<span class="err">      {:month 3 :day 1 :human 4.2 :critter 3.3}</span>
+<span class="err">      {:month 3 :day 2 :human 4.0 :critter 3.8}</span>
+<span class="err">      {:month 4 :day 1 :human 3.7 :critter 3.9}</span>
+<span class="err">      {:month 4 :day 2 :human 3.7 :critter 3.6})</span>
+</code></pre></div>
+
+
+<p>The downside is that <code>filter</code> evaluates the entire collection, while <code>take-while</code> and <code>drop-while</code> only operates on the head. Depending on the use case, either will be more suitable and computationally efficient.</p>
+<p><code>some</code> returns a <code>true</code> if at least one value in the collection evaluates the predicate to be true, and <code>false</code> if all the values in the collection evalute to be false.</p>
+<div class="highlight"><pre><span></span><code><span class="err">(some #(&gt; (:critter %) 3) food-journal)</span>
+<span class="err">=&gt; true</span>
+</code></pre></div>
+
+
+<p>You can return the entries that evalute to true with the <code>and</code> function</p>
+<div class="highlight"><pre><span></span><code><span class="err">(some #(and (&gt; (:critter %) 3) %) food-journal)</span>
+<span class="err">=&gt; {:month 3 :day 1 :human 4.2 :critter 3.3}</span>
+</code></pre></div>
+
+
+<p>This is because <code>(and true %)</code>, where <code>%</code> contains the value that returns true, will always evaluate to <code>true</code>, therefore returning he value</p>
+<h2>sort and sort-by, concat</h2>
+<p><code>sort</code> sorts the sequence in order, while <code>sort-by</code> takes in a function to apply on the elemets, and sorts on the return value of that function</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">sort</span> <span class="p">[</span><span class="mi">3</span> <span class="mi">1</span> <span class="mi">2</span><span class="p">])</span>
+<span class="o">=&gt;</span> <span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="p">(</span><span class="n">sort</span><span class="o">-</span><span class="k">by</span> <span class="k">count</span> <span class="p">[</span><span class="ss">&quot;aaa&quot;</span> <span class="ss">&quot;c&quot;</span> <span class="ss">&quot;bb&quot;</span><span class="p">])</span>
+<span class="o">=&gt;</span> <span class="p">(</span><span class="ss">&quot;c&quot;</span> <span class="ss">&quot;bb&quot;</span> <span class="ss">&quot;aaa&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>In the <code>sort-by</code> example, we apply the function <code>count</code> on each of the elements, and sort them based on the return value of <code>count</code></p>
+<p><code>concat</code> simply takes in members of a sequence, and appends one to the end of the other</p>
+<div class="highlight"><pre><span></span><code><span class="err">(concat [1 2] [3 4])</span>
+<span class="err">=&gt; (1 2 3 4)</span>
+</code></pre></div>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/clojure.html">clojure</a>
+    </p>
+  </div>
+
+
+
+
+
+  <section id="comments" class="body">
+	  <h2>Comments:</h2>
+	  Contact me for any comments, and I'll paste them here! Why not Disqus or other comment services? That's because I want to have control of my site, comments included!
+
+	  PS: I won't put your real name and email if you don't want me to.
+	  
+  </section>
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>
