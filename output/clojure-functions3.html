@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="Chan Jin Hao" />
+<meta name="description" content="Lazy Sequences We learned previously that when you call a function that works on a sequence like map, filter or reduce, Clojure first calls the function seq on it to for a sequence of elements. The returned sequence from seq however, are lazy sequences, meaning the actual value of the …" />
+<meta name="keywords" content="clojure">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="SWE Day 20: Clojure Functions In Depth 2"/>
+<meta property="og:description" content="Lazy Sequences We learned previously that when you call a function that works on a sequence like map, filter or reduce, Clojure first calls the function seq on it to for a sequence of elements. The returned sequence from seq however, are lazy sequences, meaning the actual value of the …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/clojure-functions3.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2020-05-20 10:25:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/chan-jin-hao.html">
+<meta property="article:section" content="Software Engineering"/>
+<meta property="article:tag" content="clojure"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; SWE Day 20: Clojure Functions In Depth 2</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="/">All</a></li>
+          <li><a href="/category/data-science.html">Data Science</a></li>
+          <li><a href="/category/security.html">Cyber Security</a></li>
+          <li><a href="/category/software-engineering.html">Software Engineering</a></li>
+          <li><a href="/category/review.html">Book Reviews</a></li>
+          <li><a href="/category/ramblings.html">Ramblings</a></li>
+        </ul>
+      </nav>
+
+		<p>What the osfork? Just like the pythonic way of spawning off different processes by invoking <p style="font-family:courier;">os.fork</p> this website is meant to have different processes of content.</p>
+		<p>From technical stuff, to books I've read, and ramblings about life, all my thought processes are here.</p>
+      <br/>
+      <br/>
+      <ul class="social">
+        <li><a class="sc-linkedin" href="https://www.linkedin.com/in/jin-hao-chan-162630120/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-github" href="https://www.github.com/jinhaochan" target="_blank"><i class="fa fa-github"></i></a></li>
+      </ul>
+
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="clojure-functions3">SWE Day 20: Clojure Functions In Depth 2</h1>
+    <p>
+          Posted on Wed 20 May 2020 in <a href="/category/software-engineering.html">Software Engineering</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <h2>Lazy Sequences</h2>
+<p>We learned previously that when you call a function that works on a sequence like <code>map</code>, <code>filter</code> or <code>reduce</code>, Clojure first calls the function <code>seq</code> on it to for a sequence of elements. The returned sequence from <code>seq</code> however, are lazy sequences, meaning the actual value of the sequence is not computed until something tries to access it. When it does, it's called realizing the sequence. By doing so, you can theoratically make an infinitely large sequences, because nothing is actually stored in memory.</p>
+<p>Lazy Sequences contains two parts:
+1. Steps to realize the elements of the sequence
+2. Elements that has already been realized</p>
+<p>When you call <code>map</code>, it does not actually return you the entire mapped sequence, but the steps needed to perform to get the mapped sequence. And when you try to access the sequence element, then the steps are actually performed.</p>
+<p>Clojure also does pre-empting realization. When you realize a single element, Clojure will realize a few elements after it as well. This improves lookup time performace.</p>
+<h2>Infinite Sequences</h2>
+<p>Because sequences are lazily realized, you can instantiate an infinite sequence without fearing you would run out of memory. One way to create an infinite sequence in Clojure is via <code>repeat</code>, which creates an infinite sequence of arguments you pass in.</p>
+<div class="highlight"><pre><span></span><code><span class="err">(take 5 (repeat &quot;value&quot;))</span>
+<span class="err">=&gt; (&quot;value&quot; &quot;value&quot; &quot;value&quot; &quot;value&quot; &quot;value&quot;)</span>
+</code></pre></div>
+
+
+<p>Its like an infinite pool of resources you can dip into.</p>
+<p>The function <code>repeatedly</code> does the same thing, but instead of a single argument, it takes in a function, and repeatedly calls the function</p>
+<div class="highlight"><pre><span></span><code><span class="err">(take 3 (repeatedly (fn [] (rand-int 10))))</span>
+<span class="err">=&gt; (1 4 0)</span>
+</code></pre></div>
+
+
+<p>Here we are repeatedly calling the <code>rand-int</code> function, and taking the first 3 elements it produces.</p>
+<h2>Collection Abstraction</h2>
+<p>Sequence Abstractions deal with each individual element, while Collection Abstraction deals with all the elements in the collection as a whole. Functions such as <code>empty</code> and <code>count</code> need to account for all the elements inside a collection.</p>
+<h4>into</h4>
+<p>As all sequence functions call seq, which returns a list rather than the original data structure, in some cases we need to re-cast it back to the original data structure we want. In such cases, we call the function <code>into</code>, which casts the list data structure into the desired data structure.</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="k">map</span> <span class="k">identity</span> <span class="err">{</span><span class="p">:</span><span class="k">key</span> <span class="ss">&quot;value&quot;</span><span class="err">}</span><span class="p">)</span>
+<span class="o">=&gt;</span> <span class="p">([:</span><span class="k">key</span> <span class="ss">&quot;value&quot;</span><span class="p">])</span>     <span class="o">&lt;</span><span class="c1">-- map returns a list</span>
+
+<span class="p">(</span><span class="k">into</span> <span class="err">{}</span> <span class="p">(</span><span class="k">map</span> <span class="k">identity</span> <span class="err">{</span><span class="p">:</span><span class="k">key</span> <span class="ss">&quot;value&quot;</span><span class="err">}</span><span class="p">))</span>
+<span class="o">=&gt;</span> <span class="err">{</span><span class="p">:</span><span class="k">key</span> <span class="ss">&quot;value&quot;</span><span class="err">}</span>   <span class="o">&lt;</span><span class="c1">-- casting the list back to a map</span>
+</code></pre></div>
+
+
+<p>Briefly speaking, into takes two collections, and casts the 2nd collection into the first collection.</p>
+<h4>conj</h4>
+<p><code>conj</code> does the same thing as into, putting the second collection into the first collection. However, there are slight nuances to how <code>conj</code> does it</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="k">into</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="o">=&gt;</span><span class="p">[</span><span class="mi">0</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="p">(</span><span class="n">conj</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="o">=&gt;</span> <span class="p">[</span><span class="mi">0</span> <span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+</code></pre></div>
+
+
+<p>Instead of taking the elements in the second collection to put it in the first like how <code>into</code> does it, <code>conj</code> takes literally the entire second collection as a whole, and places it inside the first collection.</p>
+<p>Thus, when working with <code>conj</code>, we want to make sure the elements we are passing into the first collection are the elements themselves, not the collection of elements. In the example below, we are passing in a scalar value of 1, instead of a vector.</p>
+<div class="highlight"><pre><span></span><code><span class="err">(conj [0] 1)</span>
+<span class="err">=&gt; [0 1]</span>
+</code></pre></div>
+
+
+<h2>Calling Functions of Functions</h2>
+<h4>apply</h4>
+<p><code>apply</code> explodes a sequences to it's constituent elements, before passing them into a function. Functionally, it behaves exactly like reduce</p>
+<div class="highlight"><pre><span></span><code><span class="err">(apply max [0 1 2])</span>
+<span class="err">=&gt; 2</span>
+</code></pre></div>
+
+
+<h4>partial</h4>
+<p><code>partial</code> is an action that you can define, which you can then stick into any part of a function. The function then performs the original action, but at the same time also performs the partial action.</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">def</span> <span class="n">add10</span> <span class="p">(</span><span class="k">partial</span> <span class="o">+</span> <span class="mi">10</span><span class="p">))</span>
+
+<span class="p">(</span><span class="n">add10</span> <span class="mi">3</span><span class="p">)</span> 
+<span class="o">=&gt;</span> <span class="mi">13</span>
+</code></pre></div>
+
+
+<h4>complement</h4>
+<p><code>complement</code> simply negates a Boolean, changing <code>true</code> to <code>false</code>, and <code>false</code> to <code>true</code></p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">def</span> <span class="k">is</span><span class="o">-</span><span class="n">pos</span><span class="o">?</span> <span class="p">(</span><span class="n">complement</span> <span class="n">neg</span><span class="o">?</span><span class="p">))</span>
+<span class="p">(</span><span class="k">is</span><span class="o">-</span><span class="n">pos</span><span class="o">?</span> <span class="mi">1</span><span class="p">)</span>  
+<span class="o">=&gt;</span> <span class="k">true</span>
+
+<span class="p">(</span><span class="k">is</span><span class="o">-</span><span class="n">pos</span><span class="o">?</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> 
+<span class="o">=&gt;</span> <span class="k">false</span>
+</code></pre></div>
+
+
+<p>Here, we compare is the number is negative with <code>neg?</code>, but we negate the answer with <code>complement</code>, so any negative number returns <code>true</code> on <code>neg?</code>, which is then complemented and returns <code>false</code> on <code>is-pos?</code></p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/clojure.html">clojure</a>
+    </p>
+  </div>
+
+
+
+
+
+  <section id="comments" class="body">
+	  <h2>Comments:</h2>
+	  Contact me for any comments, and I'll paste them here! Why not Disqus or other comment services? That's because I want to have control of my site, comments included!
+
+	  PS: I won't put your real name and email if you don't want me to.
+	  
+  </section>
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>

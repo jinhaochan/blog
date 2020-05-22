@@ -75,7 +75,7 @@
 
 <article>
   <header>
-    <h2><a href="/clojure-functions2.html#clojure-functions2">SWE Day 20: Clojure Functions In Depth</a></h2>
+    <h2><a href="/clojure-functions2.html#clojure-functions2">SWE Day 20: Clojure Functions In Depth 1</a></h2>
     <p>
           Posted on Wed 20 May 2020 in <a href="/category/software-engineering.html">Software Engineering</a>
 
@@ -89,6 +89,27 @@
       <p>In Clojure, operations do not care about the actual data structure of the object it is operating on, as long as it can perform sequence operations on the object. For example, you can call the same function <code>map</code> on a list, set, vector, or a hash, even though they all …</p>
       <br>
       <a class="btn" href="/clojure-functions2.html#clojure-functions2">    Continue reading
+</a>
+  </div>
+  <hr />
+</article>
+<article>
+  <header>
+    <h2><a href="/clojure-functions3.html#clojure-functions3">SWE Day 20: Clojure Functions In Depth 2</a></h2>
+    <p>
+          Posted on Wed 20 May 2020 in <a href="/category/software-engineering.html">Software Engineering</a>
+
+
+          &#8226;     Tagged with
+
+              <a href="/tag/clojure.html">clojure</a>
+    </p>
+  </header>
+  <div>
+      <h2>Lazy Sequences</h2>
+<p>We learned previously that when you call a function that works on a sequence like <code>map</code>, <code>filter</code> or <code>reduce</code>, Clojure first calls the function <code>seq</code> on it to for a sequence of elements. The returned sequence from <code>seq</code> however, are lazy sequences, meaning the actual value of the …</p>
+      <br>
+      <a class="btn" href="/clojure-functions3.html#clojure-functions3">    Continue reading
 </a>
   </div>
   <hr />
@@ -303,40 +324,6 @@
 <p>You can define anonymous functions with the <code>fn</code> keyword. In this case, you don't have to put in a function name or docstring, but …</p>
       <br>
       <a class="btn" href="/clojure-function-body.html#clojure-function-body">    Continue reading
-</a>
-  </div>
-  <hr />
-</article>
-<article>
-  <header>
-    <h2><a href="/clojure-functions.html#clojure-functions">SWE Day 11: Function Definitions</a></h2>
-    <p>
-          Posted on Mon 11 May 2020 in <a href="/category/software-engineering.html">Software Engineering</a>
-
-
-          &#8226;     Tagged with
-
-              <a href="/tag/clojure.html">clojure</a>
-    </p>
-  </header>
-  <div>
-      <p>Functions defined in Clojure also take the same sexpr form, surrounded in brackets</p>
-<p>The main parts are:
-1. Function name
-2. Description of the function
-3. Parameters
-4. Function body</p>
-<div class="highlight"><pre><span></span><code><span class="nv">(defn</span> <span class="nv">my-function-name</span>  <span class="nv">&lt;--1</span>
-  <span class="s">&quot;Doc string to define the function&quot;</span>  <span class="nv">&lt;--</span> <span class="mi">2</span>
-  <span class="p">[</span><span class="nv">param1</span> <span class="nv">param2</span> <span class="nv">param3</span><span class="p">]</span>  <span class="nv">&lt;--</span> <span class="mi">3</span>
-  <span class="nv">(str</span> <span class="nv">param1</span> <span class="nv">param2</span> <span class="nv">param3)</span>  <span class="nv">&lt;--</span> <span class="mi">4</span>
-<span class="nv">)</span>
-</code></pre></div>
-
-
-<p>To …</p>
-      <br>
-      <a class="btn" href="/clojure-functions.html#clojure-functions">    Continue reading
 </a>
   </div>
 </article>
