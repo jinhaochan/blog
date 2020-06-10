@@ -2,7 +2,7 @@ Title: Accelerate
 Date: 2020-06-10 21:32
 Author: Chan Jin Hao
 Category: Review
-Slug: hit-refresh
+Slug: accelerate 
 Status: published
 
 

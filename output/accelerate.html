@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="Chan Jin Hao" />
+<meta name="description" content="A book not only about DevOps, but about the surrounding culture to enable it Click here for the book This book breaks things down nicely into the actionable segments that you can take to enable a fast and dynamic organization. It talks about DevOps, but you&#39;ll come to realize that …" />
+<meta name="keywords" content="">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="Accelerate"/>
+<meta property="og:description" content="A book not only about DevOps, but about the surrounding culture to enable it Click here for the book This book breaks things down nicely into the actionable segments that you can take to enable a fast and dynamic organization. It talks about DevOps, but you&#39;ll come to realize that …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/accelerate.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2020-06-10 21:32:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/chan-jin-hao.html">
+<meta property="article:section" content="Review"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; Accelerate</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="/">All</a></li>
+          <li><a href="/category/data-science.html">Data Science</a></li>
+          <li><a href="/category/security.html">Cyber Security</a></li>
+          <li><a href="/category/software-engineering.html">Software Engineering</a></li>
+          <li><a href="/category/review.html">Book Reviews</a></li>
+          <li><a href="/category/ramblings.html">Ramblings</a></li>
+        </ul>
+      </nav>
+
+		<p>What the osfork? Just like the pythonic way of spawning off different processes by invoking <p style="font-family:courier;">os.fork</p> this website is meant to have different processes of content.</p>
+		<p>From technical stuff, to books I've read, and ramblings about life, all my thought processes are here.</p>
+      <br/>
+      <br/>
+      <ul class="social">
+        <li><a class="sc-linkedin" href="https://www.linkedin.com/in/jin-hao-chan-162630120/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-github" href="https://www.github.com/jinhaochan" target="_blank"><i class="fa fa-github"></i></a></li>
+      </ul>
+
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="accelerate">Accelerate</h1>
+    <p>
+          Posted on Wed 10 June 2020 in <a href="/category/review.html">Review</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>A book not only about DevOps, but about the surrounding culture to enable it</p>
+<p><a href="https://www.amazon.sg/Accelerate-Software-Performing-Technology-Organizations/dp/1942788339">Click here for the book</a></p>
+<p>This book breaks things down nicely into the actionable segments that you can take to enable a fast and dynamic organization. It talks about DevOps, but you'll come to realize that it's not all about DevOps, and theres so many other modes of agile thinking and leadership that is required for all of it to work.</p>
+<h2>Measuring Performance</h2>
+<hr>
+<p>We should be thinking in terms of capabilities, and not "Maturity". A maturity of a company tells us nothing about what it can do, while capabilities tells us how efficient and capable the company is. Thinking in terms of capabilities means that we need ask questions about our processes, what we can do, and how efficiently we can do it. To quantify those questions into measurable metrics, we use 4 indicators</p>
+<ol>
+<li>Lead Time</li>
+<li>Deployment Frequency</li>
+<li>Time to Restore</li>
+<li>Change Fail Rate</li>
+</ol>
+<p>When we talk about lead time, there are 2 parts to it: Design Lead Time and Delivery Lead Time. Design Lead Time something that is hard to measure, and it's mostly subjective. How and when are the designers happy with the features, look, and architecture of a product? That is something hard to quantify. Delivery Lead Time however, is from the time any new code is committed, to the time it appears and is usable in production. The time difference between commit and delivery is the Delivery Lead Time, and what happens in between is ideally automated activities such as unit/integration/systems testing.</p>
+<p>Deployment Frequency is simply how frequent code is being pushed out. Delivery Lead Time, together with Deployment Frequency, tells you the Tempo of a company. Time to Restore is the time to recover failed services, and Change Fail Rate is the rate of errors for each deployment.</p>
+<p>High functioning companies:</p>
+<ul>
+<li>Lead Time: Less than 1 hour</li>
+<li>Deployment Frequency: Multiple times a day</li>
+<li>Time to Restore: Less than 1 hour</li>
+<li>Change Fail Rate: 0% - 15%</li>
+</ul>
+<p>Low functioning companies:</p>
+<ul>
+<li>Lead Time: One week - One month</li>
+<li>Deployment Frequency Once a week - Once a month</li>
+<li>Time to Restore: One day - One week</li>
+<li>Change Fail Rate: 31% - 45%</li>
+</ul>
+<p>We can see that high performing companies move extremely fast, with all 3 time metrics falling within a single day. To achieve those crazy levels of efficiency, it needs to be enabled the following</p>
+<h2>1. CI/CD</h2>
+<p>This is where the concepts of DevOps comes in. Putting them in bullet points:</p>
+<ul>
+<li>Work in small batches, and commit often to master</li>
+<li>From frequent pushes to master, automate the deployment of new code to production</li>
+<li>Testing should not be outsourced, but created by the very developers of the program. Testing should also be automated</li>
+<li>Have proper test data. Upfront time is need to curate and make this test data comphrensive. Dont skimp on it.</li>
+<li>Have a proper configuration management for each environment. Define your configs for dev, staging and production</li>
+<li>Version Control (need not say more about this)</li>
+</ul>
+<h2>2. Architecture</h2>
+<p>Obviously put, the architecture should be loose. The buzzword these days are "microservices", which works. This gives your product two important characteristics: Deployability, and Testability. These two features synergizes well with the points above about CI/CD. By lowering the barrier to deploying to production, and making testing much simpler.</p>
+<p>On a cultural point, when building the architecture, allow your developers to choose their own tools. They should be busy thinking about the outcomes, and not bickering about what tools to use.</p>
+<h2>3. Lean Management</h2>
+<ul>
+<li>Limit Work In Progress (WIP). This means not piling a bunch of work onto a developer all at once, forcing him/her to perform costly context switching</li>
+<li>Visual Displays of metrics, such as bugs, to-do features and backlogs</li>
+<li>Obtain Feedback fast and often, and seriously implement them in the design. The customer is king</li>
+<li>Lightweight Change Management process. Your develop will go crazy if he has to jump through 3 hoops just to make a single line of change</li>
+<li>Use Peer Review to analyze and stamp your codes, such as pair programming, or intrateam code review.</li>
+</ul>
+<h2>4. Product Development</h2>
+<p>When it comes to the actual development of the product:</p>
+<ul>
+<li>Work in small batches (as mentioned above in CI/CD)</li>
+<li>Make sure everyone understands the workflow</li>
+<li>Seek and use feedback (enabled by lean management)</li>
+<li>Allow team experimentation, and empower the developers some degree of authority to explore technologies</li>
+</ul>
+<h2>5. Making Work Sustainable</h2>
+<p>The number fear and anxiety developers have is the process of deployment to production. This sits at the 3rd and 4th point of Time to Restore and Change Fail Rate.</p>
+<p>The solution is mentioned a few times in the points above, and it has to do largely with automation and proper management. With a combination of CI/CD practices and Lean Management, it allows the team to navigate this space more confidently, thus reducing their anxiety levels.</p>
+<h2>6. Proper Leadership</h2>
+<p>They draw a distinction here between Servant Leadership (focus on development and performance of the staff) vs Transformational Leadership (Inspiring staff to identify with the organization and it's mission). Having both types of leaders is a must.</p>
+<p>A Transformational Leader must have and provide:</p>
+<ul>
+<li>Vision</li>
+<li>Inspirational Communication</li>
+<li>Intellectual Stimuation</li>
+<li>Supportive Leadership</li>
+<li>Personal Recognition</li>
+</ul>
+<p>!! Hack and Yak days !! Days to create (hack) and days to clear technical debt (yak)</p>
+<p>Most importantly, the leaders must provide a culture of learning and cross-functional collaboration.</p>
+<h2>Conclusion</h2>
+<p>Those were the key pointers in the book, and a large section of it was dedicated to the scientific methods used to back the study up. I really liked that portion, as it shows that these qualities defined above are "scientific", and not just pulled out of the air.</p>
+<p>That's not to say that by following steps 1-7, your company will find incredible success. It would transform and accelerate your technical capabilities by a huge amount, but thats only one side of the business. Technology afterall, is an enabler, and as to what it enables and how you use this process, that determines your success.</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+    </p>
+  </div>
+
+
+
+
+
+  <section id="comments" class="body">
+	  <h2>Comments:</h2>
+	  Contact me for any comments, and I'll paste them here! Why not Disqus or other comment services? That's because I want to have control of my site, comments included!
+
+	  PS: I won't put your real name and email if you don't want me to.
+	  
+  </section>
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>
