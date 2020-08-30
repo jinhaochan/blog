@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="Chan Jin Hao" />
+<meta name="description" content="I&#39;ve been doing this lessons by Pentesterlabs, and i&#39;ve learnt a few new things there, which is always great! To be honestly, i&#39;ve never had any proper training or course in terms of offensive cyber security, especially the web. My experiences have mostly been centered around the Linux kernel, which …" />
+<meta name="keywords" content="XSS">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="XSS - Revisited"/>
+<meta property="og:description" content="I&#39;ve been doing this lessons by Pentesterlabs, and i&#39;ve learnt a few new things there, which is always great! To be honestly, i&#39;ve never had any proper training or course in terms of offensive cyber security, especially the web. My experiences have mostly been centered around the Linux kernel, which …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/XSS.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2020-08-30 13:50:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/chan-jin-hao.html">
+<meta property="article:section" content="Security"/>
+<meta property="article:tag" content="XSS"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; XSS - Revisited</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="/">All</a></li>
+          <li><a href="/category/data-science.html">Data Science</a></li>
+          <li><a href="/category/security.html">Cyber Security</a></li>
+          <li><a href="/category/software-engineering.html">Software Engineering</a></li>
+          <li><a href="/category/review.html">Book Reviews</a></li>
+          <li><a href="/category/ramblings.html">Ramblings</a></li>
+        </ul>
+      </nav>
+
+		<p>What the osfork? Just like the pythonic way of spawning off different processes by invoking <p style="font-family:courier;">os.fork</p> this website is meant to have different processes of content.</p>
+		<p>From technical stuff, to books I've read, and ramblings about life, all my thought processes are here.</p>
+      <br/>
+      <br/>
+      <ul class="social">
+        <li><a class="sc-linkedin" href="https://www.linkedin.com/in/jin-hao-chan-162630120/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-github" href="https://www.github.com/jinhaochan" target="_blank"><i class="fa fa-github"></i></a></li>
+      </ul>
+
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="XSS">XSS - Revisited</h1>
+    <p>
+          Posted on Sun 30 August 2020 in <a href="/category/security.html">Security</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>I've been doing this lessons by  <a href="www.pentesterlab.com">Pentesterlabs</a>, and i've learnt a few new things there, which is always great! To be honestly, i've never had any proper training or course in terms of offensive cyber security, especially the web. My experiences have mostly been centered around the Linux kernel, which is pretty niche and narrow. In this post, i'd like to talk very briefly about XSS, and the different ways to do it.</p>
+<h2>Kinds of XSS</h2>
+<p>Very briefly, XSS can be done in 3 ways: Stored, Reflected, or DOM attacks.</p>
+<p>In Stored XSS, a script is injected to the server, and it resides permanently on the server. The malicious script thus triggers everytime someone visits the server.</p>
+<p>In Reflected XSS, the script is part of the URL, and is sent to other users to click on it. Once the victim clicks on the URL with the payload appended to it, the script is executed.</p>
+<p>In DOM based attacks, we're injecting HTML DOMs, or Document Object Models to the server, and this is the attack that I have learnt a great deal from Pentesterlabs.</p>
+<h2>DOM based attacks</h2>
+<p>I won't cover much on Stored and Reflected XSS, and those are pretty common. In Stored, you have to upload the script to the server, and in Reflected, you will see the payload in the URL.</p>
+<p>For DOM based attacks, instead of seeing the script tags <code>&lt;script&gt;&lt;/script&gt;</code> that traditionally encapsulates the JS payload to be executed, we see DOMs being injected.</p>
+<p>For example, we could inject an image which loads from an invalid path, and place an onerror function to trigger the payload.</p>
+<p>DOMs can even use mouse events and links to trigger the scripts</p>
+<div class="highlight"><pre><span></span><code><span class="err">&lt;img src=&#39;zzzz&#39; onerror=&#39;alert(1)&#39; /&gt;</span>
+<span class="err">&lt;div onmouseover=&#39;alert(1)&#39;/&gt; ; onmouseout; onmousemove; onclick</span>
+<span class="err">&lt;a onmouseover=&#39;alert(1)&#39;/&gt; ; onmouseout; onmousemove; onclick</span>
+<span class="err">&lt;a href=&#39;javascript:alert(1)&#39; /&gt;</span>
+</code></pre></div>
+
+
+<h2>Detection on the network</h2>
+<p>This is really new to me (I'm not a red teamer), and we could utilize these infomation to form detection rules in whatever engine we're using.</p>
+<p>Things like XSS or SQLi are usually caught with some signature mapping, for example, a regex to detect an SQL statement in the URL. For XSS, instead of just detecting <code>&lt;script&gt;&lt;/script&gt;</code>, we must also include these DOMs. In any case, it's suspicious and unlikely that there would be DOMs existing in the URL.</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/xss.html">XSS</a>
+    </p>
+  </div>
+
+
+
+
+
+  <section id="comments" class="body">
+	  <h2>Comments:</h2>
+	  Contact me for any comments, and I'll paste them here! Why not Disqus or other comment services? That's because I want to have control of my site, comments included!
+
+	  PS: I won't put your real name and email if you don't want me to.
+	  
+  </section>
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>
