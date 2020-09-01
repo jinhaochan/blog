@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="Chan Jin Hao" />
+<meta name="description" content="Server Side Request Forgery, or SSRF, is an attack where the attacker is able to make a request to an internal resource by pivoting through the server. By leveraging on the server to make a request to the internal resource, the request become seen as legitimate, because internal systems usually …" />
+<meta name="keywords" content="SSRF">
+
+<meta property="og:site_name" content="glob"/>
+<meta property="og:title" content="Server Side Request Forgery"/>
+<meta property="og:description" content="Server Side Request Forgery, or SSRF, is an attack where the attacker is able to make a request to an internal resource by pivoting through the server. By leveraging on the server to make a request to the internal resource, the request become seen as legitimate, because internal systems usually …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/SSRF.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2020-09-01 12:19:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/chan-jin-hao.html">
+<meta property="article:section" content="Security"/>
+<meta property="article:tag" content="SSRF"/>
+<meta property="og:image" content="">
+
+  <title>glob &ndash; Server Side Request Forgery</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/theme/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+
+          <li><a href="/">All</a></li>
+          <li><a href="/category/data-science.html">Data Science</a></li>
+          <li><a href="/category/security.html">Cyber Security</a></li>
+          <li><a href="/category/software-engineering.html">Software Engineering</a></li>
+          <li><a href="/category/review.html">Book Reviews</a></li>
+          <li><a href="/category/ramblings.html">Ramblings</a></li>
+        </ul>
+      </nav>
+
+		<p>What the osfork? Just like the pythonic way of spawning off different processes by invoking <p style="font-family:courier;">os.fork</p> this website is meant to have different processes of content.</p>
+		<p>From technical stuff, to books I've read, and ramblings about life, all my thought processes are here.</p>
+      <br/>
+      <br/>
+      <ul class="social">
+        <li><a class="sc-linkedin" href="https://www.linkedin.com/in/jin-hao-chan-162630120/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-github" href="https://www.github.com/jinhaochan" target="_blank"><i class="fa fa-github"></i></a></li>
+      </ul>
+
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="SSRF">Server Side Request Forgery</h1>
+    <p>
+          Posted on Tue 01 September 2020 in <a href="/category/security.html">Security</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>Server Side Request Forgery, or SSRF, is an attack where the attacker is able to make a request to an internal resource by pivoting through the server. By leveraging on the server to make a request to the internal resource, the request become seen as legitimate, because internal systems usually trust each other.</p>
+<h2>SSRF through Forms</h2>
+<p>If the server and internal resource are hosted on the same machine, the attacker can leverage on internal systems by specifying the resource address to <code>localhost</code>, <code>127.0.0.1</code> or <code>0.0.0.0</code>. This attack vector is exposed if the application allows an input of an address or URL, and makes calls to them. For example, if we have an application that accepts a URL of a webpage, and sends a <code>GET</code> request to it to get certain resources, we can put in <code>localhost</code> for it to send a <code>GET</code> request to other internal services running on the same server</p>
+<div class="highlight"><pre><span></span><code><span class="n">Legitimate</span> <span class="k">call</span>
+
+<span class="n">www</span><span class="p">.</span><span class="n">vulnweb</span><span class="p">.</span><span class="n">com</span><span class="o">/?</span><span class="n">site</span><span class="o">=</span><span class="n">www</span><span class="p">.</span><span class="n">shop</span><span class="p">.</span><span class="n">com</span>
+
+
+<span class="n">SSRF</span> <span class="k">to</span> <span class="n">send</span> <span class="n">requests</span> <span class="k">to</span> <span class="n">services</span> <span class="n">running</span> <span class="k">on</span> <span class="n">the</span> <span class="n">same</span> <span class="n">server</span>
+
+<span class="n">www</span><span class="p">.</span><span class="n">vulnweb</span><span class="p">.</span><span class="n">com</span><span class="o">/?</span><span class="n">site</span><span class="o">=</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span>
+</code></pre></div>
+
+
+<p>We can acheive the same effect if the other services are hosted not on the same machine, but on other internal IP addresses. In this cases, instead of injecting <code>0.0.0.0</code>, we could put <code>192.168.0.1</code>, or perform an enumeration of private IP address to discover the services.</p>
+<p>Defences against these involve input sanitization, and prevent calls to <code>localhost</code>, <code>0.0.0.0</code> and <code>127.0.0.1</code> inputs. From a software engineering perspective, we can move towards a Zero Trust Artchitecture, which basically means we remove the explicit assumption that calls to internal systems from other internal systems are trusted, and every request must be authenticated.</p>
+<p>There are ways to circumvent input sanitizations and removing strings, and that is through DNS replies that always return a localhost</p>
+<h2>SSRF through DNS</h2>
+<p>If there are input sanitization rules to remove <code>localhost</code>, <code>0.0.0.0</code> or <code>127.0.0.1</code>, we can setup our own malicious domain name or DNS server to always return localhost.</p>
+<div class="highlight"><pre><span></span><code><span class="n">badsite</span><span class="p">.</span><span class="n">com</span> <span class="k">returns</span> <span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">,</span> <span class="n">which</span> <span class="n">has</span> <span class="n">the</span> <span class="n">same</span> <span class="n">effect</span> <span class="k">as</span> <span class="n">SSRF</span>
+
+<span class="n">www</span><span class="p">.</span><span class="n">vulnweb</span><span class="p">.</span><span class="n">com</span><span class="o">/?</span><span class="n">site</span><span class="o">=</span><span class="n">www</span><span class="p">.</span><span class="n">badsite</span><span class="p">.</span><span class="n">com</span>
+</code></pre></div>
+
+
+<h2>Possible Detections</h2>
+<p>Looking for localhost variants in the URL, or DNS replies with localhost values. One possible false positive is when malicious domains are sinkholed, they are also resolved to localhost</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/ssrf.html">SSRF</a>
+    </p>
+  </div>
+
+
+
+
+
+  <section id="comments" class="body">
+	  <h2>Comments:</h2>
+	  Contact me for any comments, and I'll paste them here! Why not Disqus or other comment services? That's because I want to have control of my site, comments included!
+
+	  PS: I won't put your real name and email if you don't want me to.
+	  
+  </section>
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " glob ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>
